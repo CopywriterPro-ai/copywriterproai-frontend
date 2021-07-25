@@ -1,16 +1,21 @@
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
+import { ThemeProvider } from "styled-components";
 
-import store, { persistor } from "@redux/store";
+import store from "@redux/store";
+import GlobalStyle from "@styles/index";
+import theme from "@styles/theme";
 
-function MyApp({ Component, pageProps }) {
+const App = ({ Component, pageProps }) => {
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <Component {...pageProps} />
-      </PersistGate>
-    </Provider>
+    <>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
+      </ThemeProvider>
+    </>
   );
-}
+};
 
-export default MyApp;
+export default App;

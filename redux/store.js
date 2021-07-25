@@ -1,46 +1,39 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from "redux-persist";
-// import {
-//   createStateSyncMiddleware,
-//   initMessageListener,
-// } from "redux-state-sync";
+import {
+  createStateSyncMiddleware,
+  initStateWithPrevTab,
+} from "redux-state-sync";
 
-import storage from "@redux/storage";
-import reducers from "@redux/reducers";
+import reducer from "@redux/reducers";
 import authMiddleware from "@redux/middleware/auth";
 
-// const stateSyncConfig = {
-//   blacklist: ["persist/PERSIST", "persist/PURGE"],
-// };
+const isServer = typeof window === "undefined";
+
+const stateSyncConfig = {
+  blacklist: [],
+};
 
 const middleware = (getDefaultMiddleware) => {
-  return [
+  const items = [
     ...getDefaultMiddleware({
       serializableCheck: false,
     }),
     authMiddleware,
-    // createStateSyncMiddleware(stateSyncConfig),
   ];
-};
 
-const persistConfig = {
-  key: "cwp",
-  storage,
-  version: 1.0,
-  //   whitelist: ["auth"],
-};
+  if (!isServer) {
+    items.push(createStateSyncMiddleware(stateSyncConfig));
+  }
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+  return items;
+};
 
 const store = configureStore({
-  serializableCheck: false,
-  reducer: persistedReducer,
+  reducer,
   middleware,
   devTools: process.env.NODE_ENV !== "production",
 });
 
-export const persistor = persistStore(store);
-
-// initMessageListener(store);
+initStateWithPrevTab(store);
 
 export default store;
