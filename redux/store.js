@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import {
   createStateSyncMiddleware,
-  initStateWithPrevTab,
+  initMessageListener,
 } from "redux-state-sync";
+import throttle from "lodash.throttle";
 
 import reducer from "@redux/reducers";
 import authMiddleware from "@redux/middleware/auth";
+import { isServer, stateStorage } from "@utils/index";
 
-const isServer = typeof window === "undefined";
+const { saveState } = stateStorage;
 
 const stateSyncConfig = {
   blacklist: [],
@@ -34,6 +36,15 @@ const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
 });
 
-initStateWithPrevTab(store);
+store.subscribe(
+  throttle(() => {
+    const { counter } = store.getState();
+    saveState({
+      counter,
+    });
+  }, 1000)
+);
+
+initMessageListener(store);
 
 export default store;

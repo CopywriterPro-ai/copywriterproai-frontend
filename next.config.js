@@ -1,3 +1,12 @@
 module.exports = {
-  reactStrictMode: true,
-}
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/",
+  //       destination: "/about",
+  //     },
+  //   ];
+  // },
+  poweredByHeader: false,
+  reactStrictMode: false,
+};
