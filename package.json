@@ -11,19 +11,27 @@
     "deploy": "npm-run-all clean build start --parallel"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.6.1",
+    "@hookform/resolvers": "^2.8.2",
+    "@reduxjs/toolkit": "^1.6.2",
+    "axios": "^0.23.0",
     "bootstrap": "^4.6.0",
-    "js-cookie": "^3.0.1",
+    "dayjs": "^1.10.7",
+    "fuse.js": "^6.4.6",
     "lodash.throttle": "^4.1.1",
     "next": "11.1.2",
     "next-seo": "^4.28.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-hook-form": "^7.17.4",
     "react-redux": "^7.2.5",
+    "react-slick": "^0.28.1",
+    "react-toastify": "^8.0.3",
     "reactstrap": "^8.10.0",
     "redux-state-sync": "^3.1.2",
+    "sharp": "^0.29.1",
     "styled-components": "^5.3.1",
-    "tiny-invariant": "^1.1.0"
+    "tiny-invariant": "^1.1.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^1.13.2",

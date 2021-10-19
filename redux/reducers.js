@@ -1,10 +1,13 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
-import counterReducer from "@redux/slices/counterSlice";
+import authReducer from "@/redux/slices/auth";
+import uiReducer from "@/redux/slices/ui";
+import demoGenerateReducer from "@/redux/slices/demoGenerate";
 
 const reducers = combineReducers({
-  auth: () => true,
-  counter: counterReducer,
+  ui: uiReducer,
+  auth: authReducer,
+  demoGenerate: demoGenerateReducer,
 });
 
 export default reducers;

@@ -5,9 +5,9 @@ import {
 } from "redux-state-sync";
 import throttle from "lodash.throttle";
 
-import reducer from "@redux/reducers";
-import authMiddleware from "@redux/middleware/auth";
-import { isServer, stateStorage } from "@utils/index";
+import reducer from "@/redux/reducers";
+import authMiddleware from "@/redux/middleware/auth";
+import { isServer, stateStorage } from "@/utils";
 
 const { saveState } = stateStorage;
 

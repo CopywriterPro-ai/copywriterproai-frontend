@@ -1,4 +1,4 @@
-import { UserNavbar as Navbar } from "@components/common/Navbar";
+import { UserNavbar as Navbar } from "@/components/common/Navbar";
 
 const UserHeader = () => {
   return (

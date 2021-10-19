@@ -1,15 +1,16 @@
-import { Fragment } from "react";
+import React from "react";
 
-import { GuestHeader as Header } from "@components/common/Header";
-import { GuestFooter as Footer } from "@components/common/Footer";
+import Layout from "./Layout";
+import { GuestHeader as Header } from "@/components/common/Header";
+import { GuestFooter as Footer } from "@/components/common/Footer";
 
 const GuestLayout = ({ children }) => {
   return (
-    <Fragment>
+    <Layout>
       <Header />
       <main>{children}</main>
       <Footer />
-    </Fragment>
+    </Layout>
   );
 };
 

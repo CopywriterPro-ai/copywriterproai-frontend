@@ -2,8 +2,8 @@ module.exports = {
   // async rewrites() {
   //   return [
   //     {
-  //       source: "/",
-  //       destination: "/about",
+  //       source: "/forgot-password",
+  //       destination: "/forgotpassword",
   //     },
   //   ];
   // },

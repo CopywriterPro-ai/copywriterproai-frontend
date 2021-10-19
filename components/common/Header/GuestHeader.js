@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef } from "react";
+import { useState, useRef, forwardRef } from "react";
 import Link from "next/link";
 import {
   Collapse,
@@ -8,49 +8,42 @@ import {
   Nav,
   NavItem,
   NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "reactstrap";
 import styled from "styled-components";
 
-import externalLink from "../../../data/externallink.json";
-import NavMeunuIcon from "@assets/images/navmenu.png";
-import Logo from "@assets/images/logo-color.png";
+import externalLink from "data/externallink.json";
+import NavMeunuIcon from "assets/images/navmenu.png";
+import Logo from "assets/images/logo-color.png";
 import { useResponsive, useElementSize } from "hooks";
 
-const AppNavLink = ({ to = "/", title = "Page Title", shape = false }) => {
+const AppNavLink = ({ to = "/", title = "Page Title", shapebox = "none" }) => {
   const { isDesktop } = useResponsive();
-
+  const shape = shapebox === "active" ? true : false;
   const isShape = Boolean(shape && isDesktop);
 
   return (
     <NavItem>
       <Link href={to} passHref>
-        <AppNavLinkShape Shape={isShape.toString()}>{title}</AppNavLinkShape>
+        <AppNavLinkShape href={to} shapebox={isShape ? "active" : "none"}>
+          {title}
+        </AppNavLinkShape>
       </Link>
     </NavItem>
   );
 };
 
-const AppbarBrand = forwardRef(({ onClick, href }, ref) => {
+const AppBrandLogo = forwardRef(({ onClick, href }, ref) => {
+  AppBrandLogo.displayName = "AppBrandLogo";
   return (
-    <NavbarBrand href={href} onClick={onClick} ref={ref}>
-      <AppLogo src={Logo} alt="copywriterpro.ai"></AppLogo>
+    <NavbarBrand href={href} onClick={onClick}>
+      <AppLogo src={Logo.src} alt="copywriterpro.ai"></AppLogo>
     </NavbarBrand>
   );
 });
-
-// const AppNavHashLink = ({ to = "/", title = "Page Title", shape = false }) => {
-//   const { isDesktop } = useResponsive();
-
-//   const isShape = Boolean(shape && isDesktop);
-
-//   return (
-//     <NavItem>
-//       <Link href={to} passHref>
-//         <AppNavLinkShape shape={isShape.toString()}>{title}</AppNavLinkShape>
-//       </Link>
-//     </NavItem>
-//   );
-// };
 
 const AppHeader = () => {
   const noticeTopRef = useRef();
@@ -88,21 +81,31 @@ const AppHeader = () => {
       >
         <div className="container">
           <Link href="/" passHref>
-            <AppbarBrand />
-            {/* <NavbarBrand>
-              <AppLogo src={Logo} alt="copywriterpro.ai"></AppLogo>
-            </NavbarBrand> */}
+            <AppBrandLogo />
           </Link>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <AppNavLink to="/features" title="Features" />
+              <AppNavLink to="/#features" title="Features" />
               <AppNavLink to="/pricing" title="Pricing" />
+              <UncontrolledDropdown nav inNavbar>
+                <StyledDropdownToggle nav caret>
+                  Community
+                </StyledDropdownToggle>
+                <StyledDropdownMenu left="true">
+                  <DropdownItem href={externalLink.facebookGroup}>
+                    Facebook Group
+                  </DropdownItem>
+                  <DropdownItem href={externalLink.discord}>
+                    Discord Server
+                  </DropdownItem>
+                </StyledDropdownMenu>
+              </UncontrolledDropdown>
             </Nav>
 
             <Nav className="ml-auto" navbar>
               <AppNavLink to="/signin" title="Sign in" />
-              <AppNavLink to="/signup" title="Sign up" shape={true} />
+              <AppNavLink to="/signup" title="Sign up" shapebox="active" />
             </Nav>
           </Collapse>
         </div>
@@ -139,9 +142,18 @@ const JoinButton = styled.button`
 const AppLogo = styled.img`
   height: 45px;
 
+  @media (max-width: 992px) {
+    height: 40px;
+  }
+
   @media (max-width: 768px) {
     height: 55px;
     padding-left: 11px;
+  }
+
+  @media only screen and (max-width: 768px) and (min-width: 768px) {
+    height: 45px;
+    padding-left: 0px;
   }
 
   @media (max-width: 576px) {
@@ -171,21 +183,76 @@ const NavBar = styled(Navbar)`
     shownotice === "true" ? noticeheight : null};
   padding-top: 25px;
 
+  @media (max-width: 992px) {
+    font-size: 13px;
+  }
+
   @media (max-width: 768px) {
     margin-left: 10px;
+    flex-wrap: wrap;
+
+    .ml-auto:nth-of-type(1) {
+      padding-top: 50px;
+    }
+
+    .ml-auto {
+      font-size: 16px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .ml-auto {
+      font-size: 15px;
+    }
+  }
+
+  @media (max-width: 425px) {
+    .ml-auto {
+      font-size: 14px;
+    }
+  }
+`;
+
+const StyledDropdownToggle = styled(DropdownToggle)`
+  padding: 12px 18px !important;
+  color: black !important;
+`;
+
+const StyledDropdownMenu = styled(DropdownMenu)`
+  background-color: transparent;
+  border: none;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 425px) {
+    font-size: 14px;
   }
 `;
 
 const AppNavLinkShape = styled(NavLink)`
-  background-image: ${({ Shape }) =>
-    Shape === "true" ? `url(${NavMeunuIcon})` : null};
+  background-image: ${({ shapebox }) =>
+    shapebox === "active" ? `url(${NavMeunuIcon.src})` : null};
   padding: 12px 26px !important;
-  color: ${({ Shape }) =>
-    Shape === "true" ? "white !important" : "black !important"};
-  font-weight: ${({ Shape }) => (Shape === "true" ? 500 : null)};
-  background-repeat: ${({ Shape }) => (Shape === "true" ? "no-repeat" : null)};
-  background-size: ${({ Shape }) => (Shape === "true" ? "contain" : null)};
-  background-position-x: ${({ Shape }) => (Shape === "true" ? "right" : null)};
+  color: ${({ shapebox }) =>
+    shapebox === "active" ? "white !important" : "black !important"};
+  font-weight: ${({ shapebox }) => (shapebox === "active" ? 500 : null)};
+  background-repeat: ${({ shapebox }) =>
+    shapebox === "active" ? "no-repeat" : null};
+  background-size: ${({ shapebox }) =>
+    shapebox === "active" ? "contain" : null};
+  background-position-x: ${({ shapebox }) =>
+    shapebox === "active" ? "right" : null};
+
+  @media (max-width: 992px) {
+    padding: 9px 18px !important;
+    margin-top: 2px;
+  }
 `;
 
 export default AppHeader;

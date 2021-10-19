@@ -1,4 +1,4 @@
-import isServer from "@utils/isServer";
+import isServer from "@/utils/isServer";
 
 const loadState = () => {
   try {

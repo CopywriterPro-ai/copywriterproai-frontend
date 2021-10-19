@@ -1,0 +1,37 @@
+[
+  {
+    "id": "1",
+    "question": "Can I try your service for free?",
+    "answer": "Yes, you can try it for free. Just sign up to start with our 7-days free trial."
+  },
+  {
+    "id": "2",
+    "question": "What do I need in order to register?",
+    "answer": "You just need a valid email address to get started. No credit card or personal information is required."
+  },
+  {
+    "id": "4",
+    "question": "How do you stack up against others?",
+    "answer": "Don't just take our word for it. Since we have a free plan, why not give it a try? The proof is in the pudding!"
+  },
+  {
+    "id": "5",
+    "question": "How secured is the payment method?",
+    "answer": "We have chosen Stripe as our payment service provider for this product. Stripe is certified to the highest level of security standards and will protect your credit card data from unauthorized use."
+  },
+  {
+    "id": "6",
+    "question": "I would like to cancel my subscription. Do you offer refunds?",
+    "answer": "If you are not happy with our service, just let us know by sending an email know within 48 hours of subscription and we will refund your money."
+  },
+  {
+    "id": "7",
+    "question": "Will you create features catered to our specific business?",
+    "answer": "Yes, we will. We will implement any features that would be helpful to our customers."
+  },
+  {
+    "id": "8",
+    "question": "Do you support languages other than English?",
+    "answer": "We are not currently supporting any other languages. However, we plan to do so soon."
+  }
+]

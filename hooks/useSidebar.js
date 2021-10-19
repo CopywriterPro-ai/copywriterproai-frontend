@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 // import { selectors as uiSelector } from "redux/slices/uiSlice";
-import { useResponsive } from "@hooks/index";
+import { useResponsive } from "@/hooks";
 
 const useSidebar = () => {
   const { isMobile } = useResponsive();
