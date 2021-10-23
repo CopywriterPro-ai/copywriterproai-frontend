@@ -1,5 +1,8 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
+// import { PersistGate } from "redux-persist/integration/react";
+
+// import { persistor } from "@/redux/store";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -10,7 +13,11 @@ export default class MyDocument extends Document {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) =>
-            sheet.collectStyles(<App {...props} />),
+            sheet.collectStyles(
+              // <PersistGate loading={null} persistor={persistor}>
+              <App {...props} />
+              // </PersistGate>
+            ),
         });
 
       const initialProps = await Document.getInitialProps(ctx);

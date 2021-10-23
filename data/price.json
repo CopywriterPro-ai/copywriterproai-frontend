@@ -1,0 +1,30 @@
+{
+  "BASIC_1MONTH": {
+    "period": "1month",
+    "words": "70,000",
+    "maxInput": "400",
+    "maxOutput": "600",
+    "user": "1"
+  },
+  "BASIC_6MONTH": {
+    "period": "6month",
+    "words": "420,000",
+    "maxInput": "400",
+    "maxOutput": "600",
+    "user": "1"
+  },
+  "PROFESSINAL_1MONTH": {
+    "period": "1month",
+    "words": "300,000",
+    "maxInput": "600",
+    "maxOutput": "1000",
+    "user": "1"
+  },
+  "PROFESSINAL_6MONTH": {
+    "period": "6month",
+    "words": "1,800,000",
+    "maxInput": "600",
+    "maxOutput": "1000",
+    "user": "1"
+  }
+}

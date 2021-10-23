@@ -6,7 +6,7 @@ import Banner from "@/components/pages/landing/Banner";
 import GenerateSchedule from "@/components/pages/landing/GenerateSchedule";
 import CopywriterOffers from "@/components/pages/landing/CopywriterOffers";
 import QuickAuth from "@/components/pages/landing/QuickAuth";
-import FAQ from "@/components/Faq";
+import Faq from "@/components/Faq";
 
 const Home = () => {
   return (
@@ -23,7 +23,7 @@ const Home = () => {
           <CopywriterOffers />
         </Section>
         <Section>
-          <FAQ />
+          <Faq />
         </Section>
       </div>
       <Section style={{ margin: "30px 0" }}>

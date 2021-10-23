@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-// import { selectors as uiSelector } from "redux/slices/uiSlice";
+import { selectors as uiSelector } from "@/redux/slices/ui";
 import { useResponsive } from "@/hooks";
 
 const useSidebar = () => {
   const { isMobile } = useResponsive();
-  // const { bookmark: isSidebar } = useSelector(uiSelector.getSidebar);
-
-  // Temporay
-  const isSidebar = true;
+  const { bookmark: isSidebar } = useSelector(uiSelector.getSidebar);
 
   const [showSidebar, setShowSidebar] = useState(false);
   const [showContent, setShowContent] = useState(false);

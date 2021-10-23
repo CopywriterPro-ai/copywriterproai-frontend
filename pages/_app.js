@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
+// import { PersistGate } from "redux-persist/integration/react";
 
-import store from "@/redux/store";
+import store, { persistor } from "@/redux/store";
 import GlobalStyle from "@/styles";
 import theme from "@/styles/theme";
 import Head from "@/components/common/Head";
+// import "@/styles/all.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = ({ Component, pageProps }) => {
@@ -17,11 +19,13 @@ const App = ({ Component, pageProps }) => {
     <>
       <Head />
       <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <Provider store={store}>
+      <Provider store={store}>
+        {/* <PersistGate loading={null} persistor={persistor}> */}
+        <ThemeProvider theme={theme}>
           <Component {...pageProps} />
-        </Provider>
-      </ThemeProvider>
+        </ThemeProvider>
+        {/* </PersistGate> */}
+      </Provider>
     </>
   );
 };

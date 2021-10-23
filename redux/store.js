@@ -3,17 +3,26 @@ import {
   createStateSyncMiddleware,
   initMessageListener,
 } from "redux-state-sync";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import throttle from "lodash.throttle";
 
 import reducer from "@/redux/reducers";
 import authMiddleware from "@/redux/middleware/auth";
-import { isServer, stateStorage } from "@/utils";
+import { isServer, stateStorage, stateSyncPredicate } from "@/utils";
 
 const { saveState } = stateStorage;
 
 const stateSyncConfig = {
-  blacklist: [],
+  predicate: stateSyncPredicate,
 };
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, reducer);
 
 const middleware = (getDefaultMiddleware) => {
   const items = [
@@ -31,7 +40,7 @@ const middleware = (getDefaultMiddleware) => {
 };
 
 const store = configureStore({
-  reducer,
+  reducer: persistedReducer,
   middleware,
   devTools: process.env.NODE_ENV !== "production",
 });
@@ -44,6 +53,8 @@ store.subscribe(
     });
   }, 1000)
 );
+
+export const persistor = persistStore(store);
 
 initMessageListener(store);
 
