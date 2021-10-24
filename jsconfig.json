@@ -1,15 +1,20 @@
 {
   "compilerOptions": {
+    "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@redux/*": ["redux/*"],
-      "@utils/*": ["utils/*"],
-      "@config/*": ["config/*"],
-      "@assets/*": ["assets/*"],
-      "@components/*": ["components/*"],
-      "@hooks/*": ["hooks/*"],
-      "@styles/*": ["styles/*"],
-      "@api/*": ["api/*"]
+      "@/*": ["*"],
+      "@/data": ["data/*"],
+      "@/redux/*": ["redux/*"],
+      "@/utils/*": ["utils/*"],
+      "@/config/*": ["config/*"],
+      "@/assets/*": ["assets/*"],
+      "@/components/*": ["components/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/styles/*": ["styles/*"],
+      "@/api/*": ["api/*"],
+      "@/layout/*": ["layout/*"]
     }
-  }
+  },
+  "exclude": ["node_modules", ".next"]
 }

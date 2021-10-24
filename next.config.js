@@ -1,3 +1,12 @@
 module.exports = {
-  reactStrictMode: true,
-}
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/forgot-password",
+  //       destination: "/forgotpassword",
+  //     },
+  //   ];
+  // },
+  poweredByHeader: false,
+  reactStrictMode: false,
+};
