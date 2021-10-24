@@ -3,6 +3,7 @@ import {
   createAsyncThunk,
   createSelector,
 } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 
 import { supportApi } from "@/api";
 import asyncThunkError from "@/utils/asyncThunkError";
@@ -69,6 +70,10 @@ const support = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    [HYDRATE]: (state, { payload }) => ({
+      ...state,
+      ...payload.support,
+    }),
     [postContactUs.pending]: (state, action) => {
       if (state.contactus.loading === "idle") {
         state.contactus.loading = "pending";

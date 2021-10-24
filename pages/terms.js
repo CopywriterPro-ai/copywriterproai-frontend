@@ -1,10 +1,10 @@
 import React from "react";
 
-import { CondLayout } from "@/layout";
+import { CondLayout as Layout } from "@/layout";
 
 const Terms = () => {
   return (
-    <CondLayout>
+    <Layout>
       <div
         className="container"
         style={{ margin: "0 auto", marginTop: "20px" }}
@@ -808,7 +808,7 @@ const Terms = () => {
           By visiting this page on our website: https://copywriterpro.ai/contact
         </p>
       </div>
-    </CondLayout>
+    </Layout>
   );
 };
 

@@ -3,6 +3,7 @@ import {
   createAsyncThunk,
   createSelector,
 } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 
 import { demoGenerateApi } from "@/api";
 import { asyncThunkError } from "@/utils";
@@ -34,6 +35,10 @@ const demoGenerate = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    [HYDRATE]: (state, { payload }) => ({
+      ...state,
+      ...payload.demoGenerate,
+    }),
     [postLandingDemo.pending]: (state, action) => {
       if (state.loading === "idle") {
         state.loading = "pending";

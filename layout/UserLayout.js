@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-// import { Switch, Route, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 import Layout from "./Layout";
 import { UserHeader as Header } from "@/components/common/Header";
@@ -26,6 +26,7 @@ import { SigninModal } from "@/components/modals/auth";
 
 const UserLayout = ({ children }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const visible = usePageIsVisible();
   const isOnline = useNetwork();
   const [requestAccess, setRequestAccess] = useState(true);
@@ -42,6 +43,11 @@ const UserLayout = ({ children }) => {
   const {
     status: { fetchContent, fetchCategories },
   } = useSelector(contentSelector.getformContents());
+
+  useEffect(() => {
+    if (!isAuth) router.push("/signin");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -136,6 +142,10 @@ const UserLayout = ({ children }) => {
   );
 
   const redirectPath = useSelector(uiSelector.getRedirectPath);
+
+  if (!isAuth) {
+    return <h4>Redirecting...</h4>;
+  }
 
   return (
     <Layout>

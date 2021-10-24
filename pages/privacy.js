@@ -1,10 +1,10 @@
 import React from "react";
 
-import { CondLayout } from "@/layout";
+import { CondLayout as Layout } from "@/layout";
 
 const Privacy = () => {
   return (
-    <CondLayout>
+    <Layout>
       <div
         className="container"
         style={{ margin: "0 auto", marginTop: "20px" }}
@@ -886,7 +886,7 @@ const Privacy = () => {
           https://copywriterpro.ai/contact.
         </p>
       </div>
-    </CondLayout>
+    </Layout>
   );
 };
 

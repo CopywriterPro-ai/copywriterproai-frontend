@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
-import { UserLayout } from "@/layout";
+import { UserLayout as Layout } from "@/layout";
 import EditorJS from "@/components/editor";
 import CustomToolbar from "@/components/editor/CustomToolbar";
 import { BlogHeadline, BlogIntro, BlogOutline } from "@/components/blog";
@@ -163,7 +163,7 @@ const BlogGenerator = () => {
   };
 
   return (
-    <UserLayout>
+    <Layout>
       <BlogContainer>
         {/* <RouterPrompt when={isUpdateChange} /> */}
         <EditorSection>
@@ -213,7 +213,7 @@ const BlogGenerator = () => {
         </ToolsSection>
         <BlogResetModal />
       </BlogContainer>
-    </UserLayout>
+    </Layout>
   );
 };
 

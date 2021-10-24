@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { GuestLayout as Layout } from "@/layout";
+import { CondLayout as Layout } from "@/layout";
 import PricingCard from "@/components/PricingCard";
 import Faq from "@/components/Faq";
 

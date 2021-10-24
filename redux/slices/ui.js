@@ -1,4 +1,5 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
   sideBar: {
@@ -99,6 +100,12 @@ const ui = createSlice({
     setRedirectPath: (state, action) => {
       state.redirectPath = action.payload;
     },
+  },
+  extraReducers: {
+    [HYDRATE]: (state, { payload }) => ({
+      ...state,
+      ...payload.ui,
+    }),
   },
 });
 

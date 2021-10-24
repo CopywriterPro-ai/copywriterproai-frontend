@@ -4,6 +4,7 @@ import {
   createSelector,
 } from "@reduxjs/toolkit";
 import Fuse from "fuse.js";
+import { HYDRATE } from "next-redux-wrapper";
 
 import { contentApi } from "@/api";
 import asyncThunkError from "@/utils/asyncThunkError";
@@ -82,6 +83,10 @@ const content = createSlice({
     },
   },
   extraReducers: {
+    [HYDRATE]: (state, { payload }) => ({
+      ...state,
+      ...payload.content,
+    }),
     [postGenerateContents.pending]: (state, action) => {
       if (state.generatedContents.loading === "idle") {
         state.generatedContents.loading = "pending";

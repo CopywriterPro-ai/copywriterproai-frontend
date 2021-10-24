@@ -3,6 +3,7 @@ import {
   createAsyncThunk,
   createSelector,
 } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 
 import { paymentApi } from "@/api";
 import preprice from "@/data/preprice.json";
@@ -88,6 +89,10 @@ const payment = createSlice({
     },
   },
   extraReducers: {
+    [HYDRATE]: (state, { payload }) => ({
+      ...state,
+      ...payload.payment,
+    }),
     [getPriceList.pending]: (state, action) => {
       if (state.price.loading === "idle") {
         state.price.loading = "pending";

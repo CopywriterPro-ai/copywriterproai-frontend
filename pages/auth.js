@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
+import { AuthLayout as Layout } from "@/layout";
 import { postStrategyLogin } from "@/redux/slices/auth";
 import { toastMessage } from "@/utils";
 import Loader from "@/components/common/Loader";
@@ -34,9 +35,11 @@ const Strategyauth = () => {
   }, [dispatch, token]);
 
   return (
-    <StrategyContainer>
-      <Loader size="90px" />
-    </StrategyContainer>
+    <Layout>
+      <StrategyContainer>
+        <Loader size="90px" />
+      </StrategyContainer>
+    </Layout>
   );
 };
 

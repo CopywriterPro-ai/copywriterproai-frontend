@@ -3,6 +3,7 @@ import {
   createAsyncThunk,
   createSelector,
 } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 
 import { subscriberApi } from "@/api";
 import asyncThunkError from "@/utils/asyncThunkError";
@@ -42,6 +43,10 @@ const subscriber = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    [HYDRATE]: (state, { payload }) => ({
+      ...state,
+      ...payload.subscriber,
+    }),
     [getOwnSubscriber.pending]: (state, action) => {
       if (state.loading === "idle") {
         state.loading = "pending";

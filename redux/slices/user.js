@@ -3,6 +3,7 @@ import {
   createAsyncThunk,
   createSelector,
 } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 
 import { userApi } from "@/api";
 import { selectors as contentSelector } from "@/redux/slices/content";
@@ -156,6 +157,10 @@ const user = createSlice({
     },
   },
   extraReducers: {
+    [HYDRATE]: (state, { payload }) => ({
+      ...state,
+      ...payload.user,
+    }),
     [updateBookmarks.pending]: (state, action) => {
       if (state.currentgeneratebookmarks.loading === "idle") {
         state.currentgeneratebookmarks.loading = "pending";

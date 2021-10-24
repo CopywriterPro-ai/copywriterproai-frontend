@@ -3,6 +3,7 @@ import {
   createAsyncThunk,
   createSelector,
 } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 
 import { toolsApi } from "@/api";
 import asyncThunkError from "@/utils/asyncThunkError";
@@ -152,6 +153,10 @@ const tools = createSlice({
     },
   },
   extraReducers: {
+    [HYDRATE]: (state, { payload }) => ({
+      ...state,
+      ...payload.tools,
+    }),
     [getToolCategories.pending]: (state, action) => {
       if (state.categories.loading === "idle") {
         state.categories.loading = "pending";

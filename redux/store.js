@@ -1,28 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { createWrapper } from "next-redux-wrapper";
 import {
   createStateSyncMiddleware,
   initMessageListener,
 } from "redux-state-sync";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import throttle from "lodash.throttle";
 
 import reducer from "@/redux/reducers";
 import authMiddleware from "@/redux/middleware/auth";
-import { isServer, stateStorage, stateSyncPredicate } from "@/utils";
-
-const { saveState } = stateStorage;
-
-const stateSyncConfig = {
-  predicate: stateSyncPredicate,
-};
-
-const persistConfig = {
-  key: "root",
-  storage,
-};
-
-const persistedReducer = persistReducer(persistConfig, reducer);
+import {
+  isServer,
+  stateSyncPredicate,
+  persistStorage as storage,
+} from "@/utils";
 
 const middleware = (getDefaultMiddleware) => {
   const items = [
@@ -31,31 +20,43 @@ const middleware = (getDefaultMiddleware) => {
     }),
     authMiddleware,
   ];
-
   if (!isServer) {
-    items.push(createStateSyncMiddleware(stateSyncConfig));
+    items.push(
+      createStateSyncMiddleware({
+        predicate: stateSyncPredicate,
+      })
+    );
   }
-
   return items;
 };
 
-const store = configureStore({
-  reducer: persistedReducer,
-  middleware,
-  devTools: process.env.NODE_ENV !== "production",
-});
+const ReduxStoreConfigure = (reducer) => {
+  return configureStore({
+    reducer,
+    middleware,
+    devTools: process.env.NODE_ENV !== "production",
+  });
+};
 
-store.subscribe(
-  throttle(() => {
-    const { counter } = store.getState();
-    saveState({
-      counter,
-    });
-  }, 1000)
-);
+const makeStore = () => {
+  if (isServer) {
+    return ReduxStoreConfigure(reducer);
+  } else {
+    const { persistStore, persistReducer } = require("redux-persist");
 
-export const persistor = persistStore(store);
+    const persistConfig = {
+      key: "ai_copywriter",
+      storage,
+      version: 1.0,
+      whitelist: ["auth", "payment"],
+    };
 
-initMessageListener(store);
+    const persistedReducer = persistReducer(persistConfig, reducer);
+    const store = ReduxStoreConfigure(persistedReducer);
+    store.__persistor = persistStore(store);
+    initMessageListener(store);
+    return store;
+  }
+};
 
-export default store;
+export const wrapper = createWrapper(makeStore);

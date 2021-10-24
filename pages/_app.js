@@ -1,13 +1,12 @@
 import { useEffect } from "react";
-import { Provider } from "react-redux";
+import { useStore } from "react-redux";
 import { ThemeProvider } from "styled-components";
-// import { PersistGate } from "redux-persist/integration/react";
+import { PersistGate } from "redux-persist/integration/react";
 
-import store, { persistor } from "@/redux/store";
+import { wrapper } from "@/redux/store";
 import GlobalStyle from "@/styles";
 import theme from "@/styles/theme";
 import Head from "@/components/common/Head";
-// import "@/styles/all.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = ({ Component, pageProps }) => {
@@ -15,19 +14,21 @@ const App = ({ Component, pageProps }) => {
     document.body.classList?.remove("loading");
   }, []);
 
+  const store = useStore();
+
   return (
     <>
       <Head />
       <GlobalStyle />
-      <Provider store={store}>
-        {/* <PersistGate loading={null} persistor={persistor}> */}
-        <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
-        </ThemeProvider>
-        {/* </PersistGate> */}
-      </Provider>
+      <PersistGate loading={null} persistor={store.__persistor}>
+        {() => (
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
+        )}
+      </PersistGate>
     </>
   );
 };
 
-export default App;
+export default wrapper.withRedux(App);

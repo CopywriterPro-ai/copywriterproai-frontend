@@ -3,6 +3,7 @@ import {
   createAsyncThunk,
   createSelector,
 } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 
 import { authApi, userApi } from "@/api";
 import { asyncThunkError } from "@/utils";
@@ -154,6 +155,10 @@ const auth = createSlice({
     },
   },
   extraReducers: {
+    [HYDRATE]: (state, { payload }) => ({
+      ...state,
+      ...payload.auth,
+    }),
     [getMe.pending]: (state, action) => {
       if (state.info.loading === "idle") {
         state.info.loading = "pending";

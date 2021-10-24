@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { CondLayout } from "@/layout";
+import { CondLayout as Layout } from "@/layout";
 import externalLink from "@/data/externallink.json";
 import ContactBgImg from "@/assets/images/contact-bg.png";
 import FacebookIcon from "@/assets/images/contact/Facebook.png";
@@ -72,7 +72,7 @@ const ContactIconImg = styled.img``;
 
 const ConatactTemplate = ({ children, title }) => {
   return (
-    <CondLayout>
+    <Layout>
       <div className="container">
         <Section>
           <ContactContainer className="row">
@@ -86,7 +86,7 @@ const ConatactTemplate = ({ children, title }) => {
           </ContactContainer>
         </Section>
       </div>
-    </CondLayout>
+    </Layout>
   );
 };
 

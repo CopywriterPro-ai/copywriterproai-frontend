@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
-import { Layout } from "@/layout";
+import { AuthLayout as Layout } from "@/layout";
 import SignInBgImg from "assets/images/signinbg.png";
 import {
   InputField,

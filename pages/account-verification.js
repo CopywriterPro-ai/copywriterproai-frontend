@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 
+import { AuthLayout as Layout } from "@/layout";
 import { postUserVerify } from "@/redux/slices/auth";
 import { toastMessage } from "@/utils";
 
@@ -33,11 +34,13 @@ const AccountVerify = () => {
   }, [dispatch, token]);
 
   return (
-    <div style={{ minHeight: "59vh" }}>
-      <div className="text-center mt-5">
-        <h3>Invalid or expired token</h3>
+    <Layout>
+      <div style={{ minHeight: "59vh" }}>
+        <div className="text-center mt-5">
+          <h3>Invalid or expired token</h3>
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

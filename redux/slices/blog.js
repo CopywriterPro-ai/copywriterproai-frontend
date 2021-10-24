@@ -4,6 +4,7 @@ import {
   createSelector,
 } from "@reduxjs/toolkit";
 import deepEqual from "deep-equal";
+import { HYDRATE } from "next-redux-wrapper";
 
 import { contentApi, blogApi } from "@/api";
 import {
@@ -189,6 +190,10 @@ const blog = createSlice({
     },
   },
   extraReducers: {
+    [HYDRATE]: (state, { payload }) => ({
+      ...state,
+      ...payload.blog,
+    }),
     [postBlogContents.pending]: (state, action) => {
       if (state.loading === "idle") {
         state.loading = "pending";
