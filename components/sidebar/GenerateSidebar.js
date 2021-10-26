@@ -8,7 +8,6 @@ import {
   SidebarHeader,
   SidebarContent,
 } from "react-pro-sidebar";
-import "react-pro-sidebar/dist/css/styles.css";
 import styled from "styled-components";
 
 import {

@@ -24,7 +24,7 @@ import { isExpiresToken } from "@/utils";
 import { usePageIsVisible, useNetwork, useUser } from "@/hooks";
 import { SigninModal } from "@/components/modals/auth";
 
-const UserLayout = ({ children }) => {
+const UserLayout = ({ children, isSpecial = false }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const visible = usePageIsVisible();
@@ -45,7 +45,7 @@ const UserLayout = ({ children }) => {
   } = useSelector(contentSelector.getformContents());
 
   useEffect(() => {
-    if (!isAuth) router.push("/signin");
+    if (!isSpecial && !isAuth) router.push("/signin");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth]);
 
@@ -143,7 +143,7 @@ const UserLayout = ({ children }) => {
 
   const redirectPath = useSelector(uiSelector.getRedirectPath);
 
-  if (!isAuth) {
+  if (!isSpecial && !isAuth) {
     return <h4>Redirecting...</h4>;
   }
 

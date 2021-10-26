@@ -1,5 +1,8 @@
-import { useRef, useEffect, useState } from "react";
+import deepEqual from "deep-equal";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useQuill } from "react-quilljs";
+import "quill/dist/quill.snow.css";
 
 import EditorModal from "components/EditorModal";
 import {
@@ -8,7 +11,6 @@ import {
   setEditorCurrentSelectedText,
   selectors as blogSelector,
 } from "@/redux/slices/blog";
-import { quill as ReactQuill } from "@/utils";
 
 const modules = {
   toolbar: {
@@ -35,8 +37,13 @@ const formats = [
 
 const QuillEditor = ({ setQuillEditor }) => {
   const dispatch = useDispatch();
-  const quillRef = useRef(null);
-  const [mounted, setMounted] = useState(false);
+  // const quillRef = useRef(null);
+  const { quill, quillRef } = useQuill({
+    placeholder: "Start writing here...",
+    theme: "snow",
+    modules,
+    formats,
+  });
 
   const [position, setPostion] = useState({
     bottom: 0,
@@ -46,68 +53,69 @@ const QuillEditor = ({ setQuillEditor }) => {
     top: 0,
     width: 0,
   });
-  const [editorRef, setEditorRef] = useState(null);
   const { value, selected } = useSelector(blogSelector.getEditor());
 
-  const handleChange = (value, delta, source, editor) => {
-    const content = editor.getContents().ops;
-    dispatch(setEditorCurrentValue(content));
-  };
+  useEffect(() => {
+    if (quill) setQuillEditor(quill);
+  }, [quill, setQuillEditor]);
 
-  const handleSelectionChange = (range, source, editor) => {
-    if (range && range.length > 0) {
-      dispatch(setEditorCurrentSelectedRange(range));
-      const selected = editor.getText(range).trim();
-      if (selected.length > 0) {
-        setPostion(editor.getBounds(range));
-        dispatch(setEditorCurrentSelectedText(selected));
+  useEffect(() => {
+    if (quill) {
+      const current = quill.getContents().ops;
+      const isEqual = deepEqual(value, current);
+      if (!isEqual) {
+        quill.setContents(value);
       }
-    } else {
-      if (selected !== null) dispatch(setEditorCurrentSelectedText(null));
     }
-  };
+  }, [quill, value]);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    if (quill) {
+      quill.on("text-change", (delta, oldDelta, source) => {
+        const content = quill.getContents().ops;
+        dispatch(setEditorCurrentValue(content));
+      });
+    }
+  }, [dispatch, quill]);
 
   useEffect(() => {
-    if (typeof quillRef.current?.getEditor !== "function") return;
-    const editor = quillRef.current.getEditor();
-    setQuillEditor(editor);
-    setEditorRef(editor);
-  }, [setQuillEditor]);
-
-  useEffect(() => {
-    editorRef?.clipboard?.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
-      let ops = [];
-      delta.ops.forEach((op) => {
-        if (op.insert && typeof op.insert === "string") {
-          ops.push({
-            insert: op.insert,
-          });
+    if (quill) {
+      quill.on("selection-change", function (range, oldRange, source) {
+        if (range && range.length > 0) {
+          dispatch(setEditorCurrentSelectedRange(range));
+          const selected = quill.getText(range).trim();
+          if (selected.length > 0) {
+            setPostion(quill.getBounds(range));
+            dispatch(setEditorCurrentSelectedText(selected));
+          }
+        } else {
+          if (selected !== null) dispatch(setEditorCurrentSelectedText(null));
         }
       });
-      delta.ops = ops;
-      return delta;
-    });
-  }, [editorRef]);
+    }
+  }, [dispatch, quill, selected]);
+
+  useEffect(() => {
+    if (quill) {
+      quill?.clipboard?.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
+        let ops = [];
+        delta.ops.forEach((op) => {
+          if (op.insert && typeof op.insert === "string") {
+            ops.push({
+              insert: op.insert,
+            });
+          }
+        });
+        delta.ops = ops;
+        return delta;
+      });
+    }
+  }, [quill]);
 
   return (
     <div className="editor-container">
-      {mounted && (
-        <ReactQuill
-          modules={modules}
-          formats={formats}
-          placeholder="Start writing here..."
-          forwardedRef={(instants) => (quillRef.current = instants)}
-          value={{ ops: value }}
-          onChangeSelection={handleSelectionChange}
-          onChange={handleChange}
-          theme="snow"
-        ></ReactQuill>
-      )}
-      <EditorModal position={position} quill={editorRef} />
+      <div ref={quillRef} />
+      <EditorModal position={position} quill={quill} />
     </div>
   );
 };

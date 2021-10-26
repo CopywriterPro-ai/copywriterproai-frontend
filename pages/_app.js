@@ -8,6 +8,7 @@ import GlobalStyle from "@/styles";
 import theme from "@/styles/theme";
 import Head from "@/components/common/Head";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "@/styles/global.scss";
 
 const App = ({ Component, pageProps }) => {
   useEffect(() => {

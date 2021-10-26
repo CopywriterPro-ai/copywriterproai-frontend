@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
-import { UserLayout as Layout } from "@/layout";
+import { SpecialLayout as Layout } from "@/layout";
 import EditorJS from "@/components/editor";
 import CustomToolbar from "@/components/editor/CustomToolbar";
 import { BlogHeadline, BlogIntro, BlogOutline } from "@/components/blog";

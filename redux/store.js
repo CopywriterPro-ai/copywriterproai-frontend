@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
+import { useDispatch } from "react-redux";
 import {
   createStateSyncMiddleware,
   initMessageListener,
@@ -58,5 +59,7 @@ const makeStore = () => {
     return store;
   }
 };
+
+export const useAppDispatch = () => useDispatch();
 
 export const wrapper = createWrapper(makeStore);
