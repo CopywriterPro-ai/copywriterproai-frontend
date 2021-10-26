@@ -223,8 +223,8 @@ const AppHeader = () => {
             {!isAuth && (
               <NavbarMenu>
                 <NavList>
-                  <NavItem link="/signin" title="Singin" />
-                  <NavItem link="/signup" title="Singup" />
+                  <NavItem link="/signin" title="Signin" />
+                  <NavItem link="/signup" title="Signup" />
                 </NavList>
               </NavbarMenu>
             )}

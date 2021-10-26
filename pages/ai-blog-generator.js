@@ -13,6 +13,7 @@ import {
   setCurrentToolContent,
   createBlog,
   updateBlog,
+  resetBlog,
   selectors as blogSelector,
 } from "@/redux/slices/blog";
 import { setBlogResetModal, setSigninModal } from "@/redux/slices/ui";
@@ -50,6 +51,7 @@ const BlogGenerator = () => {
 
   useEffect(() => {
     if (currentBlogId === "") {
+      dispatch(resetBlog());
       router.push(createRoute);
     } else {
       router.push(updateRoute);
