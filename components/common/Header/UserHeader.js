@@ -187,7 +187,7 @@ const AppHeader = () => {
         <div className="container-fluid">
           <NavbarContainer>
             <Logo>
-              <Link href="/">
+              <Link href={isAuth ? "/app" : "/"}>
                 <a>
                   <LogoIcon src={LogoImg.src} alt="copywriterpro" />
                 </a>

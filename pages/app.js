@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
-import { UserLayout as Layout } from "@/layout";
+import { SpecialLayout as Layout } from "@/layout";
 import { GenerateSidebar, MainSidebar } from "@/components/sidebar";
 import GeneratingBox from "components/contentgenerate";
 import { useSidebar } from "hooks";
@@ -25,6 +25,11 @@ const App = () => {
   const { subscriber } = useSelector(uiSelector.getModal);
 
   useEffect(() => {
+    if (tool) dispatch(setCurrentActiveKeyState(tool));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
+
+  useEffect(() => {
     if (activeKey) {
       router.push({
         pathname: "/app",
@@ -35,9 +40,14 @@ const App = () => {
   }, [activeKey]);
 
   useEffect(() => {
-    dispatch(setCurrentActiveKeyState(tool));
+    if (!tool) {
+      router.push({
+        pathname: "/app",
+        query: `tool=${activeKey}`,
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, [activeKey, tool]);
 
   const { width: windowWidth } = useWindowSize();
 
