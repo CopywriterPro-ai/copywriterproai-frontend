@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -67,6 +67,7 @@ const Modal = ({ children, position, isSelected }) => {
 const EditorModal = ({ position, quill }) => {
   const dispatch = useDispatch();
 
+  const [mounded, setMounded] = useState(false);
   // const { about } = useSelector(blogSelector.getBlogContent);
   const { selected, range } = useSelector(blogSelector.getEditor());
   const { loading } = useSelector(blogSelector.getToolContent());
@@ -104,6 +105,14 @@ const EditorModal = ({ position, quill }) => {
       }
     });
   };
+
+  useEffect(() => {
+    setMounded(true);
+  }, []);
+
+  if (!mounded) {
+    return null;
+  }
 
   if (loading === "pending") {
     return (

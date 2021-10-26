@@ -1,16 +1,4 @@
-import { useEffect, useState } from "react";
-
 const CustomToolbar = () => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return <p>Loading toolbar</p>;
-  }
-
   return (
     <div id="toolbar">
       <span className="ql-formats">
