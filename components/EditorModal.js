@@ -8,6 +8,7 @@ import {
   EXPANDER,
   SIMPLIFIER,
   CHANGE_TONE,
+  BLOG_TOPIC,
 } from "@/appconstants";
 import {
   setEditorCurrentSelectedText,
@@ -68,7 +69,7 @@ const EditorModal = ({ position, quill }) => {
   const dispatch = useDispatch();
 
   const [mounded, setMounded] = useState(false);
-  // const { about } = useSelector(blogSelector.getBlogContent);
+  const { about } = useSelector(blogSelector.getBlogContent);
   const { selected, range } = useSelector(blogSelector.getEditor());
   const { loading } = useSelector(blogSelector.getToolContent());
   const { isAuth } = useUser();
@@ -93,6 +94,13 @@ const EditorModal = ({ position, quill }) => {
     } else if (task === CHANGE_TONE) {
       const task = CHANGE_TONE;
       data = { task, userText: selected, tone };
+    } else if (task === BLOG_TOPIC) {
+      const task = BLOG_TOPIC;
+      if (!about) {
+        alert("Please provide blog about");
+        return;
+      }
+      data = { task, about, topic: selected };
     }
 
     dispatch(postEditorToolsContent({ data, task: data.task })).then((res) => {
@@ -138,6 +146,14 @@ const EditorModal = ({ position, quill }) => {
               onClick={() => handleGetTool(PARAPHRASING)}
             >
               Paraphrasing
+            </ToolItemButton>
+          </ToolItem>
+          <ToolItem>
+            <ToolItemButton
+              title="Writter"
+              onClick={() => handleGetTool(BLOG_TOPIC)}
+            >
+              Writter
             </ToolItemButton>
           </ToolItem>
           <ToolItem>
