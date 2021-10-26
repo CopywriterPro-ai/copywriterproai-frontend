@@ -6,9 +6,9 @@
     "dev": "next dev",
     "clean": "del-cli .next",
     "build": "next build",
-    "start": "next start",
+    "serve": "next start",
     "lint": "next lint",
-    "deploy": "npm-run-all clean build start --parallel"
+    "start": "npm-run-all clean build serve --parallel"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.2",
