@@ -6,7 +6,7 @@ import { GuestHeader as Header } from "@/components/common/Header";
 import { GuestFooter as Footer } from "@/components/common/Footer";
 import { useUser } from "@/hooks";
 
-const GuestLayout = ({ children }) => {
+const GuestLayout = ({ children, title, description, otherSEO }) => {
   const router = useRouter();
   const { isAuth } = useUser();
 
@@ -20,7 +20,7 @@ const GuestLayout = ({ children }) => {
   }
 
   return (
-    <Layout>
+    <Layout title={title} description={description} otherSEO={otherSEO}>
       <Header />
       <main>{children}</main>
       <Footer />

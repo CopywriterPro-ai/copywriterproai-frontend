@@ -1,4 +1,5 @@
 import ReactModal from "react-modal";
+import Head from "@/components/common/Head";
 import { Fragment } from "react";
 
 import ToastContainer from "@/components/ToastContainer";
@@ -9,11 +10,12 @@ if (!isServer) {
   ReactModal.setAppElement("#__next");
 }
 
-const Layout = ({ children }) => {
+const Layout = ({ children, title, description, otherSEO }) => {
   useScrollTop();
 
   return (
     <Fragment>
+      <Head title={title} description={description} otherSEO={otherSEO} />
       {children}
       <ToastContainer />
     </Fragment>
