@@ -24,7 +24,13 @@ import { isExpiresToken } from "@/utils";
 import { usePageIsVisible, useNetwork, useUser } from "@/hooks";
 import { SigninModal } from "@/components/modals/auth";
 
-const UserLayout = ({ children, isSpecial = false }) => {
+const UserLayout = ({
+  children,
+  isSpecial = false,
+  title,
+  description,
+  otherSEO,
+}) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const visible = usePageIsVisible();
@@ -148,7 +154,7 @@ const UserLayout = ({ children, isSpecial = false }) => {
   }
 
   return (
-    <Layout>
+    <Layout title={title} description={description} otherSEO={otherSEO}>
       <Header />
       <Main
         topBarHeigth={topBarHeigth}

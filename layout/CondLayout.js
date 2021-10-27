@@ -4,13 +4,21 @@ import { useUser } from "@/hooks";
 import UserLayout from "./UserLayout";
 import GuestLayout from "./GuestLayout";
 
-const CondLayout = ({ children }) => {
+const CondLayout = ({ children, title, description, otherSEO }) => {
   const { isAuth } = useUser();
 
   if (isAuth) {
-    return <UserLayout>{children}</UserLayout>;
+    return (
+      <UserLayout title={title} description={description} otherSEO={otherSEO}>
+        {children}
+      </UserLayout>
+    );
   } else {
-    return <GuestLayout>{children}</GuestLayout>;
+    return (
+      <GuestLayout title={title} description={description} otherSEO={otherSEO}>
+        {children}
+      </GuestLayout>
+    );
   }
 };
 
