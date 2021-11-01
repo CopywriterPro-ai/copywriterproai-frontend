@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { UncontrolledTooltip } from "reactstrap";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import {
@@ -23,6 +24,7 @@ import { useUser } from "@/hooks";
 
 const InputGeneratingBox = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const isToolFetched = useSelector(contentSelector.getformContentsIsOk());
   const formContent = useSelector(contentSelector.getCurrentActiveTool());
@@ -34,14 +36,23 @@ const InputGeneratingBox = () => {
     subscriberSelector.getOwnSubscriber
   );
   const [defaultInput, setDefaultInput] = useState({});
+  const [queryTool, setQueryTool] = useState(null);
+  const isToolAvailable = useSelector(contentSelector.isHasTool(queryTool));
   const { isAuth } = useUser();
 
   const { contentTexts } = content;
   const { words } = subscriberData;
+  const { isReady, query } = router;
 
   const { register, handleSubmit, reset, watch } = useForm();
 
   const watching = watch();
+
+  useEffect(() => {
+    if (isReady) {
+      setQueryTool(query.task);
+    }
+  }, [isReady, query.task]);
 
   useEffect(() => {
     let size = Object.values(watching).length;
@@ -99,6 +110,14 @@ const InputGeneratingBox = () => {
     );
   }
 
+  if (isReady && isToolFetched && !isToolAvailable) {
+    return (
+      <EmptyTool>
+        <h4>Tool not found</h4>
+      </EmptyTool>
+    );
+  }
+
   return (
     <Container>
       <ContentHeader>
@@ -141,7 +160,10 @@ const InputGeneratingBox = () => {
                     <Input
                       autoComplete="off"
                       style={{ color: "black" }}
-                      {...register(field.key, { required, maxLength: maxChar })}
+                      {...register(field.key, {
+                        required,
+                        maxLength: maxChar,
+                      })}
                       type="text"
                       id={field.key}
                       defaultValue={
@@ -173,7 +195,10 @@ const InputGeneratingBox = () => {
                     <label htmlFor={field.key}>{field.name}</label>
                     <TextArea
                       style={{ color: "black" }}
-                      {...register(field.key, { required, maxLength: maxChar })}
+                      {...register(field.key, {
+                        required,
+                        maxLength: maxChar,
+                      })}
                       id={field.key}
                       defaultValue={
                         isCurrentInput ? defaultInput.input[field.key] : null

@@ -119,7 +119,7 @@ const EditorModal = ({ position, quill }) => {
   }, []);
 
   if (!mounded) {
-    return null;
+    return <p>Modal not supported</p>;
   }
 
   if (loading === "pending") {
@@ -142,18 +142,18 @@ const EditorModal = ({ position, quill }) => {
         <ToolItems>
           <ToolItem>
             <ToolItemButton
-              title="Paraphrasing"
-              onClick={() => handleGetTool(PARAPHRASING)}
-            >
-              Paraphrasing
-            </ToolItemButton>
-          </ToolItem>
-          <ToolItem>
-            <ToolItemButton
               title="Writter"
               onClick={() => handleGetTool(BLOG_TOPIC)}
             >
               Writter
+            </ToolItemButton>
+          </ToolItem>
+          <ToolItem>
+            <ToolItemButton
+              title="Paraphrasing"
+              onClick={() => handleGetTool(PARAPHRASING)}
+            >
+              Paraphrasing
             </ToolItemButton>
           </ToolItem>
           <ToolItem>
