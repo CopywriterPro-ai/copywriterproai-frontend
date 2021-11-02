@@ -166,6 +166,12 @@ export const selectors = {
       return formContents.items;
     }),
 
+  isHasTool: (key) =>
+    createSelector([selectors.getContentTools()], (tools) => {
+      const tool = tools.find((tool) => tool.key === key);
+      return tool ? true : false;
+    }),
+
   getCategorywithTools: () =>
     createSelector(
       [selectors.getContentCategories(), selectors.getContentTools()],

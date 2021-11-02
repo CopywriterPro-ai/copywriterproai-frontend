@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   ProSidebar,
@@ -9,6 +9,7 @@ import {
   SidebarContent,
 } from "react-pro-sidebar";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 import {
   setCurrentActiveKeyState,
@@ -24,7 +25,6 @@ import {
   selectors as uiSelector,
 } from "@/redux/slices/ui";
 import { useWindowSize, useUser } from "@/hooks";
-import { isServer } from "@/utils";
 
 const FavouriteAction = ({ itemKey }) => {
   const dispatch = useDispatch();
@@ -61,6 +61,7 @@ const FavouriteAction = ({ itemKey }) => {
 
 const GenerateSidebar = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [query, setQuery] = useState("");
 
   const searchResult = useSelector(contentSelector.getContentSearch(query));
@@ -70,31 +71,19 @@ const GenerateSidebar = () => {
     userSelector.getFavouriteToolsWithDetails()
   );
   const { open: toggled } = useSelector(uiSelector.getContentSidebar);
-  const [count, setCount] = useState(0);
   const { isAuth } = useUser();
 
   const handleActiveItem = (key) => {
     dispatch(setCurrentActiveKeyState(key));
+    router.push({
+      pathname: `/app/${key}`,
+    });
     dispatch(setContentSidebar(false));
-    setCount((count) => count + 1);
   };
 
   const handleToggleSidebar = (value) => {
     dispatch(setContentSidebar(value));
   };
-
-  useEffect(() => {
-    try {
-      !isServer &&
-        window.scroll({
-          top: 0,
-          left: 0,
-          behavior: "smooth",
-        });
-    } catch (error) {
-      window.scrollTo(0, 0);
-    }
-  }, [count]);
 
   const hasSearchResult = searchResult.length !== 0;
   const noSearchResult = !hasSearchResult && query.length !== 0;

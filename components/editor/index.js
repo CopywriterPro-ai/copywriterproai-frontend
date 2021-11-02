@@ -37,7 +37,6 @@ const formats = [
 
 const QuillEditor = ({ setQuillEditor }) => {
   const dispatch = useDispatch();
-  // const quillRef = useRef(null);
   const { quill, quillRef } = useQuill({
     placeholder: "Start writing here...",
     theme: "snow",

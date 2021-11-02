@@ -161,7 +161,6 @@ const blog = createSlice({
     setCurrentTask: (state, action) => {
       state.currenttask = action.payload;
     },
-
     setEditorCurrentSelectedRange: (state, action) => {
       state.editor.range = action.payload;
     },
@@ -251,7 +250,7 @@ const blog = createSlice({
       if (state.toolcontents.loading === "pending") {
         const text = action.payload.data?.generatedTexts[0];
         state.toolcontents.loading = "idle";
-        // state.toolcontents.items = action.payload.data?.generatedTexts;
+        state.toolcontents.items = action.payload.data?.generatedTexts;
         state.toolcontents.item = `\n${text}`;
       }
     },
