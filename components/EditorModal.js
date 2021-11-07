@@ -18,7 +18,7 @@ import {
 } from "@/redux/slices/blog";
 import { setSigninModal } from "@/redux/slices/ui";
 import { useUser } from "@/hooks";
-import { isServer } from "@/utils";
+import { isServer, toastMessage } from "@/utils";
 
 const tones = [
   "Formal",
@@ -40,18 +40,24 @@ const tones = [
   "Empathetic",
 ];
 
-const Modal = ({ children, position, isSelected }) => {
+const TOOLBARWIDTH = 500;
+
+const Modal = ({ children, position, isSelected, editorWidth }) => {
   let modalRoot;
   let element;
 
   if (!isServer) {
     modalRoot = document.getElementsByClassName("ql-container")[0];
     element = document.createElement("div");
+    const positionLeft = position.left;
+    const toolsNeedWidth = TOOLBARWIDTH - (editorWidth - positionLeft);
 
     element.style.display = `${!isSelected ? "none" : null}`;
     element.style.position = "absolute";
     element.style.top = `${position.bottom + 10}px`;
-    element.style.left = `${position.left}px`;
+    element.style.left = `${
+      toolsNeedWidth > 0 ? positionLeft - toolsNeedWidth : positionLeft
+    }px`;
   }
 
   useEffect(() => {
@@ -65,7 +71,7 @@ const Modal = ({ children, position, isSelected }) => {
   return !isServer ? createPortal(children, element) : null;
 };
 
-const EditorModal = ({ position, quill }) => {
+const EditorModal = ({ position, quill, editorWidth }) => {
   const dispatch = useDispatch();
 
   const [mounded, setMounded] = useState(false);
@@ -76,7 +82,7 @@ const EditorModal = ({ position, quill }) => {
 
   const handleGetTool = (task, tone) => {
     let data;
-    if (!selected) alert("Please select some text");
+    if (!selected) toastMessage.warn("Please select some text");
     if (!isAuth) {
       dispatch(setSigninModal(true));
       return;
@@ -97,7 +103,7 @@ const EditorModal = ({ position, quill }) => {
     } else if (task === BLOG_TOPIC) {
       const task = BLOG_TOPIC;
       if (!about) {
-        alert("Please provide blog about");
+        toastMessage.warn("Please provide blog about");
         return;
       }
       data = { task, about, topic: selected };
@@ -137,50 +143,39 @@ const EditorModal = ({ position, quill }) => {
   }
 
   return (
-    <Modal position={position} isSelected={Boolean(selected)}>
+    <Modal
+      position={position}
+      isSelected={Boolean(selected)}
+      editorWidth={editorWidth}
+    >
       <WritingTools>
         <ToolItems>
           <ToolItem>
-            <ToolItemButton
-              title="Writter"
-              onClick={() => handleGetTool(BLOG_TOPIC)}
-            >
-              Writter
+            <ToolItemButton onClick={() => handleGetTool(BLOG_TOPIC)}>
+              Write
             </ToolItemButton>
           </ToolItem>
           <ToolItem>
-            <ToolItemButton
-              title="Paraphrasing"
-              onClick={() => handleGetTool(PARAPHRASING)}
-            >
-              Paraphrasing
+            <ToolItemButton onClick={() => handleGetTool(PARAPHRASING)}>
+              Paraphrase
             </ToolItemButton>
           </ToolItem>
           <ToolItem>
-            <ToolItemButton
-              title="Expander"
-              onClick={() => handleGetTool(EXPANDER)}
-            >
-              Expander
+            <ToolItemButton onClick={() => handleGetTool(EXPANDER)}>
+              Expand
             </ToolItemButton>
           </ToolItem>
           <ToolItem>
-            <ToolItemButton
-              title="Simplified"
-              onClick={() => handleGetTool(SIMPLIFIER)}
-            >
-              Simplified
+            <ToolItemButton onClick={() => handleGetTool(SIMPLIFIER)}>
+              Simplify
             </ToolItemButton>
           </ToolItem>
           <ToolItem>
-            <ToolItemButton title="Change Tone">
-              Change Tone &#9662;
-            </ToolItemButton>
+            <ToolItemButton>Change Tone &#9662;</ToolItemButton>
             <Dropdown>
               {tones.map((tone) => (
                 <DropdownBtn
                   key={tone}
-                  title={tone}
                   onClick={() => handleGetTool(CHANGE_TONE, tone)}
                 >
                   {tone}
