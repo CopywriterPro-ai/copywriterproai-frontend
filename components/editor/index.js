@@ -1,5 +1,5 @@
 import deepEqual from "deep-equal";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
@@ -11,6 +11,7 @@ import {
   setEditorCurrentSelectedText,
   selectors as blogSelector,
 } from "@/redux/slices/blog";
+import { useElementSize } from "hooks";
 
 const modules = {
   toolbar: {
@@ -37,6 +38,9 @@ const formats = [
 
 const QuillEditor = ({ setQuillEditor }) => {
   const dispatch = useDispatch();
+  const editorcontainerRef = useRef(null);
+  const { width: editorWidth } = useElementSize(editorcontainerRef);
+
   const { quill, quillRef } = useQuill({
     placeholder: "Start writing here...",
     theme: "snow",
@@ -82,7 +86,12 @@ const QuillEditor = ({ setQuillEditor }) => {
       quill.on("selection-change", function (range, oldRange, source) {
         if (range && range.length > 0) {
           dispatch(setEditorCurrentSelectedRange(range));
-          const selected = quill.getText(range).trim();
+          const selected = quill
+            .getText(range)
+            .trim()
+            .split(" ")
+            .filter(Boolean)
+            .join(" ");
           if (selected.length > 0) {
             setPostion(quill.getBounds(range));
             dispatch(setEditorCurrentSelectedText(selected));
@@ -112,9 +121,13 @@ const QuillEditor = ({ setQuillEditor }) => {
   }, [quill]);
 
   return (
-    <div className="editor-container">
+    <div className="editor-container" ref={editorcontainerRef}>
       <div ref={quillRef} />
-      <EditorModal position={position} quill={quill} />
+      <EditorModal
+        position={position}
+        quill={quill}
+        editorWidth={editorWidth}
+      />
     </div>
   );
 };

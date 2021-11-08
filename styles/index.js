@@ -30,9 +30,23 @@ body {
 }
 
 .ql-editor {
+  font-size: 16px;
+  max-height: 100vh;
   min-height: 300px;
   padding-top: 30px;
   font-size: 16px;
+  word-wrap: break-word;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ff0000;
+  }
+
 }
 
 .ql-toolbar.ql-snow {

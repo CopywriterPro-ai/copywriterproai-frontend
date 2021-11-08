@@ -182,36 +182,38 @@ const BlogGenerator = () => {
           <EditorJS setQuillEditor={setQuill} />
         </EditorSection>
         <ToolsSection>
-          <ToolsHeader>
-            <Tips>
-              <TipsIcon src={TipsImg.src} alt="tips" />
-              <span>
-                The results depend on the information you input. So be sure to
-                spend some time making it as specific as possible.
-              </span>
-            </Tips>
-            <strong>Blog About</strong>
-            <textarea
-              ref={aboutRef}
-              onChange={(e) => handleChangeBlogAbout(e)}
-              value={about}
-              rows="4"
-            ></textarea>
-          </ToolsHeader>
-          <ToolsBody>
-            <BlogHeadline aboutRef={aboutRef} />
-            <BlogIntro
-              titleRef={titleRef}
-              aboutRef={aboutRef}
-              quillRef={quill}
-            />
-            <BlogOutline aboutRef={aboutRef} quillRef={quill} />
-          </ToolsBody>
+          <ScollingTool>
+            <ToolsHeader>
+              <Tips>
+                <TipsIcon src={TipsImg.src} alt="tips" />
+                <span>
+                  The results depend on the information you input. So be sure to
+                  spend some time making it as specific as possible.
+                </span>
+              </Tips>
+              <strong>Blog About</strong>
+              <textarea
+                ref={aboutRef}
+                onChange={(e) => handleChangeBlogAbout(e)}
+                value={about}
+                rows="4"
+              ></textarea>
+            </ToolsHeader>
+            <ToolsBody>
+              <BlogHeadline aboutRef={aboutRef} />
+              <BlogIntro
+                titleRef={titleRef}
+                aboutRef={aboutRef}
+                quillRef={quill}
+              />
+              <BlogOutline aboutRef={aboutRef} quillRef={quill} />
+            </ToolsBody>
 
-          <ToolBottom>
-            <button onClick={handleResetBlog}>Reset</button>
-            <button onClick={handleSaveOrUpdate}>Save</button>
-          </ToolBottom>
+            <ToolBottom>
+              <button onClick={handleResetBlog}>Reset</button>
+              <button onClick={handleSaveOrUpdate}>Save</button>
+            </ToolBottom>
+          </ScollingTool>
         </ToolsSection>
         <BlogResetModal />
       </BlogContainer>
@@ -247,6 +249,22 @@ const ToolsSection = styled.div`
 
   @media (max-width: 768px) {
     flex: 100%;
+  }
+`;
+
+const ScollingTool = styled.div`
+  position: sticky;
+  max-height: 100vh;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ff0000;
   }
 `;
 
