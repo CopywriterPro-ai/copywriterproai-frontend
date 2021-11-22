@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
-import { SpecialLayout as Layout } from "@/layout";
+import { UserLayout as Layout } from "@/layout";
 import EditorJS from "@/components/editor";
 import CustomToolbar from "@/components/editor/CustomToolbar";
 import { BlogHeadline, BlogIntro, BlogOutline } from "@/components/blog";
@@ -18,8 +18,9 @@ import {
 } from "@/redux/slices/blog";
 import { setBlogResetModal, setSigninModal } from "@/redux/slices/ui";
 import { CREATE, UPDATE } from "@/appconstants";
-import { useBeforeunload, useUser } from "@/hooks";
+import { useBeforeunload, useUser, useSidebar } from "@/hooks";
 import { BlogResetModal } from "@/components/modals/blogs";
+import { MainSidebar } from "@/components/sidebar";
 import TipsImg from "@/assets/images/generate-tips.png";
 import { toastMessage } from "@/utils";
 
@@ -42,6 +43,7 @@ const BlogGenerator = () => {
   const { currentid: currentBlogId } = useSelector(blogSelector.getBlogs());
   const isUpdateChange = useSelector(blogSelector.isUpdateChange());
   const { isAuth } = useUser();
+  const { showSidebar, showContent } = useSidebar();
 
   useBeforeunload((event) => {
     if (isUpdateChange) {
@@ -68,21 +70,24 @@ const BlogGenerator = () => {
 
   useEffect(() => {
     let interval;
-    if (quill) {
+    if (quill && toolItem.length) {
+      const toolItemArr = toolItem?.split(" ");
+      const toolItemArrLength = toolItemArr.length;
+
       interval = setInterval(() => {
-        if (toolItem.length > index) {
-          let char = toolItem.charAt(index);
+        if (toolItemArrLength > index) {
+          let word = toolItemArr[index];
           quill.enable(false);
-          quill.insertText(lastIndex, char);
+          quill.insertText(lastIndex, ` ${word}`);
           setIndex(index + 1);
-          setLastIndex(lastIndex + 1);
+          setLastIndex(lastIndex + word.length + 1);
         } else {
           clearInterval(interval);
           setIndex(0);
           dispatch(setCurrentToolContent(""));
           quill.enable();
         }
-      }, 20);
+      }, 1);
     }
     return () => {
       if (quill) {
@@ -166,57 +171,60 @@ const BlogGenerator = () => {
 
   return (
     <Layout>
-      <BlogContainer>
-        {/* <RouterPrompt when={isUpdateChange} /> */}
-        <EditorSection>
-          <TitleInput
-            ref={titleRef}
-            autoComplete="off"
-            type="text"
-            name="title"
-            value={title}
-            placeholder="Blog Headline"
-            onChange={handleChangeTitle}
-          />
-          <CustomToolbar />
-          <EditorJS setQuillEditor={setQuill} />
-        </EditorSection>
-        <ToolsSection>
-          <ScollingTool>
-            <ToolsHeader>
-              <Tips>
-                <TipsIcon src={TipsImg.src} alt="tips" />
-                <span>
-                  The results depend on the information you input. So be sure to
-                  spend some time making it as specific as possible.
-                </span>
-              </Tips>
-              <strong>Blog About</strong>
-              <textarea
-                ref={aboutRef}
-                onChange={(e) => handleChangeBlogAbout(e)}
-                value={about}
-                rows="4"
-              ></textarea>
-            </ToolsHeader>
-            <ToolsBody>
-              <BlogHeadline aboutRef={aboutRef} />
-              <BlogIntro
-                titleRef={titleRef}
-                aboutRef={aboutRef}
-                quillRef={quill}
-              />
-              <BlogOutline aboutRef={aboutRef} quillRef={quill} />
-            </ToolsBody>
+      {showSidebar && <MainSidebar />}
+      {showContent && (
+        <BlogContainer>
+          {/* <RouterPrompt when={isUpdateChange} /> */}
+          <EditorSection>
+            <TitleInput
+              ref={titleRef}
+              autoComplete="off"
+              type="text"
+              name="title"
+              value={title}
+              placeholder="Blog Headline"
+              onChange={handleChangeTitle}
+            />
+            <CustomToolbar />
+            <EditorJS setQuillEditor={setQuill} />
+          </EditorSection>
+          <ToolsSection>
+            <ScollingTool>
+              <ToolsHeader>
+                <Tips>
+                  <TipsIcon src={TipsImg.src} alt="tips" />
+                  <span>
+                    The results depend on the information you input. So be sure
+                    to spend some time making it as specific as possible.
+                  </span>
+                </Tips>
+                <strong>Blog About</strong>
+                <textarea
+                  ref={aboutRef}
+                  onChange={(e) => handleChangeBlogAbout(e)}
+                  value={about}
+                  rows="4"
+                ></textarea>
+              </ToolsHeader>
+              <ToolsBody>
+                <BlogHeadline aboutRef={aboutRef} />
+                <BlogIntro
+                  titleRef={titleRef}
+                  aboutRef={aboutRef}
+                  quillRef={quill}
+                />
+                <BlogOutline aboutRef={aboutRef} quillRef={quill} />
+              </ToolsBody>
 
-            <ToolBottom>
-              <button onClick={handleResetBlog}>Reset</button>
-              <button onClick={handleSaveOrUpdate}>Save</button>
-            </ToolBottom>
-          </ScollingTool>
-        </ToolsSection>
-        <BlogResetModal />
-      </BlogContainer>
+              <ToolBottom>
+                <button onClick={handleResetBlog}>Reset</button>
+                <button onClick={handleSaveOrUpdate}>Save</button>
+              </ToolBottom>
+            </ScollingTool>
+          </ToolsSection>
+          <BlogResetModal />
+        </BlogContainer>
+      )}
     </Layout>
   );
 };
