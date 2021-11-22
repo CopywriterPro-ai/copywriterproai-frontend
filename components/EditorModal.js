@@ -41,6 +41,7 @@ const tones = [
 ];
 
 const TOOLBARWIDTH = 500;
+const MAXCHARSELECTLIMIT = 400;
 
 const Modal = ({ children, position, isSelected, editorWidth }) => {
   let modalRoot;
@@ -82,7 +83,14 @@ const EditorModal = ({ position, quill, editorWidth }) => {
 
   const handleGetTool = (task, tone) => {
     let data;
-    if (!selected) toastMessage.warn("Please select some text");
+    if (!selected) {
+      toastMessage.warn("Please select some text");
+      return;
+    }
+    if (selected?.length > MAXCHARSELECTLIMIT) {
+      toastMessage.warn("Select limit exceeded");
+      return;
+    }
     if (!isAuth) {
       dispatch(setSigninModal(true));
       return;
@@ -184,7 +192,11 @@ const EditorModal = ({ position, quill, editorWidth }) => {
             </Dropdown>
           </ToolItem>
           <ToolItem>
-            <Counter>{selected?.length}</Counter>
+            <Counter
+              Color={selected?.length > MAXCHARSELECTLIMIT ? "red" : "green"}
+            >
+              {selected?.length}
+            </Counter>
           </ToolItem>
         </ToolItems>
       </WritingTools>
@@ -256,7 +268,7 @@ const DropdownBtn = styled(ToolItemButton)`
 `;
 
 const Counter = styled(ToolItemButton)`
-  color: green;
+  color: ${({ Color }) => Color};
   cursor: default !important;
 `;
 

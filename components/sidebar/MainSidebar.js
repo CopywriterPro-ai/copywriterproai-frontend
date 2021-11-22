@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import { Collapse } from "reactstrap";
 
 import externalLink from "@/data/externallink.json";
 import { postUserLogout } from "@/redux/slices/auth";
@@ -18,6 +19,7 @@ const MainSidebar = () => {
   const {
     refreshToken: { token },
   } = authToken;
+  const [blogDrop, setBlogDrop] = useState(false);
 
   const handleSignout = () => {
     dispatch(postUserLogout({ data: { refreshToken: token } })).then(
@@ -69,9 +71,28 @@ const MainSidebar = () => {
 
           {isAuth && (
             <>
-              <Link href="/app" passHref>
+              <DropDownMenuTitle
+                onClick={() => setBlogDrop((prevState) => !prevState)}
+              >
+                Blog
+              </DropDownMenuTitle>
+              <Collapse isOpen={blogDrop}>
+                <DropDownList>
+                  <li>
+                    <Link href="/ai-blog-generator" passHref>
+                      <UserActionLink>Generate</UserActionLink>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/draft" passHref>
+                      <UserActionLink>Drafts</UserActionLink>
+                    </Link>
+                  </li>
+                </DropDownList>
+              </Collapse>
+              {/* <Link href="/app" passHref>
                 <UserActionLink>Generate Copy</UserActionLink>
-              </Link>
+              </Link> */}
               <Link href="/bookmarks" passHref>
                 <UserActionLink>Bookmarks</UserActionLink>
               </Link>
@@ -124,6 +145,16 @@ const Sidebar = styled.div`
   @media (max-width: 768px) {
     border: 0;
   }
+`;
+
+const DropDownMenuTitle = styled.p`
+  color: #000;
+  font-weight: 500;
+`;
+
+const DropDownList = styled.ul`
+  list-style: none;
+  padding-left: 5px;
 `;
 
 const SidebarContainer = styled.div`
