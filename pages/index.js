@@ -8,9 +8,14 @@ import CopywriterOffers from "@/components/pages/landing/CopywriterOffers";
 import QuickAuth from "@/components/pages/landing/QuickAuth";
 import Faq from "@/components/Faq";
 
+const seo = {
+  description:
+    "Need help writing marketing content? Our AI copywriting tool will help you write compelling copy that ranks and converts visitors into customers. Don't miss out - get started today for free!",
+};
+
 const Home = () => {
   return (
-    <Layout>
+    <Layout description={seo.description}>
       <PageGlobalStyles />
       <div className="container">
         <Section>
