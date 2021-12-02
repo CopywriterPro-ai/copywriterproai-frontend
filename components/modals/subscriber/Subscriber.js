@@ -295,7 +295,7 @@ const Subscriber = () => {
   const { loading: checkoutLoading } = useSelector(paymentSelector.getCheckout);
 
   const closeModal = () => {
-    dispatch(setSubscriberUsageModal(false));
+    dispatch(setSubscriberUsageModal({ usage: false }));
   };
 
   useEffect(() => {
@@ -352,9 +352,9 @@ const Subscriber = () => {
       contentLabel="Subscriber Modal"
     >
       <Container>
-        {!words && (
+        {(!words || subscriber.message) && (
           <HeadingMessage>
-            <h4>Trial period has expired. Upgrade Our Friendship Today!</h4>
+            <h4>{subscriber.message}</h4>
           </HeadingMessage>
         )}
         <StyledCurrentPlan>

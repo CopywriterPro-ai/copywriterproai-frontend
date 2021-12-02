@@ -8,7 +8,8 @@
     "build": "next build",
     "serve": "next start -p 5000",
     "lint": "next lint",
-    "start": "npm-run-all clean build serve --parallel"
+    "start": "npm-run-all clean build serve --parallel",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.2",
@@ -55,6 +56,7 @@
     "del-cli": "^4.0.1",
     "eslint": "7.31.0",
     "eslint-config-next": "11.0.1",
+    "next-sitemap": "^1.6.203",
     "npm-run-all": "^4.1.5"
   }
 }

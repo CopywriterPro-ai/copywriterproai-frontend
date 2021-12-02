@@ -7,7 +7,7 @@ import {
   setStateBlogOutline,
   selectors as blogSelector,
 } from "@/redux/slices/blog";
-import { setSigninModal } from "@/redux/slices/ui";
+import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
 import ToolTitleItem from "./ToolTitleItem";
 import { ToolItem, TextItem, OutlineForm, GenButton } from "./styles";
 import { BLOG_OUTLINE } from "@/appconstants";
@@ -27,6 +27,10 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
   const { isAuth } = useUser();
   const validAbout = about.trim().length > 0;
 
+  const handleSubscriberModalOpen = (message) => {
+    dispatch(setSubscriberUsageModal({ usage: true, message }));
+  };
+
   const handleBlogOutline = () => {
     if (validAbout) {
       if (isAuth) {
@@ -39,7 +43,11 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
               blogAbout: about,
             },
           })
-        );
+        ).then(({ payload }) => {
+          if (payload.status === 400) {
+            handleSubscriberModalOpen(payload.data.message);
+          }
+        });
       } else {
         dispatch(setSigninModal(true));
       }

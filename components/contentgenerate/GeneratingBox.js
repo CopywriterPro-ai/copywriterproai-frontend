@@ -75,8 +75,8 @@ const InputGeneratingBox = () => {
     if (activeKey) dispatch(resetGeneratedContentsState());
   }, [activeKey, dispatch]);
 
-  const handleSubscriberModalOpen = () => {
-    dispatch(setSubscriberUsageModal(true));
+  const handleSubscriberModalOpen = (message) => {
+    dispatch(setSubscriberUsageModal({ usage: true, message }));
   };
 
   const onSubmit = (formData) => {
@@ -84,7 +84,12 @@ const InputGeneratingBox = () => {
     const data = { ...formData, task };
 
     if (isAuth) {
-      if (words) dispatch(postGenerateContents({ data, task }));
+      if (words)
+        dispatch(postGenerateContents({ data, task })).then(({ payload }) => {
+          if (payload.status === 400) {
+            handleSubscriberModalOpen(payload.data.message);
+          }
+        });
       else handleSubscriberModalOpen();
     } else {
       dispatch(setSigninModal(true));

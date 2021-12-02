@@ -6,7 +6,7 @@ import {
   setStateBlogIntro,
   selectors as blogSelector,
 } from "@/redux/slices/blog";
-import { setSigninModal } from "@/redux/slices/ui";
+import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
 import ToolTitleItem from "./ToolTitleItem";
 import { ToolItem, TextItem } from "./styles";
 import { BLOG_INTRO } from "@/appconstants";
@@ -26,6 +26,10 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
   const validTitle = title.trim().length > 0;
   const validAbout = about.trim().length > 0;
 
+  const handleSubscriberModalOpen = (message) => {
+    dispatch(setSubscriberUsageModal({ usage: true, message }));
+  };
+
   const handleBlogIntro = () => {
     if (validTitle && validAbout) {
       if (isAuth) {
@@ -38,7 +42,11 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
               about,
             },
           })
-        );
+        ).then(({ payload }) => {
+          if (payload.status === 400) {
+            handleSubscriberModalOpen(payload.data.message);
+          }
+        });
       } else {
         dispatch(setSigninModal(true));
       }

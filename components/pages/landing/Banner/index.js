@@ -156,7 +156,7 @@ const BannerContainer = styled.div`
   }
 `;
 
-const BannerHeading = styled.h2`
+const BannerHeading = styled.h1`
   font-weight: 600;
   font-size: 38px;
   line-height: 61px;
