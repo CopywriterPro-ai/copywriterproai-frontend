@@ -7,7 +7,7 @@ import {
   setStateBlogTitle,
   selectors as blogSelector,
 } from "@/redux/slices/blog";
-import { setSigninModal } from "@/redux/slices/ui";
+import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
 import ToolTitleItem from "./ToolTitleItem";
 import { ToolItem, TextItem } from "./styles";
 import { BLOG_HEADLINE } from "@/appconstants";
@@ -25,6 +25,10 @@ const BlogHeadline = ({ aboutRef }) => {
 
   const validAbout = about.trim().length > 0;
 
+  const handleSubscriberModalOpen = (message) => {
+    dispatch(setSubscriberUsageModal({ usage: true, message }));
+  };
+
   const handleBlogHeadline = () => {
     if (validAbout) {
       if (isAuth) {
@@ -36,7 +40,11 @@ const BlogHeadline = ({ aboutRef }) => {
               blogAbout: about,
             },
           })
-        );
+        ).then(({ payload }) => {
+          if (payload.status === 400) {
+            handleSubscriberModalOpen(payload.data.message);
+          }
+        });
       } else {
         dispatch(setSigninModal(true));
       }

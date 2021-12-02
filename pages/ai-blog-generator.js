@@ -16,9 +16,14 @@ import {
   resetBlog,
   selectors as blogSelector,
 } from "@/redux/slices/blog";
-import { setBlogResetModal, setSigninModal } from "@/redux/slices/ui";
+import {
+  setBlogResetModal,
+  setSigninModal,
+  selectors as uiSelector,
+} from "@/redux/slices/ui";
 import { CREATE, UPDATE } from "@/appconstants";
 import { useBeforeunload, useUser, useSidebar } from "@/hooks";
+import { SubscriberModal } from "@/components/modals/subscriber";
 import { BlogResetModal } from "@/components/modals/blogs";
 import { MainSidebar } from "@/components/sidebar";
 import TipsImg from "@/assets/images/generate-tips.png";
@@ -42,6 +47,7 @@ const BlogGenerator = () => {
   const { item: toolItem } = useSelector(blogSelector.getToolContent());
   const { currentid: currentBlogId } = useSelector(blogSelector.getBlogs());
   const isUpdateChange = useSelector(blogSelector.isUpdateChange());
+  const { subscriber } = useSelector(uiSelector.getModal);
   const { isAuth } = useUser();
   const { showSidebar, showContent } = useSidebar();
 
@@ -225,6 +231,7 @@ const BlogGenerator = () => {
           <BlogResetModal />
         </BlogContainer>
       )}
+      {subscriber?.usage && <SubscriberModal />}
     </Layout>
   );
 };

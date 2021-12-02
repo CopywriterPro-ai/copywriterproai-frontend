@@ -18,6 +18,7 @@ const initialState = {
     },
     subscriber: {
       usage: false,
+      message: null,
     },
     auth: {
       signin: false,
@@ -75,7 +76,12 @@ const ui = createSlice({
       state.modal.blogs.reset = action.payload;
     },
     setSubscriberUsageModal: (state, action) => {
-      state.modal.subscriber.usage = action.payload;
+      state.modal.subscriber.usage = action.payload.usage;
+      if (action.payload.usage === true) {
+        state.modal.subscriber.message = action.payload.message;
+      } else {
+        state.modal.subscriber.message = null;
+      }
     },
     setSigninModal: (state, action) => {
       state.modal.auth.signin = action.payload;
