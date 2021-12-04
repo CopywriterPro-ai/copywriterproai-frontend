@@ -74,9 +74,9 @@ const DemoBlogHeadline = () => {
 
   return (
     <Container>
+      <Title>Blog Headline</Title>
       <Scroll ref={scrollAreaRef}>
         <InputSection ref={inputRef}>
-          <Title>Blog Headline</Title>
           <TextArea
             ref={textAreaRef}
             Color={(maxInput && "red") || (!minInput && "green")}

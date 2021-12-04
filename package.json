@@ -8,8 +8,7 @@
     "build": "next build",
     "serve": "next start -p 5000",
     "lint": "next lint",
-    "start": "npm-run-all clean build serve --parallel",
-    "postbuild": "next-sitemap"
+    "start": "npm-run-all clean build serve --parallel"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.2",
