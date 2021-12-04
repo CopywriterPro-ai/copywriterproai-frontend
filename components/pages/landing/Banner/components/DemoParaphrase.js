@@ -74,9 +74,9 @@ const DemoParaphrase = () => {
 
   return (
     <Container>
+      <Title>Paraphrase</Title>
       <Scroll ref={scrollAreaRef}>
         <InputSection ref={inputRef}>
-          <Title>Paraphrase</Title>
           <TextArea
             ref={textAreaRef}
             Color={(maxInput && "red") || (!minInput && "green")}
