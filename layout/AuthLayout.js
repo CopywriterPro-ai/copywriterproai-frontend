@@ -4,7 +4,13 @@ import { useRouter } from "next/router";
 import Layout from "./Layout";
 import { useUser } from "@/hooks";
 
-const AuthLayout = ({ children, title, description, otherSEO }) => {
+const AuthLayout = ({
+  children,
+  title,
+  description,
+  otherSEO,
+  additionalMeta,
+}) => {
   const router = useRouter();
   const { isAuth } = useUser();
 
@@ -18,7 +24,12 @@ const AuthLayout = ({ children, title, description, otherSEO }) => {
   }
 
   return (
-    <Layout title={title} description={description} otherSEO={otherSEO}>
+    <Layout
+      title={title}
+      description={description}
+      otherSEO={otherSEO}
+      additionalMeta={additionalMeta}
+    >
       {children}
     </Layout>
   );

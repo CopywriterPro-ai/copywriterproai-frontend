@@ -12,7 +12,7 @@ export const Container = styled.div`
 `;
 
 export const Scroll = styled.div`
-  height: 370px;
+  height: 300px;
   overflow: scroll;
   overflow-x: hidden;
 
