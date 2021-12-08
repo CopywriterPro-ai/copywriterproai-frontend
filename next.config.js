@@ -2,6 +2,7 @@ const { withSentryConfig } = require("@sentry/nextjs");
 const path = require("path");
 
 const nextConfig = {
+  productionBrowserSourceMaps: false,
   poweredByHeader: false,
   reactStrictMode: false,
   sassOptions: {

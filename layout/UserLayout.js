@@ -30,6 +30,7 @@ const UserLayout = ({
   title,
   description,
   otherSEO,
+  additionalMeta,
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -154,7 +155,12 @@ const UserLayout = ({
   }
 
   return (
-    <Layout title={title} description={description} otherSEO={otherSEO}>
+    <Layout
+      title={title}
+      description={description}
+      otherSEO={otherSEO}
+      additionalMeta={additionalMeta}
+    >
       <Header />
       <Main
         topBarHeigth={topBarHeigth}

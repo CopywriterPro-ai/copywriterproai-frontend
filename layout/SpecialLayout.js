@@ -3,7 +3,13 @@ import React from "react";
 import Layout from "./UserLayout";
 import { useUser } from "@/hooks";
 
-const SpecialLayout = ({ children, title, description, otherSEO }) => {
+const SpecialLayout = ({
+  children,
+  title,
+  description,
+  otherSEO,
+  additionalMeta,
+}) => {
   const { isAuth } = useUser();
   return (
     <Layout
@@ -11,6 +17,7 @@ const SpecialLayout = ({ children, title, description, otherSEO }) => {
       title={title}
       description={description}
       otherSEO={otherSEO}
+      additionalMeta={additionalMeta}
     >
       {children}
     </Layout>

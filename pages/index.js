@@ -13,9 +13,16 @@ const seo = {
     "Need help writing marketing content? Our AI copywriting tool will help you write compelling copy that ranks and converts visitors into customers. Don't miss out - get started today for free!",
 };
 
+const additionalMeta = [
+  {
+    property: "keywords",
+    content: "ai content writer, ai copywriting tool, article content creator",
+  },
+];
+
 const Home = () => {
   return (
-    <Layout description={seo.description}>
+    <Layout description={seo.description} additionalMeta={additionalMeta}>
       <PageGlobalStyles />
       <div className="container">
         <Section>

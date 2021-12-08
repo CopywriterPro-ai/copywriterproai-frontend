@@ -10,12 +10,17 @@ if (!isServer) {
   ReactModal.setAppElement("#__next");
 }
 
-const Layout = ({ children, title, description, otherSEO }) => {
+const Layout = ({ children, title, description, otherSEO, additionalMeta }) => {
   useScrollTop();
 
   return (
     <Fragment>
-      <Head title={title} description={description} otherSEO={otherSEO} />
+      <Head
+        title={title}
+        description={description}
+        otherSEO={otherSEO}
+        additionalMeta={additionalMeta}
+      />
       {children}
       <ToastContainer />
     </Fragment>
