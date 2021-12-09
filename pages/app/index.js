@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import router from "next/router";
 
 import { UserLayout as Layout } from "@/layout";
 import { GenerateSidebar, MainSidebar } from "@/components/sidebar";
@@ -8,10 +9,18 @@ import { selectors as uiSelector } from "@/redux/slices/ui";
 import { SubscriberModal } from "@/components/modals/subscriber";
 import { useWindowSize } from "@/hooks";
 
+const MOBILE_DEFAULT_TOOL = "ads-facebook-primary-texts";
+
 const App = () => {
   const { showSidebar, showContent } = useSidebar();
   const { subscriber } = useSelector(uiSelector.getModal);
   const { width: windowWidth } = useWindowSize();
+
+  useEffect(() => {
+    if (windowWidth !== 0 && windowWidth < 768) {
+      router.push(`/app/${MOBILE_DEFAULT_TOOL}`);
+    }
+  }, [windowWidth]);
 
   return (
     <Layout>
