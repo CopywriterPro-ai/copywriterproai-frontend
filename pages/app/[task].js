@@ -5,11 +5,10 @@ import { useRouter } from "next/router";
 import GeneratingBox from "components/contentgenerate";
 import { SpecialLayout as Layout } from "@/layout";
 import { GenerateSidebar, MainSidebar } from "@/components/sidebar";
-import { useSidebar } from "hooks";
 import { setCurrentActiveKeyState } from "@/redux/slices/content";
 import { selectors as uiSelector } from "@/redux/slices/ui";
 import { SubscriberModal } from "@/components/modals/subscriber";
-import { useWindowSize } from "@/hooks";
+import { useWindowSize, useSidebar } from "@/hooks";
 
 const AppItem = () => {
   const dispatch = useDispatch();
