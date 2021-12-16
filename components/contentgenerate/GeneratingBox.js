@@ -132,7 +132,7 @@ const InputGeneratingBox = () => {
         </ContentTitle>
         {isAuth && (
           <CreditsLeft
-            onClick={handleSubscriberModalOpen}
+            onClick={() => handleSubscriberModalOpen()}
             style={{ cursor: "pointer" }}
           >
             Words Left: {subscriberData?.words}
