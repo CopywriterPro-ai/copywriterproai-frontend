@@ -28,8 +28,6 @@ const Strategyauth = () => {
           toastMessage.error(message);
         }
       });
-    } else {
-      toastMessage.warn("Auth token needed");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, token]);

@@ -149,6 +149,7 @@ const Sidebar = styled.div`
 
 const DropDownMenuTitle = styled.p`
   color: #000;
+  cursor: pointer;
   font-weight: 500;
 `;
 
