@@ -47,21 +47,15 @@ const NavComDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
           {MenuName} <span className="fas fa-angle-down"></span>
         </DropdownToggle>
         <NavDropdownMenus>
-          <NavDropdownItem tag="div">
-            <a href={externalLink.facebookGroup} target="__blank">
-              Facebook Group
-            </a>
-          </NavDropdownItem>
-          <NavDropdownItem tag="div">
-            <a href={externalLink.discord} target="__blank">
-              Discord Server
-            </a>
-          </NavDropdownItem>
-          <NavDropdownItem tag="div">
-            <a href={externalLink.twitter} target="__blank">
-              Twitter Account
-            </a>
-          </NavDropdownItem>
+          <a href={externalLink.facebookGroup} target="__blank">
+            <NavDropdownItem tag="div">Facebook Group</NavDropdownItem>
+          </a>
+          <a href={externalLink.discord} target="__blank">
+            <NavDropdownItem tag="div">Discord Server</NavDropdownItem>
+          </a>
+          <a href={externalLink.twitter} target="__blank">
+            <NavDropdownItem tag="div">Twitter Account</NavDropdownItem>
+          </a>
         </NavDropdownMenus>
       </Dropdown>
     </li>
@@ -81,12 +75,16 @@ const NavBlogDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
           {MenuName} <span className="fas fa-angle-down"></span>
         </DropdownToggle>
         <NavDropdownMenus>
-          <NavDropdownItem tag="div">
-            <Link href="/ai-blog-generator">Generate</Link>
-          </NavDropdownItem>
-          <NavDropdownItem tag="div">
-            <Link href="/draft">Drafts</Link>
-          </NavDropdownItem>
+          <Link href="/ai-blog-generator">
+            <a>
+              <NavDropdownItem tag="div">Generate</NavDropdownItem>
+            </a>
+          </Link>
+          <Link href="/draft">
+            <a>
+              <NavDropdownItem tag="div">Drafts</NavDropdownItem>
+            </a>
+          </Link>
         </NavDropdownMenus>
       </Dropdown>
     </li>
@@ -252,8 +250,11 @@ const AppHeader = () => {
                   </DropdownToggle>
                   <NavDropdownMenu>
                     <NavDropdownItem tag="div">
-                      <span className="far fa-user"></span>
-                      <Link href="/bookmarks"> My account</Link>
+                      <Link href="/bookmarks">
+                        <a>
+                          <span className="far fa-user"></span> My account
+                        </a>
+                      </Link>
                     </NavDropdownItem>
                     <NavDropdownItem tag="div" onClick={handleSignout}>
                       <span className="fas fa-sign-out-alt"></span> Log out

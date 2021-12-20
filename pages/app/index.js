@@ -17,10 +17,8 @@ const App = () => {
   const { width: windowWidth } = useWindowSize();
 
   useEffect(() => {
-    if (windowWidth !== 0 && windowWidth < 768) {
-      router.push(`/app/${MOBILE_DEFAULT_TOOL}`);
-    }
-  }, [windowWidth]);
+    router.push(`/app/${MOBILE_DEFAULT_TOOL}`);
+  }, []);
 
   return (
     <Layout>
