@@ -48,7 +48,7 @@ const AppBrandLogo = forwardRef(({ onClick, href }, ref) => {
 const AppHeader = () => {
   const noticeTopRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
-  const [showNotice, setShowNotice] = useState(false);
+  const [showNotice, setShowNotice] = useState(true);
   const { height: topNoticeHeight } = useElementSize(noticeTopRef);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -58,11 +58,11 @@ const AppHeader = () => {
       {showNotice && (
         <TopNotice ref={noticeTopRef}>
           <div style={{ maxWidth: "80%" }}>
-            Find out about exclusive offers and useful resources by joining our
-            Facebook group.{"  "}
-            <a href={externalLink.facebookGroup} target="__blank">
+            New Year’s Sale! Apply <u>MYSTERYDEAL</u> and Get a Flat 60% OFF!
+            Ends January 10.
+            {/* <a href={externalLink.facebookGroup} target="__blank">
               <JoinButton>Join</JoinButton>
-            </a>
+            </a> */}
           </div>
           <div style={{ position: "absolute", right: "10px" }}>
             <i
@@ -119,7 +119,7 @@ const TopNotice = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 8px 0;
+  padding: 12px 0;
   position: fixed;
   background: #2cae97;
   color: white;
@@ -127,8 +127,9 @@ const TopNotice = styled.div`
   top: 0px;
   z-index: 1031;
   color: white;
-  font-size: 16px;
+  font-size: 17px;
   text-align: center;
+  font-weight: 500;
 `;
 
 const JoinButton = styled.button`

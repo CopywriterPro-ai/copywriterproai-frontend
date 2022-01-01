@@ -39,6 +39,11 @@ const user = {
       method: "patch",
     });
   },
+  extensionAccessToken: () => {
+    return fetcher(`/users/extension/access`, {
+      method: "post",
+    });
+  },
 };
 
 export default user;
