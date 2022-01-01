@@ -104,6 +104,21 @@ export const updateFavouriteTools = createAsyncThunk(
   }
 );
 
+export const extensionAccessToken = createAsyncThunk(
+  "user/postExtensionAccessToken",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await userApi.extensionAccessToken();
+      return {
+        data: response.data,
+        status: response.status,
+      };
+    } catch (error) {
+      return asyncThunkError(error, rejectWithValue);
+    }
+  }
+);
+
 const initialState = {
   currentgeneratebookmarks: {
     loading: "idle",
@@ -137,6 +152,13 @@ const initialState = {
     loading: "idle",
     items: [],
     error: null,
+  },
+  extension: {
+    accessToken: {
+      loading: "idle",
+      access: {},
+      error: null,
+    },
   },
 };
 
@@ -330,6 +352,25 @@ const user = createSlice({
         state.favouritetools.error = action.payload.data;
       }
     },
+
+    [extensionAccessToken.pending]: (state, action) => {
+      if (state.extension.accessToken.loading === "idle") {
+        state.extension.accessToken.loading = "pending";
+        state.extension.accessToken.error = null;
+      }
+    },
+    [extensionAccessToken.fulfilled]: (state, action) => {
+      if (state.extension.accessToken.loading === "pending") {
+        state.extension.accessToken.loading = "idle";
+        state.extension.accessToken.access = action.payload.data.access;
+      }
+    },
+    [extensionAccessToken.rejected]: (state, action) => {
+      if (state.extension.accessToken.loading === "pending") {
+        state.extension.accessToken.loading = "idle";
+        state.extension.accessToken.error = action.payload.data;
+      }
+    },
   },
 });
 
@@ -380,6 +421,11 @@ export const selectors = {
         return favTools;
       }
     ),
+
+  getExtension: createSelector(
+    (state) => state.user.extension,
+    (extension) => extension
+  ),
 };
 
 export default user.reducer;
