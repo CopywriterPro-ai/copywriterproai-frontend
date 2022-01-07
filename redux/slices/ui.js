@@ -1,5 +1,36 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createSelector,
+  createAsyncThunk,
+} from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
+
+import { uiApi } from "@/api";
+import asyncThunkError from "@/utils/asyncThunkError";
+
+export const getNotice = createAsyncThunk(
+  "ui/getNoticeFetching",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await uiApi.getNotice();
+      return { data: response.data, status: response.status };
+    } catch (error) {
+      return asyncThunkError(error, rejectWithValue);
+    }
+  }
+);
+
+export const updateNotice = createAsyncThunk(
+  "ui/updateNoticeFetching",
+  async ({ data }, { rejectWithValue }) => {
+    try {
+      const response = await uiApi.updateNotice({ data });
+      return { data: response.data, status: response.status };
+    } catch (error) {
+      return asyncThunkError(error, rejectWithValue);
+    }
+  }
+);
 
 const initialState = {
   sideBar: {
@@ -45,6 +76,12 @@ const initialState = {
     showTopBar: true,
   },
   redirectPath: null,
+  notice: {
+    loading: "idle",
+    data: { active: true },
+    isLoaded: false,
+    error: null,
+  },
 };
 
 const ui = createSlice({
@@ -112,6 +149,46 @@ const ui = createSlice({
       ...state,
       ...payload.ui,
     }),
+
+    [getNotice.pending]: (state, action) => {
+      if (state.notice.loading === "idle") {
+        state.notice.loading = "pending";
+        state.notice.error = null;
+      }
+    },
+    [getNotice.fulfilled]: (state, action) => {
+      if (state.notice.loading === "pending") {
+        state.notice.loading = "idle";
+        state.notice.isLoaded = true;
+        state.notice.data = action.payload.data.notice;
+      }
+    },
+    [getNotice.rejected]: (state, action) => {
+      if (state.notice.loading === "pending") {
+        state.notice.loading = "idle";
+        state.notice.error = action.payload.data;
+      }
+    },
+
+    [updateNotice.pending]: (state, action) => {
+      if (state.notice.loading === "idle") {
+        state.notice.loading = "pending";
+        state.notice.error = null;
+      }
+    },
+    [updateNotice.fulfilled]: (state, action) => {
+      if (state.notice.loading === "pending") {
+        state.notice.loading = "idle";
+        state.notice.isLoaded = true;
+        state.notice.data = action.payload.data.notice;
+      }
+    },
+    [updateNotice.rejected]: (state, action) => {
+      if (state.notice.loading === "pending") {
+        state.notice.loading = "idle";
+        state.notice.error = action.payload.data;
+      }
+    },
   },
 });
 
@@ -138,12 +215,10 @@ export const selectors = {
     (state) => state.ui,
     (data) => data
   ),
-
   getSidebar: createSelector(
     (state) => state.ui.sideBar,
     (data) => data
   ),
-
   getModal: createSelector(
     (state) => state.ui.modal,
     (modal) => modal
@@ -159,6 +234,10 @@ export const selectors = {
   getRedirectPath: createSelector(
     (state) => state.ui.redirectPath,
     (redirectPath) => redirectPath
+  ),
+  getNotice: createSelector(
+    (state) => state.ui.notice,
+    (notice) => notice
   ),
 };
 

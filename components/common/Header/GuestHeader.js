@@ -14,11 +14,12 @@ import {
   DropdownItem,
 } from "reactstrap";
 import styled from "styled-components";
+import dayjs from "dayjs";
 
 import externalLink from "data/externallink.json";
 import NavMeunuIcon from "assets/images/navmenu.png";
 import Logo from "assets/images/logo-color.png";
-import { useResponsive, useElementSize } from "hooks";
+import { useResponsive, useElementSize, useNotice } from "hooks";
 
 const AppNavLink = ({ to = "/", title = "Page Title", shapebox = "none" }) => {
   const { isDesktop } = useResponsive();
@@ -50,19 +51,24 @@ const AppHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showNotice, setShowNotice] = useState(true);
   const { height: topNoticeHeight } = useElementSize(noticeTopRef);
+  const { data: noticeData } = useNotice();
+
+  const { active, title, description, expiryTime } = noticeData;
 
   const toggle = () => setIsOpen(!isOpen);
 
   return (
     <header>
-      {showNotice && (
+      {active && showNotice && (
         <TopNotice ref={noticeTopRef}>
           <div style={{ maxWidth: "80%" }}>
-            New Year’s Sale! Apply <u>MYSTERYDEAL</u> and Get a Flat 60% OFF!
-            Ends January 10.
-            {/* <a href={externalLink.facebookGroup} target="__blank">
-              <JoinButton>Join</JoinButton>
-            </a> */}
+            {active && (
+              <>
+                {title}{" "}
+                <span dangerouslySetInnerHTML={{ __html: description }}></span>{" "}
+                Ends {expiryTime && dayjs(expiryTime).format("MMMM D")}.
+              </>
+            )}
           </div>
           <div style={{ position: "absolute", right: "10px" }}>
             <i

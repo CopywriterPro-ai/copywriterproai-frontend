@@ -9,6 +9,7 @@ import {
   DropdownItem,
 } from "reactstrap";
 import styled from "styled-components";
+import dayjs from "dayjs";
 
 import externalLink from "@/data/externallink.json";
 import { postUserLogout } from "@/redux/slices/auth";
@@ -22,7 +23,7 @@ import {
 } from "@/redux/slices/ui";
 import { useResponsive } from "@/hooks";
 import LogoImg from "@/assets/images/logo-white.png";
-import { useElementSize, useUser } from "@/hooks";
+import { useElementSize, useUser, useNotice } from "@/hooks";
 
 const NavItem = ({ link, title }) => {
   return (
@@ -121,6 +122,8 @@ const AppHeader = () => {
 
   const { showTopBar } = useSelector(uiSelector.getHeaderSize);
 
+  const { data: noticeData } = useNotice();
+
   const handleSignout = () => {
     dispatch(postUserLogout({ data: { refreshToken: token } })).then(
       ({ payload }) => {
@@ -157,16 +160,20 @@ const AppHeader = () => {
     dispatch(setTopBarStatus(val));
   };
 
+  const { active, title, description, expiryTime } = noticeData;
+
   return (
     <div>
-      {showTopBar && (
+      {active && showTopBar && (
         <TopNotice ref={noticeTopRef}>
           <div style={{ maxWidth: "80%" }}>
-            New Year’s Sale! Apply <u>MYSTERYDEAL</u> and Get a Flat 60% OFF!
-            Ends January 10.
-            {/* <a href={externalLink.facebookGroup} target="__blank">
-              <JoinButton>Join</JoinButton>
-            </a> */}
+            {active && (
+              <>
+                {title}{" "}
+                <span dangerouslySetInnerHTML={{ __html: description }}></span>{" "}
+                Ends {expiryTime && dayjs(expiryTime).format("MMMM D")}.
+              </>
+            )}
           </div>
           <div style={{ position: "absolute", right: "10px" }}>
             <i

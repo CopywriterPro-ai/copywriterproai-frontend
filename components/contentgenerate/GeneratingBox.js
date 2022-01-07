@@ -223,6 +223,26 @@ const InputGeneratingBox = () => {
                     </WordCount>
                   </div>
                 );
+              } else if (field.type === "selectBox") {
+                const tones = field.key.split(",").map((key) => key.trim());
+
+                return (
+                  <div className="form-group" key={index}>
+                    <label htmlFor={field.type}>{field.name}</label>
+                    <OptionSelect {...register("tone")} id={field.type}>
+                      {tones.map((tone) => (
+                        <option key={tone} value={tone}>
+                          {tone}
+                        </option>
+                      ))}
+                    </OptionSelect>
+                    {field?.tips?.text && (
+                      <UncontrolledTooltip placement="auto" target={field.type}>
+                        {field?.tips?.text}
+                      </UncontrolledTooltip>
+                    )}
+                  </div>
+                );
               }
               return null;
             })}
@@ -365,6 +385,18 @@ const TextArea = styled.textarea`
   color: #748194;
   font-size: 16px;
   display: block;
+`;
+
+const OptionSelect = styled.select`
+  width: 100%;
+  height: 45px;
+  padding: 6px 15px;
+  outline: none;
+  border: 1px solid #b4b4b4;
+  color: #748194;
+  font-size: 16px;
+  display: block;
+  background: transparent;
 `;
 
 const Button = styled.button`

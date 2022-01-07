@@ -8,3 +8,4 @@ export { default as subscriberApi } from "./subscriberApi";
 export { default as supportApi } from "./supportApi";
 export { default as toolsApi } from "./toolsApi";
 export { default as demoGenerateApi } from "./demoGenerateApi";
+export { default as uiApi } from "./uiApi";
