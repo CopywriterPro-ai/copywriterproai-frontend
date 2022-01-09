@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable react/display-name */
 import styled from "styled-components";
 import { useMemo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +10,7 @@ import {
   getToolCategories,
   selectors as toolsSelector,
 } from "@/redux/slices/tools";
+import { UserLayout as Layout } from "@/layout";
 import CreateOrEditCategoriesModal from "@/components/modals/tools/categories/CreateOrEdit";
 import DeleteCategoriesModal from "@/components/modals/tools/categories/Delete";
 
@@ -93,7 +92,7 @@ const Categories = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <Layout>
       <Container className="container-fluid">
         <StyledHeader>
           <StyledButton Color="dodgerblue" onClick={handleCreate}>
@@ -106,10 +105,10 @@ const Categories = () => {
             className="table table-striped table-bordered"
           >
             <thead>
-              {headerGroups.map((headerGroup) => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <th {...column.getHeaderProps()}>
+              {headerGroups.map((headerGroup, index) => (
+                <tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                  {headerGroup.headers.map((column, index) => (
+                    <th {...column.getHeaderProps()} key={index}>
                       {column.render("Header")}
                     </th>
                   ))}
@@ -117,13 +116,15 @@ const Categories = () => {
               ))}
             </thead>
             <tbody {...getTableBodyProps()}>
-              {rows.map((row) => {
+              {rows.map((row, index) => {
                 prepareRow(row);
                 return (
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map((cell) => {
+                  <tr {...row.getRowProps()} key={index}>
+                    {row.cells.map((cell, index) => {
                       return (
-                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                        <td {...cell.getCellProps()} key={index}>
+                          {cell.render("Cell")}
+                        </td>
                       );
                     })}
                   </tr>
@@ -137,7 +138,7 @@ const Categories = () => {
         <CreateOrEditCategoriesModal />
       )}
       {action === "delete" && <DeleteCategoriesModal />}
-    </>
+    </Layout>
   );
 };
 
