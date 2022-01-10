@@ -147,7 +147,6 @@ const CreateOrEditModal = () => {
         <h3>{action === "create" ? "Create Category" : "Update Category"}</h3>
         <div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div></div>
             <InputGroup
               label="Name"
               name="name"

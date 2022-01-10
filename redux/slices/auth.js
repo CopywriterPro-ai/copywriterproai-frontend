@@ -141,7 +141,7 @@ const initialState = {
   },
   info: {
     loading: "idle",
-    data: {},
+    data: { isLoaded: false },
     error: null,
   },
 };
@@ -168,7 +168,7 @@ const auth = createSlice({
     [getMe.fulfilled]: (state, action) => {
       if (state.info.loading === "pending") {
         state.info.loading = "idle";
-        state.info.data = action.payload.data.profile;
+        state.info.data = { ...action.payload.data.profile, isLoaded: true };
       }
     },
     [getMe.rejected]: (state, action) => {
@@ -177,6 +177,7 @@ const auth = createSlice({
           return initialState;
         } else {
           state.info.loading = "idle";
+          state.info.data.isLoaded = true;
           state.info.error = action.payload.data;
         }
       }
@@ -225,7 +226,7 @@ const auth = createSlice({
     [postUserLogin.fulfilled]: (state, action) => {
       if (state.auth.loading === "pending") {
         state.auth.loading = "idle";
-        state.info.data = action.payload.data.user;
+        state.info.data = { ...action.payload.data.user, isLoaded: true };
         state.auth.isAuth = true;
         state.auth.accessToken = action.payload.data.tokens.access;
         state.auth.refreshToken = action.payload.data.tokens.refresh;
@@ -316,7 +317,7 @@ const auth = createSlice({
     [postStrategyLogin.fulfilled]: (state, action) => {
       if (state.auth.loading === "pending") {
         state.auth.loading = "idle";
-        state.info.data = action.payload.data.user;
+        state.info.data = { ...action.payload.data.user, isLoaded: true };
         state.auth.isAuth = true;
         state.auth.accessToken = action.payload.data.tokens.access;
         state.auth.refreshToken = action.payload.data.tokens.refresh;

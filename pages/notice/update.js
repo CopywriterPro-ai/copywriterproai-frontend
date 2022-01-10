@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
 
-import { SpecialLayout as Layout } from "@/layout";
+import { AdminLayout as Layout } from "@/layout";
 import { updateNotice } from "@/redux/slices/ui";
 import { useNotice, useUser } from "@/hooks";
 import { toastMessage } from "@/utils";

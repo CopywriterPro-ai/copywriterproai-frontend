@@ -11,7 +11,7 @@ import {
   getTools,
   selectors as toolsSelector,
 } from "@/redux/slices/tools";
-import { SpecialLayout as Layout } from "@/layout";
+import { AdminLayout as Layout } from "@/layout";
 import CreateOrEditToolsModal from "@/components/modals/tools/tools/CreateOrEdit";
 import DeleteToolsModal from "@/components/modals/tools/tools/Delete";
 

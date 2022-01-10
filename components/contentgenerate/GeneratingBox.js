@@ -225,11 +225,10 @@ const InputGeneratingBox = () => {
                 );
               } else if (field.type === "selectBox") {
                 const tones = field.key.split(",").map((key) => key.trim());
-
                 return (
                   <div className="form-group" key={index}>
                     <label htmlFor={field.type}>{field.name}</label>
-                    <OptionSelect {...register("tone")} id={field.type}>
+                    <OptionSelect {...register(field.name)} id={field.type}>
                       {tones.map((tone) => (
                         <option key={tone} value={tone}>
                           {tone}
