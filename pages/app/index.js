@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import router from "next/router";
 
-import { UserLayout as Layout } from "@/layout";
+import { SpecialLayout as Layout } from "@/layout";
 import { GenerateSidebar, MainSidebar } from "@/components/sidebar";
 import { useSidebar } from "hooks";
 import { selectors as uiSelector } from "@/redux/slices/ui";

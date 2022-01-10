@@ -10,7 +10,7 @@ import {
   getToolCategories,
   selectors as toolsSelector,
 } from "@/redux/slices/tools";
-import { UserLayout as Layout } from "@/layout";
+import { AdminLayout as Layout } from "@/layout";
 import CreateOrEditCategoriesModal from "@/components/modals/tools/categories/CreateOrEdit";
 import DeleteCategoriesModal from "@/components/modals/tools/categories/Delete";
 

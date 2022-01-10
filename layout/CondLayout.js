@@ -11,9 +11,9 @@ const CondLayout = ({
   otherSEO,
   additionalMeta,
 }) => {
-  const { isAuth } = useUser();
+  const { isAuth, isRehydrated } = useUser();
 
-  if (isAuth) {
+  if (isAuth && isRehydrated) {
     return (
       <UserLayout
         title={title}
@@ -24,7 +24,7 @@ const CondLayout = ({
         {children}
       </UserLayout>
     );
-  } else {
+  } else if (isRehydrated) {
     return (
       <GuestLayout
         title={title}
@@ -35,6 +35,8 @@ const CondLayout = ({
         {children}
       </GuestLayout>
     );
+  } else {
+    return <h4>Loading...</h4>;
   }
 };
 

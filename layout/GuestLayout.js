@@ -14,14 +14,14 @@ const GuestLayout = ({
   additionalMeta,
 }) => {
   const router = useRouter();
-  const { isAuth } = useUser();
+  const { isAuth, isRehydrated } = useUser();
 
   useEffect(() => {
-    if (isAuth) router.push("/app");
+    if (isAuth && isRehydrated) router.push("/app");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth]);
+  }, [isAuth, isRehydrated]);
 
-  if (isAuth) {
+  if (isAuth && isRehydrated) {
     return <h4>Redirecting...</h4>;
   }
 

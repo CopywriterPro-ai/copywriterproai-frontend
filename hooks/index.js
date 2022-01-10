@@ -13,3 +13,4 @@ export { default as useNetwork } from "./useNetwork";
 export { default as useUser } from "./useUser";
 export { default as useLoaded } from "./useLoaded";
 export { default as useNotice } from "./useNotice";
+export { default as useAuth } from "./useAuth";

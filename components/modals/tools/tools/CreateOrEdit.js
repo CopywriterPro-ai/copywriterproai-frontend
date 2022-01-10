@@ -26,15 +26,14 @@ const customStyles = {
   },
 };
 
-const InputGroup = ({ name, label, register, type = "text", placeholder }) => {
+const InputGroup = ({ register, name, label, type = "text", placeholder }) => {
   return (
     <StyledInputGroup>
       <label htmlFor={name}>{label}</label>
       <input
+        {...register(name)}
         autoComplete="off"
         id={name}
-        name={name}
-        ref={register}
         type={type}
         placeholder={placeholder}
       />
@@ -48,7 +47,7 @@ const SelectGroup = ({ name, label, register }) => {
   return (
     <StyledSelectGroup>
       <label htmlFor={name}>{label}</label>
-      <select id={name} name={name} ref={register}>
+      <select id={name} {...register(name)}>
         {categories.length === 0 && (
           <option value="">Please create a category first</option>
         )}
@@ -73,7 +72,6 @@ const StyledInputGroup = styled.div`
     border-radius: 5px;
     border: 0;
     box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
-    /* color: #666; */
     font-size: 16px;
     line-height: 50px;
     outline: 0;
@@ -158,21 +156,24 @@ const CreateOrEditModal = () => {
         <div>
           <form onSubmit={handleSubmit(onSubmit)}>
             <InputGroup
+              register={register}
+              name="name"
               label="Name"
-              {...register("name")}
               placeholder="Youtube Video Ideas"
             />
             <InputGroup
+              register={register}
+              name="key"
               label="Key"
-              {...register("key")}
               placeholder="youtube-video-ideas"
             />
             <InputGroup
+              register={register}
+              name="videoId"
               label="Youtube Video Id"
-              {...register("videoId")}
               placeholder="I9_Yenz0NUA"
             />
-            <SelectGroup label="Category" {...register("category")} />
+            <SelectGroup label="Category" name="category" register={register} />
 
             {fieldsFields.map(
               (
@@ -201,14 +202,13 @@ const CreateOrEditModal = () => {
                   >
                     <option value="InputText">Input</option>
                     <option value="TextArea">Textarea</option>
+                    <option value="selectBox">SelectBox</option>
                   </select>
-
                   <input
                     {...register(`fields.${index}.placeholder`)}
                     defaultValue={placeholder}
                     placeholder="Placeholder"
                   />
-
                   <input
                     type="number"
                     {...register(`fields.${index}.validation.max`)}

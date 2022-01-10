@@ -10,10 +10,11 @@ const SpecialLayout = ({
   otherSEO,
   additionalMeta,
 }) => {
-  const { isAuth } = useUser();
+  const { isAuth, isRehydrated } = useUser();
+
   return (
     <Layout
-      isSpecial={isAuth ? false : true}
+      isSpecial={isAuth && isRehydrated ? false : true}
       title={title}
       description={description}
       otherSEO={otherSEO}
