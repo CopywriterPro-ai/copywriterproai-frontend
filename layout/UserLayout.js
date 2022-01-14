@@ -43,22 +43,22 @@ const UserLayout = ({
   } = useSelector(contentSelector.getformContents());
 
   useEffect(() => {
-    if (isLoaded && isAuth && requestFavourite)
+    if (isLoaded && isAuth && requestFavourite && isRehydrated)
       dispatch(getFavouriteTools({ userId })).then(({ payload }) => {
         if (payload.status === 200) {
           setRequestFavourite(false);
         }
       });
-  }, [dispatch, isAuth, isLoaded, requestFavourite, userId]);
+  }, [dispatch, isAuth, isLoaded, isRehydrated, requestFavourite, userId]);
 
   useEffect(() => {
-    if (isLoaded && isAuth && requestSubscriber)
+    if (isLoaded && isAuth && requestSubscriber && isRehydrated)
       dispatch(getOwnSubscriber()).then(({ payload }) => {
         if (payload.status === 200) {
           setRequestSubscriber(false);
         }
       });
-  }, [dispatch, isAuth, isLoaded, requestSubscriber]);
+  }, [dispatch, isAuth, isLoaded, isRehydrated, requestSubscriber]);
 
   useEffect(() => {
     if (!fetchCategories) {

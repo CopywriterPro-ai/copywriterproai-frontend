@@ -10,7 +10,7 @@ import {
   UpdateNameModal,
 } from "@/components/modals/update";
 import { MainSidebar } from "@/components/sidebar";
-import { useResponsive } from "@/hooks";
+import { useResponsive, useUser } from "@/hooks";
 import { selectors as uiSelector } from "@/redux/slices/ui";
 import { getBookmarks, selectors as userSelector } from "@/redux/slices/user";
 import { selectors as authSelector } from "@/redux/slices/auth";
@@ -110,6 +110,7 @@ const Bookmarks = () => {
   const { bookmark: isBookmark } = useSelector(uiSelector.getSidebar);
   const bookmarks = useSelector(userSelector.getBookmarks);
   const { id: userId } = useSelector(authSelector.getInfo);
+  const { isRehydrated } = useUser();
 
   let showSidebar = !isMobile || isBookmark;
   let showContent = !isMobile || !showSidebar;
@@ -117,8 +118,8 @@ const Bookmarks = () => {
   let limit = 10;
 
   useEffect(() => {
-    dispatch(getBookmarks({ userId, limit }));
-  }, [dispatch, limit, userId]);
+    if (isRehydrated) dispatch(getBookmarks({ userId, limit }));
+  }, [dispatch, isRehydrated, limit, userId]);
 
   const { loading, items, totalpages } = bookmarks;
 
