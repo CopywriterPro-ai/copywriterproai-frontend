@@ -99,10 +99,13 @@ const AppHeader = () => {
                   Community
                 </StyledDropdownToggle>
                 <StyledDropdownMenu left="true">
-                  <DropdownItem href={externalLink.facebookGroup}>
+                  <DropdownItem
+                    href={externalLink.facebookGroup}
+                    target="__blank"
+                  >
                     Facebook Group
                   </DropdownItem>
-                  <DropdownItem href={externalLink.discord}>
+                  <DropdownItem href={externalLink.discord} target="__blank">
                     Discord Server
                   </DropdownItem>
                 </StyledDropdownMenu>
