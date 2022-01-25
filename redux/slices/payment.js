@@ -6,7 +6,7 @@ import {
 import { HYDRATE } from "next-redux-wrapper";
 
 import { paymentApi } from "@/api";
-import preprice from "@/data/preprice.json";
+// import preprice from "@/data/preprice.json";
 import asyncThunkError from "@/utils/asyncThunkError";
 
 export const getPriceList = createAsyncThunk(
@@ -70,7 +70,7 @@ export const postCreateSubscription = createAsyncThunk(
 );
 
 const initialState = {
-  price: { loading: "idle", items: preprice, error: null },
+  price: { loading: "idle", items: [], error: null },
   customer: { loading: "idle", id: null, error: null },
   subscription: { loading: "idle", error: null },
   checkout: { loading: "idle", session: {}, error: null },

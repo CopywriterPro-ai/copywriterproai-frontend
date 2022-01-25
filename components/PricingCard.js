@@ -108,7 +108,6 @@ const CustomItem = ({
             <ul>
               <li>Unlimited words</li>
               <li>600 characters input limit</li>
-              <li>1000 characters output limit</li>
               <li>45+ copywriting tools</li>
               <li>AI blog generator</li>
               <li>Multiple user login</li>
@@ -190,9 +189,10 @@ const SinglePriceItem = ({
                 {priceInfo?.words} words/{priceInfo?.period}
               </li>
               <li>{priceInfo?.maxInput} characters input limit</li>
-              <li>{priceInfo?.maxOutput} characters output limit</li>
               <li>45+ copywriting tools</li>
-              <li>AI blog generator</li>
+              <li style={priceInfo?.hasAiBlog ? {} : { color: "#afafaf" }}>
+                AI blog generator
+              </li>
               <li>{priceInfo?.user} user login</li>
               <li>24/7 support</li>
               <li>Community support</li>
