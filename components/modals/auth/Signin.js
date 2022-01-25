@@ -16,6 +16,7 @@ import {
   selectors as authSelector,
 } from "@/redux/slices/auth";
 import { toastMessage } from "@/utils";
+import { USER_DEFAULT_PATH } from "@/appconstants";
 
 const baseURL = process.env.NEXT_PUBLIC_APP_API_URL;
 
@@ -121,7 +122,7 @@ const Signin = () => {
   const [authTab, setAuthTab] = useState(0);
   const { loading } = useSelector(authSelector.getAuthenticate);
   const isPending = loading === "pending";
-  const redirectPath = router.pathname || "/app";
+  const redirectPath = router.pathname || USER_DEFAULT_PATH;
 
   const { register, handleSubmit } = useForm({
     resolver: yupResolver(validationSchema),

@@ -7,6 +7,7 @@ import { AuthLayout as Layout } from "@/layout";
 import { postStrategyLogin } from "@/redux/slices/auth";
 import { toastMessage } from "@/utils";
 import Loader from "@/components/common/Loader";
+import { USER_DEFAULT_PATH } from "@/appconstants";
 
 const Strategyauth = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const Strategyauth = () => {
           data: { message },
         } = payload;
         if (status === 200) {
-          router.push("/app");
+          router.push(USER_DEFAULT_PATH);
         } else if (status === 400) {
           toastMessage.warn(message);
         } else {

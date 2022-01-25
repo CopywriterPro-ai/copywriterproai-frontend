@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 import { useUser } from "@/hooks";
 import UserLayout from "./UserLayout";
+import { USER_DEFAULT_PATH } from "@/appconstants";
 
 const AdminLayout = ({
   children,
@@ -21,7 +22,7 @@ const AdminLayout = ({
       userInfo.role !== "admin" &&
       userInfo.isLoaded
     ) {
-      push("/app");
+      push(USER_DEFAULT_PATH);
     }
   }, [isAuth, isRehydrated, push, userInfo.isLoaded, userInfo.role]);
 

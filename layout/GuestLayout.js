@@ -5,6 +5,7 @@ import Layout from "./Layout";
 import { GuestHeader as Header } from "@/components/common/Header";
 import { GuestFooter as Footer } from "@/components/common/Footer";
 import { useUser } from "@/hooks";
+import { USER_DEFAULT_PATH } from "@/appconstants";
 
 const GuestLayout = ({
   children,
@@ -17,7 +18,7 @@ const GuestLayout = ({
   const { isAuth, isRehydrated } = useUser();
 
   useEffect(() => {
-    if (isAuth && isRehydrated) router.push("/app");
+    if (isAuth && isRehydrated) router.push(USER_DEFAULT_PATH);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, isRehydrated]);
 

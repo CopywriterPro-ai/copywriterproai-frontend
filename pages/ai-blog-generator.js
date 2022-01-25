@@ -21,20 +21,20 @@ import {
   setSigninModal,
   selectors as uiSelector,
 } from "@/redux/slices/ui";
-import { CREATE, UPDATE } from "@/appconstants";
-import { useBeforeunload, useUser, useSidebar } from "@/hooks";
+import {
+  useBeforeunload,
+  useUser,
+  useSidebar,
+  useWarnIfUnsavedChanges,
+} from "@/hooks";
 import { SubscriberModal } from "@/components/modals/subscriber";
 import { BlogResetModal } from "@/components/modals/blogs";
 import { MainSidebar } from "@/components/sidebar";
 import TipsImg from "@/assets/images/generate-tips.png";
 import { toastMessage } from "@/utils";
 
-const createRoute = `/ai-blog-generator?action=${CREATE}`;
-const updateRoute = `/ai-blog-generator?action=${UPDATE}`;
-
 const BlogGenerator = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const aboutRef = useRef(null);
   const titleRef = useRef(null);
@@ -57,16 +57,9 @@ const BlogGenerator = () => {
     }
   });
 
-  useEffect(() => {
-    if (currentBlogId === "") {
-      dispatch(resetBlog());
-      router.push(createRoute);
-    } else {
-      router.push(updateRoute);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentBlogId]);
+  useWarnIfUnsavedChanges(isUpdateChange);
 
+  const isNewBlog = currentBlogId === "";
   const [lastIndex, setLastIndex] = useState(0);
 
   useEffect(() => {
@@ -115,7 +108,7 @@ const BlogGenerator = () => {
   };
 
   const handleSaveOrUpdate = () => {
-    if (router.query.action === "update") {
+    if (!isNewBlog) {
       if (title.length === 0 || value.length === 0 || about.length === 0) {
         toastMessage.customWarn(
           "Blog Headline, Blog About and Blog Content is required!",

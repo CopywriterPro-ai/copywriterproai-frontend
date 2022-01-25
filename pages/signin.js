@@ -17,6 +17,7 @@ import {
 import { postUserLogin, selectors as authSelector } from "@/redux/slices/auth";
 import { selectors as uiSelector } from "@/redux/slices/ui";
 import { toastMessage } from "@/utils";
+import { USER_DEFAULT_PATH } from "@/appconstants";
 
 const { SignForm, Forgot, ForgotLink } = FormStyles;
 
@@ -50,7 +51,7 @@ const SignIn = () => {
         if (redirectPath) {
           router.push(redirectPath);
         } else {
-          router.push("/app");
+          router.push(USER_DEFAULT_PATH);
         }
       } else if (status >= 400) {
         toastMessage.error(message);

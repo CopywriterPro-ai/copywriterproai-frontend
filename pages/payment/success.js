@@ -7,6 +7,7 @@ import {
   getCheckoutSession,
   selectors as paymentSelector,
 } from "@/redux/slices/payment";
+import { USER_DEFAULT_PATH } from "@/appconstants";
 
 const REDIRECT_TIME = 5000;
 
@@ -35,7 +36,7 @@ const Success = () => {
 
     if (!emptySession) {
       timeout = setTimeout(() => {
-        router.push("/app");
+        router.push(USER_DEFAULT_PATH);
       }, REDIRECT_TIME);
 
       interval = setInterval(() => {

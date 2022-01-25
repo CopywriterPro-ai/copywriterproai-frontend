@@ -364,11 +364,11 @@ const PricingCard = () => {
         <span>Six Month</span>
       </PriceSwitch>
       <div className="row justify-content-center" style={{ marginTop: "20px" }}>
-        <TrialItem
+        {/* <TrialItem
           isCheckoutPending={isCheckoutPending}
           subscriptionInfo={subscriptionInfo}
           isAuth={isAuth}
-        />
+        /> */}
         {items &&
           items.map((item, index) => (
             <SinglePriceItem
