@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 import Layout from "./Layout";
 import { useUser } from "@/hooks";
+import { USER_DEFAULT_PATH } from "@/appconstants";
 
 const AuthLayout = ({
   children,
@@ -15,7 +16,7 @@ const AuthLayout = ({
   const { isAuth, isRehydrated } = useUser();
 
   useEffect(() => {
-    if (isAuth && isRehydrated) router.push("/app");
+    if (isAuth && isRehydrated) router.push(USER_DEFAULT_PATH);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, isRehydrated]);
 

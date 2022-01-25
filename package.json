@@ -20,7 +20,6 @@
     "dayjs": "^1.10.7",
     "deep-equal": "^2.0.5",
     "fuse.js": "^6.4.6",
-    "ga-4-react": "^0.1.281",
     "next": "11.1.2",
     "next-redux-wrapper": "^7.0.5",
     "next-seo": "^4.28.1",

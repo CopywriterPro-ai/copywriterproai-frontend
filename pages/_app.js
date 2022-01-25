@@ -1,8 +1,8 @@
+import Script from "next/script";
 import { useEffect } from "react";
 import { useStore } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { PersistGate } from "redux-persist/integration/react";
-import GA4React from "ga-4-react";
 import { hotjar } from "react-hotjar";
 
 import { wrapper } from "@/redux/store";
@@ -12,7 +12,7 @@ import theme from "@/styles/theme";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@/styles/global.scss";
 
-const ga4react = new GA4React(process.env.NEXT_PUBLIC_APP_GA4_CODE);
+const ga4code = process.env.NEXT_PUBLIC_APP_GA4_CODE;
 
 const App = ({ Component, pageProps, err }) => {
   useEffect(() => {
@@ -29,20 +29,26 @@ const App = ({ Component, pageProps, err }) => {
 
   const store = useStore();
 
-  if (!isClientDevMode && isProductionClient) {
-    ga4react.initialize().then(
-      (ga4) => {
-        ga4.pageview("path");
-        ga4.gtag("event", "pageview", "path");
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
-  }
-
   return (
     <>
+      {!isClientDevMode && isProductionClient && (
+        <>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${ga4code}`}
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', '${ga4code}');
+        `}
+          </Script>
+        </>
+      )}
+
       <GlobalStyle />
       <PersistGate loading={null} persistor={store.__persistor}>
         {() => (

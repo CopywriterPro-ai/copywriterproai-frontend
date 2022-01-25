@@ -24,6 +24,7 @@ import {
 import { useResponsive } from "@/hooks";
 import LogoImg from "@/assets/images/logo-white.png";
 import { useElementSize, useUser, useNotice } from "@/hooks";
+import { USER_DEFAULT_PATH } from "@/appconstants";
 
 const NavItem = ({ link, title }) => {
   return (
@@ -192,7 +193,7 @@ const AppHeader = () => {
         <div className="container-fluid">
           <NavbarContainer>
             <Logo>
-              <Link href={isAuth ? "/app" : "/"}>
+              <Link href={isAuth ? USER_DEFAULT_PATH : "/"}>
                 <a>
                   <LogoIcon src={LogoImg.src} alt="copywriterpro" />
                 </a>
@@ -202,6 +203,7 @@ const AppHeader = () => {
               <ul>
                 {isAuth && (
                   <>
+                    <NavItem link="/app" title="App" />
                     <NavBlogDropdownMenuItem
                       isOpen={blogIsOpen}
                       toggle={blogToggle}
@@ -228,8 +230,8 @@ const AppHeader = () => {
             {!isAuth && (
               <NavbarMenu>
                 <NavList>
-                  <NavItem link="/signin" title="Signin" />
-                  <NavItem link="/signup" title="Signup" />
+                  <NavItem link="/signin" title="Sign in" />
+                  <NavItem link="/signup" title="Sign up" />
                 </NavList>
               </NavbarMenu>
             )}
