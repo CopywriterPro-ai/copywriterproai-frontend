@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from "styled-components";
 
 import { GuestLayout as Layout } from "@/layout";
 import Banner from "@/components/pages/landing/Banner";
+import Extension from "@/components/pages/landing/Extension";
 import GenerateSchedule from "@/components/pages/landing/GenerateSchedule";
 import CopywriterOffers from "@/components/pages/landing/CopywriterOffers";
 import QuickAuth from "@/components/pages/landing/QuickAuth";
@@ -28,6 +29,11 @@ const Home = () => {
         <Section>
           <Banner />
         </Section>
+      </div>
+      <Section>
+        <Extension />
+      </Section>
+      <div className="container">
         <Section>
           <GenerateSchedule />
         </Section>
