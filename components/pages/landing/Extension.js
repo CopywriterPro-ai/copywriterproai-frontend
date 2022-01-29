@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import ChromeIcon from "@/assets/images/landing/extension/chrome-48.png";
@@ -7,8 +7,9 @@ import { useResponsive } from "@/hooks";
 
 const Extension = () => {
   const { isDesktop } = useResponsive();
+  const [isActive] = useState(false);
 
-  if (isDesktop) {
+  if (isDesktop && isActive) {
     return (
       <Container>
         <Title>Unleash Your Writing Power. Now Available on</Title>
