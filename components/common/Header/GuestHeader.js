@@ -1,4 +1,4 @@
-import { useState, useRef, forwardRef } from "react";
+import { useState, useEffect, useRef, forwardRef } from "react";
 import Link from "next/link";
 import {
   Collapse,
@@ -57,16 +57,21 @@ const AppHeader = () => {
 
   const toggle = () => setIsOpen(!isOpen);
 
+  useEffect(() => {
+    setShowNotice(active);
+  }, [active]);
+
   return (
     <header>
-      {active && showNotice && (
+      {showNotice && (
         <TopNotice ref={noticeTopRef}>
           <div style={{ maxWidth: "80%" }}>
             {active && (
               <>
                 {title}{" "}
                 <span dangerouslySetInnerHTML={{ __html: description }}></span>{" "}
-                Ends {expiryTime && dayjs(expiryTime).format("MMMM D")}.
+                Ends
+                {expiryTime && dayjs(expiryTime).format("MMMM D")}.
               </>
             )}
           </div>
