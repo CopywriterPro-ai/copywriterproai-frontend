@@ -163,9 +163,13 @@ const AppHeader = () => {
 
   const { active, title, description, expiryTime } = noticeData;
 
+  useEffect(() => {
+    dispatch(setTopBarStatus(active));
+  }, [active, dispatch]);
+
   return (
     <div>
-      {active && showTopBar && (
+      {showTopBar && (
         <TopNotice ref={noticeTopRef}>
           <div style={{ maxWidth: "80%" }}>
             {active && (
