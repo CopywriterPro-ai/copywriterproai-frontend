@@ -4,23 +4,23 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   postBlogContents,
-  setStateBlogIntro,
+  setStateBlogOutro,
   selectors as blogSelector,
 } from "@/redux/slices/blog";
 import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
 import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem } from "./styles";
-import { BLOG_INTRO } from "@/appconstants";
+import { BLOG_OUTRO } from "@/appconstants";
 import { toastMessage } from "@/utils";
 import { useUser } from "@/hooks";
 import { ToolAction, ToolInput } from "./styles";
 import GenerateButton from "./components/GenerateButton";
 
-const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
+const BlogOutro = ({ titleRef, aboutRef, quillRef }) => {
   const dispatch = useDispatch();
   const [suggestionNum, setSuggestionNum] = useState(1);
   const { isCurrentTask, isEmpty, items, loading } = useSelector(
-    blogSelector.getBlogItem(BLOG_INTRO)
+    blogSelector.getBlogItem(BLOG_OUTRO)
   );
   const { title, about } = useSelector(blogSelector.getBlogContent);
 
@@ -33,14 +33,14 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
     dispatch(setSubscriberUsageModal({ usage: true, message }));
   };
 
-  const handleBlogIntro = () => {
+  const handleBlogOutro = () => {
     if (validTitle && validAbout) {
       if (isAuth) {
         dispatch(
           postBlogContents({
-            task: BLOG_INTRO,
+            task: BLOG_OUTRO,
             data: {
-              task: BLOG_INTRO,
+              task: BLOG_OUTRO,
               headline: title,
               numberOfSuggestions: suggestionNum,
               about,
@@ -69,17 +69,17 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
     }
   };
 
-  const handleSelectBlogIntro = (item) => {
-    dispatch(setStateBlogIntro(item));
+  const handleSelectBlogOutro = (item) => {
+    dispatch(setStateBlogOutro(item));
     quillRef.setText(item);
   };
 
   return (
     <ToolItem>
       <ToolTitleItem
-        text="Blog Intro"
+        text="Blog Outro"
         isActive={isCurrentTask}
-        currentTask={BLOG_INTRO}
+        currentTask={BLOG_OUTRO}
       />
 
       <Collapse isOpen={isCurrentTask}>
@@ -94,10 +94,10 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
               value={suggestionNum}
             />
           </ToolInput>
-          <GenerateButton loading={loading} onClick={handleBlogIntro} />
+          <GenerateButton loading={loading} onClick={handleBlogOutro} />
           {!isEmpty &&
             items.map((item, index) => (
-              <TextItem onClick={() => handleSelectBlogIntro(item)} key={index}>
+              <TextItem onClick={() => handleSelectBlogOutro(item)} key={index}>
                 {item}
               </TextItem>
             ))}
@@ -107,4 +107,4 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
   );
 };
 
-export default BlogIntro;
+export default BlogOutro;

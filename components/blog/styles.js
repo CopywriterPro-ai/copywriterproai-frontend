@@ -1,5 +1,27 @@
 import styled from "styled-components";
 
+export const ToolAction = styled.div`
+  margin-left: 20px;
+`;
+
+export const ToolInput = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0;
+
+  p {
+    margin: 0px;
+    font-size: 14px;
+  }
+
+  input {
+    outline: none;
+    padding: 1px 5px;
+    width: 70px;
+  }
+`;
+
 export const ToolTitle = styled.div`
   display: flex;
   justify-content: space-between;
@@ -17,6 +39,7 @@ export const GenButton = styled.button`
   font-size: 15px;
   line-height: 22px;
   user-select: none;
+  margin: 15px 0 15px 0;
 
   &:disabled {
     border: 1.5px solid #cacaca;
@@ -75,8 +98,9 @@ export const TextItem = styled.div`
 
 export const OutlineForm = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center; */
+  /* justify-content: center; */
+  flex-direction: column;
   padding-top: 10px;
   p {
     margin: 0;

@@ -13,6 +13,7 @@ import {
   BLOG_INTRO,
   BLOG_OUTLINE,
   BLOG_TOPIC,
+  BLOG_OUTRO,
 } from "@/appconstants";
 import asyncThunkError from "@/utils/asyncThunkError";
 
@@ -114,6 +115,7 @@ const initialState = {
   blogoutline: { items: [] },
   blogintro: { items: [] },
   blogtopic: { items: [] },
+  blogoutro: { items: [] },
   editor: {
     range: null,
     selected: null,
@@ -155,6 +157,10 @@ const blog = createSlice({
     },
     setStateBlogOutline: (state, action) => {
       state.outline = action.payload;
+      state.currenttask = BLOG_OUTRO;
+    },
+    setStateBlogOutro: (state, action) => {
+      state.outro = action.payload;
       state.currenttask = null;
     },
 
@@ -221,6 +227,10 @@ const blog = createSlice({
 
           case BLOG_INTRO:
             state.blogintro.items = generatedTexts;
+            break;
+
+          case BLOG_OUTRO:
+            state.blogoutro.items = generatedTexts;
             break;
 
           case BLOG_TOPIC:
@@ -412,6 +422,9 @@ export const selectors = {
         case BLOG_TOPIC:
           return getItem({ blog, key: "blogtopic", isCurrentTask });
 
+        case BLOG_OUTRO:
+          return getItem({ blog, key: "blogoutro", isCurrentTask });
+
         default:
           return {};
       }
@@ -464,6 +477,7 @@ export const {
   setStateBlogTitle,
   setStateBlogIntro,
   setStateBlogOutline,
+  setStateBlogOutro,
   setCurrentTask,
   setEditorCurrentSelectedRange,
   setEditorCurrentSelectedText,
