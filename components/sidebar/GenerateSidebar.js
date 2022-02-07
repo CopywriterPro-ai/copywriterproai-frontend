@@ -85,6 +85,10 @@ const GenerateSidebar = () => {
     dispatch(setContentSidebar(value));
   };
 
+  const handleBlogOpen = () => {
+    router.push({ pathname: `/ai-blog-generator` });
+  };
+
   const hasSearchResult = searchResult.length !== 0;
   const noSearchResult = !hasSearchResult && query.length !== 0;
   const { width: windowWidth } = useWindowSize();
@@ -154,6 +158,16 @@ const GenerateSidebar = () => {
             <HR />
           </>
         )}
+        <Menu>
+          <SidebarTitle>Blog Writer</SidebarTitle>
+          <MenuItemStyle
+            style={{ paddingLeft: "10px" }}
+            onClick={handleBlogOpen}
+          >
+            Blog
+          </MenuItemStyle>
+        </Menu>
+        <HR />
         <Menu>
           <SidebarTitle>Writing Tools</SidebarTitle>
           {categoriesContent.map((group) => (

@@ -8,22 +8,22 @@ import {
   selectors as blogSelector,
 } from "@/redux/slices/blog";
 import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
-import ToolTitleItem from "./ToolTitleItem";
-import { ToolItem, TextItem, OutlineForm, GenButton } from "./styles";
+import ToolTitleItem from "./components/ToolTitleItem";
+import { ToolItem, TextItem, ToolAction, ToolInput } from "./styles";
 import { BLOG_OUTLINE } from "@/appconstants";
 import { toastMessage } from "@/utils";
-import Loader from "@/components/common/Loader";
 import { useUser } from "@/hooks";
+import GenerateButton from "./components/GenerateButton";
 
 const BlogOutline = ({ aboutRef, quillRef }) => {
   const dispatch = useDispatch();
-
   const [number, setNumber] = useState(5);
+  const [suggestionNum, setSuggestionNum] = useState(1);
 
   const { isCurrentTask, items, loading } = useSelector(
     blogSelector.getBlogItem(BLOG_OUTLINE)
   );
-  const { about } = useSelector(blogSelector.getBlogContent);
+  const { about, title } = useSelector(blogSelector.getBlogContent);
   const { isAuth } = useUser();
   const validAbout = about.trim().length > 0;
 
@@ -39,8 +39,10 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
             task: BLOG_OUTLINE,
             data: {
               task: BLOG_OUTLINE,
+              headline: title,
               numberOfPoints: number,
-              blogAbout: about,
+              numberOfSuggestions: suggestionNum,
+              about,
             },
           })
         ).then(({ payload }) => {
@@ -78,42 +80,44 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
         currentTask={BLOG_OUTLINE}
       />
       <Collapse isOpen={isCurrentTask}>
-        <OutlineForm>
-          <p>Number of Points</p>
-          <input
-            type="number"
-            name="number"
-            min="3"
-            max="10"
-            onChange={(e) => setNumber(e.target.value)}
-            value={number}
-          />
-          <GenButton
-            disabled={loading}
-            loading={loading.toString()}
-            onClick={handleBlogOutline}
-          >
-            {loading ? (
-              <div style={{ display: "flex" }}>
-                Generating <Loader style={{ marginLeft: "5px" }} size="10px" />
-              </div>
-            ) : (
-              "Generate"
-            )}
-          </GenButton>
-        </OutlineForm>
-        {items.map((item, index) => {
-          const texts = item.trim()?.split("\n");
-          return (
-            <TextItem onClick={() => handleSelectBlogOutline(item)} key={index}>
-              <ol>
-                {texts.map((text, index) => (
-                  <li key={index}>{text}</li>
-                ))}
-              </ol>
-            </TextItem>
-          );
-        })}
+        <ToolAction>
+          <ToolInput>
+            <p>Number of Points</p>
+            <input
+              type="number"
+              min={3}
+              max={10}
+              onChange={(e) => setNumber(e.target.value)}
+              value={number}
+            />
+          </ToolInput>
+          <ToolInput>
+            <p>Number of Suggestions</p>
+            <input
+              type="number"
+              min={1}
+              max={10}
+              onChange={(e) => setSuggestionNum(e.target.value)}
+              value={suggestionNum}
+            />
+          </ToolInput>
+          <GenerateButton loading={loading} onClick={handleBlogOutline} />
+          {items.map((item, index) => {
+            const texts = item.trim()?.split("\n");
+            return (
+              <TextItem
+                onClick={() => handleSelectBlogOutline(item)}
+                key={index}
+              >
+                <ol>
+                  {texts.map((text, index) => (
+                    <li key={index}>{text}</li>
+                  ))}
+                </ol>
+              </TextItem>
+            );
+          })}
+        </ToolAction>
       </Collapse>
     </ToolItem>
   );

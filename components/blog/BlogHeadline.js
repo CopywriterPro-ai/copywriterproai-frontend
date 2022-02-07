@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Collapse } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,15 +8,17 @@ import {
   selectors as blogSelector,
 } from "@/redux/slices/blog";
 import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
-import ToolTitleItem from "./ToolTitleItem";
+import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem } from "./styles";
 import { BLOG_HEADLINE } from "@/appconstants";
 import { toastMessage } from "@/utils";
 import { useUser } from "@/hooks";
+import { ToolAction, ToolInput } from "./styles";
+import GenerateButton from "./components/GenerateButton";
 
 const BlogHeadline = ({ aboutRef }) => {
   const dispatch = useDispatch();
-
+  const [suggestionNum, setSuggestionNum] = useState(1);
   const { isCurrentTask, isEmpty, items, loading } = useSelector(
     blogSelector.getBlogItem(BLOG_HEADLINE)
   );
@@ -37,7 +39,8 @@ const BlogHeadline = ({ aboutRef }) => {
             task: BLOG_HEADLINE,
             data: {
               task: BLOG_HEADLINE,
-              blogAbout: about,
+              about: about,
+              numberOfSuggestions: suggestionNum,
             },
           })
         ).then(({ payload }) => {
@@ -59,21 +62,34 @@ const BlogHeadline = ({ aboutRef }) => {
   return (
     <ToolItem>
       <ToolTitleItem
-        loading={loading}
         text="Blog Headline"
         isActive={isCurrentTask}
-        onClick={handleBlogHeadline}
         currentTask={BLOG_HEADLINE}
       />
-      <Collapse isOpen={isCurrentTask && !isEmpty}>
-        {items.map((item, index) => (
-          <TextItem
-            onClick={() => dispatch(setStateBlogTitle(item))}
-            key={index}
-          >
-            {item}
-          </TextItem>
-        ))}
+
+      <Collapse isOpen={isCurrentTask}>
+        <ToolAction>
+          <ToolInput>
+            <p>Number of Suggestions</p>
+            <input
+              type="number"
+              min={1}
+              max={5}
+              onChange={(e) => setSuggestionNum(e.target.value)}
+              value={suggestionNum}
+            />
+          </ToolInput>
+          <GenerateButton loading={loading} onClick={handleBlogHeadline} />
+          {!isEmpty &&
+            items.map((item, index) => (
+              <TextItem
+                onClick={() => dispatch(setStateBlogTitle(item))}
+                key={index}
+              >
+                {item}
+              </TextItem>
+            ))}
+        </ToolAction>
       </Collapse>
     </ToolItem>
   );

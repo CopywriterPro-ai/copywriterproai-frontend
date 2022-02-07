@@ -3,6 +3,7 @@ export const BLOG_HEADLINE = "blog-headline";
 export const BLOG_OUTLINE = "blog-outline";
 export const BLOG_INTRO = "blog-intro";
 export const BLOG_TOPIC = "blog-topic";
+export const BLOG_OUTRO = "blog-outro";
 export const PARAPHRASING = "paraphrasing";
 export const EXPANDER = "expander";
 export const SIMPLIFIER = "simplifier";
@@ -15,4 +16,4 @@ export const DELETE = "delete";
 export const UPDATE = "update";
 export const CREATE = "create";
 
-export const USER_DEFAULT_PATH = "/ai-blog-generator";
+export const USER_DEFAULT_PATH = "/app";

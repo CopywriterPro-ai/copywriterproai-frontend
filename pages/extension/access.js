@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 
 import { extensionAccessToken } from "redux/slices/user";
 import { SpecialLayout as Layout } from "@/layout";
-import { useUser } from "@/hooks";
+import { useUser, useUAParser } from "@/hooks";
 import { toastMessage } from "@/utils";
 
 const REDIRECT_SECONDS = 5;
@@ -15,8 +15,10 @@ const AccessToken = () => {
   const dispatch = useDispatch();
   const [authSuccess, setAuthSuccess] = useState(false);
   const [count, setCount] = useState(REDIRECT_SECONDS);
-
+  const { success: uaSuccess, parser } = useUAParser();
   const { isAuth } = useUser();
+
+  const { browser } = parser;
 
   useEffect(() => {
     if (authSuccess)
@@ -28,9 +30,9 @@ const AccessToken = () => {
   useEffect(() => {
     if (isAuth)
       dispatch(extensionAccessToken()).then(({ payload }) => {
-        if (payload.status === 200) {
+        if (payload.status === 200 && uaSuccess) {
           try {
-            if (chrome && chrome.runtime) {
+            if (browser?.name === "Chrome" && chrome && chrome.runtime) {
               chrome.runtime.sendMessage(
                 extensionId,
                 {
@@ -47,6 +49,16 @@ const AccessToken = () => {
                 }
               );
             }
+            if (browser?.name === "Firefox" && window && window.postMessage) {
+              window.postMessage(
+                {
+                  type: "AccessToken",
+                  ...payload.data,
+                  tabCloseSeconds: REDIRECT_SECONDS,
+                },
+                "*"
+              );
+            }
           } catch (error) {
             console.log("error", error);
           }
@@ -54,7 +66,17 @@ const AccessToken = () => {
           toastMessage.warn("Something went wrong...");
         }
       });
-  }, [dispatch, isAuth]);
+  }, [browser?.name, dispatch, isAuth, uaSuccess]);
+
+  useEffect(() => {
+    if (uaSuccess && browser?.name === "Firefox") {
+      window.addEventListener("message", (event) => {
+        if (event.source === window && event.data && event.data.success) {
+          setAuthSuccess(event.data.success);
+        }
+      });
+    }
+  }, [browser?.name, uaSuccess]);
 
   return (
     <Layout>

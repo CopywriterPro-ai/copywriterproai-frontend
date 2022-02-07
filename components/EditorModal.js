@@ -76,7 +76,7 @@ const EditorModal = ({ position, quill, editorWidth }) => {
   const dispatch = useDispatch();
 
   const [mounded, setMounded] = useState(false);
-  const { about } = useSelector(blogSelector.getBlogContent);
+  const { about, title } = useSelector(blogSelector.getBlogContent);
   const { selected, range } = useSelector(blogSelector.getEditor());
   const { loading } = useSelector(blogSelector.getToolContent());
   const { isAuth } = useUser();
@@ -117,8 +117,17 @@ const EditorModal = ({ position, quill, editorWidth }) => {
       if (!about) {
         toastMessage.warn("Please provide blog about");
         return;
+      } else if (!title) {
+        toastMessage.warn("Please provide blog headline");
+        return;
       }
-      data = { task, about, topic: selected };
+      data = {
+        task,
+        about,
+        topic: selected,
+        headline: title,
+        numberOfSuggestions: 1,
+      };
     }
 
     dispatch(postEditorToolsContent({ data, task: data.task })).then((res) => {
