@@ -8,6 +8,7 @@ import {
 
 import reducer from "@/redux/reducers";
 import authMiddleware from "@/redux/middleware/auth";
+import generateUpdateMiddleware from "@/redux/middleware/generateUpdate";
 import {
   isServer,
   stateSyncPredicate,
@@ -20,6 +21,7 @@ const middleware = (getDefaultMiddleware) => {
       serializableCheck: false,
     }),
     authMiddleware,
+    generateUpdateMiddleware,
   ];
   if (!isServer) {
     items.push(

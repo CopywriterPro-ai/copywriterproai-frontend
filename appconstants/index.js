@@ -16,4 +16,4 @@ export const DELETE = "delete";
 export const UPDATE = "update";
 export const CREATE = "create";
 
-export const USER_DEFAULT_PATH = "/ai-blog-generator";
+export const USER_DEFAULT_PATH = "/app";
