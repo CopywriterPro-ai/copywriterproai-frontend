@@ -38,7 +38,7 @@ const InputGeneratingBox = () => {
   const [defaultInput, setDefaultInput] = useState({});
   const [queryTool, setQueryTool] = useState(null);
   const isToolAvailable = useSelector(contentSelector.isHasTool(queryTool));
-  const { isAuth } = useUser();
+  const { isAuth, userInfo } = useUser();
 
   const { contentTexts } = content;
   const { words } = subscriberData;
@@ -84,9 +84,10 @@ const InputGeneratingBox = () => {
     const data = { ...formData, task };
 
     if (isAuth) {
-      if (words)
+      if (words || userInfo?.role === "admin")
         dispatch(postGenerateContents({ data, task })).then(({ payload }) => {
           if (payload.status === 400) {
+            console.log(payload.data);
             handleSubscriberModalOpen(payload.data.message);
           }
         });
