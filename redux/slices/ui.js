@@ -7,6 +7,7 @@ import { HYDRATE } from "next-redux-wrapper";
 
 import { uiApi } from "@/api";
 import { selectors as authSelector } from "./auth";
+import { selectors as subscriberSelector } from "./subscriber";
 import asyncThunkError from "@/utils/asyncThunkError";
 
 export const getNotice = createAsyncThunk(
@@ -225,11 +226,16 @@ export const selectors = {
       (state) => state.ui.modal,
       authSelector.getAuthenticate,
       authSelector.getInfo,
+      subscriberSelector.getOwnSubscriber,
     ],
-    (modal, auth, authInfo) => {
+    (modal, auth, authInfo, { data: subscriberData }) => {
       const { isAuth } = auth;
+      const isTrial = subscriberData?.freeTrial?.eligible === true;
+      const hasWords = subscriberData?.words > 0;
       if (isAuth) {
         if (authInfo.role === "admin") {
+          return { ...modal, subscriber: { usage: false, message: null } };
+        } else if (authInfo.role === "user" && isTrial && hasWords) {
           return { ...modal, subscriber: { usage: false, message: null } };
         }
       }
