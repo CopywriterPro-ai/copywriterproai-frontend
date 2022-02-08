@@ -141,7 +141,10 @@ const SinglePriceItem = ({
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { subscription, isPaidSubscribers } = subscriptionInfo;
+  const {
+    subscription,
+    subscriberInfo: { isPaidSubscribers },
+  } = subscriptionInfo;
   const { id: customerId } = useSelector(paymentSelector.getCustomer);
   const priceInfo = pricesInfo[pricedata?.metadata?.priceKey];
 

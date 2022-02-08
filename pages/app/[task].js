@@ -8,12 +8,13 @@ import { GenerateSidebar, MainSidebar } from "@/components/sidebar";
 import { setCurrentActiveKeyState } from "@/redux/slices/content";
 import { selectors as uiSelector } from "@/redux/slices/ui";
 import { SubscriberModal } from "@/components/modals/subscriber";
-import { useWindowSize, useSidebar } from "@/hooks";
+import { useWindowSize, useSidebar, useUser } from "@/hooks";
 
 const AppItem = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { showSidebar, showContent } = useSidebar();
+  const { isAuth, userInfo } = useUser();
 
   const { query, isReady } = router;
   const { task } = query;

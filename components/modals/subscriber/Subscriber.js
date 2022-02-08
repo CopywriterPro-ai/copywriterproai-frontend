@@ -358,7 +358,7 @@ const Subscriber = () => {
           </HeadingMessage>
         )}
         <StyledCurrentPlan>
-          Current Plan: {subscription.replace("_", " ").toLowerCase()}
+          Current Plan: {subscription?.replace("_", " ")?.toLowerCase()}
         </StyledCurrentPlan>
         {loadingItems === "pending" && !priceItems.length ? (
           <StyledLoading>

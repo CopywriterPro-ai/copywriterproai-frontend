@@ -37,7 +37,10 @@ const MainSidebar = () => {
         {isAuth && (
           <SidebarUser>
             <p className="sidebar-premium">
-              {subscribe.isPaidSubscribers ? "Premium" : "Freemium"} Account
+              {subscribe.subscriberInfo.isPaidSubscribers
+                ? "Premium"
+                : "Freemium"}
+              Account
             </p>
             <SidebarUserAvatar>
               {profileAvatar ? (
