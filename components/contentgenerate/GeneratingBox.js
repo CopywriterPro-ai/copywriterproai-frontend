@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { UncontrolledTooltip } from "reactstrap";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import TextareaAutosize from "react-textarea-autosize";
 
 import {
   postGenerateContents,
@@ -21,6 +22,7 @@ import Spinner from "@/components/common/Spinner";
 import GenerateResult from "./GenerateResult";
 import TipsImg from "@/assets/images/generate-tips.png";
 import { useUser } from "@/hooks";
+import toolsvalidation from "@/data/toolsvalidation";
 
 const InputGeneratingBox = () => {
   const dispatch = useDispatch();
@@ -78,6 +80,14 @@ const InputGeneratingBox = () => {
   const handleSubscriberModalOpen = (message) => {
     dispatch(setSubscriberUsageModal({ usage: true, message }));
   };
+
+  const validationSchema = useMemo(() => {
+    if (activeKey) {
+      return toolsvalidation(activeKey, true);
+    } else {
+      return {};
+    }
+  }, [activeKey]);
 
   const onSubmit = (formData) => {
     const task = activeKey;
@@ -153,24 +163,26 @@ const InputGeneratingBox = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="content-form">
             {formContent.fields.map((field, index) => {
               if (field.type === "InputText") {
+                const fieldValidation = validationSchema[field.key];
                 const watchChar = watching[field.key]
                   ? watching[field.key]?.length
                   : 0;
-                const maxChar = field?.validation?.max;
-                const required = field?.validation?.required;
+                const minChar = fieldValidation?.min || 0;
+                const maxChar = fieldValidation?.max || 10;
+                const required = fieldValidation?.required || false;
                 const exceededChar = maxChar < watchChar;
 
                 return (
                   <div className="form-group" key={index}>
                     <label htmlFor={field.key}>{field.name}</label>
                     <Input
+                      maxRows={3}
                       autoComplete="off"
-                      style={{ color: "black" }}
                       {...register(field.key, {
                         required,
                         maxLength: maxChar,
+                        minLength: minChar,
                       })}
-                      type="text"
                       id={field.key}
                       defaultValue={
                         isCurrentInput ? defaultInput.input[field.key] : null
@@ -189,21 +201,25 @@ const InputGeneratingBox = () => {
                   </div>
                 );
               } else if (field.type === "TextArea") {
+                const fieldValidation = validationSchema[field.key];
                 const watchChar = watching[field.key]
                   ? watching[field.key]?.length
                   : 0;
-                const maxChar = field?.validation?.max;
-                const required = field?.validation?.required;
+                const minChar = fieldValidation?.min || 0;
+                const maxChar = fieldValidation?.max || 10;
+                const required = fieldValidation?.required || false;
                 const exceededChar = maxChar < watchChar;
 
                 return (
                   <div className="form-group" key={index}>
                     <label htmlFor={field.key}>{field.name}</label>
                     <TextArea
-                      style={{ color: "black" }}
+                      minRows={3}
+                      maxRows={7}
                       {...register(field.key, {
                         required,
                         maxLength: maxChar,
+                        minLength: minChar,
                       })}
                       id={field.key}
                       defaultValue={
@@ -365,26 +381,28 @@ const SubmitAction = styled.div`
   text-align: center;
 `;
 
-const Input = styled.input`
+const Input = styled(TextareaAutosize)`
   width: 100%;
   height: 45px;
   padding: 6px 15px;
   outline: none;
   border: 1px solid #b4b4b4;
-  color: #748194;
+  color: black;
   font-size: 16px;
   display: block;
+  resize: none;
 `;
 
-const TextArea = styled.textarea`
+const TextArea = styled(TextareaAutosize)`
   width: 100%;
   height: 270px;
   padding: 6px 15px;
   outline: none;
   border: 1px solid #b4b4b4;
-  color: #748194;
+  color: black;
   font-size: 16px;
   display: block;
+  resize: none;
 `;
 
 const OptionSelect = styled.select`
