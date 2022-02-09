@@ -77,7 +77,22 @@ const subscriber = createSlice({
 export const selectors = {
   getOwnSubscriber: createSelector(
     (state) => state.subscriber,
-    (subscriber) => subscriber
+    (subscriber) => {
+      if (Object.values(subscriber.data).length === 0) {
+        return {
+          ...subscriber,
+          data: {
+            copycounter: 0,
+            dailyCreaditUsage: { usage: 0, date: new Date().toDateString() },
+            freeTrial: { eligible: false, dailyLimitExceeded: true },
+            subscriberInfo: { isPaidSubscribers: false, inputLimit: true },
+            subscription: "Freemium",
+            words: 0,
+          },
+        };
+      }
+      return subscriber;
+    }
   ),
 };
 
