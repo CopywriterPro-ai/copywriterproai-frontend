@@ -16,12 +16,11 @@ import {
   setContentSidebar,
   setSubscriberUsageModal,
 } from "@/redux/slices/ui";
-import { selectors as subscriberSelector } from "@/redux/slices/subscriber";
 import Loader from "@/components/common/Loader";
 import Spinner from "@/components/common/Spinner";
 import GenerateResult from "./GenerateResult";
 import TipsImg from "@/assets/images/generate-tips.png";
-import { useUser } from "@/hooks";
+import { useUser, useSubscriberModal } from "@/hooks";
 import toolsvalidation from "@/data/toolsvalidation";
 
 const InputGeneratingBox = () => {
@@ -34,16 +33,16 @@ const InputGeneratingBox = () => {
   const { loading, content } = useSelector(
     contentSelector.getGeneratedContents()
   );
-  const { data: subscriberData } = useSelector(
-    subscriberSelector.getOwnSubscriber
-  );
   const [defaultInput, setDefaultInput] = useState({});
   const [queryTool, setQueryTool] = useState(null);
   const isToolAvailable = useSelector(contentSelector.isHasTool(queryTool));
-  const { isAuth, userInfo } = useUser();
+  const {
+    isAuth,
+    subscribe: { words },
+  } = useUser();
+  const showSubscriberModal = useSubscriberModal();
 
   const { contentTexts } = content;
-  const { words } = subscriberData;
   const { isReady, query } = router;
 
   const { register, handleSubmit, reset, watch } = useForm();
@@ -94,13 +93,7 @@ const InputGeneratingBox = () => {
     const data = { ...formData, task };
 
     if (isAuth) {
-      if (words || userInfo?.role === "admin")
-        dispatch(postGenerateContents({ data, task })).then(({ payload }) => {
-          if (payload.status === 400) {
-            console.log(payload.data);
-            handleSubscriberModalOpen(payload.data.message);
-          }
-        });
+      if (!showSubscriberModal) dispatch(postGenerateContents({ data, task }));
       else handleSubscriberModalOpen();
     } else {
       dispatch(setSigninModal(true));
@@ -146,7 +139,7 @@ const InputGeneratingBox = () => {
             onClick={() => handleSubscriberModalOpen()}
             style={{ cursor: "pointer" }}
           >
-            Words Left: {subscriberData?.words}
+            Words Left: {words ? words : 0}
           </CreditsLeft>
         )}
       </ContentHeader>
@@ -214,8 +207,8 @@ const InputGeneratingBox = () => {
                   <div className="form-group" key={index}>
                     <label htmlFor={field.key}>{field.name}</label>
                     <TextArea
-                      minRows={3}
-                      maxRows={7}
+                      minRows={4}
+                      maxRows={8}
                       {...register(field.key, {
                         required,
                         maxLength: maxChar,

@@ -12,7 +12,7 @@ import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem } from "./styles";
 import { BLOG_OUTRO } from "@/appconstants";
 import { toastMessage } from "@/utils";
-import { useUser } from "@/hooks";
+import { useUser, useSubscriberModal } from "@/hooks";
 import { ToolAction, ToolInput } from "./styles";
 import GenerateButton from "./components/GenerateButton";
 
@@ -25,6 +25,7 @@ const BlogOutro = ({ titleRef, aboutRef, quillRef }) => {
   const { title, about } = useSelector(blogSelector.getBlogContent);
 
   const { isAuth } = useUser();
+  const showSubscriberModal = useSubscriberModal();
 
   const validTitle = title.trim().length > 0;
   const validAbout = about.trim().length > 0;
@@ -36,6 +37,10 @@ const BlogOutro = ({ titleRef, aboutRef, quillRef }) => {
   const handleBlogOutro = () => {
     if (validTitle && validAbout) {
       if (isAuth) {
+        if (showSubscriberModal) {
+          return handleSubscriberModalOpen();
+        }
+
         dispatch(
           postBlogContents({
             task: BLOG_OUTRO,
@@ -46,11 +51,7 @@ const BlogOutro = ({ titleRef, aboutRef, quillRef }) => {
               about,
             },
           })
-        ).then(({ payload }) => {
-          if (payload.status === 400) {
-            handleSubscriberModalOpen(payload.data.message);
-          }
-        });
+        );
       } else {
         dispatch(setSigninModal(true));
       }
