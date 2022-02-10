@@ -16,8 +16,9 @@ import {
   setEditorCurrentSelectedRange,
   selectors as blogSelector,
 } from "@/redux/slices/blog";
+
 import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
-import { useUser } from "@/hooks";
+import { useUser, useSubscriberModal } from "@/hooks";
 import { isServer, toastMessage } from "@/utils";
 
 const tones = [
@@ -80,6 +81,7 @@ const EditorModal = ({ position, quill, editorWidth }) => {
   const { selected, range } = useSelector(blogSelector.getEditor());
   const { loading } = useSelector(blogSelector.getToolContent());
   const { isAuth } = useUser();
+  const showSubscriberModal = useSubscriberModal();
 
   const handleSubscriberModalOpen = (message) => {
     dispatch(setSubscriberUsageModal({ usage: true, message }));
@@ -98,6 +100,10 @@ const EditorModal = ({ position, quill, editorWidth }) => {
     if (!isAuth) {
       dispatch(setSigninModal(true));
       return;
+    }
+
+    if (showSubscriberModal) {
+      return handleSubscriberModalOpen();
     }
 
     if (task === PARAPHRASING) {
@@ -137,8 +143,6 @@ const EditorModal = ({ position, quill, editorWidth }) => {
         quill.setSelection(Index, 0);
         dispatch(setEditorCurrentSelectedText(null));
         dispatch(setEditorCurrentSelectedRange({ index: Index, length: 0 }));
-      } else if (res.payload.status === 400) {
-        handleSubscriberModalOpen(res.payload.data.message);
       }
     });
   };

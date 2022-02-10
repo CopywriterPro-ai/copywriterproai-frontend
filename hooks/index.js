@@ -16,3 +16,4 @@ export { default as useNotice } from "./useNotice";
 export { default as useAuth } from "./useAuth";
 export { default as useWarnIfUnsavedChanges } from "./useWarnIfUnsavedChanges";
 export { default as useUAParser } from "./useUAParser";
+export { default as useSubscriberModal } from "./useSubscriberModal";

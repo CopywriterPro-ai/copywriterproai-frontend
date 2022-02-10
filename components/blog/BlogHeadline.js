@@ -12,7 +12,7 @@ import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem } from "./styles";
 import { BLOG_HEADLINE } from "@/appconstants";
 import { toastMessage } from "@/utils";
-import { useUser } from "@/hooks";
+import { useUser, useSubscriberModal } from "@/hooks";
 import { ToolAction, ToolInput } from "./styles";
 import GenerateButton from "./components/GenerateButton";
 
@@ -24,6 +24,7 @@ const BlogHeadline = ({ aboutRef }) => {
   );
   const { about } = useSelector(blogSelector.getBlogContent);
   const { isAuth } = useUser();
+  const showSubscriberModal = useSubscriberModal();
 
   const validAbout = about.trim().length > 0;
 
@@ -34,6 +35,10 @@ const BlogHeadline = ({ aboutRef }) => {
   const handleBlogHeadline = () => {
     if (validAbout) {
       if (isAuth) {
+        if (showSubscriberModal) {
+          return handleSubscriberModalOpen();
+        }
+
         dispatch(
           postBlogContents({
             task: BLOG_HEADLINE,
@@ -43,11 +48,7 @@ const BlogHeadline = ({ aboutRef }) => {
               numberOfSuggestions: suggestionNum,
             },
           })
-        ).then(({ payload }) => {
-          if (payload.status === 400) {
-            handleSubscriberModalOpen(payload.data.message);
-          }
-        });
+        );
       } else {
         dispatch(setSigninModal(true));
       }

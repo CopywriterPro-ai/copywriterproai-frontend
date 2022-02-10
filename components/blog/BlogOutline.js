@@ -12,7 +12,7 @@ import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem, ToolAction, ToolInput } from "./styles";
 import { BLOG_OUTLINE } from "@/appconstants";
 import { toastMessage } from "@/utils";
-import { useUser } from "@/hooks";
+import { useUser, useSubscriberModal } from "@/hooks";
 import GenerateButton from "./components/GenerateButton";
 
 const BlogOutline = ({ aboutRef, quillRef }) => {
@@ -25,6 +25,7 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
   );
   const { about, title } = useSelector(blogSelector.getBlogContent);
   const { isAuth } = useUser();
+  const showSubscriberModal = useSubscriberModal();
   const validAbout = about.trim().length > 0;
 
   const handleSubscriberModalOpen = (message) => {
@@ -34,6 +35,10 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
   const handleBlogOutline = () => {
     if (validAbout) {
       if (isAuth) {
+        if (showSubscriberModal) {
+          return handleSubscriberModalOpen();
+        }
+
         dispatch(
           postBlogContents({
             task: BLOG_OUTLINE,
@@ -45,11 +50,7 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
               about,
             },
           })
-        ).then(({ payload }) => {
-          if (payload.status === 400) {
-            handleSubscriberModalOpen(payload.data.message);
-          }
-        });
+        );
       } else {
         dispatch(setSigninModal(true));
       }
