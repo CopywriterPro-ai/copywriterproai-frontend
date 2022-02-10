@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { useRouter } from "next/router";
 
 import { UserLayout as Layout } from "@/layout";
 import EditorJS from "@/components/editor";
@@ -9,8 +8,8 @@ import CustomToolbar from "@/components/editor/CustomToolbar";
 import {
   BlogHeadline,
   BlogIntro,
-  BlogOutline,
-  BlogOutro,
+  // BlogOutline,
+  // BlogOutro,
 } from "@/components/blog";
 import {
   setStateBlogAbout,
@@ -216,12 +215,12 @@ const BlogGenerator = () => {
                   aboutRef={aboutRef}
                   quillRef={quill}
                 />
-                <BlogOutline aboutRef={aboutRef} quillRef={quill} />
+                {/* <BlogOutline aboutRef={aboutRef} quillRef={quill} />
                 <BlogOutro
                   titleRef={titleRef}
                   aboutRef={aboutRef}
                   quillRef={quill}
-                />
+                /> */}
               </ToolsBody>
 
               <ToolBottom>
