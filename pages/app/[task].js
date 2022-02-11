@@ -14,11 +14,19 @@ const AppItem = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { showSidebar, showContent } = useSidebar();
-  const { isAuth, userInfo } = useUser();
 
   const { query, isReady } = router;
   const { task } = query;
   const { subscriber } = useSelector(uiSelector.getModal);
+
+  useEffect(() => {
+    if (task === "blog-writing") {
+      router.push({
+        pathname: `/ai-blog-generator`,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [task]);
 
   useEffect(() => {
     if (isReady && task) dispatch(setCurrentActiveKeyState(task));
@@ -43,7 +51,11 @@ const AppItem = () => {
                 <GenerateSidebar />
               </div>
               <div className={`col-lg-${windowWidth < 1600 ? "9" : "10"}`}>
-                <GeneratingBox />
+                {task === "blog-writing" ? (
+                  <p>Redirecting...</p>
+                ) : (
+                  <GeneratingBox />
+                )}
               </div>
             </>
           )}
