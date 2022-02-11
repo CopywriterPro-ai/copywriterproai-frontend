@@ -153,11 +153,11 @@ const blog = createSlice({
     },
     setStateBlogIntro: (state, action) => {
       state.intro = action.payload;
-      state.currenttask = BLOG_OUTLINE;
+      state.currenttask = BLOG_OUTRO;
     },
     setStateBlogOutline: (state, action) => {
       state.outline = action.payload;
-      state.currenttask = BLOG_OUTRO;
+      state.currenttask = null;
     },
     setStateBlogOutro: (state, action) => {
       state.outro = action.payload;

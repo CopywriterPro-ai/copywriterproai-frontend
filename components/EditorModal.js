@@ -20,6 +20,7 @@ import {
 import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
 import { useUser, useSubscriberModal } from "@/hooks";
 import { isServer, toastMessage } from "@/utils";
+import toolsvalidation from "@/data/toolsvalidation";
 
 const tones = [
   "Formal",
@@ -88,13 +89,19 @@ const EditorModal = ({ position, quill, editorWidth }) => {
   };
 
   const handleGetTool = (task, tone) => {
+    const validate = toolsvalidation(task, true)?.userText;
+
     let data;
     if (!selected) {
       toastMessage.warn("Please select some text");
       return;
     }
-    if (selected?.length > MAXCHARSELECTLIMIT) {
+    if (selected?.length > validate.max) {
       toastMessage.warn("Select limit exceeded");
+      return;
+    }
+    if (selected?.length < validate.min) {
+      toastMessage.warn("Select more text");
       return;
     }
     if (!isAuth) {
@@ -108,16 +115,16 @@ const EditorModal = ({ position, quill, editorWidth }) => {
 
     if (task === PARAPHRASING) {
       const task = PARAPHRASING;
-      data = { task, userText: selected };
+      data = { task, userText: selected, numberOfSuggestions: 1 };
     } else if (task === EXPANDER) {
       const task = EXPANDER;
-      data = { task, userText: selected };
+      data = { task, userText: selected, numberOfSuggestions: 1 };
     } else if (task === SIMPLIFIER) {
       const task = SIMPLIFIER;
-      data = { task, userText: selected };
+      data = { task, userText: selected, numberOfSuggestions: 1 };
     } else if (task === CHANGE_TONE) {
       const task = CHANGE_TONE;
-      data = { task, userText: selected, tone };
+      data = { task, userText: selected, tone, numberOfSuggestions: 1 };
     } else if (task === BLOG_TOPIC) {
       const task = BLOG_TOPIC;
       if (!about) {

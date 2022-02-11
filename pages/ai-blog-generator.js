@@ -9,7 +9,7 @@ import {
   BlogHeadline,
   BlogIntro,
   // BlogOutline,
-  // BlogOutro,
+  BlogOutro,
 } from "@/components/blog";
 import {
   setStateBlogAbout,
@@ -215,12 +215,12 @@ const BlogGenerator = () => {
                   aboutRef={aboutRef}
                   quillRef={quill}
                 />
-                {/* <BlogOutline aboutRef={aboutRef} quillRef={quill} />
+                {/* <BlogOutline aboutRef={aboutRef} quillRef={quill} /> */}
                 <BlogOutro
                   titleRef={titleRef}
                   aboutRef={aboutRef}
                   quillRef={quill}
-                /> */}
+                />
               </ToolsBody>
 
               <ToolBottom>

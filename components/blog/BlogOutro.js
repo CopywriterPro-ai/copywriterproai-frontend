@@ -27,8 +27,10 @@ const BlogOutro = ({ titleRef, aboutRef, quillRef }) => {
   const { isAuth } = useUser();
   const showSubscriberModal = useSubscriberModal();
 
-  const validTitle = title.trim().length > 0;
-  const validAbout = about.trim().length > 0;
+  const trimedTitle = title.trim();
+  const trimedAbout = about.trim();
+  const validTitle = trimedTitle.length >= 10 && trimedTitle.length <= 150;
+  const validAbout = trimedAbout.length >= 10 && trimedAbout.length <= 200;
 
   const handleSubscriberModalOpen = (message) => {
     dispatch(setSubscriberUsageModal({ usage: true, message }));

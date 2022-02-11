@@ -252,6 +252,38 @@ const InputGeneratingBox = () => {
                     )}
                   </div>
                 );
+              } else if (field.type === "InputNumber") {
+                const fieldValidation = validationSchema[field.key];
+                const minChar = fieldValidation?.min || 0;
+                const maxChar = fieldValidation?.max || 10;
+                const required = fieldValidation?.required || false;
+
+                return (
+                  <div className="form-group" key={index}>
+                    <label htmlFor={field.key}>{field.name}</label>
+                    <InputNumber
+                      type="number"
+                      autoComplete="off"
+                      min={minChar}
+                      max={maxChar}
+                      {...register(field.key, {
+                        required,
+                        max: maxChar,
+                        min: minChar,
+                      })}
+                      id={field.key}
+                      defaultValue={
+                        isCurrentInput ? defaultInput.input[field.key] : null
+                      }
+                      placeholder={field.placeholder}
+                    />
+                    {field?.tips?.text && (
+                      <UncontrolledTooltip placement="auto" target={field.key}>
+                        {field?.tips?.text}
+                      </UncontrolledTooltip>
+                    )}
+                  </div>
+                );
               }
               return null;
             })}
@@ -375,6 +407,18 @@ const SubmitAction = styled.div`
 `;
 
 const Input = styled(TextareaAutosize)`
+  width: 100%;
+  height: 45px;
+  padding: 6px 15px;
+  outline: none;
+  border: 1px solid #b4b4b4;
+  color: black;
+  font-size: 16px;
+  display: block;
+  resize: none;
+`;
+
+const InputNumber = styled.input`
   width: 100%;
   height: 45px;
   padding: 6px 15px;
