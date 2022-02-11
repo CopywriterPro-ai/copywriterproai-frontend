@@ -27,8 +27,10 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
   const { isAuth } = useUser();
   const showSubscriberModal = useSubscriberModal();
 
-  const validTitle = title.trim().length > 0;
-  const validAbout = about.trim().length > 0;
+  const trimedTitle = title.trim();
+  const trimedAbout = about.trim();
+  const validTitle = trimedTitle.length >= 10 && trimedTitle.length <= 150;
+  const validAbout = trimedAbout.length >= 10 && trimedAbout.length <= 200;
 
   const handleSubscriberModalOpen = (message) => {
     dispatch(setSubscriberUsageModal({ usage: true, message }));
@@ -58,14 +60,22 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
     } else {
       if (!validTitle) {
         titleRef.current?.focus();
-        toastMessage.customWarn("Blog headline required", 3000, {
-          toastId: "headline",
-        });
+        toastMessage.customWarn(
+          "Blog headline length need must be min 10 and max 150 characters",
+          3000,
+          {
+            toastId: "headline",
+          }
+        );
       } else if (!validAbout) {
         aboutRef.current?.focus();
-        toastMessage.customWarn("Blog about required", 3000, {
-          toastId: "about",
-        });
+        toastMessage.customWarn(
+          "Blog about need must be min 10 and max 200 characters",
+          3000,
+          {
+            toastId: "about",
+          }
+        );
       }
     }
   };

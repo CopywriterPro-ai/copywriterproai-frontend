@@ -26,7 +26,8 @@ const BlogHeadline = ({ aboutRef }) => {
   const { isAuth } = useUser();
   const showSubscriberModal = useSubscriberModal();
 
-  const validAbout = about.trim().length > 0;
+  const trimedAbout = about.trim();
+  const validAbout = trimedAbout.length >= 10 && trimedAbout.length <= 200;
 
   const handleSubscriberModalOpen = (message) => {
     dispatch(setSubscriberUsageModal({ usage: true, message }));
@@ -44,7 +45,7 @@ const BlogHeadline = ({ aboutRef }) => {
             task: BLOG_HEADLINE,
             data: {
               task: BLOG_HEADLINE,
-              about: about,
+              about,
               numberOfSuggestions: suggestionNum,
             },
           })
@@ -54,9 +55,13 @@ const BlogHeadline = ({ aboutRef }) => {
       }
     } else {
       aboutRef.current?.focus();
-      toastMessage.customWarn("Blog about required", 3000, {
-        toastId: "about",
-      });
+      toastMessage.customWarn(
+        "Blog about need must be min 10 and max 200 characters",
+        3000,
+        {
+          toastId: "about",
+        }
+      );
     }
   };
 
