@@ -203,6 +203,7 @@ const CreateOrEditModal = () => {
                     <option value="InputText">Input</option>
                     <option value="TextArea">Textarea</option>
                     <option value="selectBox">SelectBox</option>
+                    <option value="InputNumber">Number</option>
                   </select>
                   <input
                     {...register(`fields.${index}.placeholder`)}

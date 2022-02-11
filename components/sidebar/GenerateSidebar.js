@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   ProSidebar,
@@ -25,6 +25,8 @@ import {
   selectors as uiSelector,
 } from "@/redux/slices/ui";
 import { useWindowSize, useUser } from "@/hooks";
+
+const BLOG_CATEGORY_KEY = "blog";
 
 const FavouriteAction = ({ itemKey }) => {
   const dispatch = useDispatch();
@@ -88,6 +90,18 @@ const GenerateSidebar = () => {
   const handleBlogOpen = () => {
     router.push({ pathname: `/ai-blog-generator` });
   };
+
+  const toolsCategories = useMemo(() => {
+    return categoriesContent.filter(
+      (category) => category.key !== BLOG_CATEGORY_KEY
+    );
+  }, [categoriesContent]);
+
+  const blogCategory = useMemo(() => {
+    return categoriesContent.filter(
+      (category) => category.key === BLOG_CATEGORY_KEY
+    );
+  }, [categoriesContent]);
 
   const hasSearchResult = searchResult.length !== 0;
   const noSearchResult = !hasSearchResult && query.length !== 0;
@@ -158,40 +172,67 @@ const GenerateSidebar = () => {
             <HR />
           </>
         )}
-        <Menu>
-          <SidebarTitle>Blog Writer</SidebarTitle>
-          <MenuItemStyle
-            style={{ paddingLeft: "10px" }}
-            onClick={handleBlogOpen}
-          >
-            Blog
-          </MenuItemStyle>
-        </Menu>
-        <HR />
-        <Menu>
-          <SidebarTitle>Writing Tools</SidebarTitle>
-          {categoriesContent.map((group) => (
-            <SubMenu
-              key={group.key}
-              title={group.name}
-              icon={
-                <IconImg src={`${group?.icon?.src}`} alt={group.key}></IconImg>
-              }
-            >
-              {group.tools.map((item, index) => (
-                <MenuItemStyle
-                  suffix={<FavouriteAction itemKey={item.key} />}
-                  active={item.key === activeKey}
-                  key={index}
-                  title={item.name}
-                  onClick={() => handleActiveItem(item.key)}
+        {blogCategory.length > 0 && (
+          <>
+            <Menu>
+              <SidebarTitle>Blog Writer</SidebarTitle>
+              {blogCategory.map((group) => (
+                <SubMenu
+                  key={group.key}
+                  title={group.name}
+                  icon={
+                    <IconImg
+                      src={`${group?.icon?.src}`}
+                      alt={group.key}
+                    ></IconImg>
+                  }
                 >
-                  {item.name}
-                </MenuItemStyle>
+                  {group.tools.map((item, index) => (
+                    <MenuItemStyle
+                      suffix={<FavouriteAction itemKey={item.key} />}
+                      active={item.key === activeKey}
+                      key={index}
+                      title={item.name}
+                      onClick={() => handleActiveItem(item.key)}
+                    >
+                      {item.name}
+                    </MenuItemStyle>
+                  ))}
+                </SubMenu>
               ))}
-            </SubMenu>
-          ))}
-        </Menu>
+            </Menu>
+            <HR />
+          </>
+        )}
+        {toolsCategories.length > 0 && (
+          <Menu>
+            <SidebarTitle>Writing Tools</SidebarTitle>
+            {toolsCategories.map((group) => (
+              <SubMenu
+                key={group.key}
+                title={group.name}
+                icon={
+                  <IconImg
+                    src={`${group?.icon?.src}`}
+                    alt={group.key}
+                  ></IconImg>
+                }
+              >
+                {group.tools.map((item, index) => (
+                  <MenuItemStyle
+                    suffix={<FavouriteAction itemKey={item.key} />}
+                    active={item.key === activeKey}
+                    key={index}
+                    title={item.name}
+                    onClick={() => handleActiveItem(item.key)}
+                  >
+                    {item.name}
+                  </MenuItemStyle>
+                ))}
+              </SubMenu>
+            ))}
+          </Menu>
+        )}
       </SidebarContent>
     </ProSidebar>
   );
