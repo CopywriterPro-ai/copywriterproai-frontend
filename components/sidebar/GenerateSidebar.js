@@ -76,11 +76,17 @@ const GenerateSidebar = () => {
   const { isAuth } = useUser();
 
   const handleActiveItem = (key) => {
-    dispatch(setCurrentActiveKeyState(key));
-    router.push({
-      pathname: `/app/${key}`,
-    });
-    dispatch(setContentSidebar(false));
+    if (key === "blog-writing") {
+      router.push({
+        pathname: `/ai-blog-generator`,
+      });
+    } else {
+      dispatch(setCurrentActiveKeyState(key));
+      router.push({
+        pathname: `/app/${key}`,
+      });
+      dispatch(setContentSidebar(false));
+    }
   };
 
   const handleToggleSidebar = (value) => {
