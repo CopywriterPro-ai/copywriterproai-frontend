@@ -96,11 +96,11 @@ const EditorModal = ({ position, quill, editorWidth }) => {
       toastMessage.warn("Please select some text");
       return;
     }
-    if (selected?.length > validate.max) {
+    if (task !== BLOG_TOPIC && selected?.length > validate.max) {
       toastMessage.warn("Select limit exceeded");
       return;
     }
-    if (selected?.length < validate.min) {
+    if (task !== BLOG_TOPIC && selected?.length < validate.min) {
       toastMessage.warn("Select more text");
       return;
     }
