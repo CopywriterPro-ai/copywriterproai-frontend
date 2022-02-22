@@ -30,7 +30,7 @@ const singleValidation = (task, limit = true) => {
     "notes-from-passage": {
       task: "notes-from-passage",
       userText: { min: 5, max: isLimit ? 400 : 600, required: true },
-      numberOfSuggestions: { min: 2, max: 10, required: true },
+      numberOfPoints: { min: 2, max: 10, required: true },
     },
     "grammar-fixer": {
       task: "grammar-fixer",

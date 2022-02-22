@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { Container } from "./style";
 import { setBlogResetModal, selectors as uiSelector } from "@/redux/slices/ui";
 import { resetBlog } from "@/redux/slices/blog";
+import { resetCompleteBlog } from "@/redux/slices/completeBlog";
+import { AI_COMPLETE_BLOG_WRITER, AI_BLOG_WRITER } from "@/appconstants";
 
 const customStyles = {
   content: {
@@ -17,7 +19,7 @@ const customStyles = {
   },
 };
 
-const ResetBlogModal = () => {
+const ResetBlogModal = ({ quill, id }) => {
   const dispatch = useDispatch();
   const { blogs } = useSelector(uiSelector.getModal);
 
@@ -26,8 +28,20 @@ const ResetBlogModal = () => {
   };
 
   const handleReset = () => {
-    dispatch(resetBlog());
+    quill?.setContents([]);
+
+    switch (id) {
+      case AI_BLOG_WRITER:
+        dispatch(resetBlog());
+        break;
+      case AI_COMPLETE_BLOG_WRITER:
+        dispatch(resetCompleteBlog());
+        break;
+      default:
+        break;
+    }
     dispatch(setBlogResetModal(false));
+    quill?.focus();
   };
 
   return (

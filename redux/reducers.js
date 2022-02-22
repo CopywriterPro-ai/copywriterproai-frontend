@@ -10,6 +10,7 @@ import blogReducer from "@/redux/slices/blog";
 import subscriberReducer from "@/redux/slices/subscriber";
 import toolsReducer from "@/redux/slices/tools";
 import demoGenerateReducer from "@/redux/slices/demoGenerate";
+import completeBlogReducer from "@/redux/slices/completeBlog";
 
 const reducers = combineReducers({
   ui: uiReducer,
@@ -22,6 +23,7 @@ const reducers = combineReducers({
   subscriber: subscriberReducer,
   tools: toolsReducer,
   demoGenerate: demoGenerateReducer,
+  completeBlog: completeBlogReducer,
 });
 
 export default reducers;

@@ -93,20 +93,17 @@ const GenerateSidebar = () => {
     dispatch(setContentSidebar(value));
   };
 
-  const handleBlogOpen = () => {
-    router.push({ pathname: `/ai-blog-generator` });
-  };
-
   const toolsCategories = useMemo(() => {
     return categoriesContent.filter(
       (category) => category.key !== BLOG_CATEGORY_KEY
     );
   }, [categoriesContent]);
 
-  const blogCategory = useMemo(() => {
-    return categoriesContent.filter(
+  const blogTool = useMemo(() => {
+    const tools = categoriesContent.filter(
       (category) => category.key === BLOG_CATEGORY_KEY
     );
+    return Array.isArray(tools) && tools[0] ? tools[0] : {};
   }, [categoriesContent]);
 
   const hasSearchResult = searchResult.length !== 0;
@@ -178,33 +175,21 @@ const GenerateSidebar = () => {
             <HR />
           </>
         )}
-        {blogCategory.length > 0 && (
+        {blogTool?.tools && (
           <>
             <Menu>
               <SidebarTitle>Blog Writer</SidebarTitle>
-              {blogCategory.map((group) => (
-                <SubMenu
-                  key={group.key}
-                  title={group.name}
-                  icon={
-                    <IconImg
-                      src={`${group?.icon?.src}`}
-                      alt={group.key}
-                    ></IconImg>
-                  }
+              {blogTool?.tools.map((item, index) => (
+                <MenuItemStyle
+                  style={{ paddingLeft: "10px" }}
+                  suffix={<FavouriteAction itemKey={item.key} />}
+                  active={item.key === activeKey}
+                  key={index}
+                  title={item.name}
+                  onClick={() => handleActiveItem(item.key)}
                 >
-                  {group.tools.map((item, index) => (
-                    <MenuItemStyle
-                      suffix={<FavouriteAction itemKey={item.key} />}
-                      active={item.key === activeKey}
-                      key={index}
-                      title={item.name}
-                      onClick={() => handleActiveItem(item.key)}
-                    >
-                      {item.name}
-                    </MenuItemStyle>
-                  ))}
-                </SubMenu>
+                  {item.name}
+                </MenuItemStyle>
               ))}
             </Menu>
             <HR />

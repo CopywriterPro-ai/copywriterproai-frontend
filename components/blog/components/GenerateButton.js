@@ -3,7 +3,7 @@ import React from "react";
 import Loader from "@/components/common/Loader";
 import { GenButton } from "../styles";
 
-const GenerateButton = ({ loading, onClick }) => {
+const GenerateButton = ({ loading, onClick, children }) => {
   return (
     <GenButton
       disabled={loading}
@@ -14,6 +14,8 @@ const GenerateButton = ({ loading, onClick }) => {
         <div style={{ display: "flex" }}>
           Generating <Loader style={{ marginLeft: "5px" }} size="10px" />
         </div>
+      ) : children ? (
+        children
       ) : (
         "Generate"
       )}
