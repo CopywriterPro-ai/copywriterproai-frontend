@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   postBlogContents,
+  setCurrentTask,
   setBlogHeadline,
   selectors as blogSelector,
 } from "@/redux/slices/completeBlog";
@@ -39,6 +40,7 @@ const BlogHeadline = ({ aboutRef }) => {
           return handleSubscriberModalOpen();
         }
 
+        dispatch(setCurrentTask(BLOG_HEADLINE));
         dispatch(
           postBlogContents({
             task: BLOG_HEADLINE,

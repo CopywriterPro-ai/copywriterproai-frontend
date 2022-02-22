@@ -9,6 +9,7 @@ import CustomToolbar from "@/components/editor/CustomToolbar";
 import { BlogHeadlineComplete } from "@/components/blog";
 import {
   createBlog,
+  setCurrentTask,
   updateBlog,
   setBlogHeadline,
   setBlogAbout,
@@ -25,7 +26,6 @@ import {
   // useWarnIfUnsavedChanges,
   useUser,
   useSidebar,
-  useQuillConentInsert,
 } from "@/hooks";
 import { SubscriberModal } from "@/components/modals/subscriber";
 import { BlogResetModal } from "@/components/modals/blogs";
@@ -123,6 +123,7 @@ const CompleteBlogGenerator = () => {
   };
 
   const handleGenerateCompleteBlog = () => {
+    dispatch(setCurrentTask(BLOG_WRITING));
     dispatch(
       postBlogContents({
         task: "blog",
@@ -188,7 +189,8 @@ const CompleteBlogGenerator = () => {
               </ToolsBody>
               <ToolBottom>
                 <button onClick={handleResetBlog}>Reset</button>
-                <button onClick={handleSaveOrUpdate}>Save</button>
+                {/* <button onClick={handleSaveOrUpdate}>Save</button> */}
+                <button onClick={() => console.log("coming soon")}>Save</button>
               </ToolBottom>
             </ScollingTool>
           </ToolsSection>

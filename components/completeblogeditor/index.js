@@ -7,6 +7,7 @@ import EditorModal from "components/CompleteEditorModal";
 import {
   setEditor,
   setBlogComplete,
+  setBlogContentItem,
   selectors,
 } from "@/redux/slices/completeBlog";
 import {
@@ -27,11 +28,13 @@ const QuillEditor = ({ setQuillEditor }) => {
   const { value } = useSelector(selectors.getEditor());
   const {
     complete: { items: completeItems },
+    content: { item: contentItem },
   } = useSelector(selectors.getCompleteBlogContent);
   const currentContent = useQuillContentChange(quill);
   const editorcontainerRef = useRef(null);
   const { width: editorWidth } = useElementSize(editorcontainerRef);
   const isTyping = useQuillConentInsert(quill, completeItems[0]);
+  const isContentTyping = useQuillConentInsert(quill, contentItem, true);
   useQuillPlainPaste(quill);
 
   useEffect(() => {
@@ -43,6 +46,12 @@ const QuillEditor = ({ setQuillEditor }) => {
       dispatch(setBlogComplete({ items: [] }));
     }
   }, [dispatch, isTyping]);
+
+  useEffect(() => {
+    if (!isContentTyping) {
+      dispatch(setBlogContentItem(""));
+    }
+  }, [dispatch, isContentTyping]);
 
   const isContentEqual = useMemo(() => {
     return deepEqual(value, currentContent);

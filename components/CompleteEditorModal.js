@@ -8,7 +8,6 @@ import {
   EXPANDER,
   SIMPLIFIER,
   CHANGE_TONE,
-  BLOG_TOPIC,
 } from "@/appconstants";
 import {
   setEditor,
@@ -78,9 +77,7 @@ const CompleteEditorModal = ({ position, quill, editorWidth }) => {
 
   const [mounded, setMounded] = useState(false);
   const {
-    loading,
-    about,
-    headline,
+    content: { loading },
     editor: { selected, range },
   } = useSelector(blogSelector.getCompleteBlogContent);
   const { isAuth } = useUser();
@@ -98,11 +95,11 @@ const CompleteEditorModal = ({ position, quill, editorWidth }) => {
       toastMessage.warn("Please select some text");
       return;
     }
-    if (task !== BLOG_TOPIC && selected?.length > validate.max) {
+    if (selected?.length > validate.max) {
       toastMessage.warn("Select limit exceeded");
       return;
     }
-    if (task !== BLOG_TOPIC && selected?.length < validate.min) {
+    if (selected?.length < validate.min) {
       toastMessage.warn("Select more text");
       return;
     }
@@ -127,22 +124,6 @@ const CompleteEditorModal = ({ position, quill, editorWidth }) => {
     } else if (task === CHANGE_TONE) {
       const task = CHANGE_TONE;
       data = { task, userText: selected, tone, numberOfSuggestions: 1 };
-    } else if (task === BLOG_TOPIC) {
-      const task = BLOG_TOPIC;
-      if (!about) {
-        toastMessage.warn("Please provide blog about");
-        return;
-      } else if (!headline.input) {
-        toastMessage.warn("Please provide blog headline");
-        return;
-      }
-      data = {
-        task,
-        about: about.input,
-        topic: selected,
-        headline: headline.input,
-        numberOfSuggestions: 1,
-      };
     }
 
     dispatch(postEditorToolsContent({ data, task: data.task })).then((res) => {
@@ -187,11 +168,6 @@ const CompleteEditorModal = ({ position, quill, editorWidth }) => {
     >
       <WritingTools>
         <ToolItems>
-          <ToolItem>
-            <ToolItemButton onClick={() => handleGetTool(BLOG_TOPIC)}>
-              Write
-            </ToolItemButton>
-          </ToolItem>
           <ToolItem>
             <ToolItemButton onClick={() => handleGetTool(PARAPHRASING)}>
               Paraphrase

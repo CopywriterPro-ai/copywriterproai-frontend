@@ -86,6 +86,9 @@ const completeBlog = createSlice({
       const payload = pick(action.payload, ["input", "items"]);
       state.complete = { ...state.complete, ...payload };
     },
+    setBlogContentItem: (state, action) => {
+      state.content.item = action.payload;
+    },
   },
   extraReducers: {
     [HYDRATE]: (state, { payload }) => ({
@@ -125,6 +128,26 @@ const completeBlog = createSlice({
         state.error = action.payload.data;
       }
     },
+
+    [postEditorToolsContent.pending]: (state, action) => {
+      if (state.content.loading === "idle") {
+        state.content.loading = "pending";
+        state.content.error = null;
+      }
+    },
+    [postEditorToolsContent.fulfilled]: (state, action) => {
+      if (state.content.loading === "pending") {
+        const text = action.payload.data?.generatedTexts[0];
+        state.content.loading = "idle";
+        state.content.item = `\n${text}`;
+      }
+    },
+    [postEditorToolsContent.rejected]: (state, action) => {
+      if (state.content.loading === "pending") {
+        state.content.loading = "idle";
+        state.content.error = action.payload.data;
+      }
+    },
   },
 });
 
@@ -135,6 +158,7 @@ export const {
   setBlogHeadline,
   setBlogAbout,
   setBlogComplete,
+  setBlogContentItem,
 } = completeBlog.actions;
 
 export const selectors = {
