@@ -155,21 +155,24 @@ const InputGeneratingBox = () => {
         <div>
           <form onSubmit={handleSubmit(onSubmit)} className="content-form">
             {formContent.fields.map((field, index) => {
-              if (field.type === "InputText") {
+              if (field.type === "InputText" || field.type === "TextArea") {
                 const fieldValidation = validationSchema[field.key];
                 const watchChar = watching[field.key]
                   ? watching[field.key]?.length
                   : 0;
-                const minChar = fieldValidation?.min || 0;
+                const minChar = fieldValidation?.min || 1;
                 const maxChar = fieldValidation?.max || 10;
                 const required = fieldValidation?.required || false;
+                const minRows = Math.ceil(maxChar / 100);
+                const maxRows = Math.ceil(maxChar / 100 + 3);
                 const exceededChar = maxChar < watchChar;
 
                 return (
                   <div className="form-group" key={index}>
                     <label htmlFor={field.key}>{field.name}</label>
                     <Input
-                      maxRows={3}
+                      minRows={minRows}
+                      maxRows={maxRows}
                       autoComplete="off"
                       {...register(field.key, {
                         required,
@@ -193,48 +196,9 @@ const InputGeneratingBox = () => {
                     </WordCount>
                   </div>
                 );
-              } else if (field.type === "TextArea") {
-                const fieldValidation = validationSchema[field.key];
-                const watchChar = watching[field.key]
-                  ? watching[field.key]?.length
-                  : 0;
-                const minChar = fieldValidation?.min || 0;
-                const maxChar = fieldValidation?.max || 10;
-                const required = fieldValidation?.required || false;
-                const exceededChar = maxChar < watchChar;
-
-                return (
-                  <div className="form-group" key={index}>
-                    <label htmlFor={field.key}>{field.name}</label>
-                    <TextArea
-                      minRows={4}
-                      maxRows={8}
-                      {...register(field.key, {
-                        required,
-                        maxLength: maxChar,
-                        minLength: minChar,
-                      })}
-                      id={field.key}
-                      defaultValue={
-                        isCurrentInput ? defaultInput.input[field.key] : null
-                      }
-                      rows="5"
-                      placeholder={field.placeholder}
-                    />
-
-                    {field?.tips?.text && (
-                      <UncontrolledTooltip placement="auto" target={field.key}>
-                        {field?.tips?.text}
-                      </UncontrolledTooltip>
-                    )}
-
-                    <WordCount exceededChar={exceededChar}>
-                      {watchChar}/{maxChar} Max Characters
-                    </WordCount>
-                  </div>
-                );
               } else if (field.type === "selectBox") {
                 const tones = field.key.split(",").map((key) => key.trim());
+
                 return (
                   <div className="form-group" key={index}>
                     <label htmlFor={field.type}>{field.name}</label>
@@ -408,7 +372,7 @@ const SubmitAction = styled.div`
 
 const Input = styled(TextareaAutosize)`
   width: 100%;
-  height: 45px;
+  /* height: 45px; */
   padding: 6px 15px;
   outline: none;
   border: 1px solid #b4b4b4;

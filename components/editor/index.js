@@ -1,7 +1,6 @@
 import deepEqual from "deep-equal";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 
 import EditorModal from "components/EditorModal";
@@ -11,114 +10,48 @@ import {
   setEditorCurrentSelectedText,
   selectors as blogSelector,
 } from "@/redux/slices/blog";
-import { useElementSize } from "hooks";
-
-const modules = {
-  toolbar: {
-    container: "#toolbar",
-  },
-};
-
-const formats = [
-  "size",
-  "font",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "link",
-  "image",
-  "color",
-  "background",
-  "header",
-  "list",
-  "align",
-];
+import {
+  useElementSize,
+  useQuillEditor,
+  useQuillSelected,
+  useQuillContentChange,
+  useQuillPlainPaste,
+} from "@/hooks";
+import { AI_BLOG_WRITER } from "@/appconstants";
 
 const QuillEditor = ({ setQuillEditor }) => {
   const dispatch = useDispatch();
   const editorcontainerRef = useRef(null);
   const { width: editorWidth } = useElementSize(editorcontainerRef);
 
-  const { quill, quillRef } = useQuill({
-    placeholder: "Start writing here...",
-    theme: "snow",
-    modules,
-    formats,
-  });
-
-  const [position, setPostion] = useState({
-    bottom: 0,
-    height: 0,
-    left: 0,
-    right: 0,
-    top: 0,
-    width: 0,
-  });
-  const { value, selected } = useSelector(blogSelector.getEditor());
+  const { value } = useSelector(blogSelector.getEditor());
+  const { quill, quillRef } = useQuillEditor(AI_BLOG_WRITER);
+  const { range, text, position } = useQuillSelected(quill);
+  const currentContent = useQuillContentChange(quill);
+  useQuillPlainPaste(quill);
 
   useEffect(() => {
     if (quill) setQuillEditor(quill);
   }, [quill, setQuillEditor]);
 
-  useEffect(() => {
-    if (quill) {
-      const current = quill.getContents().ops;
-      const isEqual = deepEqual(value, current);
-      if (!isEqual) {
-        quill.setContents(value);
-      }
-    }
-  }, [quill, value]);
+  const isContentEqual = useMemo(() => {
+    return deepEqual(value, currentContent);
+  }, [currentContent, value]);
 
   useEffect(() => {
-    if (quill) {
-      quill.on("text-change", (delta, oldDelta, source) => {
-        const content = quill.getContents().ops;
-        dispatch(setEditorCurrentValue(content));
-      });
-    }
-  }, [dispatch, quill]);
+    const updateInterval = setInterval(() => {
+      if (!isContentEqual) dispatch(setEditorCurrentValue(currentContent));
+    }, 1000);
+    return () => clearInterval(updateInterval);
+  }, [currentContent, dispatch, isContentEqual]);
 
   useEffect(() => {
-    if (quill) {
-      quill.on("selection-change", function (range, oldRange, source) {
-        if (range && range.length > 0) {
-          dispatch(setEditorCurrentSelectedRange(range));
-          const selected = quill
-            .getText(range)
-            .trim()
-            .split(" ")
-            .filter(Boolean)
-            .join(" ");
-          if (selected.length > 0) {
-            setPostion(quill.getBounds(range));
-            dispatch(setEditorCurrentSelectedText(selected));
-          }
-        } else {
-          if (selected !== null) dispatch(setEditorCurrentSelectedText(null));
-        }
-      });
-    }
-  }, [dispatch, quill, selected]);
+    dispatch(setEditorCurrentSelectedRange(range));
+  }, [dispatch, range]);
 
   useEffect(() => {
-    if (quill) {
-      quill?.clipboard?.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
-        let ops = [];
-        delta.ops.forEach((op) => {
-          if (op.insert && typeof op.insert === "string") {
-            ops.push({
-              insert: op.insert,
-            });
-          }
-        });
-        delta.ops = ops;
-        return delta;
-      });
-    }
-  }, [quill]);
+    dispatch(setEditorCurrentSelectedText(text));
+  }, [dispatch, text]);
 
   return (
     <div className="editor-container" ref={editorcontainerRef}>

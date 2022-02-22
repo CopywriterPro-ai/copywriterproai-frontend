@@ -1,4 +1,10 @@
-const blacklist = ["content", "persist/PERSIST", "persist/PURGE", "blog"];
+const blacklist = [
+  "content",
+  "persist/PERSIST",
+  "persist/PURGE",
+  "blog",
+  "completeBlog",
+];
 
 const predicate = (action) => {
   let allowed = true;
