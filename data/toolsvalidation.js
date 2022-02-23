@@ -251,8 +251,10 @@ const singleValidation = (task, limit = true) => {
       task: "catchy-business-taglines",
       companyName: { min: 3, max: 50, required: true },
       businessType: { min: 5, max: 100, required: true },
+      numberOfSuggestions: { min: 1, max: 10, required: true },
     },
     "fiverr-profile-description": {
+      task: "fiverr-profile-description",
       profession: { min: 5, max: 100, required: true },
       experience: { min: 5, max: 20, required: true },
       numberOfSuggestions: { min: 1, max: 10, required: true },
