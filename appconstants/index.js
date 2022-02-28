@@ -12,6 +12,9 @@ export const NOTES_FROM_PASSAGE = "notes-from-passage";
 export const GRAMMAR_FIXER = "grammar-fixer";
 export const CHANGE_TONE = "change-tone";
 export const BLOG_WRITING = "blog-writing";
+export const POINT_OF_VIEW = "point-of-view";
+export const ACTIVE_PASSIVE = "active-passive";
+export const ABSTRACT = "abstract";
 
 export const DELETE = "delete";
 export const UPDATE = "update";

@@ -7,7 +7,13 @@ import {
   PARAPHRASING,
   EXPANDER,
   SIMPLIFIER,
+  SUMMARIZER,
+  ABSTRACT,
+  NOTES_FROM_PASSAGE,
+  GRAMMAR_FIXER,
   CHANGE_TONE,
+  ACTIVE_PASSIVE,
+  POINT_OF_VIEW,
 } from "@/appconstants";
 import {
   setEditor,
@@ -112,30 +118,77 @@ const CompleteEditorModal = ({ position, quill, editorWidth }) => {
       return handleSubscriberModalOpen();
     }
 
-    if (task === PARAPHRASING) {
-      const task = PARAPHRASING;
-      data = { task, userText: selected, numberOfSuggestions: 1 };
-    } else if (task === EXPANDER) {
-      const task = EXPANDER;
-      data = { task, userText: selected, numberOfSuggestions: 1 };
-    } else if (task === SIMPLIFIER) {
-      const task = SIMPLIFIER;
-      data = { task, userText: selected, numberOfSuggestions: 1 };
-    } else if (task === CHANGE_TONE) {
-      const task = CHANGE_TONE;
-      data = { task, userText: selected, tone, numberOfSuggestions: 1 };
+    dispatch(setEditor({ currenttask: task }));
+
+    switch (task) {
+      case PARAPHRASING:
+        data = {
+          task: PARAPHRASING,
+          userText: selected,
+          numberOfSuggestions: 1,
+        };
+        break;
+      case EXPANDER:
+        data = { task: EXPANDER, userText: selected, numberOfSuggestions: 1 };
+        break;
+      case SIMPLIFIER:
+        data = { task: SIMPLIFIER, userText: selected, numberOfSuggestions: 1 };
+        break;
+      case SUMMARIZER:
+        data = { task: SUMMARIZER, userText: selected, numberOfSuggestions: 1 };
+        break;
+      case ABSTRACT:
+        data = { task: ABSTRACT, userText: selected, numberOfSuggestions: 1 };
+        break;
+      case NOTES_FROM_PASSAGE:
+        data = {
+          task: NOTES_FROM_PASSAGE,
+          userText: selected,
+          numberOfPoints: 2,
+        };
+        break;
+      case GRAMMAR_FIXER:
+        data = { task: GRAMMAR_FIXER, userText: selected };
+        break;
+      case ACTIVE_PASSIVE:
+        data = {
+          task: ACTIVE_PASSIVE,
+          userText: selected,
+          from: "Active",
+          to: "Passive",
+        };
+        break;
+      case POINT_OF_VIEW:
+        data = {
+          task: POINT_OF_VIEW,
+          userText: selected,
+          from: "third-person",
+          to: "first-person",
+          gender: "male",
+        };
+        break;
+      case CHANGE_TONE:
+        data = {
+          task: CHANGE_TONE,
+          userText: selected,
+          tone,
+          numberOfSuggestions: 1,
+        };
+        break;
+      default:
+        break;
     }
 
-    dispatch(postEditorToolsContent({ data, task: data.task })).then((res) => {
-      if (res.payload.status === 200) {
-        const { index, length } = range;
-        const Index = index + length;
-        quill.setSelection(Index, 0);
-        dispatch(
-          setEditor({ range: { index: Index, length: 0 }, selected: null })
-        );
-      }
-    });
+    // dispatch(postEditorToolsContent({ data, task: data.task })).then((res) => {
+    //   if (res.payload.status === 200) {
+    //     const { index, length } = range;
+    //     const Index = index + length;
+    //     quill.setSelection(Index, 0);
+    //     dispatch(
+    //       setEditor({ range: { index: Index, length: 0 }, selected: null })
+    //     );
+    //   }
+    // });
   };
 
   useEffect(() => {
@@ -184,6 +237,46 @@ const CompleteEditorModal = ({ position, quill, editorWidth }) => {
             </ToolItemButton>
           </ToolItem>
           <ToolItem>
+            <ToolItemButton onClick={() => handleGetTool(ACTIVE_PASSIVE)}>
+              Active Passive
+            </ToolItemButton>
+          </ToolItem>
+          <ToolItem>
+            <Counter
+              Color={selected?.length > MAXCHARSELECTLIMIT ? "red" : "green"}
+            >
+              {selected?.length}
+            </Counter>
+          </ToolItem>
+        </ToolItems>
+      </WritingTools>
+      <WritingTools>
+        <ToolItems>
+          <ToolItem>
+            <ToolItemButton onClick={() => handleGetTool(SUMMARIZER)}>
+              Summarizer
+            </ToolItemButton>
+          </ToolItem>
+          <ToolItem>
+            <ToolItemButton onClick={() => handleGetTool(ABSTRACT)}>
+              Abstract
+            </ToolItemButton>
+          </ToolItem>
+          <ToolItem>
+            <ToolItemButton onClick={() => handleGetTool(NOTES_FROM_PASSAGE)}>
+              Notes From Passage
+            </ToolItemButton>
+          </ToolItem>
+        </ToolItems>
+      </WritingTools>
+      <WritingTools>
+        <ToolItems>
+          <ToolItem>
+            <ToolItemButton onClick={() => handleGetTool(GRAMMAR_FIXER)}>
+              Grammar Fixer
+            </ToolItemButton>
+          </ToolItem>
+          <ToolItem>
             <ToolItemButton>Change Tone &#9662;</ToolItemButton>
             <Dropdown>
               {tones.map((tone) => (
@@ -195,13 +288,6 @@ const CompleteEditorModal = ({ position, quill, editorWidth }) => {
                 </DropdownBtn>
               ))}
             </Dropdown>
-          </ToolItem>
-          <ToolItem>
-            <Counter
-              Color={selected?.length > MAXCHARSELECTLIMIT ? "red" : "green"}
-            >
-              {selected?.length}
-            </Counter>
           </ToolItem>
         </ToolItems>
       </WritingTools>
@@ -226,10 +312,15 @@ const WritingTools = styled.div`
   padding: 10px;
   align-items: center;
   background-color: white;
-  border-radius: 5px;
   box-shadow: 0 1px 4px rgb(0 0 0 / 20%);
   display: flex;
   min-height: 36px;
+  :last-child {
+    border-radius: 0 0 5px 5px;
+  }
+  :first-child {
+    border-radius: 5px 5px 0 0;
+  }
 `;
 
 const WritingToolsExtend = styled(WritingTools)`

@@ -3,20 +3,21 @@ import { useEffect, useRef, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "quill/dist/quill.snow.css";
 
-import EditorModal from "components/CompleteEditorModal";
+// import EditorModal from "components/CompleteEditorModal";
 import {
   setEditor,
   setBlogComplete,
-  setBlogContentItem,
+  setBlogContent,
   selectors,
 } from "@/redux/slices/completeBlog";
 import {
-  useElementSize,
+  // useElementSize,
   useQuillEditor,
   useQuillSelected,
   useQuillContentChange,
   useQuillPlainPaste,
-  useQuillConentInsert,
+  useQuillConentTypingInsert,
+  useQuillConentDirectInsert,
 } from "@/hooks";
 import { AI_COMPLETE_BLOG_WRITER } from "@/appconstants";
 
@@ -32,9 +33,9 @@ const QuillEditor = ({ setQuillEditor }) => {
   } = useSelector(selectors.getCompleteBlogContent);
   const currentContent = useQuillContentChange(quill);
   const editorcontainerRef = useRef(null);
-  const { width: editorWidth } = useElementSize(editorcontainerRef);
-  const isTyping = useQuillConentInsert(quill, completeItems[0]);
-  const isContentTyping = useQuillConentInsert(quill, contentItem, true);
+  // const { width: editorWidth } = useElementSize(editorcontainerRef);
+  const isTyping = useQuillConentTypingInsert(quill, completeItems[0]);
+  const isContentTyping = useQuillConentDirectInsert(quill, contentItem, true);
   useQuillPlainPaste(quill);
 
   useEffect(() => {
@@ -49,7 +50,14 @@ const QuillEditor = ({ setQuillEditor }) => {
 
   useEffect(() => {
     if (!isContentTyping) {
-      dispatch(setBlogContentItem(""));
+      dispatch(setBlogContent({ item: "", items: [] }));
+      dispatch(
+        setEditor({
+          currenttask: null,
+          selected: null,
+          range: { index: 0, length: 0 },
+        })
+      );
     }
   }, [dispatch, isContentTyping]);
 
@@ -71,11 +79,11 @@ const QuillEditor = ({ setQuillEditor }) => {
   return (
     <div className="editor-container" ref={editorcontainerRef}>
       <div style={{ wordBreak: "break-word" }} ref={quillRef} />
-      <EditorModal
+      {/* <EditorModal
         position={position}
         quill={quill}
         editorWidth={editorWidth}
-      />
+      /> */}
     </div>
   );
 };

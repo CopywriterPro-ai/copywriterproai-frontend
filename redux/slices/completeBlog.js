@@ -52,13 +52,16 @@ const initialState = {
   content: {
     loading: "idle",
     item: "",
+    items: [],
     error: null,
   },
   editor: {
+    currenttask: null,
     range: { index: 0, length: 0 },
     selected: null,
     value: [],
   },
+  selectedinput: {},
   error: null,
 };
 
@@ -71,7 +74,12 @@ const completeBlog = createSlice({
       state.currenttask = action.payload;
     },
     setEditor: (state, action) => {
-      const payload = pick(action.payload, ["range", "selected", "value"]);
+      const payload = pick(action.payload, [
+        "range",
+        "selected",
+        "value",
+        "currenttask",
+      ]);
       state.editor = { ...state.editor, ...payload };
     },
     setBlogHeadline: (state, action) => {
@@ -88,6 +96,13 @@ const completeBlog = createSlice({
     },
     setBlogContentItem: (state, action) => {
       state.content.item = action.payload;
+    },
+    setBlogContent: (state, action) => {
+      const payload = pick(action.payload, ["item", "items"]);
+      state.content = { ...state.content, ...payload };
+    },
+    setSelectedInput: (state, action) => {
+      state.selectedinput = action.payload;
     },
   },
   extraReducers: {
@@ -137,9 +152,10 @@ const completeBlog = createSlice({
     },
     [postEditorToolsContent.fulfilled]: (state, action) => {
       if (state.content.loading === "pending") {
-        const text = action.payload.data?.generatedTexts[0];
+        // const text = action.payload.data?.generatedTexts[0];
         state.content.loading = "idle";
-        state.content.item = `\n${text}`;
+        // state.content.item = `\n${text}`;
+        state.content.items = action.payload.data?.generatedTexts;
       }
     },
     [postEditorToolsContent.rejected]: (state, action) => {
@@ -159,6 +175,8 @@ export const {
   setBlogAbout,
   setBlogComplete,
   setBlogContentItem,
+  setBlogContent,
+  setSelectedInput,
 } = completeBlog.actions;
 
 export const selectors = {
