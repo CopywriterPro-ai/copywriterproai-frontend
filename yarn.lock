@@ -3243,6 +3243,11 @@ normalize-path@^3.0.0, normalize-path@~3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
   integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
 
+normalize-strings@^1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/normalize-strings/-/normalize-strings-1.1.1.tgz#80f416daf75968899df8262e379a67e46d0b4b5a"
+  integrity sha512-fARPRdTwmrQDLYhmeh7j/eZwrCP6WzxD6uKOdK/hT/uKACAE9AG2Bc2dgqOZLkfmmctHpfcJ9w3AQnfLgg3GYg==
+
 npm-run-all@^4.1.5:
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/npm-run-all/-/npm-run-all-4.1.5.tgz#04476202a15ee0e2e214080861bff12a51d98fba"
@@ -3571,6 +3576,16 @@ platform@1.3.6:
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/platform/-/platform-1.3.6.tgz#48b4ce983164b209c2d45a107adb31f473a6e7a7"
   integrity sha512-fnWVljUchTro6RiCFvCXBbNhJc2NijN7oIQxbwsyL0buWJPG85v81ehlHI9fXrJsMNgTofEoWIQeClKpgxFLrg==
+
+pluralize@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
+  integrity sha512-ARhBOdzS3e41FbkW/XWrTEtukqqLoK5+Z/4UeDaLuSW+39JPeFgs4gCGqsrJHVZX0fUrx//4OF0K1CUGwlIFow==
+
+pluralize@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-8.0.0.tgz#1a6fa16a38d12a1901e0320fa017051c539ce3b1"
+  integrity sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==
 
 pnp-webpack-plugin@1.6.4:
   version "1.6.4"
@@ -4623,6 +4638,15 @@ supports-color@^8.0.0:
   dependencies:
     has-flag "^4.0.0"
 
+syllable@^3.4.0:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/syllable/-/syllable-3.6.1.tgz#1b08a0522c14ebc4db871f5697f68f49616e87d8"
+  integrity sha512-L2yAT4DRi9rwHpHMResxA/VKSM9T7X+eRAOEKoAFvHJxaxjtxT2Rt8qfB6pbrxeOZWsHu+ON0kTc9Oo0lU2PHA==
+  dependencies:
+    normalize-strings "^1.1.0"
+    pluralize "^7.0.0"
+    trim "0.0.1"
+
 table@^6.0.9:
   version "6.7.2"
   resolved "https://registry.yarnpkg.com/table/-/table-6.7.2.tgz#a8d39b9f5966693ca8b0feba270a78722cbaf3b0"
@@ -4655,6 +4679,14 @@ tar-stream@^2.1.4:
     fs-constants "^1.0.0"
     inherits "^2.0.3"
     readable-stream "^3.1.1"
+
+text-readability@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/text-readability/-/text-readability-1.0.5.tgz#49e679a889926f41edd08b4d14d0d8b94241ca02"
+  integrity sha512-vFe48ng7VSauwaryuWufLKC3/sZrnZhaLKECvrBxFchgZoWBoPwl4s8rMhV95qGq2s9Rt3K6itjz+PHk+4vxjQ==
+  dependencies:
+    pluralize "^8.0.0"
+    syllable "^3.4.0"
 
 text-table@^0.2.0:
   version "0.2.0"
@@ -4721,6 +4753,11 @@ trim-newlines@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-4.0.2.tgz#d6aaaf6a0df1b4b536d183879a6b939489808c7c"
   integrity sha512-GJtWyq9InR/2HRiLZgpIKv+ufIKrVrvjQWEj7PxAXNc5dwbNJkqhAUoAGgzRmULAnoOM5EIpveYd3J2VeSAIew==
+
+trim@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/trim/-/trim-0.0.1.tgz#5858547f6b290757ee95cccc666fb50084c460dd"
+  integrity sha1-WFhUf2spB1fulczMZm+1AITEYN0=
 
 ts-essentials@^2.0.3:
   version "2.0.12"

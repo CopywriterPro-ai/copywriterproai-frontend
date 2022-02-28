@@ -4,7 +4,11 @@ import useQuillSelected from "./useQuillSelected";
 
 const INTERVAL_MS = 1;
 
-const useQuillConentInsert = (quill, item = "", isContentUpdate = false) => {
+const useQuillConentTypingInsert = (
+  quill,
+  item = "",
+  isContentUpdate = false
+) => {
   const { range, lastIndex: lIndex } = useQuillSelected(quill);
   const [isTyping, setIsTyping] = useState(true);
   const [itemArr, setItemArr] = useState([]);
@@ -59,4 +63,4 @@ const useQuillConentInsert = (quill, item = "", isContentUpdate = false) => {
   return isTyping;
 };
 
-export default useQuillConentInsert;
+export default useQuillConentTypingInsert;

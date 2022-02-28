@@ -4,6 +4,8 @@ const whitelistAction = [
   "content/postBlogContentsFetching/fulfilled",
   "content/postGenerateContentsFetching/fulfilled",
   "content/postEditorToolsContentFetching/fulfilled",
+  "completeBlog/postCompleteEditorToolsContentFetching/fulfilled",
+  "completeBlog/postCompleteBlogContentsFetching/fulfilled",
 ];
 
 const generateUpdate =
