@@ -68,7 +68,7 @@ const singleValidation = (task, limit = true) => {
       task: "active-passive",
       userText: { min: 5, max: 200, required: true },
       from: ["Active", "Passive"],
-      to: ["Active", "Passive"],
+      to: ["Passive", "Active"],
     },
     "point-of-view": {
       task: "point-of-view",
