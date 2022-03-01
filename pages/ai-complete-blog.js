@@ -113,11 +113,11 @@ const CompleteBlogGenerator = () => {
   const isNewBlog = true;
   const [editorCurrentTaskInput, setEditorCurrentTaskInput] = useState({});
 
-  useEffect(() => {
-    if (range.length === 0) {
-      dispatch(setEditor({ currenttask: null }));
-    }
-  }, [dispatch, range.length]);
+  // useEffect(() => {
+  //   if (range.length === 0) {
+  //     dispatch(setEditor({ currenttask: null }));
+  //   }
+  // }, [dispatch, range.length]);
 
   useEffect(() => {
     if (editorCurrentTask) {
@@ -214,27 +214,6 @@ const CompleteBlogGenerator = () => {
     );
   };
 
-  const onFieldFormSubmit = (values) => {
-    const datas = {
-      task: editorCurrentTaskInput.task,
-      userText: selectedText,
-      ...values,
-    };
-
-    dispatch(postEditorToolsContent({ data: datas, task: datas.task })).then(
-      (res) => {
-        // if (res.payload.status === 200) {
-        //   const { index, length } = range;
-        //   const Index = index + length;
-        //   quill.setSelection(Index, 0);
-        //   dispatch(
-        //     setEditor({ range: { index: Index, length: 0 }, selected: null })
-        //   );
-        // }
-      }
-    );
-  };
-
   const handleSelectedContentItem = (item) => {
     dispatch(setBlogContent({ item: `\n${item}`, items: [] }));
   };
@@ -245,6 +224,38 @@ const CompleteBlogGenerator = () => {
 
   const handleSelectTool = (task) => {
     dispatch(setEditor({ currenttask: task }));
+  };
+
+  const isOk = useMemo(() => {
+    const selectedLength = selectedText?.length * 1;
+    const userText = editorCurrentTaskInput.userText;
+
+    const isMin = selectedLength < userText?.min;
+    const isMax = selectedLength > userText?.max;
+    const isOk = !isMin && !isMax;
+    return isOk;
+  }, [editorCurrentTaskInput.userText, selectedText?.length]);
+
+  const onFieldFormSubmit = (values) => {
+    const datas = {
+      task: editorCurrentTaskInput.task,
+      userText: selectedText,
+      ...values,
+    };
+
+    isOk &&
+      dispatch(postEditorToolsContent({ data: datas, task: datas.task })).then(
+        (res) => {
+          // if (res.payload.status === 200) {
+          //   const { index, length } = range;
+          //   const Index = index + length;
+          //   quill.setSelection(Index, 0);
+          //   dispatch(
+          //     setEditor({ range: { index: Index, length: 0 }, selected: null })
+          //   );
+          // }
+        }
+      );
   };
 
   return (
@@ -325,6 +336,10 @@ const CompleteBlogGenerator = () => {
                   <strong>Selected Text</strong>
                   <br />
                   <StyledSelectedText>{selectedText}</StyledSelectedText>
+                  <p style={{ textAlign: "right" }}>
+                    {selectedText?.length}/{editorCurrentTaskInput.userText.max}{" "}
+                    Max Characters
+                  </p>
                 </ToolsHeader>
                 <ToolsBody>
                   <StyledToolSelection>
@@ -382,6 +397,15 @@ const CompleteBlogGenerator = () => {
                             <label>Number Of Suggestions</label>
                             <input
                               type="number"
+                              min={
+                                editorCurrentTaskInput.numberOfSuggestions.min
+                              }
+                              max={
+                                editorCurrentTaskInput.numberOfSuggestions.max
+                              }
+                              defaultValue={
+                                editorCurrentTaskInput.numberOfSuggestions.min
+                              }
                               {...register("numberOfSuggestions", {
                                 min: editorCurrentTaskInput.numberOfSuggestions
                                   .min,
@@ -399,6 +423,11 @@ const CompleteBlogGenerator = () => {
                             <label>Number Of Points</label>
                             <input
                               type="number"
+                              min={editorCurrentTaskInput.numberOfPoints.min}
+                              max={editorCurrentTaskInput.numberOfPoints.max}
+                              defaultValue={
+                                editorCurrentTaskInput.numberOfPoints.min
+                              }
                               {...register("numberOfPoints", {
                                 min: editorCurrentTaskInput.numberOfPoints.min,
                                 max: editorCurrentTaskInput.numberOfPoints.max,
@@ -410,6 +439,7 @@ const CompleteBlogGenerator = () => {
                           </StyledEditorSelectorOptions>
                         )}
                         <GenerateButton
+                          disabled={!isOk}
                           onClick={null}
                           loading={content.loading === "pending"}
                         >
@@ -493,6 +523,7 @@ const StyledEditorSelectorOptions = styled.div`
     height: 2.2rem;
     outline: 0;
     width: 100%;
+    padding: 2px 4px;
   }
 
   select {
@@ -500,6 +531,7 @@ const StyledEditorSelectorOptions = styled.div`
     height: 2.2rem;
     outline: 0;
     width: 100%;
+    padding: 2px 4px;
   }
 `;
 

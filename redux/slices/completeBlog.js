@@ -7,7 +7,7 @@ import { HYDRATE } from "next-redux-wrapper";
 
 import { pick, asyncThunkError } from "@/utils";
 import { contentApi } from "@/api";
-import { BLOG_HEADLINE, BLOG_WRITING } from "@/appconstants";
+import { BLOG_HEADLINE, BLOG_WRITING, PARAPHRASING } from "@/appconstants";
 
 export const postBlogContents = createAsyncThunk(
   "completeBlog/postCompleteBlogContentsFetching",
@@ -56,7 +56,7 @@ const initialState = {
     error: null,
   },
   editor: {
-    currenttask: null,
+    currenttask: PARAPHRASING,
     range: { index: 0, length: 0 },
     selected: null,
     value: [],

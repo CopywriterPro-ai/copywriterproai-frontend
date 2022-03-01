@@ -3,10 +3,10 @@ import React from "react";
 import Loader from "@/components/common/Loader";
 import { GenButton } from "../styles";
 
-const GenerateButton = ({ loading, onClick, children }) => {
+const GenerateButton = ({ loading, onClick, children, disabled = false }) => {
   return (
     <GenButton
-      disabled={loading}
+      disabled={loading || disabled}
       loading={loading.toString()}
       onClick={onClick}
     >
