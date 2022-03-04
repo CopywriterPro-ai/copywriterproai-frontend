@@ -105,7 +105,7 @@ const singleValidation = (task, limit = true) => {
       task: "blog-topic",
       about: { min: 10, max: 200, required: true },
       headline: { min: 10, max: 150, required: true },
-      topic: { min: 10, max: 200, required: true },
+      userText: { min: 10, max: 200, required: true },
       numberOfSuggestions: { min: 1, max: 10, required: true },
     },
     "blog-outro": {

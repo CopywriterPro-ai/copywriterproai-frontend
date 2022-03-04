@@ -80,6 +80,10 @@ const GenerateSidebar = () => {
       router.push({
         pathname: `/ai-blog-generator`,
       });
+    } else if (key === "complete-blog") {
+      router.push({
+        pathname: `/ai-complete-blog`,
+      });
     } else {
       dispatch(setCurrentActiveKeyState(key));
       router.push({
