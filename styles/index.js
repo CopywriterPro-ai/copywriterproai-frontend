@@ -34,8 +34,9 @@ body {
   max-height: 100vh;
   min-height: 300px;
   padding-top: 30px;
-  font-size: 16px;
+  font-size: 17px;
   word-wrap: break-word;
+  line-height: 34px;
 
   &::-webkit-scrollbar {
     width: 0;

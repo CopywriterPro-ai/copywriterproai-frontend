@@ -39,7 +39,7 @@ const useQuillConentTypingInsert = (
       interval = setInterval(() => {
         if (itemArrLength > index) {
           let word = itemArr[index];
-          quill.insertText(lastIndex, ` ${word}`);
+          quill.insertText(lastIndex, `${lastIndex === 0 ? "" : " "}${word}`);
           quill.enable(false);
           quill.blur();
           setIndex(index + 1);

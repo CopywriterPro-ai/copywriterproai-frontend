@@ -35,8 +35,9 @@ const useQuillCounter = (quill) => {
 
   useEffect(() => {
     if (optimizeTexts.length > 0) {
+      const readScore = rs.fleschReadingEase(optimizeTexts);
       setCount({
-        readabilityScore: rs.fleschReadingEase(optimizeTexts),
+        readabilityScore: Math.min(Math.max(parseInt(readScore), 0), 100),
         sentence: rs.sentenceCount(optimizeTexts),
         word: rs.syllableCount(optimizeTexts, "en-US"),
         character: optimizeTexts.length,

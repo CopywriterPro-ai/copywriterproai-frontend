@@ -51,10 +51,14 @@ import {
   GRAMMAR_FIXER,
   CHANGE_TONE,
   ACTIVE_PASSIVE,
-  POINT_OF_VIEW,
+  BLOG_TOPIC,
 } from "@/appconstants";
 
 const contentTools = [
+  {
+    name: "Topic Writing",
+    key: BLOG_TOPIC,
+  },
   {
     name: "Paraphrase",
     key: PARAPHRASING,
@@ -202,6 +206,16 @@ const CompleteBlogGenerator = () => {
   };
 
   const handleGenerateCompleteBlog = () => {
+    if (about.input.length < 10) {
+      return toastMessage.warn(
+        "Blog about length must be at least 10 characters long"
+      );
+    }
+    if (about.input.length > 400) {
+      return toastMessage.warn(
+        "Blog about length must be max 400 characters long"
+      );
+    }
     dispatch(setCurrentTask(BLOG_WRITING));
     dispatch(
       postBlogContents({
@@ -237,11 +251,26 @@ const CompleteBlogGenerator = () => {
   }, [editorCurrentTaskInput.userText, selectedText?.length]);
 
   const onFieldFormSubmit = (values) => {
-    const datas = {
-      task: editorCurrentTaskInput.task,
+    const task = editorCurrentTaskInput.task;
+
+    let datas = {
+      task,
       userText: selectedText,
       ...values,
     };
+
+    if (task === BLOG_TOPIC) {
+      if (about.input.length === 0) {
+        return toastMessage.warn("Blog about required");
+      } else if (headline.input.length === 0) {
+        return toastMessage.warn("Blog headline required");
+      }
+      datas = {
+        ...datas,
+        about: about.input,
+        headline: headline.input,
+      };
+    }
 
     isOk &&
       dispatch(postEditorToolsContent({ data: datas, task: datas.task })).then(
@@ -324,9 +353,9 @@ const CompleteBlogGenerator = () => {
                 <ToolBottom>
                   <button onClick={handleResetBlog}>Reset</button>
                   {/* <button onClick={handleSaveOrUpdate}>Save</button> */}
-                  <button onClick={() => console.log("coming soon")}>
+                  {/* <button onClick={() => console.log("coming soon")}>
                     Save
-                  </button>
+                  </button> */}
                 </ToolBottom>
               </ScollingTool>
             </Collapse>

@@ -32,7 +32,7 @@ const useQuillConentDirectInsert = (
   useEffect(() => {
     if (quill && texts.length > 1) {
       setIsTyping(true);
-      quill.insertText(lastIndex, ` ${texts}`);
+      quill.insertText(lastIndex, `\n ${texts}\n\n`);
     }
 
     return () => {

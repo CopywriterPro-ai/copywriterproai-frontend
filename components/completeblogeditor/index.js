@@ -29,7 +29,7 @@ const QuillEditor = ({ setQuillEditor }) => {
   const [selectedLength, setSelectedLength] = useState(0);
   const [focusInEditor, setFocusInEditor] = useState(false);
   const { quill, quillRef } = useQuillEditor(AI_COMPLETE_BLOG_WRITER);
-  const { range, text, position } = useQuillSelected(quill);
+  const { range, text } = useQuillSelected(quill);
   const { value, currenttask } = useSelector(selectors.getEditor());
   const {
     complete: { items: completeItems },
@@ -38,7 +38,7 @@ const QuillEditor = ({ setQuillEditor }) => {
   const currentContent = useQuillContentChange(quill);
   const editorcontainerRef = useRef(null);
   // const { width: editorWidth } = useElementSize(editorcontainerRef);
-  const isTyping = useQuillConentTypingInsert(quill, completeItems[0]);
+  const isTyping = useQuillConentTypingInsert(quill, completeItems);
   const isContentTyping = useQuillConentDirectInsert(quill, contentItem, true);
   useQuillPlainPaste(quill);
 
@@ -139,8 +139,8 @@ ${({ IsMin }) =>
   IsMin === "true" &&
   `
   &::selection {
-      background: #ffca2a;
-      color: white;
+      background: rgb(198 201 0 / 15%);
+      color: #a58e01;
     }
   `}
 
@@ -148,8 +148,8 @@ ${({ IsMax }) =>
   IsMax === "true" &&
   `
   &::selection {
-      background: #ff0000;
-      color: white;
+      background: rgba(222, 68, 55, 0.1);
+      color: #de4437;
     }
   `}
 
@@ -157,8 +157,8 @@ ${({ IsOk }) =>
   IsOk === "true" &&
   `
   &::selection {
-      background: #8bc34a;
-      color: white;
+      background: rgba(0, 201, 167, 0.1);
+      color: #00c9a7;
     }
   `}
 `;
