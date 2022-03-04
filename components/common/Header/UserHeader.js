@@ -79,7 +79,16 @@ const NavBlogDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
         <NavDropdownMenus>
           <Link href="/ai-blog-generator">
             <a>
-              <NavDropdownItem tag="div">Generate</NavDropdownItem>
+              <NavDropdownItem tag="div">
+                Blog writer (Write along){" "}
+              </NavDropdownItem>
+            </a>
+          </Link>
+          <Link href="/ai-complete-blog">
+            <a>
+              <NavDropdownItem tag="div">
+                Blog writer (Ghostwriter)
+              </NavDropdownItem>
             </a>
           </Link>
           <Link href="/draft">
