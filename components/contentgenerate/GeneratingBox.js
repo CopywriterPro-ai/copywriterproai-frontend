@@ -218,7 +218,7 @@ const InputGeneratingBox = () => {
                 );
               } else if (field.type === "InputNumber") {
                 const fieldValidation = validationSchema[field.key];
-                const minChar = fieldValidation?.min || 0;
+                const minChar = fieldValidation?.min || 1;
                 const maxChar = fieldValidation?.max || 10;
                 const required = fieldValidation?.required || false;
 

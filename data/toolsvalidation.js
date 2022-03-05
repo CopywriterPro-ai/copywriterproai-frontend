@@ -237,6 +237,7 @@ const singleValidation = (task, limit = true) => {
       task: "website-short-description",
       industryType: { min: 5, max: 100, required: true },
       businessName: { min: 3, max: 50, required: true },
+      numberOfSuggestions: { min: 1, max: 10, required: true },
     },
     "website-keywords-from-text": {
       task: "website-keywords-from-text",
@@ -291,6 +292,7 @@ const singleValidation = (task, limit = true) => {
       yourJobTitle: { min: 3, max: 50, required: true },
       keyAchievements: { min: 10, max: 150, required: true },
       yearsOfExperience: { min: 1, max: 2, required: true },
+      numberOfSuggestions: { min: 1, max: 10, required: true },
     },
     "problem-agitate-solution": {
       task: "problem-agitate-solution",
