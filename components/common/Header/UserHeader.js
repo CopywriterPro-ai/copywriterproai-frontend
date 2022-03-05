@@ -7,6 +7,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Badge,
 } from "reactstrap";
 import styled from "styled-components";
 import dayjs from "dayjs";
@@ -87,7 +88,7 @@ const NavBlogDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
           <Link href="/ai-complete-blog">
             <a>
               <NavDropdownItem tag="div">
-                Blog writer (Ghostwriter)
+                Blog writer (Ghostwriter) <Badge color="warning">New</Badge>
               </NavDropdownItem>
             </a>
           </Link>

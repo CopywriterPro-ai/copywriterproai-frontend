@@ -110,18 +110,29 @@ const BlogGenerator = () => {
     dispatch(setBlogResetModal(true));
   };
 
+  const isValidatedOk = () => {
+    let isValid = false;
+    if (title.length === 0 || value.length === 0 || about.length === 0) {
+      isValid = false;
+      toastMessage.customWarn(
+        "Blog Headline, Blog About and Blog Content is required!",
+        3000,
+        {
+          toastId: "updateblog",
+        }
+      );
+    } else {
+      isValid = true;
+    }
+    return isValid;
+  };
+
   const handleSaveOrUpdate = () => {
     if (!isNewBlog) {
-      if (title.length === 0 || value.length === 0 || about.length === 0) {
-        toastMessage.customWarn(
-          "Blog Headline, Blog About and Blog Content is required!",
-          3000,
-          {
-            toastId: "updateblog",
-          }
-        );
+      if (!isValidatedOk()) {
         return;
       }
+
       if (isAuth) {
         dispatch(
           updateBlog({
@@ -141,16 +152,10 @@ const BlogGenerator = () => {
         dispatch(setSigninModal(true));
       }
     } else {
-      if (title.length === 0 || value.length === 0 || about.length === 0) {
-        toastMessage.customWarn(
-          "Blog Headline, Blog About and Blog Content is required!",
-          3000,
-          {
-            toastId: "saveblog",
-          }
-        );
+      if (!isValidatedOk()) {
         return;
       }
+
       if (isAuth) {
         dispatch(
           createBlog({

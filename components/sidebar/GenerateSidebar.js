@@ -8,6 +8,7 @@ import {
   SidebarHeader,
   SidebarContent,
 } from "react-pro-sidebar";
+import { Badge } from "reactstrap";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
@@ -193,6 +194,9 @@ const GenerateSidebar = () => {
                   onClick={() => handleActiveItem(item.key)}
                 >
                   {item.name}
+                  {item.key === "complete-blog" && (
+                    <Badge color="warning">New</Badge>
+                  )}
                 </MenuItemStyle>
               ))}
             </Menu>
