@@ -18,7 +18,6 @@ import {
 } from "redux/slices/blog";
 import Spinner from "components/common/Spinner";
 import { deltaToPlainText } from "utils/quillValueConvert";
-import { UPDATE } from "appconstants";
 
 const TEXT_EXCERPT = 250;
 
@@ -39,7 +38,7 @@ const SingleDraft = ({ item }) => {
     dispatch(setBlogCurrentId(parseItem.id));
     dispatch(setCurrentBlogEditItem(parseItem));
     dispatch(setBlogCurrentItem(parseItem));
-    router.push(`/ai-blog-generator?action=${UPDATE}`);
+    router.push(`/ai-blog-generator`);
   };
 
   return (
