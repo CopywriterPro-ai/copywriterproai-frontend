@@ -81,7 +81,7 @@ const EditorModal = ({ position, quill, editorWidth }) => {
   const { about, title } = useSelector(blogSelector.getBlogContent);
   const { selected, range } = useSelector(blogSelector.getEditor());
   const { loading } = useSelector(blogSelector.getToolContent());
-  const { isAuth } = useUser();
+  const { isAuth, subscribe } = useUser();
   const showSubscriberModal = useSubscriberModal();
 
   const handleSubscriberModalOpen = (message) => {
@@ -89,7 +89,10 @@ const EditorModal = ({ position, quill, editorWidth }) => {
   };
 
   const handleGetTool = (task, tone) => {
-    const validate = toolsvalidation(task, true)?.userText;
+    const validate = toolsvalidation(
+      task,
+      subscribe.subscription === "Freemium"
+    )?.userText;
 
     let data;
     if (!selected) {

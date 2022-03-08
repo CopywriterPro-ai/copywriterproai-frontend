@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { Container } from "./style";
 import { setBlogDeleteModal, selectors as uiSelector } from "@/redux/slices/ui";
-import { deleteBlog, selectors as blogSelector } from "@/redux/slices/blog";
+import { deleteBlog, selectors as draftSelector } from "@/redux/slices/draft";
 
 const customStyles = {
   content: {
@@ -17,18 +17,18 @@ const customStyles = {
   },
 };
 
-const DeleleBlogModal = ({ id }) => {
+const DeleleBlogModal = () => {
   const dispatch = useDispatch();
 
   const { blogs } = useSelector(uiSelector.getModal);
-  const { currentid } = useSelector(blogSelector.getBlogs());
+  const { activeId } = useSelector(draftSelector.getDraftBlogs());
 
   const closeModal = () => {
     dispatch(setBlogDeleteModal(false));
   };
 
   const handleDelete = () => {
-    dispatch(deleteBlog({ id: currentid })).then(({ payload }) => {
+    dispatch(deleteBlog({ id: activeId })).then(({ payload }) => {
       if (payload.status === 204) {
         dispatch(setBlogDeleteModal(false));
       }

@@ -13,6 +13,7 @@ import {
 } from "@/redux/slices/completeBlog";
 import {
   // useElementSize,
+  useUser,
   useQuillEditor,
   useQuillSelected,
   useQuillContentChange,
@@ -25,6 +26,7 @@ import toolsvalidation from "@/data/toolsvalidation";
 
 const QuillEditor = ({ setQuillEditor }) => {
   const dispatch = useDispatch();
+  const { subscribe } = useUser();
 
   const [selectedLength, setSelectedLength] = useState(0);
   const [focusInEditor, setFocusInEditor] = useState(false);
@@ -32,6 +34,7 @@ const QuillEditor = ({ setQuillEditor }) => {
   const { range, text } = useQuillSelected(quill);
   const { value, currenttask } = useSelector(selectors.getEditor());
   const {
+    currentid,
     complete: { items: completeItems },
     content: { item: contentItem },
   } = useSelector(selectors.getCompleteBlogContent);
@@ -71,14 +74,21 @@ const QuillEditor = ({ setQuillEditor }) => {
 
   useEffect(() => {
     const updateInterval = setInterval(() => {
-      if (!isContentEqual) dispatch(setEditor({ value: currentContent }));
+      if (currentid.length === 0 && !isContentEqual)
+        dispatch(setEditor({ value: currentContent }));
     }, 1000);
     return () => clearInterval(updateInterval);
-  }, [currentContent, dispatch, isContentEqual]);
+  }, [currentContent, currentid.length, dispatch, isContentEqual]);
 
   useEffect(() => {
     dispatch(setEditor({ range, selected: text }));
   }, [dispatch, range, text]);
+
+  useEffect(() => {
+    if (quill && currentid.length > 0) {
+      quill.setContents(value);
+    }
+  }, [currentid.length, quill, value]);
 
   useEffect(() => {
     const getSelection = (event) => {
@@ -99,7 +109,10 @@ const QuillEditor = ({ setQuillEditor }) => {
   }, []);
 
   const { isMin, isMax, isOk } = useMemo(() => {
-    const { min, max } = toolsvalidation(currenttask, true)?.userText;
+    const { min, max } = toolsvalidation(
+      currenttask,
+      subscribe.subscription === "Freemium"
+    )?.userText;
 
     const isMin = focusInEditor && selectedLength < min;
     const isMax = focusInEditor && selectedLength > max;
@@ -120,11 +133,6 @@ const QuillEditor = ({ setQuillEditor }) => {
         IsOk={isOk.toString()}
       />
       <StyledQuill ref={quillRef} />
-      {/* <EditorModal
-        position={position}
-        quill={quill}
-        editorWidth={editorWidth}
-      /> */}
     </div>
   );
 };

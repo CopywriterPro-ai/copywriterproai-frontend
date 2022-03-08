@@ -86,7 +86,7 @@ const CompleteEditorModal = ({ position, quill, editorWidth }) => {
     content: { loading },
     editor: { selected, range },
   } = useSelector(blogSelector.getCompleteBlogContent);
-  const { isAuth } = useUser();
+  const { isAuth, subscribe } = useUser();
   const showSubscriberModal = useSubscriberModal();
 
   const handleSubscriberModalOpen = (message) => {
@@ -94,7 +94,10 @@ const CompleteEditorModal = ({ position, quill, editorWidth }) => {
   };
 
   const handleGetTool = (task, tone) => {
-    const validate = toolsvalidation(task, true)?.userText;
+    const validate = toolsvalidation(
+      task,
+      subscribe.subscription === "Freemium"
+    )?.userText;
 
     let data;
     if (!selected) {

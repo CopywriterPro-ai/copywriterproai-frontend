@@ -38,7 +38,7 @@ const InputGeneratingBox = () => {
   const isToolAvailable = useSelector(contentSelector.isHasTool(queryTool));
   const {
     isAuth,
-    subscribe: { words },
+    subscribe: { words, subscription },
   } = useUser();
   const showSubscriberModal = useSubscriberModal();
 
@@ -82,11 +82,11 @@ const InputGeneratingBox = () => {
 
   const validationSchema = useMemo(() => {
     if (activeKey) {
-      return toolsvalidation(activeKey, true);
+      return toolsvalidation(activeKey, subscription === "Freemium");
     } else {
       return {};
     }
-  }, [activeKey]);
+  }, [activeKey, subscription]);
 
   const onSubmit = (formData) => {
     const task = activeKey;

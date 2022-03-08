@@ -106,6 +106,7 @@ export const deleteBlog = createAsyncThunk(
 const initialState = {
   loading: "idle",
   currenttask: BLOG_HEADLINE,
+  currentid: "",
   about: "",
   title: "",
   intro: "",
@@ -144,6 +145,17 @@ const blog = createSlice({
   initialState,
   reducers: {
     resetBlog: () => initialState,
+    setEditorDefault: (state, action) => {
+      const { headline, about, body, currentid, intro, outline } =
+        action.payload;
+
+      state.title = headline;
+      state.about = about;
+      state.intro = intro;
+      state.outline = outline;
+      state.editor.value = body;
+      state.blogs.currentid = currentid;
+    },
     setStateBlogAbout: (state, action) => {
       state.about = action.payload;
     },
@@ -473,6 +485,7 @@ export const selectors = {
 
 export const {
   resetBlog,
+  setEditorDefault,
   setStateBlogAbout,
   setStateBlogTitle,
   setStateBlogIntro,

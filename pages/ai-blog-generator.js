@@ -110,16 +110,14 @@ const BlogGenerator = () => {
     dispatch(setBlogResetModal(true));
   };
 
-  const isValidatedOk = () => {
+  const isValidatedOk = (toastId) => {
     let isValid = false;
     if (title.length === 0 || value.length === 0 || about.length === 0) {
       isValid = false;
       toastMessage.customWarn(
         "Blog Headline, Blog About and Blog Content is required!",
         3000,
-        {
-          toastId: "updateblog",
-        }
+        { toastId }
       );
     } else {
       isValid = true;
@@ -129,7 +127,7 @@ const BlogGenerator = () => {
 
   const handleSaveOrUpdate = () => {
     if (!isNewBlog) {
-      if (!isValidatedOk()) {
+      if (!isValidatedOk("updateBlog")) {
         return;
       }
 
@@ -152,7 +150,7 @@ const BlogGenerator = () => {
         dispatch(setSigninModal(true));
       }
     } else {
-      if (!isValidatedOk()) {
+      if (!isValidatedOk("createBlog")) {
         return;
       }
 
