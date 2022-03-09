@@ -5,10 +5,8 @@ import "quill/dist/quill.snow.css";
 
 import EditorModal from "components/EditorModal";
 import {
-  setEditorCurrentValue,
-  setEditorCurrentSelectedRange,
-  setEditorCurrentSelectedText,
-  selectors as blogSelector,
+  writerAlongActions,
+  selectors as writerAlongSelector,
 } from "@/redux/slices/blog";
 import {
   useElementSize,
@@ -16,6 +14,7 @@ import {
   useQuillSelected,
   useQuillContentChange,
   useQuillPlainPaste,
+  useQuillConentTypingInsert,
 } from "@/hooks";
 import { AI_BLOG_WRITER } from "@/appconstants";
 
@@ -24,10 +23,12 @@ const QuillEditor = ({ setQuillEditor }) => {
   const editorcontainerRef = useRef(null);
   const { width: editorWidth } = useElementSize(editorcontainerRef);
 
-  const { value } = useSelector(blogSelector.getEditor());
+  const { value } = useSelector(writerAlongSelector.getEditor());
+  const { item } = useSelector(writerAlongSelector.getContent());
   const { quill, quillRef } = useQuillEditor(AI_BLOG_WRITER);
   const { range, text, position } = useQuillSelected(quill);
   const currentContent = useQuillContentChange(quill);
+  const isTyping = useQuillConentTypingInsert(quill, item, true);
   useQuillPlainPaste(quill);
 
   useEffect(() => {
@@ -39,19 +40,22 @@ const QuillEditor = ({ setQuillEditor }) => {
   }, [currentContent, value]);
 
   useEffect(() => {
+    if (!isTyping) {
+      dispatch(writerAlongActions.setContent({ item: "", items: [] }));
+    }
+  }, [dispatch, isTyping]);
+
+  useEffect(() => {
     const updateInterval = setInterval(() => {
-      if (!isContentEqual) dispatch(setEditorCurrentValue(currentContent));
+      if (!isContentEqual)
+        dispatch(writerAlongActions.setEditor({ value: currentContent }));
     }, 1000);
     return () => clearInterval(updateInterval);
   }, [currentContent, dispatch, isContentEqual]);
 
   useEffect(() => {
-    dispatch(setEditorCurrentSelectedRange(range));
-  }, [dispatch, range]);
-
-  useEffect(() => {
-    dispatch(setEditorCurrentSelectedText(text));
-  }, [dispatch, text]);
+    dispatch(writerAlongActions.setEditor({ range, selected: text }));
+  }, [dispatch, range, text]);
 
   return (
     <div className="editor-container" ref={editorcontainerRef}>

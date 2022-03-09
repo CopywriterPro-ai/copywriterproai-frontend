@@ -107,7 +107,6 @@ const CompleteBlogGenerator = () => {
   const aboutRef = useRef(null);
   const headlineRef = useRef(null);
   const [quill, setQuill] = useState(null);
-  const [actionSuccessStatus, setActionSuccessStatus] = useState("idle");
   const { register, handleSubmit, reset: resetForm } = useForm();
 
   const { subscriber } = useSelector(uiSelector.getModal);

@@ -123,7 +123,7 @@ const QuillEditor = ({ setQuillEditor }) => {
       isMax,
       isOk,
     };
-  }, [currenttask, focusInEditor, selectedLength]);
+  }, [currenttask, focusInEditor, selectedLength, subscribe.subscription]);
 
   return (
     <div className="editor-container" ref={editorcontainerRef}>

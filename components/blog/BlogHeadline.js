@@ -3,14 +3,14 @@ import { Collapse } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  postBlogContents,
-  setStateBlogTitle,
-  selectors as blogSelector,
+  postWriterAlongContents,
+  writerAlongActions,
+  selectors as writerAlongSelector,
 } from "@/redux/slices/blog";
 import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
 import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem } from "./styles";
-import { BLOG_HEADLINE } from "@/appconstants";
+import { BLOG_HEADLINE, BLOG_INTRO } from "@/appconstants";
 import { toastMessage } from "@/utils";
 import { useUser, useSubscriberModal } from "@/hooks";
 import { ToolAction, ToolInput } from "./styles";
@@ -20,13 +20,13 @@ const BlogHeadline = ({ aboutRef }) => {
   const dispatch = useDispatch();
   const [suggestionNum, setSuggestionNum] = useState(1);
   const { isCurrentTask, isEmpty, items, loading } = useSelector(
-    blogSelector.getBlogItem(BLOG_HEADLINE)
+    writerAlongSelector.getContentItem(BLOG_HEADLINE)
   );
-  const { about } = useSelector(blogSelector.getBlogContent);
+  const { about } = useSelector(writerAlongSelector.getWriterAlong);
   const { isAuth } = useUser();
   const showSubscriberModal = useSubscriberModal();
 
-  const trimedAbout = about.trim();
+  const trimedAbout = about.item.trim();
   const validAbout = trimedAbout.length >= 10 && trimedAbout.length <= 200;
 
   const handleSubscriberModalOpen = (message) => {
@@ -41,11 +41,11 @@ const BlogHeadline = ({ aboutRef }) => {
         }
 
         dispatch(
-          postBlogContents({
+          postWriterAlongContents({
             task: BLOG_HEADLINE,
             data: {
               task: BLOG_HEADLINE,
-              about,
+              about: about.item,
               numberOfSuggestions: suggestionNum,
             },
           })
@@ -63,6 +63,11 @@ const BlogHeadline = ({ aboutRef }) => {
         }
       );
     }
+  };
+
+  const handleSelectItem = (item) => {
+    dispatch(writerAlongActions.setHeadline({ item }));
+    dispatch(writerAlongActions.setCurrentTask(BLOG_INTRO));
   };
 
   return (
@@ -88,10 +93,7 @@ const BlogHeadline = ({ aboutRef }) => {
           <GenerateButton loading={loading} onClick={handleBlogHeadline} />
           {!isEmpty &&
             items.map((item, index) => (
-              <TextItem
-                onClick={() => dispatch(setStateBlogTitle(item))}
-                key={index}
-              >
+              <TextItem onClick={() => handleSelectItem(item)} key={index}>
                 {item}
               </TextItem>
             ))}
