@@ -46,7 +46,7 @@ const SingleDraft = ({ item }) => {
         })
       );
       // { headline, about, body, currentid, intro, outline }
-      router.push(`/ai-blog-generator`);
+      router.push(`/app/ai-writeralong`);
     } else if (blogType === "GHOSTWRITER") {
       dispatch(
         setEditorCompleteBlogDefault({
@@ -56,7 +56,7 @@ const SingleDraft = ({ item }) => {
           currentid: id,
         })
       );
-      router.push(`/ai-complete-blog`);
+      router.push(`/app/ai-ghostwriter`);
     }
   };
 
