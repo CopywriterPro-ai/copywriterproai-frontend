@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useMemo } from "react";
+import { useRef, useState, useEffect, useMemo, useCallback } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { Collapse } from "reactstrap";
@@ -9,9 +9,8 @@ import EditorJS from "@/components/completeblogeditor";
 import CustomToolbar from "@/components/editor/CustomToolbar";
 import { BlogHeadlineComplete } from "@/components/blog";
 import {
-  createBlog,
+  resetCompleteBlog,
   setCurrentTask,
-  updateBlog,
   setBlogHeadline,
   setBlogAbout,
   postBlogContents,
@@ -21,13 +20,20 @@ import {
   selectors as blogSelector,
 } from "@/redux/slices/completeBlog";
 import {
+  resetBlogsDraft,
+  updateBlog,
+  createBlog,
+  selectors as draftSelector,
+} from "@/redux/slices/draft";
+import {
   setBlogResetModal,
   setSigninModal,
   selectors as uiSelector,
 } from "@/redux/slices/ui";
 import {
-  // useBeforeunload,
-  // useWarnIfUnsavedChanges,
+  useBeforeunload,
+  useWarnIfUnsavedChanges,
+  useQuillValueIsChange,
   useQuillCounter,
   useQuillSelected,
   useUser,
@@ -107,30 +113,52 @@ const CompleteBlogGenerator = () => {
   const { subscriber } = useSelector(uiSelector.getModal);
   const { about, headline, currenttask, loading, complete, content } =
     useSelector(blogSelector.getCompleteBlogContent);
-  const { currenttask: editorCurrentTask } = useSelector(
+  const { currenttask: editorCurrentTask, value } = useSelector(
     blogSelector.getEditor()
   );
-  const { isAuth } = useUser();
+  const { activeId } = useSelector(draftSelector.getDraftBlogs());
+  const { isAuth, subscribe } = useUser();
   const { showSidebar, showContent } = useSidebar();
   const quillCounter = useQuillCounter(quill);
   const { range, text: selectedText } = useQuillSelected(quill);
-  const isNewBlog = true;
   const [editorCurrentTaskInput, setEditorCurrentTaskInput] = useState({});
+  const { isEditorChange } = useQuillValueIsChange(quill);
 
-  // useEffect(() => {
-  //   if (range.length === 0) {
-  //     dispatch(setEditor({ currenttask: null }));
-  //   }
-  // }, [dispatch, range.length]);
+  const isNewBlog = activeId === "";
+
+  useBeforeunload((event) => {
+    if (isEditorChange) {
+      event.preventDefault();
+    }
+  });
+  useWarnIfUnsavedChanges(isEditorChange);
+
+  const handleEditorReset = useCallback(() => {
+    quill?.setContents([]);
+    dispatch(resetBlogsDraft());
+    dispatch(resetCompleteBlog());
+  }, [dispatch, quill]);
 
   useEffect(() => {
     if (editorCurrentTask) {
       resetForm();
-      setEditorCurrentTaskInput(toolsvalidation(editorCurrentTask));
+      setEditorCurrentTaskInput(
+        toolsvalidation(
+          editorCurrentTask,
+          subscribe.subscription === "Freemium"
+        )
+      );
     } else {
       setEditorCurrentTaskInput({});
     }
-  }, [editorCurrentTask, resetForm]);
+  }, [editorCurrentTask, resetForm, subscribe.subscription]);
+
+  useEffect(() => {
+    return () => {
+      handleEditorReset();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleChangeBlogAbout = (e) => {
     dispatch(setBlogAbout({ input: e.target.value }));
@@ -144,16 +172,14 @@ const CompleteBlogGenerator = () => {
     dispatch(setBlogResetModal(true));
   };
 
-  const isValidatedOk = () => {
+  const isValidatedOk = (toastId) => {
     let isValid = false;
-    if (title.length === 0 || value.length === 0 || about.length === 0) {
+    if (headline.input.length === 0 || about.input.length === 0) {
       isValid = false;
       toastMessage.customWarn(
         "Blog Headline, Blog About and Blog Content is required!",
         3000,
-        {
-          toastId: "updateblog",
-        }
+        { toastId }
       );
     } else {
       isValid = true;
@@ -163,18 +189,19 @@ const CompleteBlogGenerator = () => {
 
   const handleSaveOrUpdate = () => {
     if (!isNewBlog) {
-      if (!isValidatedOk()) {
+      if (!isValidatedOk("updateBlog")) {
         return;
       }
 
       if (isAuth) {
         dispatch(
           updateBlog({
-            id: currentBlogId,
+            id: activeId,
             data: {
-              blogAbout: about,
-              headline: title,
+              blogAbout: about.input,
+              headline: headline.input,
               blogPost: JSON.stringify(value),
+              blogType: "GHOSTWRITER",
             },
           })
         ).then(({ payload }) => {
@@ -186,7 +213,7 @@ const CompleteBlogGenerator = () => {
         dispatch(setSigninModal(true));
       }
     } else {
-      if (!isValidatedOk()) {
+      if (!isValidatedOk("createBlog")) {
         return;
       }
 
@@ -194,9 +221,10 @@ const CompleteBlogGenerator = () => {
         dispatch(
           createBlog({
             data: {
-              blogAbout: about,
-              headline: title,
+              blogAbout: about.input,
+              headline: headline.input,
               blogPost: JSON.stringify(value),
+              blogType: "GHOSTWRITER",
             },
           })
         ).then(({ payload }) => {
@@ -208,6 +236,13 @@ const CompleteBlogGenerator = () => {
         dispatch(setSigninModal(true));
       }
     }
+  };
+
+  const handleNewBlog = () => {
+    handleSaveOrUpdate();
+    setTimeout(() => {
+      handleEditorReset();
+    }, 200);
   };
 
   const handleGenerateCompleteBlog = () => {
@@ -277,19 +312,7 @@ const CompleteBlogGenerator = () => {
       };
     }
 
-    isOk &&
-      dispatch(postEditorToolsContent({ data: datas, task: datas.task })).then(
-        (res) => {
-          // if (res.payload.status === 200) {
-          //   const { index, length } = range;
-          //   const Index = index + length;
-          //   quill.setSelection(Index, 0);
-          //   dispatch(
-          //     setEditor({ range: { index: Index, length: 0 }, selected: null })
-          //   );
-          // }
-        }
-      );
+    isOk && dispatch(postEditorToolsContent({ data: datas, task: datas.task }));
   };
 
   return (
@@ -338,26 +361,32 @@ const CompleteBlogGenerator = () => {
                     value={about.input}
                     rows="4"
                   ></textarea>
-                  <Collapse
+                  {/* <Collapse
                     isOpen={!complete.success && about.input.trim().length > 0}
+                  > */}
+                  <GenerateButton
+                    loading={
+                      loading === "pending" && currenttask === BLOG_WRITING
+                    }
+                    onClick={
+                      complete.success
+                        ? handleResetBlog
+                        : about.input.trim().length > 0
+                        ? handleGenerateCompleteBlog
+                        : null
+                    }
                   >
-                    <GenerateButton
-                      loading={
-                        loading === "pending" && currenttask === BLOG_WRITING
-                      }
-                      onClick={handleGenerateCompleteBlog}
-                    >
-                      Generate Blog
-                    </GenerateButton>
-                  </Collapse>
+                    {complete.success ? "Reset Blog" : "Generate Blog"}
+                  </GenerateButton>
+                  {/* </Collapse> */}
                 </ToolsHeader>
 
                 <ToolsBody>
                   <BlogHeadlineComplete aboutRef={aboutRef} />
                 </ToolsBody>
                 <ToolBottom>
-                  <button onClick={handleResetBlog}>Reset</button>
-                  {/* <button onClick={handleSaveOrUpdate}>Save</button> */}
+                  <button onClick={handleNewBlog}>New Blog</button>
+                  <button onClick={handleSaveOrUpdate}>Save</button>
                   {/* <button onClick={() => console.log("coming soon")}>
                     Save
                   </button> */}

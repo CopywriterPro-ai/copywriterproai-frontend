@@ -78,14 +78,14 @@ const NavBlogDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
           {MenuName} <span className="fas fa-angle-down"></span>
         </DropdownToggle>
         <NavDropdownMenus>
-          <Link href="/ai-blog-generator">
+          <Link href="/app/ai-writeralong">
             <a>
               <NavDropdownItem tag="div">
                 Blog writer (Write along){" "}
               </NavDropdownItem>
             </a>
           </Link>
-          <Link href="/ai-complete-blog">
+          <Link href="/app/ai-ghostwriter">
             <a>
               <NavDropdownItem tag="div">
                 Blog writer (Ghostwriter) <Badge color="warning">New</Badge>

@@ -7,15 +7,15 @@ import { useRouter } from "next/router";
 import { UserLayout as Layout } from "@/layout";
 import { BlogDeleteModal } from "@/components/modals/blogs";
 import { MainSidebar } from "@/components/sidebar";
-import { useResponsive } from "@/hooks";
+import { useResponsive, useAuth } from "@/hooks";
 import { setBlogDeleteModal, selectors as uiSelector } from "redux/slices/ui";
 import {
+  setBlogsDraft,
   getBlogs,
-  setBlogCurrentId,
-  setCurrentBlogEditItem,
-  setBlogCurrentItem,
-  selectors as blogSelector,
-} from "redux/slices/blog";
+  selectors as draftSelector,
+} from "@/redux/slices/draft";
+import { setEditorDefault as setEditorCompleteBlogDefault } from "@/redux/slices/completeBlog";
+import { writerAlongActions } from "@/redux/slices/blog";
 import Spinner from "components/common/Spinner";
 import { deltaToPlainText } from "utils/quillValueConvert";
 
@@ -26,19 +26,38 @@ const SingleDraft = ({ item }) => {
   const router = useRouter();
 
   const parseItem = { ...item, blogPost: JSON.parse(item.blogPost) };
-  const { headline, blogPost } = parseItem;
+  const { headline, blogPost, id, blogType, blogAbout } = parseItem;
   const { text } = deltaToPlainText(blogPost, TEXT_EXCERPT);
 
   const handleDeleteBlog = () => {
-    dispatch(setBlogCurrentId(parseItem.id));
+    dispatch(setBlogsDraft({ activeId: id }));
     dispatch(setBlogDeleteModal(true));
   };
 
   const handleEditBlog = () => {
-    dispatch(setBlogCurrentId(parseItem.id));
-    dispatch(setCurrentBlogEditItem(parseItem));
-    dispatch(setBlogCurrentItem(parseItem));
-    router.push(`/ai-blog-generator`);
+    dispatch(setBlogsDraft({ activeId: id, item: parseItem }));
+    if (blogType === "WRITE_ALONG") {
+      dispatch(
+        writerAlongActions.setEditorDefault({
+          headline,
+          about: blogAbout,
+          body: blogPost,
+          currentid: id,
+        })
+      );
+      // { headline, about, body, currentid, intro, outline }
+      router.push(`/app/ai-writeralong`);
+    } else if (blogType === "GHOSTWRITER") {
+      dispatch(
+        setEditorCompleteBlogDefault({
+          headline,
+          about: blogAbout,
+          body: blogPost,
+          currentid: id,
+        })
+      );
+      router.push(`/app/ai-ghostwriter`);
+    }
   };
 
   return (
@@ -123,8 +142,9 @@ const CardButtonGroup = styled.div`
 const Draft = () => {
   const dispatch = useDispatch();
   const { isMobile } = useResponsive();
+  const { isAuth, isRehydrated } = useAuth();
   const { bookmark: isBookmark } = useSelector(uiSelector.getSidebar);
-  const blogs = useSelector(blogSelector.getBlogs());
+  const blogs = useSelector(draftSelector.getDraftBlogs());
 
   let showSidebar = !isMobile || isBookmark;
   let showContent = !isMobile || !showSidebar;
@@ -132,10 +152,12 @@ const Draft = () => {
   let limit = 10;
 
   useEffect(() => {
-    dispatch(
-      getBlogs({ params: { sortBy: "updatedAt:desc", limit, page: 1 } })
-    );
-  }, [dispatch, limit]);
+    isAuth &&
+      isRehydrated &&
+      dispatch(
+        getBlogs({ params: { sortBy: "updatedAt:desc", limit, page: 1 } })
+      );
+  }, [dispatch, isAuth, isRehydrated, limit]);
 
   const { loading, items, meta } = blogs;
 

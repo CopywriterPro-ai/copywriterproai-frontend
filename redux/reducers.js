@@ -11,6 +11,7 @@ import subscriberReducer from "@/redux/slices/subscriber";
 import toolsReducer from "@/redux/slices/tools";
 import demoGenerateReducer from "@/redux/slices/demoGenerate";
 import completeBlogReducer from "@/redux/slices/completeBlog";
+import draftReducer from "@/redux/slices/draft";
 
 const reducers = combineReducers({
   ui: uiReducer,
@@ -24,6 +25,7 @@ const reducers = combineReducers({
   tools: toolsReducer,
   demoGenerate: demoGenerateReducer,
   completeBlog: completeBlogReducer,
+  draft: draftReducer,
 });
 
 export default reducers;

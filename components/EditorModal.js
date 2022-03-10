@@ -11,10 +11,9 @@ import {
   BLOG_TOPIC,
 } from "@/appconstants";
 import {
-  setEditorCurrentSelectedText,
-  postEditorToolsContent,
-  setEditorCurrentSelectedRange,
-  selectors as blogSelector,
+  writerAlongActions,
+  postWriterAlongEditorToolsContent,
+  selectors as writerAlongSelector,
 } from "@/redux/slices/blog";
 
 import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
@@ -78,10 +77,10 @@ const EditorModal = ({ position, quill, editorWidth }) => {
   const dispatch = useDispatch();
 
   const [mounded, setMounded] = useState(false);
-  const { about, title } = useSelector(blogSelector.getBlogContent);
-  const { selected, range } = useSelector(blogSelector.getEditor());
-  const { loading } = useSelector(blogSelector.getToolContent());
-  const { isAuth } = useUser();
+  const { about, headline } = useSelector(writerAlongSelector.getWriterAlong);
+  const { selected, range } = useSelector(writerAlongSelector.getEditor());
+  const { loading } = useSelector(writerAlongSelector.getContent());
+  const { isAuth, subscribe } = useUser();
   const showSubscriberModal = useSubscriberModal();
 
   const handleSubscriberModalOpen = (message) => {
@@ -89,7 +88,10 @@ const EditorModal = ({ position, quill, editorWidth }) => {
   };
 
   const handleGetTool = (task, tone) => {
-    const validate = toolsvalidation(task, true)?.userText;
+    const validate = toolsvalidation(
+      task,
+      subscribe.subscription === "Freemium"
+    )?.userText;
 
     let data;
     if (!selected) {
@@ -127,31 +129,37 @@ const EditorModal = ({ position, quill, editorWidth }) => {
       data = { task, userText: selected, tone, numberOfSuggestions: 1 };
     } else if (task === BLOG_TOPIC) {
       const task = BLOG_TOPIC;
-      if (!about) {
+      if (!about.item) {
         toastMessage.warn("Please provide blog about");
         return;
-      } else if (!title) {
+      } else if (!headline.item) {
         toastMessage.warn("Please provide blog headline");
         return;
       }
       data = {
         task,
-        about,
+        about: about.item,
         userText: selected,
-        headline: title,
+        headline: headline.item,
         numberOfSuggestions: 1,
       };
     }
 
-    dispatch(postEditorToolsContent({ data, task: data.task })).then((res) => {
-      if (res.payload.status === 200) {
-        const { index, length } = range;
-        const Index = index + length;
-        quill.setSelection(Index, 0);
-        dispatch(setEditorCurrentSelectedText(null));
-        dispatch(setEditorCurrentSelectedRange({ index: Index, length: 0 }));
+    dispatch(postWriterAlongEditorToolsContent({ data, task: data.task })).then(
+      (res) => {
+        if (res.payload.status === 200) {
+          const { index, length } = range;
+          const Index = index + length;
+          quill.setSelection(Index, 0);
+          dispatch(
+            writerAlongActions.setEditor({
+              selected: null,
+              range: { index: Index, length: 0 },
+            })
+          );
+        }
       }
-    });
+    );
   };
 
   useEffect(() => {

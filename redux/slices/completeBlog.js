@@ -6,7 +6,7 @@ import {
 import { HYDRATE } from "next-redux-wrapper";
 
 import { pick, asyncThunkError } from "@/utils";
-import { contentApi } from "@/api";
+import { contentApi, blogApi } from "@/api";
 import { BLOG_HEADLINE, BLOG_WRITING, BLOG_TOPIC } from "@/appconstants";
 
 export const postBlogContents = createAsyncThunk(
@@ -33,9 +33,46 @@ export const postEditorToolsContent = createAsyncThunk(
   }
 );
 
+export const createBlog = createAsyncThunk(
+  "completeBlog/createBlogFetching",
+  async ({ data }, { rejectWithValue }) => {
+    try {
+      const response = await blogApi.createBlog({ data });
+      return { data: response.data, status: response.status };
+    } catch (error) {
+      return asyncThunkError(error, rejectWithValue);
+    }
+  }
+);
+
+export const getBlog = createAsyncThunk(
+  "completeBlog/getBlogFetching",
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      const response = await blogApi.getBlog({ id });
+      return { data: response.data, status: response.status };
+    } catch (error) {
+      return asyncThunkError(error, rejectWithValue);
+    }
+  }
+);
+
+export const updateBlog = createAsyncThunk(
+  "completeBlog/updateBlogFetching",
+  async ({ id, data }, { rejectWithValue }) => {
+    try {
+      const response = await blogApi.updateBlog({ id, data });
+      return { data: response.data, status: response.status };
+    } catch (error) {
+      return asyncThunkError(error, rejectWithValue);
+    }
+  }
+);
+
 const initialState = {
   loading: "idle",
   currenttask: BLOG_HEADLINE,
+  currentid: "",
   headline: {
     input: "",
     items: [],
@@ -70,6 +107,13 @@ const completeBlog = createSlice({
   initialState,
   reducers: {
     resetCompleteBlog: () => initialState,
+    setEditorDefault: (state, action) => {
+      const { headline, about, body, currentid } = action.payload;
+      state.headline.input = headline;
+      state.about.input = about;
+      state.editor.value = body;
+      state.currentid = currentid;
+    },
     setCurrentTask: (state, action) => {
       state.currenttask = action.payload;
     },
@@ -172,6 +216,7 @@ const completeBlog = createSlice({
 
 export const {
   resetCompleteBlog,
+  setEditorDefault,
   setCurrentTask,
   setEditor,
   setBlogHeadline,

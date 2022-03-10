@@ -3,14 +3,14 @@ import { Collapse } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  postBlogContents,
-  setStateBlogIntro,
-  selectors as blogSelector,
+  postWriterAlongContents,
+  writerAlongActions,
+  selectors as writerAlongSelector,
 } from "@/redux/slices/blog";
 import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
 import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem } from "./styles";
-import { BLOG_INTRO } from "@/appconstants";
+import { BLOG_INTRO, BLOG_OUTRO } from "@/appconstants";
 import { toastMessage } from "@/utils";
 import { useUser, useSubscriberModal } from "@/hooks";
 import { ToolAction, ToolInput } from "./styles";
@@ -20,16 +20,17 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
   const dispatch = useDispatch();
   const [suggestionNum, setSuggestionNum] = useState(1);
   const { isCurrentTask, isEmpty, items, loading } = useSelector(
-    blogSelector.getBlogItem(BLOG_INTRO)
+    writerAlongSelector.getContentItem(BLOG_INTRO)
   );
-  const { title, about } = useSelector(blogSelector.getBlogContent);
+  const { headline, about } = useSelector(writerAlongSelector.getWriterAlong);
 
   const { isAuth } = useUser();
   const showSubscriberModal = useSubscriberModal();
 
-  const trimedTitle = title.trim();
-  const trimedAbout = about.trim();
-  const validTitle = trimedTitle.length >= 10 && trimedTitle.length <= 150;
+  const trimedHeadline = headline.item.trim();
+  const trimedAbout = about.item.trim();
+  const validHeadline =
+    trimedHeadline.length >= 10 && trimedHeadline.length <= 150;
   const validAbout = trimedAbout.length >= 10 && trimedAbout.length <= 200;
 
   const handleSubscriberModalOpen = (message) => {
@@ -37,20 +38,20 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
   };
 
   const handleBlogIntro = () => {
-    if (validTitle && validAbout) {
+    if (validHeadline && validAbout) {
       if (isAuth) {
         if (showSubscriberModal) {
           return handleSubscriberModalOpen();
         }
 
         dispatch(
-          postBlogContents({
+          postWriterAlongContents({
             task: BLOG_INTRO,
             data: {
               task: BLOG_INTRO,
-              headline: title,
+              headline: headline.item,
               numberOfSuggestions: suggestionNum,
-              about,
+              about: about.item,
             },
           })
         );
@@ -58,7 +59,7 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
         dispatch(setSigninModal(true));
       }
     } else {
-      if (!validTitle) {
+      if (!validHeadline) {
         titleRef.current?.focus();
         toastMessage.customWarn(
           "Blog headline length need must be min 10 and max 150 characters",
@@ -80,9 +81,10 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
     }
   };
 
-  const handleSelectBlogIntro = (item) => {
-    dispatch(setStateBlogIntro(item));
+  const handleSelectItem = (item) => {
     quillRef.setText(item);
+    dispatch(writerAlongActions.setIntro({ item }));
+    dispatch(writerAlongActions.setCurrentTask(BLOG_OUTRO));
   };
 
   return (
@@ -108,7 +110,7 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
           <GenerateButton loading={loading} onClick={handleBlogIntro} />
           {!isEmpty &&
             items.map((item, index) => (
-              <TextItem onClick={() => handleSelectBlogIntro(item)} key={index}>
+              <TextItem onClick={() => handleSelectItem(item)} key={index}>
                 {item}
               </TextItem>
             ))}

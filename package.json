@@ -53,6 +53,7 @@
     "text-readability": "^1.0.5",
     "tiny-invariant": "^1.1.0",
     "ua-parser-js": "^1.0.2",
+    "use-debounce": "^7.0.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {

@@ -24,3 +24,4 @@ export { default as useQuillPlainPaste } from "./editor/useQuillPlainPaste";
 export { default as useQuillConentTypingInsert } from "./editor/useQuillConentTypingInsert";
 export { default as useQuillCounter } from "./editor/useQuillCounter";
 export { default as useQuillConentDirectInsert } from "./editor/useQuillConentDirectInsert";
+export { default as useQuillValueIsChange } from "./editor/useQuillValueIsChange";

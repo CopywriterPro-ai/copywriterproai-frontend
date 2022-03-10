@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { setCurrentTask as setCurrnetTask1 } from "@/redux/slices/blog";
+import { writerAlongActions } from "@/redux/slices/blog";
 import { setCurrentTask as setCurrnetTask2 } from "@/redux/slices/completeBlog";
 
 import { ToolTitle, Title, ToolTitleName } from "../styles";
@@ -13,7 +13,7 @@ const ToolTitleItem = ({ text, isActive, currentTask, id }) => {
         dispatch(setCurrnetTask2(currentTask));
         break;
       default:
-        dispatch(setCurrnetTask1(currentTask));
+        dispatch(writerAlongActions.setCurrentTask(currentTask));
         break;
     }
   };

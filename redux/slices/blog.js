@@ -3,10 +3,9 @@ import {
   createSlice,
   createSelector,
 } from "@reduxjs/toolkit";
-import deepEqual from "deep-equal";
 import { HYDRATE } from "next-redux-wrapper";
 
-import { contentApi, blogApi } from "@/api";
+import { contentApi } from "@/api";
 import {
   BLOG_IDEA,
   BLOG_HEADLINE,
@@ -15,10 +14,10 @@ import {
   BLOG_TOPIC,
   BLOG_OUTRO,
 } from "@/appconstants";
-import asyncThunkError from "@/utils/asyncThunkError";
+import { asyncThunkError, pick } from "@/utils";
 
-export const postBlogContents = createAsyncThunk(
-  "content/postBlogContentsFetching",
+export const postWriterAlongContents = createAsyncThunk(
+  "content/postWriterAlongContentsFetching",
   async ({ data, task }, { rejectWithValue }) => {
     try {
       const response = await contentApi.postGenerateContents({ data, task });
@@ -29,8 +28,8 @@ export const postBlogContents = createAsyncThunk(
   }
 );
 
-export const postEditorToolsContent = createAsyncThunk(
-  "content/postEditorToolsContentFetching",
+export const postWriterAlongEditorToolsContent = createAsyncThunk(
+  "content/postWriterAlongEditorToolsContentFetching",
   async ({ data, task }, { rejectWithValue }) => {
     try {
       const response = await contentApi.postGenerateContents({ data, task });
@@ -41,102 +40,72 @@ export const postEditorToolsContent = createAsyncThunk(
   }
 );
 
-export const getBlogs = createAsyncThunk(
-  "blog/getBlogsFetching",
-  async ({ params }, { rejectWithValue }) => {
-    try {
-      const response = await blogApi.getBlogs({ params });
-      return { data: response.data, status: response.status };
-    } catch (error) {
-      return asyncThunkError(error, rejectWithValue);
-    }
-  }
-);
-
-export const createBlog = createAsyncThunk(
-  "blog/createBlogFetching",
-  async ({ data }, { rejectWithValue }) => {
-    try {
-      const response = await blogApi.createBlog({ data });
-      return { data: response.data, status: response.status };
-    } catch (error) {
-      return asyncThunkError(error, rejectWithValue);
-    }
-  }
-);
-
-export const getBlog = createAsyncThunk(
-  "blog/getBlogFetching",
-  async ({ id }, { rejectWithValue }) => {
-    try {
-      const response = await blogApi.getBlog({ id });
-      return { data: response.data, status: response.status };
-    } catch (error) {
-      return asyncThunkError(error, rejectWithValue);
-    }
-  }
-);
-
-export const updateBlog = createAsyncThunk(
-  "blog/updateBlogFetching",
-  async ({ id, data }, { rejectWithValue }) => {
-    try {
-      const response = await blogApi.updateBlog({ id, data });
-      return { data: response.data, status: response.status };
-    } catch (error) {
-      return asyncThunkError(error, rejectWithValue);
-    }
-  }
-);
-
-export const deleteBlog = createAsyncThunk(
-  "blog/deleteBlogFetching",
-  async ({ id }, { rejectWithValue }) => {
-    try {
-      const response = await blogApi.deleteBlog({ id });
-      return { data: response.data, status: response.status, id };
-    } catch (error) {
-      return asyncThunkError(error, rejectWithValue);
-    }
-  }
-);
-
-// const EMPTY_DELTA = { ops: [] };
+const tasksArr = {
+  about: "about",
+  [BLOG_HEADLINE]: "headline",
+  [BLOG_INTRO]: "intro",
+  [BLOG_OUTLINE]: "outline",
+  [BLOG_IDEA]: "idea",
+  [BLOG_OUTRO]: "outro",
+  [BLOG_TOPIC]: "topic",
+};
 
 const initialState = {
-  loading: "idle",
   currenttask: BLOG_HEADLINE,
-  about: "",
-  title: "",
-  intro: "",
-  outline: "",
-  blogidea: { items: [] },
-  blogheadline: { items: [] },
-  blogoutline: { items: [] },
-  blogintro: { items: [] },
-  blogtopic: { items: [] },
-  blogoutro: { items: [] },
-  editor: {
-    range: null,
-    selected: null,
-    value: [],
-  },
-  toolcontents: {
+  currentid: "",
+  about: {
     loading: "idle",
-    current: null,
     item: "",
     items: [],
     error: null,
   },
-  blogs: {
-    currentid: "",
+  headline: {
     loading: "idle",
-    meta: {},
+    item: "",
     items: [],
-    item: {},
     error: null,
   },
-  error: null,
+  intro: {
+    loading: "idle",
+    item: "",
+    items: [],
+    error: null,
+  },
+  outline: {
+    loading: "idle",
+    item: "",
+    items: [],
+    error: null,
+  },
+  idea: {
+    loading: "idle",
+    item: "",
+    items: [],
+    error: null,
+  },
+  outro: {
+    loading: "idle",
+    item: "",
+    items: [],
+    error: null,
+  },
+  topic: {
+    loading: "idle",
+    item: "",
+    items: [],
+    error: null,
+  },
+  content: {
+    loading: "idle",
+    item: "",
+    items: [],
+    error: null,
+  },
+  editor: {
+    range: { index: 0, length: 0 },
+    selected: null,
+    value: [],
+  },
 };
 
 const blog = createSlice({
@@ -144,54 +113,54 @@ const blog = createSlice({
   initialState,
   reducers: {
     resetBlog: () => initialState,
-    setStateBlogAbout: (state, action) => {
-      state.about = action.payload;
-    },
-    setStateBlogTitle: (state, action) => {
-      state.title = action.payload;
-      state.currenttask = BLOG_INTRO;
-    },
-    setStateBlogIntro: (state, action) => {
-      state.intro = action.payload;
-      state.currenttask = BLOG_OUTRO;
-    },
-    setStateBlogOutline: (state, action) => {
-      state.outline = action.payload;
-      state.currenttask = null;
-    },
-    setStateBlogOutro: (state, action) => {
-      state.outro = action.payload;
-      state.currenttask = null;
-    },
-
     setCurrentTask: (state, action) => {
       state.currenttask = action.payload;
     },
-    setEditorCurrentSelectedRange: (state, action) => {
-      state.editor.range = action.payload;
+    setCurrentId: (state, action) => {
+      state.currentid = action.payload;
     },
-    setEditorCurrentSelectedText: (state, action) => {
-      state.editor.selected = action.payload;
+    setEditorDefault: (state, action) => {
+      const { headline, about, body, currentid } = action.payload;
+      state.headline.item = headline;
+      state.about.item = about;
+      state.editor.value = body;
+      state.currentid = currentid;
     },
-    setEditorCurrentValue: (state, action) => {
-      state.editor.value = action.payload;
+    setAbout: (state, action) => {
+      const payload = pick(action.payload, ["item", "items"]);
+      state.about = { ...state.about, ...payload };
     },
-    setBlogCurrentId: (state, action) => {
-      state.blogs.currentid = action.payload;
+    setHeadline: (state, action) => {
+      const payload = pick(action.payload, ["item", "items"]);
+      state.headline = { ...state.headline, ...payload };
     },
-    setBlogCurrentItem: (state, action) => {
-      state.blogs.item = action.payload;
+    setIntro: (state, action) => {
+      const payload = pick(action.payload, ["item", "items"]);
+      state.intro = { ...state.intro, ...payload };
     },
-    setCurrentBlogEditItem: (state, action) => {
-      state.editor.value = action.payload.blogPost;
-      state.title = action.payload.headline;
-      state.about = action.payload.blogAbout;
+    setOutline: (state, action) => {
+      const payload = pick(action.payload, ["item", "items"]);
+      state.outline = { ...state.outline, ...payload };
     },
-    setCurrentToolContent: (state, action) => {
-      state.toolcontents.item = action.payload;
+    setIdea: (state, action) => {
+      const payload = pick(action.payload, ["item", "items"]);
+      state.idea = { ...state.idea, ...payload };
     },
-    setEmptyCurrentToolContents: (state, action) => {
-      state.toolcontents.items = [];
+    setOutro: (state, action) => {
+      const payload = pick(action.payload, ["item", "items"]);
+      state.outro = { ...state.outro, ...payload };
+    },
+    setTopic: (state, action) => {
+      const payload = pick(action.payload, ["item", "items"]);
+      state.topic = { ...state.topic, ...payload };
+    },
+    setEditor: (state, action) => {
+      const payload = pick(action.payload, ["range", "selected", "value"]);
+      state.editor = { ...state.editor, ...payload };
+    },
+    setContent: (state, action) => {
+      const payload = pick(action.payload, ["item", "items"]);
+      state.content = { ...state.content, ...payload };
     },
   },
   extraReducers: {
@@ -199,183 +168,48 @@ const blog = createSlice({
       ...state,
       ...payload.blog,
     }),
-    [postBlogContents.pending]: (state, action) => {
-      if (state.loading === "idle") {
-        state.loading = "pending";
-        state.error = null;
+    [postWriterAlongContents.pending]: (state, action) => {
+      const task = tasksArr[action.meta?.arg?.task];
+      if (state[task].loading === "idle" && task) {
+        state[task].loading = "pending";
+        state[task].error = null;
       }
     },
-    [postBlogContents.fulfilled]: (state, action) => {
-      if (state.loading === "pending") {
-        const task = action.payload.data?.task;
+    [postWriterAlongContents.fulfilled]: (state, action) => {
+      const task = tasksArr[action.meta?.arg?.task];
+      if (state[task].loading === "pending" && task) {
         const generatedTexts = action.payload.data?.generatedTexts;
-
-        state.loading = "idle";
-
-        switch (task) {
-          case BLOG_IDEA:
-            state.blogidea.items = generatedTexts;
-            break;
-
-          case BLOG_HEADLINE:
-            state.blogheadline.items = generatedTexts;
-            break;
-
-          case BLOG_OUTLINE:
-            state.blogoutline.items = generatedTexts;
-            break;
-
-          case BLOG_INTRO:
-            state.blogintro.items = generatedTexts;
-            break;
-
-          case BLOG_OUTRO:
-            state.blogoutro.items = generatedTexts;
-            break;
-
-          case BLOG_TOPIC:
-            state.blogtopic.items = generatedTexts;
-            break;
-
-          default:
-            state.error = action.payload.data;
-        }
+        state[task].loading = "idle";
+        state[task].items = generatedTexts;
       }
     },
-    [postBlogContents.rejected]: (state, action) => {
-      if (state.loading === "pending") {
-        state.loading = "idle";
-        state.error = action.payload.data;
+    [postWriterAlongContents.rejected]: (state, action) => {
+      const task = tasksArr[action.meta?.arg?.task];
+      if (state[task].loading === "pending" && task) {
+        state[task].loading = "idle";
+        state[task].error = action.payload.data;
       }
     },
 
-    [postEditorToolsContent.pending]: (state, action) => {
-      if (state.toolcontents.loading === "idle") {
-        state.toolcontents.loading = "pending";
-        state.toolcontents.current = action.meta?.arg?.task;
-        state.toolcontents.error = null;
+    [postWriterAlongEditorToolsContent.pending]: (state, action) => {
+      if (state.content.loading === "idle") {
+        state.content.loading = "pending";
+        state.content.current = action.meta?.arg?.task;
+        state.content.error = null;
       }
     },
-    [postEditorToolsContent.fulfilled]: (state, action) => {
-      if (state.toolcontents.loading === "pending") {
+    [postWriterAlongEditorToolsContent.fulfilled]: (state, action) => {
+      if (state.content.loading === "pending") {
         const text = action.payload.data?.generatedTexts[0];
-        state.toolcontents.loading = "idle";
-        state.toolcontents.items = action.payload.data?.generatedTexts;
-        state.toolcontents.item = `\n${text}`;
+        state.content.loading = "idle";
+        state.content.items = action.payload.data?.generatedTexts;
+        state.content.item = `\n${text}`;
       }
     },
-    [postEditorToolsContent.rejected]: (state, action) => {
-      if (state.toolcontents.loading === "pending") {
-        state.toolcontents.loading = "idle";
-        state.toolcontents.error = action.payload.data;
-      }
-    },
-
-    [getBlogs.pending]: (state, action) => {
-      if (state.blogs.loading === "idle") {
-        state.blogs.loading = "pending";
-        state.blogs.error = null;
-      }
-    },
-    [getBlogs.fulfilled]: (state, action) => {
-      if (state.blogs.loading === "pending") {
-        const { results, page, limit, totalPages, totalResults } =
-          action.payload.data;
-
-        state.blogs.loading = "idle";
-        state.blogs.items = results;
-        state.blogs.meta = { page, limit, totalPages, totalResults };
-      }
-    },
-    [getBlogs.rejected]: (state, action) => {
-      if (state.blogs.loading === "pending") {
-        state.blogs.loading = "idle";
-        state.blogs.error = action.payload.data;
-      }
-    },
-
-    [createBlog.pending]: (state, action) => {
-      if (state.blogs.loading === "idle") {
-        state.blogs.loading = "pending";
-        state.blogs.error = null;
-      }
-    },
-    [createBlog.fulfilled]: (state, action) => {
-      if (state.blogs.loading === "pending") {
-        state.blogs.loading = "idle";
-        state.blogs.items.push(action.payload.data);
-        state.blogs.item = action.payload.data;
-        state.blogs.currentid = action.payload.data?.id;
-      }
-    },
-    [createBlog.rejected]: (state, action) => {
-      if (state.blogs.loading === "pending") {
-        state.blogs.loading = "idle";
-        state.blogs.error = action.payload.data;
-      }
-    },
-
-    [getBlog.pending]: (state, action) => {
-      if (state.blogs.loading === "idle") {
-        state.blogs.loading = "pending";
-        state.blogs.error = null;
-      }
-    },
-    [getBlog.fulfilled]: (state, action) => {
-      if (state.blogs.loading === "pending") {
-        state.blogs.loading = "idle";
-        state.blogs.item = action.payload.data;
-      }
-    },
-    [getBlog.rejected]: (state, action) => {
-      if (state.blogs.loading === "pending") {
-        state.blogs.loading = "idle";
-        state.blogs.error = action.payload.data;
-      }
-    },
-
-    [updateBlog.pending]: (state, action) => {
-      if (state.blogs.loading === "idle") {
-        state.blogs.loading = "pending";
-        state.blogs.error = null;
-      }
-    },
-    [updateBlog.fulfilled]: (state, action) => {
-      if (state.blogs.loading === "pending") {
-        const updateblog = action.payload.data;
-        const findIndex = state.blogs.items.findIndex(
-          (item) => item.id === updateblog.id
-        );
-        state.blogs.loading = "idle";
-        state.blogs.item = updateblog;
-        if (findIndex) state.blogs.items[findIndex] = updateblog;
-      }
-    },
-    [updateBlog.rejected]: (state, action) => {
-      if (state.blogs.loading === "pending") {
-        state.blogs.loading = "idle";
-        state.blogs.error = action.payload.data;
-      }
-    },
-
-    [deleteBlog.pending]: (state, action) => {
-      if (state.blogs.loading === "idle") {
-        state.blogs.loading = "pending";
-        state.blogs.error = null;
-      }
-    },
-    [deleteBlog.fulfilled]: (state, action) => {
-      if (state.blogs.loading === "pending") {
-        const { id } = action.meta.arg;
-        state.blogs.loading = "idle";
-        state.blogs.items = state.blogs.items.filter((item) => item.id !== id);
-        state.blogs.item = {};
-      }
-    },
-    [deleteBlog.rejected]: (state, action) => {
-      if (state.blogs.loading === "pending") {
-        state.blogs.loading = "idle";
-        state.blogs.error = action.payload.data;
+    [postWriterAlongEditorToolsContent.rejected]: (state, action) => {
+      if (state.content.loading === "pending") {
+        state.content.loading = "idle";
+        state.content.error = action.payload.data;
       }
     },
   },
@@ -385,108 +219,45 @@ const isEmptyArr = (arr) => {
   return Boolean(!Array.isArray(arr) || !arr.length);
 };
 
-const getItem = ({ blog, key, isCurrentTask }) => {
-  const items = blog[key].items;
-  const filteritems = items.filter((item) => item.trim().length > 0);
-  return {
-    loading: isCurrentTask && blog.loading === "pending",
-    isCurrentTask,
-    items: filteritems,
-    isEmpty: isEmptyArr(filteritems),
-  };
-};
-
 export const selectors = {
-  getBlogContent: createSelector(
+  getWriterAlong: createSelector(
     (state) => state.blog,
     (blog) => blog
   ),
-
-  getBlogItem: (taskKey) =>
-    createSelector([selectors.getBlogContent], (blog) => {
-      const isCurrentTask = blog.currenttask === taskKey;
-
-      switch (taskKey) {
-        case BLOG_IDEA:
-          return getItem({ blog, key: "blogidea", isCurrentTask });
-
-        case BLOG_HEADLINE:
-          return getItem({ blog, key: "blogheadline", isCurrentTask });
-
-        case BLOG_OUTLINE:
-          return getItem({ blog, key: "blogoutline", isCurrentTask });
-
-        case BLOG_INTRO:
-          return getItem({ blog, key: "blogintro", isCurrentTask });
-
-        case BLOG_TOPIC:
-          return getItem({ blog, key: "blogtopic", isCurrentTask });
-
-        case BLOG_OUTRO:
-          return getItem({ blog, key: "blogoutro", isCurrentTask });
-
-        default:
-          return {};
-      }
-    }),
-
   getEditor: () =>
-    createSelector([selectors.getBlogContent], ({ editor }) => {
-      return editor;
-    }),
+    createSelector([selectors.getWriterAlong], ({ editor }) => editor),
 
-  getToolContent: () =>
-    createSelector([selectors.getBlogContent], ({ toolcontents }) => {
-      return toolcontents;
-    }),
-
-  getBlogs: () =>
-    createSelector([selectors.getBlogContent], ({ blogs }) => {
-      return blogs;
-    }),
-
-  isUpdateChange: () =>
-    createSelector(
-      [selectors.getBlogContent],
-      ({ blogs, editor, title, about }) => {
-        const { blogAbout = "", blogPost = [], headline = "" } = blogs.item;
-
-        const isValueEquile =
-          JSON.stringify(editor.value) === JSON.stringify([{ insert: "\n" }]);
-
-        const currentBlog = {
-          blogAbout,
-          blogPost,
-          headline,
+  getContent: () =>
+    createSelector([selectors.getWriterAlong], ({ content }) => content),
+  getContentItem: (taskKey) =>
+    createSelector([selectors.getWriterAlong], (writerAlong) => {
+      const task = tasksArr[taskKey];
+      if (task) {
+        const isCurrentTask = writerAlong.currenttask === taskKey;
+        const currentTask = writerAlong[task];
+        const filteritems = currentTask.items.filter(
+          (item) => item.trim().length > 0
+        );
+        return {
+          ...currentTask,
+          loading: isCurrentTask && currentTask.loading === "pending",
+          isCurrentTask,
+          items: filteritems,
+          isEmpty: isEmptyArr(filteritems),
         };
-
-        const updatedBlog = {
-          blogAbout: about,
-          blogPost: isValueEquile ? [] : editor.value,
-          headline: title,
+      } else {
+        return {
+          error: "invalid task",
+          isCurrentTask: false,
+          isEmpty: true,
+          item: "",
+          items: [],
+          loading: false,
         };
-
-        return !deepEqual(currentBlog, updatedBlog);
       }
-    ),
+    }),
 };
 
-export const {
-  resetBlog,
-  setStateBlogAbout,
-  setStateBlogTitle,
-  setStateBlogIntro,
-  setStateBlogOutline,
-  setStateBlogOutro,
-  setCurrentTask,
-  setEditorCurrentSelectedRange,
-  setEditorCurrentSelectedText,
-  setEditorCurrentValue,
-  setBlogCurrentId,
-  setBlogCurrentItem,
-  setCurrentBlogEditItem,
-  setCurrentToolContent,
-  setEmptyCurrentToolContents,
-} = blog.actions;
+export const writerAlongActions = blog.actions;
 
 export default blog.reducer;

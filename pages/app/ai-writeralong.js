@@ -1,125 +1,101 @@
-import { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useRef, useState, useCallback } from "react";
 
-import { UserLayout as Layout } from "@/layout";
+import { BlogHeadline, BlogIntro, BlogOutro } from "@/components/blog";
 import EditorJS from "@/components/editor";
 import CustomToolbar from "@/components/editor/CustomToolbar";
+import { BlogResetModal } from "@/components/modals/blogs";
+import { SubscriberModal } from "@/components/modals/subscriber";
+import { MainSidebar } from "@/components/sidebar";
 import {
-  BlogHeadline,
-  BlogIntro,
-  // BlogOutline,
-  BlogOutro,
-} from "@/components/blog";
-import {
-  setStateBlogAbout,
-  setStateBlogTitle,
-  setCurrentToolContent,
-  createBlog,
-  updateBlog,
-  selectors as blogSelector,
-} from "@/redux/slices/blog";
-import {
-  setBlogResetModal,
-  setSigninModal,
-  selectors as uiSelector,
-} from "@/redux/slices/ui";
-import {
-  useBeforeunload,
-  useUser,
   useSidebar,
+  useUser,
+  useQuillValueIsChange,
+  useBeforeunload,
   useWarnIfUnsavedChanges,
 } from "@/hooks";
-import { SubscriberModal } from "@/components/modals/subscriber";
-import { BlogResetModal } from "@/components/modals/blogs";
-import { MainSidebar } from "@/components/sidebar";
-import TipsImg from "@/assets/images/generate-tips.png";
+import { UserLayout as Layout } from "@/layout";
+import {
+  selectors as uiSelector,
+  setBlogResetModal,
+  setSigninModal,
+} from "@/redux/slices/ui";
+import {
+  writerAlongActions,
+  selectors as writerAlongSelector,
+} from "@/redux/slices/blog";
+import {
+  resetBlogsDraft,
+  createBlog,
+  updateBlog,
+  selectors as draftSelector,
+} from "@/redux/slices/draft";
 import { toastMessage } from "@/utils";
+import { AI_BLOG_WRITER } from "@/appconstants";
+import TipsImg from "@/assets/images/generate-tips.png";
 
 const BlogGenerator = () => {
   const dispatch = useDispatch();
 
   const aboutRef = useRef(null);
   const titleRef = useRef(null);
-
   const [quill, setQuill] = useState(null);
-  const [index, setIndex] = useState(0);
 
-  const { about, title } = useSelector(blogSelector.getBlogContent);
-  const { value, range } = useSelector(blogSelector.getEditor());
-  const { item: toolItem } = useSelector(blogSelector.getToolContent());
-  const { currentid: currentBlogId } = useSelector(blogSelector.getBlogs());
-  const isUpdateChange = useSelector(blogSelector.isUpdateChange());
+  const { about, headline } = useSelector(writerAlongSelector.getWriterAlong);
+  const { value } = useSelector(writerAlongSelector.getEditor());
+  const { activeId } = useSelector(draftSelector.getDraftBlogs());
   const { subscriber } = useSelector(uiSelector.getModal);
   const { isAuth } = useUser();
   const { showSidebar, showContent } = useSidebar();
+  const { isEditorChange } = useQuillValueIsChange(quill);
 
   useBeforeunload((event) => {
-    if (isUpdateChange) {
+    if (isEditorChange) {
       event.preventDefault();
     }
   });
+  useWarnIfUnsavedChanges(isEditorChange);
 
-  useWarnIfUnsavedChanges(isUpdateChange);
+  const isNewBlog = activeId === "";
 
-  const isNewBlog = currentBlogId === "";
-  const [lastIndex, setLastIndex] = useState(0);
+  const handleEditorReset = useCallback(() => {
+    quill?.setContents([]);
+    dispatch(resetBlogsDraft());
+    dispatch(writerAlongActions.resetBlog());
+  }, [dispatch, quill]);
 
   useEffect(() => {
-    const last = range ? range?.index : 0;
-    setLastIndex(last);
-  }, [range]);
-
-  useEffect(() => {
-    let interval;
-    if (quill && toolItem.length) {
-      const toolItemArr = toolItem?.split(" ");
-      const toolItemArrLength = toolItemArr.length;
-
-      interval = setInterval(() => {
-        if (toolItemArrLength > index) {
-          let word = toolItemArr[index];
-          quill.enable(false);
-          quill.insertText(lastIndex, ` ${word}`);
-          setIndex(index + 1);
-          setLastIndex(lastIndex + word.length + 1);
-        } else {
-          clearInterval(interval);
-          setIndex(0);
-          dispatch(setCurrentToolContent(""));
-          quill.enable();
-        }
-      }, 1);
-    }
     return () => {
-      if (quill) {
-        clearInterval(interval);
-      }
+      handleEditorReset();
     };
-  }, [dispatch, index, lastIndex, quill, toolItem]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleChangeBlogAbout = (e) => {
-    dispatch(setStateBlogAbout(e.target.value));
+    dispatch(writerAlongActions.setAbout({ item: e.target.value }));
   };
 
   const handleChangeTitle = (e) => {
-    dispatch(setStateBlogTitle(e.target.value));
+    dispatch(writerAlongActions.setHeadline({ item: e.target.value }));
   };
 
   const handleResetBlog = () => {
     dispatch(setBlogResetModal(true));
   };
 
-  const isValidatedOk = () => {
+  const isValidatedOk = (toastId) => {
     let isValid = false;
-    if (title.length === 0 || value.length === 0 || about.length === 0) {
+    if (
+      headline.item.length === 0 ||
+      value.length === 0 ||
+      about.item.length === 0
+    ) {
       isValid = false;
       toastMessage.customWarn(
         "Blog Headline, Blog About and Blog Content is required!",
         3000,
-        {
-          toastId: "updateblog",
-        }
+        { toastId }
       );
     } else {
       isValid = true;
@@ -129,17 +105,17 @@ const BlogGenerator = () => {
 
   const handleSaveOrUpdate = () => {
     if (!isNewBlog) {
-      if (!isValidatedOk()) {
+      if (!isValidatedOk("updateBlog")) {
         return;
       }
 
       if (isAuth) {
         dispatch(
           updateBlog({
-            id: currentBlogId,
+            id: activeId,
             data: {
-              blogAbout: about,
-              headline: title,
+              blogAbout: about.item,
+              headline: headline.item,
               blogPost: JSON.stringify(value),
             },
           })
@@ -152,7 +128,7 @@ const BlogGenerator = () => {
         dispatch(setSigninModal(true));
       }
     } else {
-      if (!isValidatedOk()) {
+      if (!isValidatedOk("createBlog")) {
         return;
       }
 
@@ -160,8 +136,8 @@ const BlogGenerator = () => {
         dispatch(
           createBlog({
             data: {
-              blogAbout: about,
-              headline: title,
+              blogAbout: about.item,
+              headline: headline.item,
               blogPost: JSON.stringify(value),
             },
           })
@@ -187,8 +163,8 @@ const BlogGenerator = () => {
               ref={titleRef}
               autoComplete="off"
               type="text"
-              name="title"
-              value={title}
+              name="headline"
+              value={headline.item}
               placeholder="Blog Headline"
               onChange={handleChangeTitle}
             />
@@ -209,7 +185,7 @@ const BlogGenerator = () => {
                 <textarea
                   ref={aboutRef}
                   onChange={(e) => handleChangeBlogAbout(e)}
-                  value={about}
+                  value={about.item}
                   rows="4"
                 ></textarea>
               </ToolsHeader>
@@ -234,7 +210,7 @@ const BlogGenerator = () => {
               </ToolBottom>
             </ScollingTool>
           </ToolsSection>
-          <BlogResetModal />
+          <BlogResetModal quill={quill} id={AI_BLOG_WRITER} />
         </BlogContainer>
       )}
       {subscriber?.usage && <SubscriberModal />}
