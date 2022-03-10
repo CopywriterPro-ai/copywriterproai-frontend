@@ -8,7 +8,13 @@ import CustomToolbar from "@/components/editor/CustomToolbar";
 import { BlogResetModal } from "@/components/modals/blogs";
 import { SubscriberModal } from "@/components/modals/subscriber";
 import { MainSidebar } from "@/components/sidebar";
-import { useSidebar, useUser } from "@/hooks";
+import {
+  useSidebar,
+  useUser,
+  useQuillValueIsChange,
+  useBeforeunload,
+  useWarnIfUnsavedChanges,
+} from "@/hooks";
 import { UserLayout as Layout } from "@/layout";
 import {
   selectors as uiSelector,
@@ -21,6 +27,8 @@ import {
 } from "@/redux/slices/blog";
 import {
   resetBlogsDraft,
+  createBlog,
+  updateBlog,
   selectors as draftSelector,
 } from "@/redux/slices/draft";
 import { toastMessage } from "@/utils";
@@ -32,24 +40,22 @@ const BlogGenerator = () => {
 
   const aboutRef = useRef(null);
   const titleRef = useRef(null);
-
   const [quill, setQuill] = useState(null);
 
   const { about, headline } = useSelector(writerAlongSelector.getWriterAlong);
-  const { value, range } = useSelector(writerAlongSelector.getEditor());
-  // const isUpdateChange = useSelector(blogSelector.isUpdateChange());
+  const { value } = useSelector(writerAlongSelector.getEditor());
   const { activeId } = useSelector(draftSelector.getDraftBlogs());
   const { subscriber } = useSelector(uiSelector.getModal);
   const { isAuth } = useUser();
   const { showSidebar, showContent } = useSidebar();
+  const { isEditorChange } = useQuillValueIsChange(quill);
 
-  // useBeforeunload((event) => {
-  //   if (isUpdateChange) {
-  //     event.preventDefault();
-  //   }
-  // });
-
-  // useWarnIfUnsavedChanges(isUpdateChange);
+  useBeforeunload((event) => {
+    if (isEditorChange) {
+      event.preventDefault();
+    }
+  });
+  useWarnIfUnsavedChanges(isEditorChange);
 
   const isNewBlog = activeId === "";
 
@@ -82,7 +88,7 @@ const BlogGenerator = () => {
     let isValid = false;
     if (
       headline.item.length === 0 ||
-      value.item.length === 0 ||
+      value.length === 0 ||
       about.item.length === 0
     ) {
       isValid = false;
@@ -106,7 +112,7 @@ const BlogGenerator = () => {
       if (isAuth) {
         dispatch(
           updateBlog({
-            id: currentBlogId,
+            id: activeId,
             data: {
               blogAbout: about.item,
               headline: headline.item,

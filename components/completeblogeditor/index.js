@@ -1,18 +1,17 @@
-import deepEqual from "deep-equal";
 import styled, { createGlobalStyle } from "styled-components";
 import { useEffect, useRef, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useDebounce } from "use-debounce";
 import "quill/dist/quill.snow.css";
 
-// import EditorModal from "components/CompleteEditorModal";
 import {
   setEditor,
   setBlogComplete,
   setBlogContent,
   selectors,
 } from "@/redux/slices/completeBlog";
+import { selectors as draftSelector } from "@/redux/slices/draft";
 import {
-  // useElementSize,
   useUser,
   useQuillEditor,
   useQuillSelected,
@@ -34,15 +33,18 @@ const QuillEditor = ({ setQuillEditor }) => {
   const { range, text } = useQuillSelected(quill);
   const { value, currenttask } = useSelector(selectors.getEditor());
   const {
-    currentid,
     complete: { items: completeItems },
     content: { item: contentItem },
   } = useSelector(selectors.getCompleteBlogContent);
+  const {
+    activeId,
+    item: { blogPost },
+  } = useSelector(draftSelector.getDraftBlogs());
   const currentContent = useQuillContentChange(quill);
   const editorcontainerRef = useRef(null);
-  // const { width: editorWidth } = useElementSize(editorcontainerRef);
   const isTyping = useQuillConentTypingInsert(quill, completeItems);
   const isContentTyping = useQuillConentDirectInsert(quill, contentItem, true);
+  const [editorContent] = useDebounce(currentContent, 1000);
   useQuillPlainPaste(quill);
 
   useEffect(() => {
@@ -60,7 +62,6 @@ const QuillEditor = ({ setQuillEditor }) => {
       dispatch(setBlogContent({ item: "", items: [] }));
       dispatch(
         setEditor({
-          // currenttask: null,
           selected: null,
           range: { index: 0, length: 0 },
         })
@@ -68,27 +69,19 @@ const QuillEditor = ({ setQuillEditor }) => {
     }
   }, [dispatch, isContentTyping]);
 
-  const isContentEqual = useMemo(() => {
-    return deepEqual(value, currentContent);
-  }, [currentContent, value]);
+  useEffect(() => {
+    dispatch(setEditor({ value: editorContent }));
+  }, [dispatch, editorContent]);
 
   useEffect(() => {
-    const updateInterval = setInterval(() => {
-      if (currentid.length === 0 && !isContentEqual)
-        dispatch(setEditor({ value: currentContent }));
-    }, 1000);
-    return () => clearInterval(updateInterval);
-  }, [currentContent, currentid.length, dispatch, isContentEqual]);
+    if (activeId.length > 0 && quill) {
+      quill.setContents(blogPost);
+    }
+  }, [activeId, blogPost, quill]);
 
   useEffect(() => {
     dispatch(setEditor({ range, selected: text }));
   }, [dispatch, range, text]);
-
-  useEffect(() => {
-    if (quill && currentid.length > 0) {
-      quill.setContents(value);
-    }
-  }, [currentid.length, quill, value]);
 
   useEffect(() => {
     const getSelection = (event) => {

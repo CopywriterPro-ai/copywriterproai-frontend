@@ -31,8 +31,9 @@ import {
   selectors as uiSelector,
 } from "@/redux/slices/ui";
 import {
-  // useBeforeunload,
-  // useWarnIfUnsavedChanges,
+  useBeforeunload,
+  useWarnIfUnsavedChanges,
+  useQuillValueIsChange,
   useQuillCounter,
   useQuillSelected,
   useUser,
@@ -121,8 +122,16 @@ const CompleteBlogGenerator = () => {
   const quillCounter = useQuillCounter(quill);
   const { range, text: selectedText } = useQuillSelected(quill);
   const [editorCurrentTaskInput, setEditorCurrentTaskInput] = useState({});
+  const { isEditorChange } = useQuillValueIsChange(quill);
 
   const isNewBlog = activeId === "";
+
+  useBeforeunload((event) => {
+    if (isEditorChange) {
+      event.preventDefault();
+    }
+  });
+  useWarnIfUnsavedChanges(isEditorChange);
 
   const handleEditorReset = useCallback(() => {
     quill?.setContents([]);
