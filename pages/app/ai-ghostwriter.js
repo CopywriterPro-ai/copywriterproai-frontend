@@ -174,8 +174,8 @@ const CompleteBlogGenerator = () => {
 
   const isValidatedOk = (toastId) => {
     let isValid = false;
-    const headlineLength = headline.item.trim().length;
-    const aboutLength = about.item.trim().length;
+    const headlineLength = headline.input.trim().length;
+    const aboutLength = about.input.trim().length;
     const bodyLength = quill.getLength();
 
     if (headlineLength < 10 || headlineLength > 200) {

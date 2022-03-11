@@ -1,5 +1,5 @@
 import Script from "next/script";
-import NextNProgress from "nextjs-progressbar";
+// import NextNProgress from "nextjs-progressbar";
 import { useEffect } from "react";
 import { useStore } from "react-redux";
 import { ThemeProvider } from "styled-components";
@@ -54,7 +54,7 @@ const App = ({ Component, pageProps, err }) => {
       <PersistGate loading={null} persistor={store.__persistor}>
         {() => (
           <ThemeProvider theme={theme}>
-            <NextNProgress />
+            {/* <NextNProgress /> */}
             <Component {...pageProps} err={err} />
           </ThemeProvider>
         )}
