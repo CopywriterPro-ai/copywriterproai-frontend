@@ -25,9 +25,10 @@ const useQuillValueIsChange = (quill) => {
   }, [changingDelta]);
 
   useEffect(() => {
-    // console.log("editorDelta", editorDelta);
-    // console.log("blogPost", blogPost);
-    const isEqual = deepEqual(editorDelta, blogPost);
+    const formattedBlogPost = Array.isArray(blogPost)
+      ? blogPost
+      : JSON.parse(blogPost);
+    const isEqual = deepEqual(editorDelta, formattedBlogPost);
     setChange(!isEqual);
   }, [blogPost, editorDelta]);
 
