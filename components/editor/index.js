@@ -55,8 +55,8 @@ const QuillEditor = ({ setQuillEditor }) => {
   }, [dispatch, range, text]);
 
   useEffect(() => {
-    if (activeId.length > 0 && quill) {
-      quill.setContents(blogPost);
+    if (activeId.length > 0 && quill && blogPost) {
+      quill.setContents(JSON.parse(blogPost));
     }
   }, [activeId, blogPost, dispatch, quill]);
 

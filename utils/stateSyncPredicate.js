@@ -1,9 +1,10 @@
 const blacklist = [
-  "content",
   "persist/PERSIST",
   "persist/PURGE",
+  "content",
   "blog",
   "completeBlog",
+  "draft",
 ];
 
 const predicate = (action) => {
