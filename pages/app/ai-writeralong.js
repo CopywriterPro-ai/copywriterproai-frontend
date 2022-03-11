@@ -86,14 +86,28 @@ const BlogGenerator = () => {
 
   const isValidatedOk = (toastId) => {
     let isValid = false;
-    if (
-      headline.item.length === 0 ||
-      value.length === 0 ||
-      about.item.length === 0
-    ) {
+    const headlineLength = headline.item.trim().length;
+    const aboutLength = about.item.trim().length;
+    const bodyLength = quill.getLength();
+
+    if (headlineLength < 10 || headlineLength > 200) {
       isValid = false;
       toastMessage.customWarn(
-        "Blog Headline, Blog About and Blog Content is required!",
+        "Blog headline must be between 10 and 200 characters",
+        3000,
+        { toastId }
+      );
+    } else if (aboutLength < 10 || aboutLength > 200) {
+      isValid = false;
+      toastMessage.customWarn(
+        "Blog about must be between 10 and 200 characters",
+        3000,
+        { toastId }
+      );
+    } else if (bodyLength < 10 || bodyLength > 200) {
+      isValid = false;
+      toastMessage.customWarn(
+        "Blog content must be between 10 and 200 characters",
         3000,
         { toastId }
       );

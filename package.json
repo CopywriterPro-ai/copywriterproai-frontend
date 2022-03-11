@@ -24,6 +24,7 @@
     "next": "11.1.2",
     "next-redux-wrapper": "^7.0.5",
     "next-seo": "^4.28.1",
+    "nextjs-progressbar": "^0.0.14",
     "quill": "^1.3.7",
     "react": "17.0.2",
     "react-copy-to-clipboard": "^5.0.4",
