@@ -1,38 +1,42 @@
-import { useEffect, useRef } from "react";
+import styled, { createGlobalStyle } from "styled-components";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDebounce } from "use-debounce";
 import "quill/dist/quill.snow.css";
 
-import EditorModal from "components/EditorModal";
 import {
   writerAlongActions,
   selectors as writerAlongSelector,
 } from "@/redux/slices/blog";
 import { selectors as draftSelector } from "@/redux/slices/draft";
 import {
-  useElementSize,
+  useUser,
   useQuillEditor,
   useQuillSelected,
   useQuillContentChange,
   useQuillPlainPaste,
-  useQuillConentTypingInsert,
+  useQuillConentDirectInsert,
 } from "@/hooks";
 import { AI_BLOG_WRITER } from "@/appconstants";
+import toolsvalidation from "@/data/toolsvalidation";
 
 const QuillEditor = ({ setQuillEditor }) => {
   const dispatch = useDispatch();
+  const { subscribe } = useUser();
+
+  const [selectedLength, setSelectedLength] = useState(0);
+  const [focusInEditor, setFocusInEditor] = useState(false);
   const editorcontainerRef = useRef(null);
-  const { width: editorWidth } = useElementSize(editorcontainerRef);
   const { item } = useSelector(writerAlongSelector.getContent());
+  const { currenttask } = useSelector(writerAlongSelector.getEditor());
   const {
     activeId,
     item: { blogPost },
   } = useSelector(draftSelector.getDraftBlogs());
-  const dra = useSelector(draftSelector.getDraftBlogs());
   const { quill, quillRef } = useQuillEditor(AI_BLOG_WRITER);
   const { range, text, position } = useQuillSelected(quill);
   const currentContent = useQuillContentChange(quill);
-  const isTyping = useQuillConentTypingInsert(quill, item, true);
+  const isContentTyping = useQuillConentDirectInsert(quill, item, true);
   const [editorContent] = useDebounce(currentContent, 1000);
   useQuillPlainPaste(quill);
 
@@ -41,10 +45,16 @@ const QuillEditor = ({ setQuillEditor }) => {
   }, [quill, setQuillEditor]);
 
   useEffect(() => {
-    if (!isTyping) {
+    if (!isContentTyping) {
       dispatch(writerAlongActions.setContent({ item: "", items: [] }));
+      dispatch(
+        writerAlongActions.setEditor({
+          selected: null,
+          range: { index: 0, length: 0 },
+        })
+      );
     }
-  }, [dispatch, isTyping]);
+  }, [dispatch, isContentTyping]);
 
   useEffect(() => {
     dispatch(writerAlongActions.setEditor({ value: editorContent }));
@@ -60,16 +70,85 @@ const QuillEditor = ({ setQuillEditor }) => {
     }
   }, [activeId, blogPost, dispatch, quill]);
 
+  useEffect(() => {
+    const getSelection = (event) => {
+      const { className, contentEditable } = event.target.activeElement;
+      if (contentEditable === "true" && className === "ql-editor") {
+        const selectedTexts = document.getSelection().toString().trim();
+        setSelectedLength(selectedTexts.length);
+        setFocusInEditor(true);
+      } else {
+        setFocusInEditor(false);
+      }
+    };
+
+    document.addEventListener("selectionchange", getSelection);
+    return () => {
+      document.removeEventListener("selectionchange", getSelection);
+    };
+  }, []);
+
+  const { isMin, isMax, isOk } = useMemo(() => {
+    const { min, max } = toolsvalidation(
+      currenttask,
+      subscribe.subscription === "Freemium"
+    )?.userText;
+
+    const isMin = focusInEditor && selectedLength < min;
+    const isMax = focusInEditor && selectedLength > max;
+    const isOk = focusInEditor && !isMin && !isMax;
+
+    return {
+      isMin,
+      isMax,
+      isOk,
+    };
+  }, [currenttask, focusInEditor, selectedLength, subscribe.subscription]);
+
   return (
     <div className="editor-container" ref={editorcontainerRef}>
-      <div ref={quillRef} />
-      <EditorModal
-        position={position}
-        quill={quill}
-        editorWidth={editorWidth}
+      <GlobalStyled
+        IsMin={isMin.toString()}
+        IsMax={isMax.toString()}
+        IsOk={isOk.toString()}
       />
+      <StyledQuill ref={quillRef} />
     </div>
   );
 };
+
+const StyledQuill = styled.div`
+  word-break: break-word;
+`;
+
+const GlobalStyled = createGlobalStyle`
+
+${({ IsMin }) =>
+  IsMin === "true" &&
+  `
+  &::selection {
+      background: rgb(198 201 0 / 15%);
+      color: #a58e01;
+    }
+  `}
+
+${({ IsMax }) =>
+  IsMax === "true" &&
+  `
+  &::selection {
+      background: rgba(222, 68, 55, 0.1);
+      color: #de4437;
+    }
+  `}
+
+${({ IsOk }) =>
+  IsOk === "true" &&
+  `
+  &::selection {
+      background: rgba(0, 201, 167, 0.1);
+      color: #00c9a7;
+    }
+  `}
+`;
 
 export default QuillEditor;
