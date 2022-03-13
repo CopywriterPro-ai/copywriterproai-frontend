@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
-import { Test } from "@/api/docs/app";
+import { getAllDocs, getDocByTask, getDocTasks } from "@/api/docs/app";
 import { markdownToHtml } from "@/utils";
 import GeneratingBox from "components/contentgenerate";
 import { SpecialLayout as Layout } from "@/layout";
@@ -13,7 +13,7 @@ import { SubscriberModal } from "@/components/modals/subscriber";
 import { useWindowSize, useSidebar } from "@/hooks";
 import AppTaskModal from "@/components/modals/tutorial/apptask";
 
-const AppItem = () => {
+const AppItem = ({ doc }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { showSidebar, showContent } = useSidebar();
@@ -58,41 +58,40 @@ const AppItem = () => {
           )}
         </div>
       </div>
-      <AppTaskModal showTutorialState={showTutorialState} />
+      <AppTaskModal
+        content={doc?.content}
+        showTutorialState={showTutorialState}
+      />
       {subscriber?.usage && <SubscriberModal />}
     </Layout>
   );
 };
 
 export async function getStaticProps({ params }) {
-  // const doc = getDocByTask(params.task, ["title", "content", "seo"]);
-  // const content = await markdownToHtml(doc.content || "");
+  const doc = getDocByTask(params.task, ["title", "content", "seo"]);
+  const content = await markdownToHtml(doc.content || "");
 
   return {
-    // props: {
-    //   doc: {
-    //     ...doc,
-    //     content,
-    //   },
-    // },
     props: {
-      doc: {},
+      doc: {
+        ...doc,
+        content,
+      },
     },
   };
 }
 
 export async function getStaticPaths() {
-  // const docs = getAllDocs(["task"]);
+  const docs = getAllDocs(["task"]);
 
   return {
-    paths: [{ params: { task: "youtube-video-ideas" } }],
-    // docs.map((doc) => {
-    //   return {
-    //     params: {
-    //       task: doc.task,
-    //     },
-    //   };
-    // }),
+    paths: docs.map((doc) => {
+      return {
+        params: {
+          task: doc.task,
+        },
+      };
+    }),
     fallback: false,
   };
 }
