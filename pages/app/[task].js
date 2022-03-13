@@ -1,32 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
+import { Test } from "@/api/docs/app";
+import { markdownToHtml } from "@/utils";
 import GeneratingBox from "components/contentgenerate";
 import { SpecialLayout as Layout } from "@/layout";
 import { GenerateSidebar, MainSidebar } from "@/components/sidebar";
 import { setCurrentActiveKeyState } from "@/redux/slices/content";
 import { selectors as uiSelector } from "@/redux/slices/ui";
 import { SubscriberModal } from "@/components/modals/subscriber";
-import { useWindowSize, useSidebar, useUser } from "@/hooks";
+import { useWindowSize, useSidebar } from "@/hooks";
+import AppTaskModal from "@/components/modals/tutorial/apptask";
 
 const AppItem = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { showSidebar, showContent } = useSidebar();
-
+  const showTutorialState = useState(false);
   const { query, isReady } = router;
   const { task } = query;
   const { subscriber } = useSelector(uiSelector.getModal);
-
-  // useEffect(() => {
-  //   if (task === "blog-writing") {
-  //     router.push({
-  //       pathname: `/ai-blog-generator`,
-  //     });
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [task]);
 
   useEffect(() => {
     if (isReady && task) dispatch(setCurrentActiveKeyState(task));
@@ -50,20 +44,57 @@ const AppItem = () => {
               >
                 <GenerateSidebar />
               </div>
-              <div className={`col-lg-${windowWidth < 1600 ? "9" : "10"}`}>
+              <div
+                className={`col-lg-${windowWidth < 1600 ? "9" : "10"}`}
+                style={{ position: "relative" }}
+              >
                 {task === "blog-writing" ? (
                   <p>Redirecting...</p>
                 ) : (
-                  <GeneratingBox />
+                  <GeneratingBox showTutorialState={showTutorialState} />
                 )}
               </div>
             </>
           )}
         </div>
       </div>
+      <AppTaskModal showTutorialState={showTutorialState} />
       {subscriber?.usage && <SubscriberModal />}
     </Layout>
   );
 };
+
+export async function getStaticProps({ params }) {
+  // const doc = getDocByTask(params.task, ["title", "content", "seo"]);
+  // const content = await markdownToHtml(doc.content || "");
+
+  return {
+    // props: {
+    //   doc: {
+    //     ...doc,
+    //     content,
+    //   },
+    // },
+    props: {
+      doc: {},
+    },
+  };
+}
+
+export async function getStaticPaths() {
+  // const docs = getAllDocs(["task"]);
+
+  return {
+    paths: [{ params: { task: "youtube-video-ideas" } }],
+    // docs.map((doc) => {
+    //   return {
+    //     params: {
+    //       task: doc.task,
+    //     },
+    //   };
+    // }),
+    fallback: false,
+  };
+}
 
 export default AppItem;

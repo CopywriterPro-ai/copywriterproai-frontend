@@ -23,7 +23,7 @@ import TipsImg from "@/assets/images/generate-tips.png";
 import { useUser, useSubscriberModal } from "@/hooks";
 import toolsvalidation from "@/data/toolsvalidation";
 
-const InputGeneratingBox = () => {
+const InputGeneratingBox = ({ showTutorialState }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -41,6 +41,7 @@ const InputGeneratingBox = () => {
     subscribe: { words, subscription },
   } = useUser();
   const showSubscriberModal = useSubscriberModal();
+  const setShowTutorial = showTutorialState[1];
 
   const { contentTexts } = content;
   const { isReady, query } = router;
@@ -132,7 +133,8 @@ const InputGeneratingBox = () => {
       <ContentHeader>
         <ContentTitle>
           <span onClick={handleSidebar} className="fas fa-bars"></span>
-          <p>{formContent.name}</p>
+          <p>{formContent.name}</p>{" "}
+          <button onClick={() => setShowTutorial(true)}>Tutorial</button>
         </ContentTitle>
         {isAuth && (
           <CreditsLeft
