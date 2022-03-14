@@ -102,6 +102,7 @@ const initialState = {
     error: null,
   },
   editor: {
+    currenttask: BLOG_TOPIC,
     range: { index: 0, length: 0 },
     selected: null,
     value: [],
@@ -155,7 +156,12 @@ const blog = createSlice({
       state.topic = { ...state.topic, ...payload };
     },
     setEditor: (state, action) => {
-      const payload = pick(action.payload, ["range", "selected", "value"]);
+      const payload = pick(action.payload, [
+        "range",
+        "selected",
+        "value",
+        "currenttask",
+      ]);
       state.editor = { ...state.editor, ...payload };
     },
     setContent: (state, action) => {
@@ -200,10 +206,10 @@ const blog = createSlice({
     },
     [postWriterAlongEditorToolsContent.fulfilled]: (state, action) => {
       if (state.content.loading === "pending") {
-        const text = action.payload.data?.generatedTexts[0];
+        // const text = action.payload.data?.generatedTexts[0];
         state.content.loading = "idle";
         state.content.items = action.payload.data?.generatedTexts;
-        state.content.item = `\n${text}`;
+        // state.content.item = `\n${text}`;
       }
     },
     [postWriterAlongEditorToolsContent.rejected]: (state, action) => {
