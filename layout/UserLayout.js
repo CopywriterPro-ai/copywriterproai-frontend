@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 
 import Layout from "./Layout";
 import { UserHeader as Header } from "@/components/common/Header";
-import { UserFooter as Footer } from "@/components/common/Footer";
 import {
   getToolsContent,
   getToolsCategory,
@@ -16,6 +15,8 @@ import { getFavouriteTools } from "@/redux/slices/user";
 import { getOwnSubscriber } from "@/redux/slices/subscriber";
 import { useUser, useAuth } from "@/hooks";
 import { SigninModal } from "@/components/modals/auth";
+
+import Processing from "@/pages/processing";
 
 const UserLayout = ({
   children,
@@ -81,7 +82,7 @@ const UserLayout = ({
   const redirectPath = useSelector(uiSelector.getRedirectPath);
 
   if (!isAuth && isRehydrated && !isSpecial) {
-    return <h4>Redirecting...</h4>;
+    return <Processing color='#000'/>;
   }
 
   return (
@@ -99,7 +100,6 @@ const UserLayout = ({
       >
         {children}
       </Main>
-      <Footer />
       {!isAuth && <SigninModal />}
     </Layout>
   );

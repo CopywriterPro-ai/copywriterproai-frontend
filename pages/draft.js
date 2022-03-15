@@ -15,7 +15,7 @@ import {
   selectors as draftSelector,
 } from "@/redux/slices/draft";
 import { setEditorDefault as setEditorCompleteBlogDefault } from "@/redux/slices/completeBlog";
-import { writerAlongActions } from "@/redux/slices/blog";
+import { writeAlongActions } from "@/redux/slices/blog";
 import Spinner from "components/common/Spinner";
 import { deltaToPlainText } from "utils/quillValueConvert";
 
@@ -38,7 +38,7 @@ const SingleDraft = ({ item }) => {
     dispatch(setBlogsDraft({ activeId: id, item: parseItem }));
     if (blogType === "WRITE_ALONG") {
       dispatch(
-        writerAlongActions.setEditorDefault({
+        writeAlongActions.setEditorDefault({
           headline,
           about: blogAbout,
           body: blogPost,
@@ -46,7 +46,7 @@ const SingleDraft = ({ item }) => {
         })
       );
       // { headline, about, body, currentid, intro, outline }
-      router.push(`/app/ai-writeralong`);
+      router.push(`/app/ai-write-along`);
     } else if (blogType === "GHOSTWRITER") {
       dispatch(
         setEditorCompleteBlogDefault({

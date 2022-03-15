@@ -23,7 +23,7 @@ import {
   selectors as uiSelector,
 } from "@/redux/slices/ui";
 import { useResponsive } from "@/hooks";
-import LogoImg from "@/assets/images/logo-white.png";
+import LogoImg from "@/assets/images/logo-color.png";
 import { useElementSize, useUser, useNotice } from "@/hooks";
 import { USER_DEFAULT_PATH } from "@/appconstants";
 
@@ -41,14 +41,13 @@ const NavComDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
   return (
     <li style={{ alignSelf: "center" }}>
       <Dropdown isOpen={isOpen} toggle={toggle}>
-        <DropdownToggle
-          style={{ color: "white", cursor: "pointer" }}
+        <DropdownToggleOptions
           tag="span"
           data-toggle="dropdown"
           aria-expanded={isOpen}
         >
           {MenuName} <span className="fas fa-angle-down"></span>
-        </DropdownToggle>
+        </DropdownToggleOptions>
         <NavDropdownMenus>
           <a href={externalLink.facebookGroup} target="__blank">
             <NavDropdownItem tag="div">Facebook Group</NavDropdownItem>
@@ -69,16 +68,15 @@ const NavBlogDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
   return (
     <li style={{ alignSelf: "center" }}>
       <Dropdown isOpen={isOpen} toggle={toggle}>
-        <DropdownToggle
-          style={{ color: "white", cursor: "pointer" }}
+        <DropdownToggleOptions
           tag="span"
           data-toggle="dropdown"
           aria-expanded={isOpen}
         >
           {MenuName} <span className="fas fa-angle-down"></span>
-        </DropdownToggle>
+        </DropdownToggleOptions>
         <NavDropdownMenus>
-          <Link href="/app/ai-writeralong">
+          <Link href="/app/ai-write-along">
             <a>
               <NavDropdownItem tag="div">
                 Blog writer (Write along){" "}
@@ -177,6 +175,13 @@ const AppHeader = () => {
     dispatch(setTopBarStatus(active));
   }, [active, dispatch]);
 
+  // useEffect(() => {
+  //   const onScroll = () => setOffset(window.pageYOffset);
+  //   window.removeEventListener('scroll', onScroll);
+  //   window.addEventListener('scroll', onScroll, { passive: true });
+  //   return () => window.removeEventListener('scroll', onScroll);
+  // }, []);
+
   return (
     <div>
       {showTopBar && (
@@ -231,7 +236,7 @@ const AppHeader = () => {
                 <NavComDropdownMenuItem
                   isOpen={comIsOpen}
                   toggle={comToggle}
-                  MenuName="Comminuty"
+                  MenuName="Community"
                 />
               </ul>
             </NavList>
@@ -253,7 +258,7 @@ const AppHeader = () => {
             {isAuth && (
               <NavbarMenu>
                 <Dropdown isOpen={isOpen} toggle={toggle}>
-                  <DropdownToggle
+                  <DropdownToggleOptions
                     tag="span"
                     data-toggle="dropdown"
                     aria-expanded={isOpen}
@@ -270,7 +275,7 @@ const AppHeader = () => {
                         className="fas fa-angle-down"
                       ></span>
                     </DropdownAvatar>
-                  </DropdownToggle>
+                  </DropdownToggleOptions>
                   <NavDropdownMenu>
                     <NavDropdownItem tag="div">
                       <Link href="/bookmarks">
@@ -299,7 +304,7 @@ const TopNotice = styled.div`
   justify-content: center;
   align-items: center;
   padding: 12px 0;
-  position: fixed;
+   position: fixed;
   background: #2cae97;
   color: white;
   margin: 0px;
@@ -320,10 +325,18 @@ const JoinButton = styled.button`
 `;
 
 const NavDropdownMenu = styled(DropdownMenu)`
-  background: #3a4841;
+  background: white;
+
+  @media (max-width: 992px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 850px) {
+    font-size: 13px;
+  }
 
   a {
-    color: white;
+    color: black;
     &:hover {
       color: black;
       text-decoration: none;
@@ -331,40 +344,71 @@ const NavDropdownMenu = styled(DropdownMenu)`
   }
 `;
 
+const DropdownToggleOptions = styled(DropdownToggle)`
+  color: black;
+  cursor: pointer;
+
+  &:hover {
+    color: gray;
+    text-decoration: none;
+  }
+`;
+
 const NavDropdownMenus = styled(DropdownMenu)`
-  background: #3a4841;
+  background: #FFFFFF;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
   top: 25px !important;
 
+  @media (max-width: 992px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 850px) {
+    font-size: 13px;
+  }
+
   a {
-    color: white;
+    color: black;
     &:hover {
-      color: black;
+      color: gray;
       text-decoration: none;
     }
   }
 `;
 
 const NavDropdownItem = styled(DropdownItem)`
-  color: #fff;
+  color: black;
   cursor: pointer;
 
   &:active {
-    background-color: white;
+    color: black;
+    background-color: #e0e0e0;
   }
 `;
 
 const MyNavbar = styled.nav`
-  background-color: #3a4841;
+  background: #FFFFFF;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: row;
   height: 55px;
   align-items: center;
+  font-size: 16px;
+
   margin-top: ${({ shownotice, noticeheight }) =>
     shownotice === "true" ? `${noticeheight}px` : `${0}px`};
 
+  @media (max-width: 992px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 850px) {
+    font-size: 13px;
+  }
+
   @media (min-width: 768px) {
     padding: 35px 0px;
-    position: fixed;
+     position: fixed;
     top: 0;
     width: 100%;
     z-index: 9999;
@@ -391,6 +435,10 @@ const Logo = styled.div`
 
 const LogoIcon = styled.img`
   height: 38px;
+
+  @media (max-width: 992px) {
+    height: 32px;
+  }
 `;
 
 const NavList = styled.div`
@@ -409,20 +457,20 @@ const NavList = styled.div`
 
 const NavItemLink = styled.a`
   display: block;
-  color: white;
+  color: black;
   text-align: center;
 
   text-decoration: none;
 
   &:hover {
-    color: white;
+    color: gray;
     text-decoration: none;
   }
 `;
 
 const MobileToogle = styled.span`
   align-self: center;
-  color: #ffffff;
+  color: black;
   cursor: pointer;
   font-size: 25px;
   position: absolute;
@@ -438,7 +486,7 @@ const FirstCharAvatar = styled.span`
   // background-color: #e69500;
   background-color: rgba(15, 160, 152, 1);
   border-radius: 50%;
-  color: #fff;
+  color: white !important;
   display: flex;
   height: 22px;
   justify-content: center;
@@ -466,7 +514,7 @@ const DropdownAvatar = styled.div`
 
   span {
     margin-left: 5px;
-    color: #fff;
+    color: black;
   }
 `;
 

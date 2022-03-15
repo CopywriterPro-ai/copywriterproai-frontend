@@ -3,9 +3,9 @@ import { Collapse } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  postWriterAlongContents,
-  writerAlongActions,
-  selectors as writerAlongSelector,
+  postWriteAlongContents,
+  writeAlongActions,
+  selectors as writeAlongSelector,
 } from "@/redux/slices/blog";
 import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
 import ToolTitleItem from "./components/ToolTitleItem";
@@ -20,9 +20,9 @@ const BlogOutro = ({ titleRef, aboutRef, quillRef }) => {
   const dispatch = useDispatch();
   const [suggestionNum, setSuggestionNum] = useState(1);
   const { isCurrentTask, isEmpty, items, loading } = useSelector(
-    writerAlongSelector.getContentItem(BLOG_OUTRO)
+    writeAlongSelector.getContentItem(BLOG_OUTRO)
   );
-  const { headline, about } = useSelector(writerAlongSelector.getWriterAlong);
+  const { headline, about } = useSelector(writeAlongSelector.getWriteAlong);
 
   const { isAuth } = useUser();
   const showSubscriberModal = useSubscriberModal();
@@ -45,7 +45,7 @@ const BlogOutro = ({ titleRef, aboutRef, quillRef }) => {
         }
 
         dispatch(
-          postWriterAlongContents({
+          postWriteAlongContents({
             task: BLOG_OUTRO,
             data: {
               task: BLOG_OUTRO,
@@ -75,8 +75,8 @@ const BlogOutro = ({ titleRef, aboutRef, quillRef }) => {
 
   const handleSelectItem = (item) => {
     quillRef.setText(item);
-    dispatch(writerAlongActions.setOutro({ item }));
-    dispatch(writerAlongActions.setCurrentTask(BLOG_HEADLINE));
+    dispatch(writeAlongActions.setOutro({ item }));
+    dispatch(writeAlongActions.setCurrentTask(BLOG_HEADLINE));
   };
 
   return (

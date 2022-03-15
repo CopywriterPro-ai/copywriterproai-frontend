@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
+import Processing from "@/pages/processing";
 import Layout from "./Layout";
 import { GuestHeader as Header } from "@/components/common/Header";
 import { GuestFooter as Footer } from "@/components/common/Footer";
@@ -23,7 +24,7 @@ const GuestLayout = ({
   }, [isAuth, isRehydrated]);
 
   if (isAuth && isRehydrated) {
-    return <h4>Redirecting...</h4>;
+    return <Processing color='#000'/>;
   }
 
   return (

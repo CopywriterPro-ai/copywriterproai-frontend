@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { UserLayout as Layout } from "@/layout";
 import EditorJS from "@/components/completeblogeditor";
 import CustomToolbar from "@/components/editor/CustomToolbar";
-import { BlogHeadlineComplete } from "@/components/blog";
+import { BlogHeadlineComplete, BlogData } from "@/components/blog";
 import {
   resetCompleteBlog,
   setCurrentTask,
@@ -355,16 +355,6 @@ const CompleteBlogGenerator = () => {
             <Collapse isOpen={!isOpenEditorField}>
               <ScollingTool>
                 <ToolsHeader>
-                  <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    <strong>
-                      Readability: {quillCounter.readabilityScore}
-                    </strong>
-                    <strong>Sentence: {quillCounter.sentence}</strong>
-                    <strong>Word: {quillCounter.word}</strong>
-                    <strong>Character: {quillCounter.character}</strong>
-                  </div>
                   <Tips>
                     <TipsIcon src={TipsImg.src} alt="tips" />
                     <span>
@@ -556,6 +546,7 @@ const CompleteBlogGenerator = () => {
         </BlogContainer>
       )}
       {subscriber?.usage && <SubscriberModal />}
+      <BlogData textData={quillCounter}/>
     </Layout>
   );
 };
