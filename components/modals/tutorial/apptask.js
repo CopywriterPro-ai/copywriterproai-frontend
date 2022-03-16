@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-const AppTask = ({ showTutorialState, content = "" }) => {
+const AppTask = ({ showTutorialState, doc = {} }) => {
   const [showTutorial, setShowTutorial] = showTutorialState;
 
   useEffect(() => {
@@ -19,14 +19,17 @@ const AppTask = ({ showTutorialState, content = "" }) => {
   return (
     <StyledTutorial ShowModal={showTutorial.toString()} id="tutorial-modal">
       <StyledTutorialContent id="tutorial-modal-content">
-        <button
-          style={{ float: "right" }}
-          onClick={() => setShowTutorial(false)}
-        >
-          ✕
-        </button>
-        <br />
-        <div dangerouslySetInnerHTML={{ __html: content }} />
+        <StyledHead>
+          <div></div>
+          <div>
+            <button title="Close" onClick={() => setShowTutorial(false)}>
+              ✕
+            </button>
+          </div>
+        </StyledHead>
+        <StyledBody>
+          <div dangerouslySetInnerHTML={{ __html: doc.content }} />
+        </StyledBody>
       </StyledTutorialContent>
     </StyledTutorial>
   );
@@ -42,7 +45,7 @@ const StyledTutorial = styled.div`
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   cursor: pointer;
   visibility: ${({ ShowModal }) =>
     ShowModal === "true" ? "visible" : "hidden"};
@@ -57,9 +60,50 @@ const StyledTutorialContent = styled.div`
   max-height: 80vh;
   border-radius: 8px;
   background: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   overflow: auto;
-  padding: 5px;
+  padding: 15px;
   cursor: default;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 0;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    /* background: #ff0000; */
+    background: rgba(0, 0, 0, 0.2);
+  }
+`;
+
+const StyledHead = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    background: transparent;
+    border: 0;
+    color: gray;
+    font-size: 18px;
+
+    &:hover {
+      color: black;
+    }
+  }
+`;
+
+const StyledBody = styled.div`
+  margin: 5px 0;
+  color: #525252;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
 `;
 
 export default AppTask;

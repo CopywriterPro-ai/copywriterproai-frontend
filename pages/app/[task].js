@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
-import { getAllDocs, getDocByTask, getDocTasks } from "@/api/docs/app";
+import { getAllDocs, getDocByTask } from "@/api/docs/app";
 import { markdownToHtml } from "@/utils";
 import GeneratingBox from "components/contentgenerate";
 import { SpecialLayout as Layout } from "@/layout";
@@ -58,10 +58,7 @@ const AppItem = ({ doc }) => {
           )}
         </div>
       </div>
-      <AppTaskModal
-        content={doc?.content}
-        showTutorialState={showTutorialState}
-      />
+      <AppTaskModal doc={doc} showTutorialState={showTutorialState} />
       {subscriber?.usage && <SubscriberModal />}
     </Layout>
   );

@@ -325,9 +325,9 @@ const PricingCard = () => {
     setIsOneMonth(!isOneMonth);
   };
 
-  useEffect(() => {
-    dispatch(getPriceList());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getPriceList());
+  // }, [dispatch]);
 
   useEffect(() => {
     dispatch(setRedirectPath(null));
