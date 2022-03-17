@@ -318,6 +318,11 @@ const singleValidation = (task, limit = true) => {
     "generate-recipe": {
       task: "generate-recipe",
     },
+    "youtube-video-script": {
+      task: "youtube-video-script",
+      title: { min: 5, max: 400, required: true },
+      numberOfSuggestions: { min: 1, max: 10, required: true },
+    },
   };
 
   return validateSchema[task] ? validateSchema[task] : {};
