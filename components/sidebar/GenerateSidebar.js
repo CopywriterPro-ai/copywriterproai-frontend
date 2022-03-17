@@ -79,7 +79,7 @@ const GenerateSidebar = () => {
   const handleActiveItem = (key) => {
     if (key === "blog-writing") {
       router.push({
-        pathname: `/app/ai-writeralong`,
+        pathname: `/app/ai-write-along`,
       });
     } else if (key === "complete-blog") {
       router.push({

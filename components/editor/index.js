@@ -5,8 +5,8 @@ import { useDebounce } from "use-debounce";
 import "quill/dist/quill.snow.css";
 
 import {
-  writerAlongActions,
-  selectors as writerAlongSelector,
+  writeAlongActions,
+  selectors as writeAlongSelector,
 } from "@/redux/slices/blog";
 import { selectors as draftSelector } from "@/redux/slices/draft";
 import {
@@ -27,8 +27,8 @@ const QuillEditor = ({ setQuillEditor }) => {
   const [selectedLength, setSelectedLength] = useState(0);
   const [focusInEditor, setFocusInEditor] = useState(false);
   const editorcontainerRef = useRef(null);
-  const { item } = useSelector(writerAlongSelector.getContent());
-  const { currenttask } = useSelector(writerAlongSelector.getEditor());
+  const { item } = useSelector(writeAlongSelector.getContent());
+  const { currenttask } = useSelector(writeAlongSelector.getEditor());
   const {
     activeId,
     item: { blogPost },
@@ -46,9 +46,9 @@ const QuillEditor = ({ setQuillEditor }) => {
 
   useEffect(() => {
     if (!isContentTyping) {
-      dispatch(writerAlongActions.setContent({ item: "", items: [] }));
+      dispatch(writeAlongActions.setContent({ item: "", items: [] }));
       dispatch(
-        writerAlongActions.setEditor({
+        writeAlongActions.setEditor({
           selected: null,
           range: { index: 0, length: 0 },
         })
@@ -57,11 +57,11 @@ const QuillEditor = ({ setQuillEditor }) => {
   }, [dispatch, isContentTyping]);
 
   useEffect(() => {
-    dispatch(writerAlongActions.setEditor({ value: editorContent }));
+    dispatch(writeAlongActions.setEditor({ value: editorContent }));
   }, [dispatch, editorContent]);
 
   useEffect(() => {
-    dispatch(writerAlongActions.setEditor({ range, selected: text }));
+    dispatch(writeAlongActions.setEditor({ range, selected: text }));
   }, [dispatch, range, text]);
 
   useEffect(() => {

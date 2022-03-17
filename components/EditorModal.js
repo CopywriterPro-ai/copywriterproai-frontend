@@ -11,9 +11,9 @@ import {
   BLOG_TOPIC,
 } from "@/appconstants";
 import {
-  writerAlongActions,
-  postWriterAlongEditorToolsContent,
-  selectors as writerAlongSelector,
+  writeAlongActions,
+  postWriteAlongEditorToolsContent,
+  selectors as writeAlongSelector,
 } from "@/redux/slices/blog";
 
 import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
@@ -77,9 +77,9 @@ const EditorModal = ({ position, quill, editorWidth }) => {
   const dispatch = useDispatch();
 
   const [mounded, setMounded] = useState(false);
-  const { about, headline } = useSelector(writerAlongSelector.getWriterAlong);
-  const { selected, range } = useSelector(writerAlongSelector.getEditor());
-  const { loading } = useSelector(writerAlongSelector.getContent());
+  const { about, headline } = useSelector(writeAlongSelector.getWriteAlong);
+  const { selected, range } = useSelector(writeAlongSelector.getEditor());
+  const { loading } = useSelector(writeAlongSelector.getContent());
   const { isAuth, subscribe } = useUser();
   const showSubscriberModal = useSubscriberModal();
 
@@ -145,14 +145,14 @@ const EditorModal = ({ position, quill, editorWidth }) => {
       };
     }
 
-    dispatch(postWriterAlongEditorToolsContent({ data, task: data.task })).then(
+    dispatch(postWriteAlongEditorToolsContent({ data, task: data.task })).then(
       (res) => {
         if (res.payload.status === 200) {
           const { index, length } = range;
           const Index = index + length;
           quill.setSelection(Index, 0);
           dispatch(
-            writerAlongActions.setEditor({
+            writeAlongActions.setEditor({
               selected: null,
               range: { index: Index, length: 0 },
             })

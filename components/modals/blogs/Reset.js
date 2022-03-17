@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { Container } from "./style";
 import { setBlogResetModal, selectors as uiSelector } from "@/redux/slices/ui";
-import { writerAlongActions } from "@/redux/slices/blog";
+import { writeAlongActions } from "@/redux/slices/blog";
 import { resetCompleteBlog } from "@/redux/slices/completeBlog";
 import { AI_COMPLETE_BLOG_WRITER, AI_BLOG_WRITER } from "@/appconstants";
 
@@ -32,7 +32,7 @@ const ResetBlogModal = ({ quill, id }) => {
 
     switch (id) {
       case AI_BLOG_WRITER:
-        dispatch(writerAlongActions.resetBlog());
+        dispatch(writeAlongActions.resetBlog());
         break;
       case AI_COMPLETE_BLOG_WRITER:
         dispatch(resetCompleteBlog());

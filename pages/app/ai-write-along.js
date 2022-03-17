@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { Collapse } from "reactstrap";
 import { useForm } from "react-hook-form";
 
-import { BlogHeadline, BlogIntro, BlogOutro } from "@/components/blog";
+import { BlogHeadline, BlogIntro, BlogOutro, BlogData } from "@/components/blog";
 import EditorJS from "@/components/editor";
 import CustomToolbar from "@/components/editor/CustomToolbar";
 import { BlogResetModal } from "@/components/modals/blogs";
@@ -15,6 +15,7 @@ import {
   useSidebar,
   useUser,
   useQuillValueIsChange,
+  useQuillCounter,
   useQuillSelected,
   useBeforeunload,
   useWarnIfUnsavedChanges,
@@ -26,9 +27,9 @@ import {
   setSigninModal,
 } from "@/redux/slices/ui";
 import {
-  postWriterAlongEditorToolsContent,
-  writerAlongActions,
-  selectors as writerAlongSelector,
+  postWriteAlongEditorToolsContent,
+  writeAlongActions,
+  selectors as writeAlongSelector,
 } from "@/redux/slices/blog";
 import {
   resetBlogsDraft,
@@ -105,15 +106,16 @@ const BlogGenerator = () => {
   const { register, handleSubmit, reset: resetForm } = useForm();
 
   const { about, headline, content } = useSelector(
-    writerAlongSelector.getWriterAlong
+    writeAlongSelector.getWriteAlong
   );
   const { currenttask: editorCurrentTask, value } = useSelector(
-    writerAlongSelector.getEditor()
+    writeAlongSelector.getEditor()
   );
   const { activeId } = useSelector(draftSelector.getDraftBlogs());
   const { subscriber } = useSelector(uiSelector.getModal);
   const { isAuth, subscribe } = useUser();
   const { showSidebar, showContent } = useSidebar();
+  const quillCounter = useQuillCounter(quill);
   const { isEditorChange } = useQuillValueIsChange(quill);
   const { range, text: selectedText } = useQuillSelected(quill);
   const [editorCurrentTaskInput, setEditorCurrentTaskInput] = useState({});
@@ -130,7 +132,7 @@ const BlogGenerator = () => {
   const handleEditorReset = useCallback(() => {
     quill?.setContents([]);
     dispatch(resetBlogsDraft());
-    dispatch(writerAlongActions.resetBlog());
+    dispatch(writeAlongActions.resetBlog());
   }, [dispatch, quill]);
 
   useEffect(() => {
@@ -155,11 +157,11 @@ const BlogGenerator = () => {
   }, [editorCurrentTask, resetForm, subscribe.subscription]);
 
   const handleChangeBlogAbout = (e) => {
-    dispatch(writerAlongActions.setAbout({ item: e.target.value }));
+    dispatch(writeAlongActions.setAbout({ item: e.target.value }));
   };
 
   const handleChangeTitle = (e) => {
-    dispatch(writerAlongActions.setHeadline({ item: e.target.value }));
+    dispatch(writeAlongActions.setHeadline({ item: e.target.value }));
   };
 
   const handleResetBlog = () => {
@@ -247,7 +249,7 @@ const BlogGenerator = () => {
   };
 
   const handleSelectTool = (task) => {
-    dispatch(writerAlongActions.setEditor({ currenttask: task }));
+    dispatch(writeAlongActions.setEditor({ currenttask: task }));
   };
 
   const isOpenEditorField = useMemo(() => {
@@ -264,7 +266,7 @@ const BlogGenerator = () => {
   }, [editorCurrentTaskInput.userText, selectedText?.length]);
 
   const handleSelectedContentItem = (item) => {
-    dispatch(writerAlongActions.setContent({ item: `\n${item}`, items: [] }));
+    dispatch(writeAlongActions.setContent({ item: `\n${item}`, items: [] }));
   };
 
   const onFieldFormSubmit = (values) => {
@@ -291,7 +293,7 @@ const BlogGenerator = () => {
 
     isOk &&
       dispatch(
-        postWriterAlongEditorToolsContent({ data: datas, task: datas.task })
+        postWriteAlongEditorToolsContent({ data: datas, task: datas.task })
       );
   };
 
@@ -499,6 +501,7 @@ const BlogGenerator = () => {
         </BlogContainer>
       )}
       {subscriber?.usage && <SubscriberModal />}
+      <BlogData textData={quillCounter}/>
     </Layout>
   );
 };

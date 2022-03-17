@@ -38,8 +38,8 @@ const MainSidebar = () => {
           <SidebarUser>
             <p className="sidebar-premium">
               {subscribe.subscriberInfo.isPaidSubscribers
-                ? "Premium"
-                : "Freemium"}
+                ? "Premium "
+                : "Freemium "}
               Account
             </p>
             <SidebarUserAvatar>
@@ -82,8 +82,13 @@ const MainSidebar = () => {
               <Collapse isOpen={blogDrop}>
                 <DropDownList>
                   <li>
-                    <Link href="/ai-blog-generator" passHref>
-                      <UserActionLink>Generate</UserActionLink>
+                    <Link href="/app/ai-write-along" passHref>
+                      <UserActionLink>Blog writer (Write along)</UserActionLink>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/app/ai-ghostwriter" passHref>
+                      <UserActionLink>Blog writer (Ghostwriter)</UserActionLink>
                     </Link>
                   </li>
                   <li>

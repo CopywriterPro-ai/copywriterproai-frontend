@@ -16,8 +16,8 @@ import {
 } from "@/appconstants";
 import { asyncThunkError, pick } from "@/utils";
 
-export const postWriterAlongContents = createAsyncThunk(
-  "content/postWriterAlongContentsFetching",
+export const postWriteAlongContents = createAsyncThunk(
+  "content/postWriteAlongContentsFetching",
   async ({ data, task }, { rejectWithValue }) => {
     try {
       const response = await contentApi.postGenerateContents({ data, task });
@@ -28,8 +28,8 @@ export const postWriterAlongContents = createAsyncThunk(
   }
 );
 
-export const postWriterAlongEditorToolsContent = createAsyncThunk(
-  "content/postWriterAlongEditorToolsContentFetching",
+export const postWriteAlongEditorToolsContent = createAsyncThunk(
+  "content/postWriteAlongEditorToolsContentFetching",
   async ({ data, task }, { rejectWithValue }) => {
     try {
       const response = await contentApi.postGenerateContents({ data, task });
@@ -174,14 +174,14 @@ const blog = createSlice({
       ...state,
       ...payload.blog,
     }),
-    [postWriterAlongContents.pending]: (state, action) => {
+    [postWriteAlongContents.pending]: (state, action) => {
       const task = tasksArr[action.meta?.arg?.task];
       if (state[task].loading === "idle" && task) {
         state[task].loading = "pending";
         state[task].error = null;
       }
     },
-    [postWriterAlongContents.fulfilled]: (state, action) => {
+    [postWriteAlongContents.fulfilled]: (state, action) => {
       const task = tasksArr[action.meta?.arg?.task];
       if (state[task].loading === "pending" && task) {
         const generatedTexts = action.payload.data?.generatedTexts;
@@ -189,7 +189,7 @@ const blog = createSlice({
         state[task].items = generatedTexts;
       }
     },
-    [postWriterAlongContents.rejected]: (state, action) => {
+    [postWriteAlongContents.rejected]: (state, action) => {
       const task = tasksArr[action.meta?.arg?.task];
       if (state[task].loading === "pending" && task) {
         state[task].loading = "idle";
@@ -197,14 +197,14 @@ const blog = createSlice({
       }
     },
 
-    [postWriterAlongEditorToolsContent.pending]: (state, action) => {
+    [postWriteAlongEditorToolsContent.pending]: (state, action) => {
       if (state.content.loading === "idle") {
         state.content.loading = "pending";
         state.content.current = action.meta?.arg?.task;
         state.content.error = null;
       }
     },
-    [postWriterAlongEditorToolsContent.fulfilled]: (state, action) => {
+    [postWriteAlongEditorToolsContent.fulfilled]: (state, action) => {
       if (state.content.loading === "pending") {
         // const text = action.payload.data?.generatedTexts[0];
         state.content.loading = "idle";
@@ -212,7 +212,7 @@ const blog = createSlice({
         // state.content.item = `\n${text}`;
       }
     },
-    [postWriterAlongEditorToolsContent.rejected]: (state, action) => {
+    [postWriteAlongEditorToolsContent.rejected]: (state, action) => {
       if (state.content.loading === "pending") {
         state.content.loading = "idle";
         state.content.error = action.payload.data;
@@ -226,21 +226,21 @@ const isEmptyArr = (arr) => {
 };
 
 export const selectors = {
-  getWriterAlong: createSelector(
+  getWriteAlong: createSelector(
     (state) => state.blog,
     (blog) => blog
   ),
   getEditor: () =>
-    createSelector([selectors.getWriterAlong], ({ editor }) => editor),
+    createSelector([selectors.getWriteAlong], ({ editor }) => editor),
 
   getContent: () =>
-    createSelector([selectors.getWriterAlong], ({ content }) => content),
+    createSelector([selectors.getWriteAlong], ({ content }) => content),
   getContentItem: (taskKey) =>
-    createSelector([selectors.getWriterAlong], (writerAlong) => {
+    createSelector([selectors.getWriteAlong], (writeAlong) => {
       const task = tasksArr[taskKey];
       if (task) {
-        const isCurrentTask = writerAlong.currenttask === taskKey;
-        const currentTask = writerAlong[task];
+        const isCurrentTask = writeAlong.currenttask === taskKey;
+        const currentTask = writeAlong[task];
         const filteritems = currentTask.items.filter(
           (item) => item.trim().length > 0
         );
@@ -264,6 +264,6 @@ export const selectors = {
     }),
 };
 
-export const writerAlongActions = blog.actions;
+export const writeAlongActions = blog.actions;
 
 export default blog.reducer;

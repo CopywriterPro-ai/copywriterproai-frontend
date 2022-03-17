@@ -1,3 +1,5 @@
+import Processing from "@/pages/processing";
+
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
@@ -32,7 +34,7 @@ const AdminLayout = ({
     userInfo.role !== "admin" &&
     userInfo.isLoaded
   ) {
-    return <h4>Redirecting</h4>;
+    return <Processing color='#000'/>;
   }
 
   return (

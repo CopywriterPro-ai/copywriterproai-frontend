@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
+import Processing from "@/pages/processing";
 import Layout from "./Layout";
 import { useUser } from "@/hooks";
 import { USER_DEFAULT_PATH } from "@/appconstants";
@@ -21,7 +22,7 @@ const AuthLayout = ({
   }, [isAuth, isRehydrated]);
 
   if (isAuth && isRehydrated) {
-    return <h4>Redirecting...</h4>;
+    return <Processing color='#000'/>;
   }
 
   return (
