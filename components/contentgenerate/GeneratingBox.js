@@ -135,7 +135,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
           <span onClick={handleSidebar} className="fas fa-bars"></span>
           <p>{formContent.name}</p>
           <TutorialButton onClick={() => setShowTutorial(true)}>
-            Tutorial
+            [Tutorial]
           </TutorialButton>
         </ContentTitle>
         {isAuth && (
@@ -324,7 +324,7 @@ const ContentHeader = styled.div`
 
 const ContentTitle = styled.div`
   display: flex;
-  align-items: center;
+  align-items: baseline;
 
   span {
     cursor: pointer;
@@ -435,9 +435,11 @@ const Button = styled.button`
 `;
 
 const TutorialButton = styled.button`
-  background: transparent;
-  border: 0;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  margin: 0 0 0 10px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #007fff;
 `;
 
 export default InputGeneratingBox;
