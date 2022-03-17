@@ -231,7 +231,7 @@ const AppHeader = () => {
                     <NavItem link="/bookmarks" title="Bookmarks" />
                   </>
                 )}
-                {!isAuth && <NavItem link="/ai-blog-generator" title="Blog" />}
+                {/* {!isAuth && <NavItem link="/ai-blog-generator" title="Blog" />} */}
                 <NavItem link="/pricing" title="Pricing" />
                 <NavComDropdownMenuItem
                   isOpen={comIsOpen}

@@ -5,8 +5,32 @@ seo:
   description: this is seo title
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
+## Ad Creative Description
 
-## Lorem Ipsum
+### **Product Name**
 
-Tristique senectus et netus et malesuada fames ac turpis. Ridiculous mus mauris vitae ultricies leo integer malesuada nunc vel. In mollis nunc sed id semper. Egestas tellus rutrum tellus pellentesque. Phasellus vestibulum lorem sed risus ultricies tristique nulla. Quis blandit turpis cursus in hac habitasse platea dictumst quisque. Eros donec ac odio tempor orci dapibus ultrices.
+Write the exact name of your product or business.
+
+**Example:** Galaxy S22 Ultra, WhatsApp, etc.
+
+### **Business Type**
+
+Business or product type refers to a certain sort of item or service. In other words, how you would like to categorize your product.
+
+**Example:** Clothing brand, Communication platform, Payment service, etc.
+
+### **Customer Benefits**
+
+List down the benefits your customers will get from buying and using your product.
+
+**Example:** Enhanced safety features, High quality, 50% off, etc.
+
+## Example of a complete input
+
+**Product Name:** Yogurt Plus.
+
+**Business Type:** Frozen Yogurt.
+
+**Customer Benefits:** Healthy and nutritious, 5 different flavors.
+
+![enter image description here](https://copywriterpro-ai-tools.s3.amazonaws.com/Ad+Creative+Description.png)

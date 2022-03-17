@@ -188,13 +188,11 @@ const BlogGenerator = () => {
         3000,
         { toastId }
       );
-    } else if (bodyLength < 10 || bodyLength > 200) {
+    } else if (bodyLength < 10) {
       isValid = false;
-      toastMessage.customWarn(
-        "Blog content must be between 10 and 200 characters",
-        3000,
-        { toastId }
-      );
+      toastMessage.customWarn("Blog content must be 10 characters", 3000, {
+        toastId,
+      });
     } else {
       isValid = true;
     }

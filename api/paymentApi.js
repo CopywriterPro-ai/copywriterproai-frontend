@@ -2,7 +2,9 @@ import fetcher from "./fetcher";
 
 const content = {
   getPriceList: () => {
-    return fetcher("/payments/product-prices");
+    return fetcher("/payments/product-prices", {
+      params: { activeProduct: true },
+    });
   },
   postCreateCustomer: () => {
     return fetcher("/payments/create-customer", {
