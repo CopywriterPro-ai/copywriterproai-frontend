@@ -1,4 +1,4 @@
-# Ad Creative Description
+﻿# Ad Creative Headlines
 ### **Product Name**
 
 Write the exact name of your product or business.
@@ -22,4 +22,4 @@ List down the benefits your customers will get from buying and using your produc
 
 **Number Of Suggestions:** 3.
 
-![enter image description here](https://copywriterpro-ai-tools.s3.amazonaws.com/Ad-Creative-Description.jpg)
+![enter image description here](https://copywriterpro-ai-tools.s3.amazonaws.com/Ad-Creative-Headlines.jpg)
