@@ -28,15 +28,33 @@ const ListItemAnchor = ({ to = "/", title, imgSrc = null }) => {
   );
 };
 
+const ListItemChat = ({ title }) => {
+  return (
+    <List>
+      <a href={null} onClick={() => Tawk_API.toggle()}>
+        {title}
+      </a>
+      <span>&#9679;</span>
+    </List>
+  );
+};
+
 const List = styled.li`
   margin: 0.6rem 0;
 
   a {
     color: #000000;
+    cursor: pointer;
 
     &:hover {
       text-decoration: none;
     }
+  }
+
+  span {
+    color: #50cb50;
+    font-size: 20px;
+    margin-left: 5px;
   }
 `;
 
@@ -90,6 +108,7 @@ const UserFooter = () => {
                 <ListItem to="/feature-request" title="Request a Feature" />
                 <ListItem to="/bug-report" title="Report a bug" />
                 <ListItem to="/contact-us" title="Contact Us" />
+                <ListItemChat title="Chat with Us" />
               </UnorderList>
             </SectionWrap>
           </Section>
