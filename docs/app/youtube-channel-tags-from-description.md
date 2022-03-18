@@ -1,4 +1,5 @@
 ﻿# Channel Tags From Description
+
 ### **Channel Description**
 
 Channel description is a short paragraph that explains the purpose and focus of a given channel. It can be used to introduce a new channel, provide information about an existing one, or both.
@@ -12,5 +13,7 @@ Channel description is a short paragraph that explains the purpose and focus of 
 Khan Academy provides teachers with data on how their students are doing so they can identify gaps in learning and provide tailored instruction.
 
 Our resources have been translated into dozens of languages, and 15 million people around the globe learn on Khan Academy each month.
+
+**Number Of Suggestions:** 4.
 
 ![enter image description here](https://copywriterpro-ai-tools.s3.amazonaws.com/Channel+Tags+From+Description.jpg)

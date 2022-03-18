@@ -1,3 +1,3 @@
 ﻿# Point of view
 
-**Something Awesome is Coming**
+**Tutorial will be available soon**

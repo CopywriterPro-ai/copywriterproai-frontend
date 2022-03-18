@@ -1,7 +1,8 @@
 ﻿# Grammar Fixer
+
 ### **Original Text**
 
-Write any text you want.
+Write any text you want.\
 **Example:** Every girl must bring their own lunch.
 
 ### **Example of a complete input**

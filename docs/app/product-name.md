@@ -1,3 +1,3 @@
 ﻿# Product Name
 
-**Something Awesome is Coming**
+**Tutorial will be available soon**

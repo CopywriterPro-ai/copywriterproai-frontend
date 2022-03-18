@@ -1,7 +1,8 @@
 ﻿# Attention Grabbing Headline
+
 ### **Attention Grabbing Headline**
 
-Write the Content.
+Write the Content.\
 **Example:** A video about bad impacts of climate change.
 
 ### **Example of a complete input**

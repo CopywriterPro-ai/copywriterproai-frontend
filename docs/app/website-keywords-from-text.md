@@ -1,7 +1,7 @@
 ﻿# Website SEO Friendly Keywords From Text
 ### **Primary Text**
 
-Write a company description.
+Write a company description.\
 **Example:** Coding Hub is a web based service provider. Our main goal is to build smarter websites to grow your business.
 
 ### **Example of a complete input**

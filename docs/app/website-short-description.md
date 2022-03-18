@@ -1,17 +1,18 @@
 ﻿# Website Short Description
+
 ### **Business Type**
 
-Write the exact name of your business type.
+Write the exact name of your business type.\
 **Example:** Real-estate,Ecommerce,Healthcare,Software Company etc.
 
 ### **Business name**
 
-Write the exact name of your business.
+Write the exact name of your business.\
 **Example:** Apollo,Bashundhra,Alibaba etc.
 
 ### **Example of a complete input**
 
-**Business Type:** Real-estate.
+**Business Type:** Real-estate.\
 **Business Name:** Sheltech.
 
 **Number Of Suggestions:** 4.

@@ -1,3 +1,3 @@
 ﻿# Facebook Campaign Post
 
-**Something Awesome is Coming**
+**Tutorial will be available soon**

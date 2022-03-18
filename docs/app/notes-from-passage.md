@@ -1,3 +1,3 @@
 ﻿# Notes From Passage
 
-**Something Awesome is Coming**
+**Tutorial will be available soon**
