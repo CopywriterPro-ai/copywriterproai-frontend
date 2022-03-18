@@ -1,8 +1,7 @@
-﻿# Youtube Video Ideas
+﻿# Youtube Video Script
 
-### **Channel or Video Topic**
+### **Video About**
 
-Video About.\
 **Example:** Traveling to the Happiest Country in the Word, How to travel Solo: Must know Tips Before Traveling Alone, New York Tour Guide
 
 ### **Example of a complete input**
