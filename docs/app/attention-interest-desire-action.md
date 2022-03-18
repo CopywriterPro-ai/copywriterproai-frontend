@@ -5,7 +5,7 @@
 Write the exact name of your product or business.\
 **Example:** CopywriterPro.
 
-### Product Categories
+### **Product Categories**
 
 A product description is an overview of the features and benefits of your product, as well as why people would want to purchase it.\
 **Example:** AI copywriting assistant.

@@ -15,7 +15,7 @@ Business or product type refers to a certain sort of item or service. In other w
 List down the benefits your customers will get from buying and using your product.\
 **Example:** Enhanced safety features, High quality, 50% off, etc.
 
-### Example of a complete input
+### **Example of a complete input**
 
 **Product Name:** Yogurt Plus.\
 **Business Type:** Frozen Yogurt.\

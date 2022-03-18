@@ -1,10 +1,11 @@
 ﻿# Problem Agitate Solution
+
 ### **Product Name**
 
 Write the exact name of your product or business.\
 **Example:** Figi.
 
-### Product Categories
+### **Product Categories**
 
 A product description is an overview of the features and benefits of your product, as well as why people would want to purchase it.\
 **Example:** A web-based vector graphics editor and prototyping tool.
