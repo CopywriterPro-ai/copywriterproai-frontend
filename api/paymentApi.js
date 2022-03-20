@@ -41,6 +41,15 @@ const content = {
       data,
     });
   },
+  getSubscriptions: ({ status = "all" }) => {
+    return fetcher(`/payments/subscriptions?status=${status}`);
+  },
+  postUpdateSubscriptionPlan: ({ data }) => {
+    return fetcher("/payments/update-subscription-plan", {
+      method: "post",
+      data,
+    });
+  },
 };
 
 export default content;

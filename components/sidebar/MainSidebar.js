@@ -1,25 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { Collapse } from "reactstrap";
 
 import externalLink from "@/data/externallink.json";
 import { postUserLogout } from "@/redux/slices/auth";
+import {
+  getSubscriptions,
+  selectors as paymentSelector,
+} from "@/redux/slices/payment";
+import { setSubscriptionsCancelModal } from "@/redux/slices/ui";
+import SubscriberModal from "@/components/modals/subscriptions/plan";
 import { useResponsive, useUser } from "@/hooks";
 
 const MainSidebar = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { isMobile } = useResponsive();
-  const { authToken, isAuth, subscribe, userInfo } = useUser();
+  const { authToken, isAuth, subscribe, userInfo, isRehydrated } = useUser();
   const { firstName, lastName, email, profileAvatar } = userInfo;
   const fullName = `${firstName} ${lastName}`;
   const {
     refreshToken: { token },
   } = authToken;
   const [blogDrop, setBlogDrop] = useState(false);
+  const { items: subscriptions } = useSelector(paymentSelector.getSubscription);
+
+  console.log("subscriptions", subscriptions);
+
+  const handleShowSubscriptionsCancelModal = () => {
+    dispatch(setSubscriptionsCancelModal(true));
+  };
 
   const handleSignout = () => {
     dispatch(postUserLogout({ data: { refreshToken: token } })).then(
@@ -30,6 +43,10 @@ const MainSidebar = () => {
       }
     );
   };
+
+  useEffect(() => {
+    isRehydrated && isAuth && dispatch(getSubscriptions({ status: "active" }));
+  }, [dispatch, isAuth, isRehydrated]);
 
   return (
     <Sidebar className="col-md-3">
@@ -74,6 +91,16 @@ const MainSidebar = () => {
 
           {isAuth && (
             <>
+              <div>
+                <p>Plan</p>
+                {subscriptions.length > 0 && (
+                  <div>
+                    <button onClick={handleShowSubscriptionsCancelModal}>
+                      Subscriptions
+                    </button>
+                  </div>
+                )}
+              </div>
               <DropDownMenuTitle
                 onClick={() => setBlogDrop((prevState) => !prevState)}
               >
@@ -127,6 +154,7 @@ const MainSidebar = () => {
           </ul>
         </Community>
       </SidebarContainer>
+      <SubscriberModal />
     </Sidebar>
   );
 };

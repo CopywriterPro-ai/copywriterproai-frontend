@@ -53,6 +53,9 @@ const initialState = {
       usage: false,
       message: null,
     },
+    subscriptions: {
+      cancel: false,
+    },
     auth: {
       signin: false,
     },
@@ -145,6 +148,9 @@ const ui = createSlice({
     setRedirectPath: (state, action) => {
       state.redirectPath = action.payload;
     },
+    setSubscriptionsCancelModal: (state, action) => {
+      state.modal.subscriptions.cancel = action.payload;
+    },
   },
   extraReducers: {
     [HYDRATE]: (state, { payload }) => ({
@@ -210,6 +216,7 @@ export const {
   setNavBarHeigth,
   setTopBarStatus,
   setRedirectPath,
+  setSubscriptionsCancelModal,
 } = ui.actions;
 
 export const selectors = {
