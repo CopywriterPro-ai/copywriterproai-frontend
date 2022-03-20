@@ -1,5 +1,6 @@
 {
   "BASIC_1MONTH": {
+    "name": "Basic",
     "period": "1month",
     "words": "7,000",
     "maxInput": "400",
@@ -8,6 +9,7 @@
     "hasAiBlog": true
   },
   "BASIC_6MONTH": {
+    "name": "Basic",
     "period": "6month",
     "words": "42,000",
     "maxInput": "400",
@@ -16,6 +18,7 @@
     "hasAiBlog": true
   },
   "STANDARD_1MONTH": {
+    "name": "Standard",
     "period": "1month",
     "words": "50,000",
     "maxInput": "400",
@@ -24,6 +27,7 @@
     "hasAiBlog": true
   },
   "STANDARD_6MONTH": {
+    "name": "Standard",
     "period": "6month",
     "words": "300,000",
     "maxInput": "400",
@@ -32,6 +36,7 @@
     "hasAiBlog": true
   },
   "PROFESSINAL_1MONTH": {
+    "name": "Professional",
     "period": "1month",
     "words": "200,000",
     "maxInput": "600",
@@ -40,6 +45,7 @@
     "hasAiBlog": true
   },
   "PROFESSINAL_6MONTH": {
+    "name": "Professional",
     "period": "6month",
     "words": "1,200,000",
     "maxInput": "600",

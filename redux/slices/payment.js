@@ -21,6 +21,30 @@ export const getPriceList = createAsyncThunk(
   }
 );
 
+export const getSubscriptions = createAsyncThunk(
+  "payment/getSubscriptionsFetching",
+  async ({ status }, { rejectWithValue }) => {
+    try {
+      const response = await paymentApi.getSubscriptions({ status });
+      return { data: response.data, status: response.status };
+    } catch (error) {
+      return asyncThunkError(error, rejectWithValue);
+    }
+  }
+);
+
+export const postUpdateSubscriptionPlan = createAsyncThunk(
+  "payment/postUpdateSubscriptionPlanFetching",
+  async ({ data }, { rejectWithValue }) => {
+    try {
+      const response = await paymentApi.postUpdateSubscriptionPlan({ data });
+      return { data: response.data, status: response.status };
+    } catch (error) {
+      return asyncThunkError(error, rejectWithValue);
+    }
+  }
+);
+
 export const postCreateCustomer = createAsyncThunk(
   "payment/postCreateCustomerFetching",
   async (_, { rejectWithValue }) => {
@@ -72,7 +96,7 @@ export const postCreateSubscription = createAsyncThunk(
 const initialState = {
   price: { loading: "idle", items: [...preprice], error: null },
   customer: { loading: "idle", id: null, error: null },
-  subscription: { loading: "idle", error: null },
+  subscription: { loading: "idle", items: [], error: null },
   checkout: { loading: "idle", session: {}, error: null },
   modalpricing: { current: null },
 };
@@ -111,6 +135,51 @@ const payment = createSlice({
         state.price.error = action.payload.data;
       }
     },
+
+    [getSubscriptions.pending]: (state, action) => {
+      if (state.subscription.loading === "idle") {
+        state.subscription.loading = "pending";
+        state.subscription.error = null;
+      }
+    },
+    [getSubscriptions.fulfilled]: (state, action) => {
+      if (state.subscription.loading === "pending") {
+        state.subscription.loading = "idle";
+        state.subscription.items = action.payload.data.subscriptions;
+      }
+    },
+    [getSubscriptions.rejected]: (state, action) => {
+      if (state.subscription.loading === "pending") {
+        state.subscription.loading = "idle";
+        state.subscription.error = action.payload.data;
+      }
+    },
+
+    [postUpdateSubscriptionPlan.pending]: (state, action) => {
+      if (state.subscription.loading === "idle") {
+        state.subscription.loading = "pending";
+        state.subscription.error = null;
+      }
+    },
+    [postUpdateSubscriptionPlan.fulfilled]: (state, action) => {
+      if (state.subscription.loading === "pending") {
+        state.subscription.loading = "idle";
+        const subscription = action.payload.data.subscription;
+        const subsIndex = state.subscription.items.findIndex(
+          (item) => item.id === subscription.id
+        );
+        if (subsIndex >= 0) {
+          state.subscription.items[subsIndex] = subscription;
+        }
+      }
+    },
+    [postUpdateSubscriptionPlan.rejected]: (state, action) => {
+      if (state.subscription.loading === "pending") {
+        state.subscription.loading = "idle";
+        state.subscription.error = action.payload.data;
+      }
+    },
+
     [postCreateCustomer.pending]: (state, action) => {
       if (state.customer.loading === "idle") {
         state.customer.loading = "pending";
