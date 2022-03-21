@@ -1,4 +1,4 @@
-import Script from "next/script";
+// import Script from "next/script";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -83,7 +83,7 @@ const UserLayout = ({
   const redirectPath = useSelector(uiSelector.getRedirectPath);
 
   if (!isAuth && isRehydrated && !isSpecial) {
-    return <Processing color='#000'/>;
+    return <Processing color="#000" />;
   }
 
   return (
@@ -102,7 +102,7 @@ const UserLayout = ({
         {children}
       </Main>
       {!isAuth && <SigninModal />}
-      <Script
+      {/* <Script
         id="chat-us-with-tawk"
         dangerouslySetInnerHTML={{
           __html: `
@@ -117,7 +117,7 @@ const UserLayout = ({
               })();
               `,
         }}
-      ></Script>
+      ></Script> */}
     </Layout>
   );
 };

@@ -1,16 +1,16 @@
 {
-  "title": "Your Personal AI Copywriting Assistant",
-  "titleTemplate": "%s - CopywriterPro.ai",
-  "description": "Your Personal AI Copywriting Assistant",
+  "title": "Your Personal AI Content Writing Assistant",
+  "titleTemplate": "%s - Your Personal AI Content Writing Assistant",
+  "description": "Your Personal AI Content Writing Assistant",
   "openGraph": {
-    "title": "Your Personal AI Copywriting Assistant",
-    "description": "Your Personal AI Copywriting Assistant",
+    "title": "Your Personal AI Content Writing Assistant",
+    "description": "Your Personal AI Content Writing Assistant",
     "type": "website",
     "url": "https://copywriterpro.ai",
     "site_name": "CopywriterPro.ai",
     "images": [
       {
-        "url": "/feature-image.png",
+        "url": "https://copywriterpro.ai/feature-image.png",
         "width": 800,
         "height": 600,
         "alt": "CopywriterPro.ai"
