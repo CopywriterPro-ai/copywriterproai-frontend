@@ -145,7 +145,6 @@ const SinglePriceItem = ({
     subscription,
     subscriberInfo: { isPaidSubscribers },
   } = subscriptionInfo;
-  const { id: customerId } = useSelector(paymentSelector.getCustomer);
   const priceInfo = pricesInfo[pricedata?.metadata?.priceKey];
 
   const handleCheckoutSessions = (priceId) => {
@@ -155,17 +154,17 @@ const SinglePriceItem = ({
     }
 
     if (isAuth && !isCheckoutPending)
-      dispatch(
-        postCreateCheckoutSession({ data: { customerId, priceId } })
-      ).then(async ({ payload }) => {
-        if (payload.status === 200) {
-          const { data } = payload;
-          const stripe = await getStripe();
-          stripe?.redirectToCheckout({
-            sessionId: data.session.id,
-          });
+      dispatch(postCreateCheckoutSession({ data: { priceId } })).then(
+        async ({ payload }) => {
+          if (payload.status === 200) {
+            const { data } = payload;
+            const stripe = await getStripe();
+            stripe?.redirectToCheckout({
+              sessionId: data.session.id,
+            });
+          }
         }
-      });
+      );
   };
 
   return (
@@ -325,9 +324,9 @@ const PricingCard = () => {
     setIsOneMonth(!isOneMonth);
   };
 
-  // useEffect(() => {
-  //   dispatch(getPriceList());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getPriceList());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(setRedirectPath(null));
