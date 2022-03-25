@@ -50,6 +50,11 @@ const content = {
       data,
     });
   },
+  postCustomerPortal: () => {
+    return fetcher("/payments/create-customer-portal-session", {
+      method: "post",
+    });
+  },
 };
 
 export default content;

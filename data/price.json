@@ -35,7 +35,7 @@
     "user": "1",
     "hasAiBlog": true
   },
-  "PROFESSINAL_1MONTH": {
+  "PROFESSIONAL_1MONTH": {
     "name": "Professional",
     "period": "1month",
     "words": "200,000",
@@ -44,7 +44,7 @@
     "user": "5",
     "hasAiBlog": true
   },
-  "PROFESSINAL_6MONTH": {
+  "PROFESSIONAL_6MONTH": {
     "name": "Professional",
     "period": "6month",
     "words": "1,200,000",

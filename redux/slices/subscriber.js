@@ -32,6 +32,18 @@ export const patchGenerateUpdate = createAsyncThunk(
   }
 );
 
+export const postSubscriptionSwitch = createAsyncThunk(
+  "content/postSubscriptionSwitchFetching",
+  async ({ data }, { rejectWithValue }) => {
+    try {
+      const response = await subscriberApi.postSubscriptionSwitch({ data });
+      return { data: response.data, status: response.status };
+    } catch (error) {
+      return asyncThunkError(error, rejectWithValue);
+    }
+  }
+);
+
 const initialState = {
   loading: "idle",
   data: {},
@@ -68,6 +80,25 @@ const subscriber = createSlice({
     [patchGenerateUpdate.fulfilled]: (state, action) => {
       state.loading = "idle";
       state.data = action.payload.data.subscriber;
+    },
+
+    [postSubscriptionSwitch.pending]: (state, action) => {
+      if (state.loading === "idle") {
+        state.loading = "pending";
+        state.error = null;
+      }
+    },
+    [postSubscriptionSwitch.fulfilled]: (state, action) => {
+      if (state.loading === "pending") {
+        state.loading = "idle";
+        state.data = action.payload.data.subscriber;
+      }
+    },
+    [postSubscriptionSwitch.rejected]: (state, action) => {
+      if (state.loading === "pending") {
+        state.loading = "idle";
+        state.error = action.payload.data;
+      }
     },
   },
 });

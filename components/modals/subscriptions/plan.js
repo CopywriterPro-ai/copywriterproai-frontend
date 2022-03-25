@@ -10,6 +10,10 @@ import {
   selectors as paymentSelector,
 } from "@/redux/slices/payment";
 import {
+  postSubscriptionSwitch,
+  selectors as subscriberSelector,
+} from "@/redux/slices/subscriber";
+import {
   selectors as uiSelector,
   setSubscriptionsCancelModal,
 } from "@/redux/slices/ui";
@@ -35,6 +39,11 @@ const SubscriptionsPlanModal = () => {
   const { items: subscriptions, loading } = useSelector(
     paymentSelector.getSubscription
   );
+  const {
+    data: { subscriptionId },
+  } = useSelector(subscriberSelector.getOwnSubscriber);
+
+  console.log(subscriptionId);
 
   const handleCloseModal = () => {
     dispatch(setSubscriptionsCancelModal(false));
@@ -73,6 +82,10 @@ const SubscriptionsPlanModal = () => {
     );
   };
 
+  const handleSetCurrentSubsciption = (subId) => {
+    dispatch(postSubscriptionSwitch({ data: { subscriptionId: subId } }));
+  };
+
   const isSubscriptionLoading = loading === "pending";
 
   return (
@@ -108,21 +121,33 @@ const SubscriptionsPlanModal = () => {
                       .unix(subscription.current_period_end)
                       .format("MMMM D, YYYY")}
                   </div>
-
-                  <StyledCancelSubscriptionBtn
-                    disabled={isSubscriptionLoading}
-                    onClick={() =>
-                      !isSubscriptionLoading &&
-                      handleUpdateSubscriptionPlan(subscription.id, true)
-                    }
-                  >
-                    {isSubscriptionLoading &&
-                    currentSubsId === subscription.id ? (
-                      <span id="loading">Loading...</span>
-                    ) : (
-                      <span id="cancel">Cancel</span>
-                    )}
-                  </StyledCancelSubscriptionBtn>
+                  <div>
+                    <StyledCancelSubscriptionBtn
+                      disabled={isSubscriptionLoading}
+                      onClick={() =>
+                        !isSubscriptionLoading &&
+                        handleUpdateSubscriptionPlan(subscription.id, true)
+                      }
+                    >
+                      {isSubscriptionLoading &&
+                      currentSubsId === subscription.id ? (
+                        <span id="loading">Loading...</span>
+                      ) : (
+                        <span id="cancel">Cancel</span>
+                      )}
+                    </StyledCancelSubscriptionBtn>
+                    <StyledActivingSubscriptionBtn
+                      IsCurrent={subscriptionId === subscription.id}
+                      onClick={() =>
+                        handleSetCurrentSubsciption(
+                          subscription.id,
+                          subscriptionId === subscription.id
+                        )
+                      }
+                    >
+                      Active
+                    </StyledActivingSubscriptionBtn>
+                  </div>
                 </StyledSubscriptionBox>
               </StyledSubscriptionContainerItem>
             ))}
@@ -150,20 +175,33 @@ const SubscriptionsPlanModal = () => {
                       .format("MMMM D, YYYY")}
                   </div>
 
-                  <StyledCancelSubscriptionBtn
-                    disabled={isSubscriptionLoading}
-                    onClick={() =>
-                      !isSubscriptionLoading &&
-                      handleUpdateSubscriptionPlan(subscription.id, false)
-                    }
-                  >
-                    {isSubscriptionLoading &&
-                    currentSubsId === subscription.id ? (
-                      <span id="loading">Loading...</span>
-                    ) : (
-                      <span id="cancel">Reactive</span>
-                    )}
-                  </StyledCancelSubscriptionBtn>
+                  <div>
+                    <StyledCancelSubscriptionBtn
+                      disabled={isSubscriptionLoading}
+                      onClick={() =>
+                        !isSubscriptionLoading &&
+                        handleUpdateSubscriptionPlan(subscription.id, false)
+                      }
+                    >
+                      {isSubscriptionLoading &&
+                      currentSubsId === subscription.id ? (
+                        <span id="loading">Loading...</span>
+                      ) : (
+                        <span id="cancel">Reactive</span>
+                      )}
+                    </StyledCancelSubscriptionBtn>
+                    <StyledActivingSubscriptionBtn
+                      IsCurrent={subscriptionId === subscription.id}
+                      onClick={() =>
+                        handleSetCurrentSubsciption(
+                          subscription.id,
+                          subscriptionId === subscription.id
+                        )
+                      }
+                    >
+                      Active
+                    </StyledActivingSubscriptionBtn>
+                  </div>
                 </StyledSubscriptionBox>
               </StyledSubscriptionContainerItem>
             ))}
@@ -176,6 +214,19 @@ const SubscriptionsPlanModal = () => {
 const StyledContainer = styled.div`
   max-height: 80vh;
   overflow: hidden scroll;
+  max-width: 800px;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+    height: 0;
+    border-radius: 10px;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: inherit;
+  }
 `;
 
 const StyledSubscriptionContainer = styled.div`
@@ -199,6 +250,17 @@ const StyledSubscriptionBox = styled.div`
 `;
 
 const StyledCancelSubscriptionBtn = styled.button`
+  background: transparent;
+  border-radius: 3px;
+  border: 1px solid #3a4841;
+  outline: 0;
+  color: black;
+  margin-right: 8px;
+`;
+
+const StyledActivingSubscriptionBtn = styled.button`
+  cursor: ${({ IsCurrent }) =>
+    IsCurrent.toString() === "true" ? "disable" : "pointer"};
   background: transparent;
   border-radius: 3px;
   border: 1px solid #3a4841;

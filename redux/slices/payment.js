@@ -9,6 +9,18 @@ import { paymentApi } from "@/api";
 import preprice from "@/data/preprice";
 import asyncThunkError from "@/utils/asyncThunkError";
 
+export const postCustomerPortal = createAsyncThunk(
+  "payment/postCustomerPortalFetching",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await paymentApi.postCustomerPortal();
+      return { data: response.data, status: response.status };
+    } catch (error) {
+      return asyncThunkError(error, rejectWithValue);
+    }
+  }
+);
+
 export const getPriceList = createAsyncThunk(
   "payment/getPriceListFetching",
   async (_, { rejectWithValue }) => {
@@ -249,6 +261,24 @@ const payment = createSlice({
       if (state.subscription.loading === "pending") {
         state.subscription.loading = "idle";
         state.subscription.error = action.payload.data;
+      }
+    },
+
+    [postCustomerPortal.pending]: (state, action) => {
+      if (state.customer.loading === "idle") {
+        state.customer.loading = "pending";
+        state.customer.error = null;
+      }
+    },
+    [postCustomerPortal.fulfilled]: (state, action) => {
+      if (state.customer.loading === "pending") {
+        state.customer.loading = "idle";
+      }
+    },
+    [postCustomerPortal.rejected]: (state, action) => {
+      if (state.customer.loading === "pending") {
+        state.customer.loading = "idle";
+        state.customer.error = action.payload.data;
       }
     },
   },
