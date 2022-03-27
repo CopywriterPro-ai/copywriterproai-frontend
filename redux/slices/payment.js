@@ -9,6 +9,18 @@ import { paymentApi } from "@/api";
 import preprice from "@/data/preprice";
 import asyncThunkError from "@/utils/asyncThunkError";
 
+export const postCustomerPortal = createAsyncThunk(
+  "payment/postCustomerPortalFetching",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await paymentApi.postCustomerPortal();
+      return { data: response.data, status: response.status };
+    } catch (error) {
+      return asyncThunkError(error, rejectWithValue);
+    }
+  }
+);
+
 export const getPriceList = createAsyncThunk(
   "payment/getPriceListFetching",
   async (_, { rejectWithValue }) => {
@@ -26,6 +38,18 @@ export const getSubscriptions = createAsyncThunk(
   async ({ status }, { rejectWithValue }) => {
     try {
       const response = await paymentApi.getSubscriptions({ status });
+      return { data: response.data, status: response.status };
+    } catch (error) {
+      return asyncThunkError(error, rejectWithValue);
+    }
+  }
+);
+
+export const getSubscriptionsMe = createAsyncThunk(
+  "payment/getSubscriptionsMeFetching",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await paymentApi.getSubscriptionsMe();
       return { data: response.data, status: response.status };
     } catch (error) {
       return asyncThunkError(error, rejectWithValue);
@@ -94,6 +118,7 @@ export const postCreateSubscription = createAsyncThunk(
 );
 
 const initialState = {
+  payment: { loading: "idle", items: [], error: null },
   price: { loading: "idle", items: [...preprice], error: null },
   customer: { loading: "idle", id: null, error: null },
   subscription: { loading: "idle", items: [], error: null },
@@ -110,6 +135,10 @@ const payment = createSlice({
     },
     setCurrentModalPrice: (state, action) => {
       state.modalpricing.current = action.payload;
+    },
+    setCurrentSubscriptionWords: (state, action) => {
+      // console.log(action.payload);
+      // state.payment.items[1].words = 5;
     },
   },
   extraReducers: {
@@ -152,6 +181,25 @@ const payment = createSlice({
       if (state.subscription.loading === "pending") {
         state.subscription.loading = "idle";
         state.subscription.error = action.payload.data;
+      }
+    },
+
+    [getSubscriptionsMe.pending]: (state, action) => {
+      if (state.payment.loading === "idle") {
+        state.payment.loading = "pending";
+        state.payment.error = null;
+      }
+    },
+    [getSubscriptionsMe.fulfilled]: (state, action) => {
+      if (state.payment.loading === "pending") {
+        state.payment.loading = "idle";
+        state.payment.items = action.payload.data.subscriptions;
+      }
+    },
+    [getSubscriptionsMe.rejected]: (state, action) => {
+      if (state.payment.loading === "pending") {
+        state.payment.loading = "idle";
+        state.payment.error = action.payload.data;
       }
     },
 
@@ -251,10 +299,32 @@ const payment = createSlice({
         state.subscription.error = action.payload.data;
       }
     },
+
+    [postCustomerPortal.pending]: (state, action) => {
+      if (state.customer.loading === "idle") {
+        state.customer.loading = "pending";
+        state.customer.error = null;
+      }
+    },
+    [postCustomerPortal.fulfilled]: (state, action) => {
+      if (state.customer.loading === "pending") {
+        state.customer.loading = "idle";
+      }
+    },
+    [postCustomerPortal.rejected]: (state, action) => {
+      if (state.customer.loading === "pending") {
+        state.customer.loading = "idle";
+        state.customer.error = action.payload.data;
+      }
+    },
   },
 });
 
-export const { resetPaymentState, setCurrentModalPrice } = payment.actions;
+export const {
+  resetPaymentState,
+  setCurrentModalPrice,
+  setCurrentSubscriptionWords,
+} = payment.actions;
 
 export const selectors = {
   getPayment: createSelector(

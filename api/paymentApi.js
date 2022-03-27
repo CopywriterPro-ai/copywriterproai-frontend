@@ -44,10 +44,18 @@ const content = {
   getSubscriptions: ({ status = "all" }) => {
     return fetcher(`/payments/subscriptions?status=${status}`);
   },
+  getSubscriptionsMe: () => {
+    return fetcher(`/payments/subscriptions/me`);
+  },
   postUpdateSubscriptionPlan: ({ data }) => {
     return fetcher("/payments/update-subscription-plan", {
       method: "post",
       data,
+    });
+  },
+  postCustomerPortal: () => {
+    return fetcher("/payments/create-customer-portal-session", {
+      method: "post",
     });
   },
 };

@@ -6,9 +6,13 @@ import styled from "styled-components";
 
 import prices from "@/data/price.json";
 import {
-  postUpdateSubscriptionPlan,
+  setCurrentSubscriptionWords,
   selectors as paymentSelector,
 } from "@/redux/slices/payment";
+import {
+  postSubscriptionSwitch,
+  selectors as subscriberSelector,
+} from "@/redux/slices/subscriber";
 import {
   selectors as uiSelector,
   setSubscriptionsCancelModal,
@@ -25,16 +29,43 @@ const customStyles = {
   },
 };
 
+const SubscriptionSwitchBtn = ({
+  isSubscriptionLoading,
+  selectedSubscription,
+  currentSubscriptionId,
+  subscription,
+  handleSetCurrentSubsciption,
+}) => {
+  const subsId = subscription.id;
+  const isLoading = subsId === selectedSubscription && isSubscriptionLoading;
+  const isCurrent = currentSubscriptionId === subsId;
+
+  return (
+    <StyledActivingSubscriptionBtn
+      IsCurrent={isCurrent.toString()}
+      onClick={() => handleSetCurrentSubsciption(subsId, isCurrent)}
+    >
+      {isCurrent ? "Current" : isLoading ? "Loading" : "Active"}
+    </StyledActivingSubscriptionBtn>
+  );
+};
+
 const SubscriptionsPlanModal = () => {
   const dispatch = useDispatch();
 
-  const [currentSubsId, setCurrentSubsId] = useState(null);
+  const [selectedSubscription, setSelectedSubscription] = useState(null);
   const {
     subscriptions: { cancel },
   } = useSelector(uiSelector.getModal);
-  const { items: subscriptions, loading } = useSelector(
-    paymentSelector.getSubscription
-  );
+  const { items: subscriptions } = useSelector(paymentSelector.getSubscription);
+  const {
+    payment: { items: paymentItems },
+  } = useSelector(paymentSelector.getPayment);
+
+  const {
+    loading,
+    data: { subscriptionId, words: currentWords },
+  } = useSelector(subscriberSelector.getOwnSubscriber);
 
   const handleCloseModal = () => {
     dispatch(setSubscriptionsCancelModal(false));
@@ -45,12 +76,15 @@ const SubscriptionsPlanModal = () => {
       return [];
     } else {
       return subscriptions.map((subscription) => {
+        const { words } = paymentItems.find(
+          (item) => item.subscriptionId === subscription.id
+        );
         const priceKey = subscription.plan.metadata?.priceKey;
         const subscriptionName = prices[priceKey];
-        return { ...subscription, packageName: subscriptionName.name };
+        return { ...subscription, packageName: subscriptionName.name, words };
       });
     }
-  }, [subscriptions]);
+  }, [paymentItems, subscriptions]);
 
   const RecurringSubscriptions = useMemo(() => {
     return formattedSubscriptions.filter(
@@ -64,16 +98,15 @@ const SubscriptionsPlanModal = () => {
     );
   }, [formattedSubscriptions]);
 
-  const handleUpdateSubscriptionPlan = (subId, bool) => {
-    setCurrentSubsId(subId);
-    dispatch(
-      postUpdateSubscriptionPlan({
-        data: { subscriptionId: subId, bool },
-      })
-    );
-  };
-
   const isSubscriptionLoading = loading === "pending";
+
+  const handleSetCurrentSubsciption = (subId, isCurrent) => {
+    if (!isCurrent && !isSubscriptionLoading) {
+      setSelectedSubscription(subId);
+      // dispatch(setCurrentSubscriptionWords({ subId, currentWords }));
+      dispatch(postSubscriptionSwitch({ data: { subscriptionId: subId } }));
+    }
+  };
 
   return (
     <Modal
@@ -96,7 +129,10 @@ const SubscriptionsPlanModal = () => {
                     <strong>{subscription.packageName}</strong>
                   </div>
                   <div>
-                    <strong>Words Left: </strong>3000
+                    <strong>Words Left: </strong>
+                    {subscriptionId === subscription.id
+                      ? currentWords
+                      : subscription.words}
                   </div>
                   <div>
                     <strong>Purchase Date: </strong>{" "}
@@ -108,21 +144,15 @@ const SubscriptionsPlanModal = () => {
                       .unix(subscription.current_period_end)
                       .format("MMMM D, YYYY")}
                   </div>
-
-                  <StyledCancelSubscriptionBtn
-                    disabled={isSubscriptionLoading}
-                    onClick={() =>
-                      !isSubscriptionLoading &&
-                      handleUpdateSubscriptionPlan(subscription.id, true)
-                    }
-                  >
-                    {isSubscriptionLoading &&
-                    currentSubsId === subscription.id ? (
-                      <span id="loading">Loading...</span>
-                    ) : (
-                      <span id="cancel">Cancel</span>
-                    )}
-                  </StyledCancelSubscriptionBtn>
+                  <div>
+                    <SubscriptionSwitchBtn
+                      isSubscriptionLoading={isSubscriptionLoading}
+                      selectedSubscription={selectedSubscription}
+                      subscription={subscription}
+                      currentSubscriptionId={subscriptionId}
+                      handleSetCurrentSubsciption={handleSetCurrentSubsciption}
+                    />
+                  </div>
                 </StyledSubscriptionBox>
               </StyledSubscriptionContainerItem>
             ))}
@@ -137,7 +167,10 @@ const SubscriptionsPlanModal = () => {
                     <strong>{subscription.packageName}</strong>
                   </div>
                   <div>
-                    <strong>Words Left: </strong>3000
+                    <strong>Words Left: </strong>{" "}
+                    {subscriptionId === subscription.id
+                      ? currentWords
+                      : subscription.words}
                   </div>
                   <div>
                     <strong>Purchase Date: </strong>{" "}
@@ -149,21 +182,15 @@ const SubscriptionsPlanModal = () => {
                       .unix(subscription.current_period_end)
                       .format("MMMM D, YYYY")}
                   </div>
-
-                  <StyledCancelSubscriptionBtn
-                    disabled={isSubscriptionLoading}
-                    onClick={() =>
-                      !isSubscriptionLoading &&
-                      handleUpdateSubscriptionPlan(subscription.id, false)
-                    }
-                  >
-                    {isSubscriptionLoading &&
-                    currentSubsId === subscription.id ? (
-                      <span id="loading">Loading...</span>
-                    ) : (
-                      <span id="cancel">Reactive</span>
-                    )}
-                  </StyledCancelSubscriptionBtn>
+                  <div>
+                    <SubscriptionSwitchBtn
+                      isSubscriptionLoading={isSubscriptionLoading}
+                      selectedSubscription={selectedSubscription}
+                      subscription={subscription}
+                      currentSubscriptionId={subscriptionId}
+                      handleSetCurrentSubsciption={handleSetCurrentSubsciption}
+                    />
+                  </div>
                 </StyledSubscriptionBox>
               </StyledSubscriptionContainerItem>
             ))}
@@ -176,6 +203,19 @@ const SubscriptionsPlanModal = () => {
 const StyledContainer = styled.div`
   max-height: 80vh;
   overflow: hidden scroll;
+  max-width: 800px;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+    height: 0;
+    border-radius: 10px;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: inherit;
+  }
 `;
 
 const StyledSubscriptionContainer = styled.div`
@@ -198,7 +238,9 @@ const StyledSubscriptionBox = styled.div`
   padding: 8px;
 `;
 
-const StyledCancelSubscriptionBtn = styled.button`
+const StyledActivingSubscriptionBtn = styled.button`
+  cursor: ${({ IsCurrent }) =>
+    IsCurrent === "true" ? "not-allowed !important" : "pointer !important"};
   background: transparent;
   border-radius: 3px;
   border: 1px solid #3a4841;

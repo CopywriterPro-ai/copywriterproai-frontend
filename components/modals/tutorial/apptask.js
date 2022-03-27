@@ -125,7 +125,8 @@ const StyledBody = styled.div`
     }
   }
 
-  h2, h3 {
+  h2,
+  h3 {
     font-size: 1.5rem;
     font-weight: 400;
     margin: 2rem 0;
@@ -146,7 +147,7 @@ const StyledBody = styled.div`
   }
 
   img {
-    margin-top:3.5rem;
+    margin-top: 3.5rem;
     max-width: 100%;
     max-height: 100%;
     display: block;

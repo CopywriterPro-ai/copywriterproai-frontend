@@ -10,6 +10,12 @@ const subscriber = {
       data,
     });
   },
+  postSubscriptionSwitch: ({ data }) => {
+    return fetcher("/subscriber/sub-switcher", {
+      method: "post",
+      data,
+    });
+  },
 };
 
 export default subscriber;

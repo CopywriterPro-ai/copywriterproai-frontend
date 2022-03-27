@@ -28,8 +28,6 @@ const MainSidebar = () => {
   const [blogDrop, setBlogDrop] = useState(false);
   const { items: subscriptions } = useSelector(paymentSelector.getSubscription);
 
-  console.log("subscriptions", subscriptions);
-
   const handleShowSubscriptionsCancelModal = () => {
     dispatch(setSubscriptionsCancelModal(true));
   };
