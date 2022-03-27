@@ -13,6 +13,7 @@ import { MainSidebar } from "@/components/sidebar";
 import { useResponsive, useUser } from "@/hooks";
 import { selectors as uiSelector } from "@/redux/slices/ui";
 import { getBookmarks, selectors as userSelector } from "@/redux/slices/user";
+import { getSubscriptionsMe } from "@/redux/slices/payment";
 import { selectors as authSelector } from "@/redux/slices/auth";
 import Spinner from "@/components/common/Spinner";
 
@@ -129,6 +130,10 @@ const Bookmarks = () => {
   };
 
   const isPending = loading === "pending";
+
+  useEffect(() => {
+    isRehydrated && dispatch(getSubscriptionsMe());
+  }, [dispatch, isRehydrated]);
 
   return (
     <Layout>

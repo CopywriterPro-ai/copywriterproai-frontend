@@ -106,6 +106,10 @@ const subscriber = createSlice({
 // export const {} = subscriber.reducer;
 
 export const selectors = {
+  getSubscriber: createSelector(
+    (state) => state.subscriber,
+    (subscriber) => subscriber
+  ),
   getOwnSubscriber: createSelector(
     (state) => state.subscriber,
     (subscriber) => {
