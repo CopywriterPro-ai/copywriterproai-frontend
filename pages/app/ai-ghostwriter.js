@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { Collapse } from "reactstrap";
 import { useForm } from "react-hook-form";
+import "@pathofdev/react-tag-input/build/index.css";
+import ReactTagInput from "@pathofdev/react-tag-input";
 
 import { UserLayout as Layout } from "@/layout";
 import EditorJS from "@/components/completeblogeditor";
@@ -45,7 +47,12 @@ import { MainSidebar } from "@/components/sidebar";
 import GenerateButton from "@/components/blog/components/GenerateButton";
 import TipsImg from "@/assets/images/generate-tips.png";
 import { toastMessage } from "@/utils";
-import { AI_COMPLETE_BLOG_WRITER, BLOG_WRITING } from "@/appconstants";
+import {
+  AI_COMPLETE_BLOG_WRITER,
+  BLOG_WRITING,
+  SHORT_BLOG,
+  LONG_BLOG,
+} from "@/appconstants";
 import toolsvalidation from "@/data/toolsvalidation";
 import {
   PARAPHRASING,
@@ -103,6 +110,24 @@ const contentTools = [
   },
 ];
 
+const blogLengthItems = [
+  { name: "Short", key: SHORT_BLOG },
+  { name: "Long", key: LONG_BLOG },
+];
+
+const reactTagValidation = (value) => {
+  const validateValue = value
+    .trim()
+    .split(" ")
+    .filter((item) => Boolean(item));
+  const valueLength = validateValue.length;
+  if (valueLength < 2 || valueLength > 5) {
+    toastMessage.warn("Keyword must be between 2 and 5 words");
+    return;
+  }
+  return validateValue.join(" ");
+};
+
 const CompleteBlogGenerator = () => {
   const dispatch = useDispatch();
   const aboutRef = useRef(null);
@@ -123,6 +148,8 @@ const CompleteBlogGenerator = () => {
   const { range, text: selectedText } = useQuillSelected(quill);
   const [editorCurrentTaskInput, setEditorCurrentTaskInput] = useState({});
   const { isEditorChange } = useQuillValueIsChange(quill);
+  const [tags, setTags] = useState([]);
+  const [blogLength, setBlogLength] = useState(SHORT_BLOG);
 
   const isNewBlog = activeId === "";
 
@@ -135,9 +162,17 @@ const CompleteBlogGenerator = () => {
 
   const handleEditorReset = useCallback(() => {
     quill?.setContents([]);
+    setTags([]);
     dispatch(resetBlogsDraft());
     dispatch(resetCompleteBlog());
   }, [dispatch, quill]);
+
+  useEffect(() => {
+    if (blogLength === SHORT_BLOG) {
+      setTags(tags.slice(0, 2));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blogLength]);
 
   useEffect(() => {
     if (editorCurrentTask) {
@@ -272,13 +307,18 @@ const CompleteBlogGenerator = () => {
         "Blog about length must be max 400 characters long"
       );
     }
+    const editorText = quill && quill.getText();
     dispatch(setCurrentTask(BLOG_WRITING));
     dispatch(
       postBlogContents({
-        task: "blog",
+        task: blogLength,
         data: {
-          task: BLOG_WRITING,
+          task: blogLength,
           about: about.input,
+          headline: headline.input,
+          keywords: tags,
+          ...(blogLength === LONG_BLOG &&
+            editorText.length >= 10 && { contents: editorText }),
         },
       })
     );
@@ -370,6 +410,31 @@ const CompleteBlogGenerator = () => {
                   {/* <Collapse
                     isOpen={!complete.success && about.input.trim().length > 0}
                   > */}
+
+                  {/* </Collapse> */}
+                  <StyledBlogLength>
+                    <strong>Blog Length</strong>
+                    <select
+                      value={blogLength}
+                      onChange={(e) => setBlogLength(e.target.value)}
+                    >
+                      {blogLengthItems.map(({ name, key }) => (
+                        <option key={key} value={key}>
+                          {name}
+                        </option>
+                      ))}
+                    </select>
+                  </StyledBlogLength>
+                  <StyledKeyword>
+                    <strong>Keywords</strong>
+                    <ReactTagInput
+                      tags={tags}
+                      maxTags={blogLength === "short-blog" ? 2 : 3}
+                      onChange={(newTags) => setTags(newTags)}
+                      placeholder="Press enter to add keyword"
+                      validator={reactTagValidation}
+                    />
+                  </StyledKeyword>
                   <GenerateButton
                     loading={
                       loading === "pending" && currenttask === BLOG_WRITING
@@ -382,9 +447,12 @@ const CompleteBlogGenerator = () => {
                         : null
                     }
                   >
-                    {complete.success ? "Reset Blog" : "Generate Blog"}
+                    {complete.success
+                      ? "Reset Blog"
+                      : quill?.getText().length >= 10
+                      ? "Generate More"
+                      : "Generate Blog"}
                   </GenerateButton>
-                  {/* </Collapse> */}
                 </ToolsHeader>
 
                 <ToolsBody>
@@ -544,7 +612,7 @@ const CompleteBlogGenerator = () => {
         </BlogContainer>
       )}
       {subscriber?.usage && <SubscriberModal />}
-      <BlogData textData={quillCounter}/>
+      <BlogData textData={quillCounter} />
     </Layout>
   );
 };
@@ -726,6 +794,28 @@ const ToolBottom = styled(ToolControll)`
 
   button:first-child {
     margin-right: 15px;
+  }
+`;
+
+const StyledKeyword = styled.div`
+  .react-tag-input {
+    margin-top: 8px;
+    border: 1px solid #878787;
+  }
+  margin: 10px 0;
+  strong {
+    margin-bottom: 10px;
+  }
+`;
+
+const StyledBlogLength = styled.div`
+  margin: 10px 0;
+  select {
+    width: 100%;
+    margin-top: 8px;
+    outline: none;
+    height: 2.2rem;
+    padding: 0 5px;
   }
 `;
 

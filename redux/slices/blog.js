@@ -13,6 +13,7 @@ import {
   BLOG_OUTLINE,
   BLOG_TOPIC,
   BLOG_OUTRO,
+  BLOG_FROM_OUTLINE,
 } from "@/appconstants";
 import { asyncThunkError, pick } from "@/utils";
 
@@ -48,6 +49,7 @@ const tasksArr = {
   [BLOG_IDEA]: "idea",
   [BLOG_OUTRO]: "outro",
   [BLOG_TOPIC]: "topic",
+  [BLOG_FROM_OUTLINE]: "outlineblog",
 };
 
 const initialState = {
@@ -72,6 +74,12 @@ const initialState = {
     error: null,
   },
   outline: {
+    loading: "idle",
+    item: "",
+    items: [],
+    error: null,
+  },
+  outlineblog: {
     loading: "idle",
     item: "",
     items: [],
@@ -143,6 +151,10 @@ const blog = createSlice({
       const payload = pick(action.payload, ["item", "items"]);
       state.outline = { ...state.outline, ...payload };
     },
+    setOutlineBlog: (state, action) => {
+      const payload = pick(action.payload, ["item", "items"]);
+      state.outlineblog = { ...state.outline, ...payload };
+    },
     setIdea: (state, action) => {
       const payload = pick(action.payload, ["item", "items"]);
       state.idea = { ...state.idea, ...payload };
@@ -184,9 +196,13 @@ const blog = createSlice({
     [postWriteAlongContents.fulfilled]: (state, action) => {
       const task = tasksArr[action.meta?.arg?.task];
       if (state[task].loading === "pending" && task) {
-        const generatedTexts = action.payload.data?.generatedTexts;
         state[task].loading = "idle";
-        state[task].items = generatedTexts;
+        const generatedTexts = action.payload.data?.generatedTexts;
+        if (Array.isArray(generatedTexts)) {
+          state[task].items = generatedTexts;
+        } else {
+          state[task].item = generatedTexts;
+        }
       }
     },
     [postWriteAlongContents.rejected]: (state, action) => {

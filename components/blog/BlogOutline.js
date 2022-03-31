@@ -1,53 +1,67 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Collapse } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 
 import {
-  postBlogContents,
-  setStateBlogOutline,
-  selectors as blogSelector,
+  postWriteAlongContents,
+  writeAlongActions,
+  selectors as writeAlongSelector,
 } from "@/redux/slices/blog";
 import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
 import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem, ToolAction, ToolInput } from "./styles";
-import { BLOG_OUTLINE } from "@/appconstants";
+import { BLOG_OUTLINE, BLOG_FROM_OUTLINE } from "@/appconstants";
 import { toastMessage } from "@/utils";
-import { useUser, useSubscriberModal } from "@/hooks";
+import {
+  useUser,
+  useSubscriberModal,
+  useQuillConentTypingInsert,
+} from "@/hooks";
 import GenerateButton from "./components/GenerateButton";
 
 const BlogOutline = ({ aboutRef, quillRef }) => {
   const dispatch = useDispatch();
   const [number, setNumber] = useState(5);
   const [suggestionNum, setSuggestionNum] = useState(1);
+  const [currentOutlineIndex, setCurrentOutlineIndex] = useState(null);
 
-  const { isCurrentTask, items, loading } = useSelector(
-    blogSelector.getBlogItem(BLOG_OUTLINE)
+  const { outline, about, headline, intro, outlineblog } = useSelector(
+    writeAlongSelector.getWriteAlong
   );
-  const { about, title } = useSelector(blogSelector.getBlogContent);
+  const { isCurrentTask } = useSelector(
+    writeAlongSelector.getContentItem(BLOG_OUTLINE)
+  );
   const { isAuth } = useUser();
   const showSubscriberModal = useSubscriberModal();
-  const validAbout = about.trim().length > 0;
+  const isTyping = useQuillConentTypingInsert(quillRef, outlineblog.item);
 
   const handleSubscriberModalOpen = (message) => {
     dispatch(setSubscriberUsageModal({ usage: true, message }));
   };
 
+  useEffect(() => {
+    if (!isTyping) {
+      dispatch(writeAlongActions.setOutlineBlog({ item: "" }));
+    }
+  }, [dispatch, isTyping]);
+
   const handleBlogOutline = () => {
-    if (validAbout) {
+    if (about.item.trim().length && headline.item.trim().length) {
       if (isAuth) {
         if (showSubscriberModal) {
           return handleSubscriberModalOpen();
         }
 
         dispatch(
-          postBlogContents({
+          postWriteAlongContents({
             task: BLOG_OUTLINE,
             data: {
               task: BLOG_OUTLINE,
-              headline: title,
+              headline: headline.item,
               numberOfPoints: number,
               numberOfSuggestions: suggestionNum,
-              about,
+              about: about.item,
             },
           })
         );
@@ -62,22 +76,28 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
     }
   };
 
-  const handleSelectBlogOutline = (item) => {
-    dispatch(setStateBlogOutline(item));
-    item = item
-      .split("\n")
-      .map((text) => text + "\n")
-      .join("\n");
-    const quillLastIndex = quillRef.getLength();
-    quillRef.insertText(quillLastIndex - 2, `\n\n${item}`, "bold", true);
+  const handleWriteMore = (outline, index) => {
+    setCurrentOutlineIndex(index);
+    dispatch(
+      postWriteAlongContents({
+        task: BLOG_FROM_OUTLINE,
+        data: {
+          task: BLOG_FROM_OUTLINE,
+          headline: headline.item,
+          intro: intro.item,
+          outline,
+        },
+      })
+    );
   };
+
+  const isLoading = outlineblog.loading === "pending";
 
   return (
     <ToolItem>
       <ToolTitleItem
         text="Blog Outline"
         isActive={isCurrentTask}
-        isOutline={true}
         currentTask={BLOG_OUTLINE}
       />
       <Collapse isOpen={isCurrentTask}>
@@ -102,19 +122,28 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
               value={suggestionNum}
             />
           </ToolInput>
-          <GenerateButton loading={loading} onClick={handleBlogOutline} />
-          {items.map((item, index) => {
+          <GenerateButton
+            onClick={handleBlogOutline}
+            loading={outline.loading === "pending"}
+          />
+          {outline.items.map((item, index) => {
             const texts = item.trim()?.split("\n");
+            const clickedIndex = currentOutlineIndex === index;
             return (
-              <TextItem
-                onClick={() => handleSelectBlogOutline(item)}
-                key={index}
-              >
+              <TextItem key={index} style={{ cursor: "default" }}>
                 <ol>
                   {texts.map((text, index) => (
                     <li key={index}>{text}</li>
                   ))}
                 </ol>
+                <div style={{ textAlign: "center" }}>
+                  <StyledWriteMore
+                    style={isLoading ? { cursor: "not-allowed" } : {}}
+                    onClick={() => !isLoading && handleWriteMore(texts, index)}
+                  >
+                    {isLoading && clickedIndex ? "Creating..." : "Write more"}
+                  </StyledWriteMore>
+                </div>
               </TextItem>
             );
           })}
@@ -123,5 +152,15 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
     </ToolItem>
   );
 };
+
+const StyledWriteMore = styled.button`
+  background-color: white;
+  border: 1.5px solid #3a4841;
+  padding: 2px 10px;
+  border-radius: 3px;
+  font-size: 15px;
+  line-height: 22px;
+  user-select: none;
+`;
 
 export default BlogOutline;

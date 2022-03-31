@@ -16,15 +16,13 @@ const useQuillConentTypingInsert = (
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const { length } = range;
-    const contentLength = quill?.getLength();
-
-    if (isContentUpdate || length > 0) {
+    if (isContentUpdate || range.length > 0) {
       setLastIndex(lIndex);
     } else {
-      setLastIndex(contentLength);
+      const lastIndex = quill?.getLength();
+      setLastIndex(lastIndex);
     }
-  }, [isContentUpdate, lIndex, quill, range]);
+  }, [isContentUpdate, lIndex, quill, range, item]);
 
   useEffect(() => {
     if (item.length > 0) {

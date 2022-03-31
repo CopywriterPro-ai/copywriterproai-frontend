@@ -7,7 +7,13 @@ import { HYDRATE } from "next-redux-wrapper";
 
 import { pick, asyncThunkError } from "@/utils";
 import { contentApi, blogApi } from "@/api";
-import { BLOG_HEADLINE, BLOG_WRITING, BLOG_TOPIC } from "@/appconstants";
+import {
+  BLOG_HEADLINE,
+  BLOG_WRITING,
+  BLOG_TOPIC,
+  LONG_BLOG,
+  SHORT_BLOG,
+} from "@/appconstants";
 
 export const postBlogContents = createAsyncThunk(
   "completeBlog/postCompleteBlogContentsFetching",
@@ -178,6 +184,14 @@ const completeBlog = createSlice({
             state.complete.items = generatedBlog;
             state.headline.input = headline;
             state.complete.success = true;
+            break;
+          case LONG_BLOG:
+            state.complete.items = generatedTexts[0];
+            break;
+          case SHORT_BLOG:
+            state.complete.items = generatedTexts[0];
+            state.complete.success = true;
+            break;
           default:
             state.error = action.payload.data;
             break;
