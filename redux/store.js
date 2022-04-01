@@ -9,6 +9,7 @@ import {
 import reducer from "@/redux/reducers";
 import authMiddleware from "@/redux/middleware/auth";
 import generateUpdateMiddleware from "@/redux/middleware/generateUpdate";
+import accessTaskMiddleware from "@/redux/middleware/accessTask";
 import {
   isServer,
   stateSyncPredicate,
@@ -22,6 +23,7 @@ const middleware = (getDefaultMiddleware) => {
     }),
     authMiddleware,
     generateUpdateMiddleware,
+    accessTaskMiddleware,
   ];
   if (!isServer) {
     items.push(
