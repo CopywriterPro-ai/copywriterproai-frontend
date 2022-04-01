@@ -15,6 +15,9 @@ export const BLOG_WRITING = "blog-writing";
 export const POINT_OF_VIEW = "point-of-view";
 export const ACTIVE_PASSIVE = "active-passive";
 export const ABSTRACT = "abstract";
+export const SHORT_BLOG = "short-blog";
+export const LONG_BLOG = "long-blog";
+export const BLOG_FROM_OUTLINE = "blog-from-outline";
 
 export const DELETE = "delete";
 export const UPDATE = "update";

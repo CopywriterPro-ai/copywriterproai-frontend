@@ -3,8 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { Collapse } from "reactstrap";
 import { useForm } from "react-hook-form";
+// import "@pathofdev/react-tag-input/build/index.css";
+// import ReactTagInput from "@pathofdev/react-tag-input";
 
-import { BlogHeadline, BlogIntro, BlogOutro, BlogData } from "@/components/blog";
+import {
+  BlogHeadline,
+  BlogIntro,
+  BlogOutro,
+  BlogOutline,
+  BlogData,
+} from "@/components/blog";
 import EditorJS from "@/components/editor";
 import CustomToolbar from "@/components/editor/CustomToolbar";
 import { BlogResetModal } from "@/components/modals/blogs";
@@ -119,6 +127,7 @@ const BlogGenerator = () => {
   const { isEditorChange } = useQuillValueIsChange(quill);
   const { range, text: selectedText } = useQuillSelected(quill);
   const [editorCurrentTaskInput, setEditorCurrentTaskInput] = useState({});
+  // const [tags, setTags] = useState([]);
 
   useBeforeunload((event) => {
     if (isEditorChange) {
@@ -317,8 +326,8 @@ const BlogGenerator = () => {
             <EditorJS setQuillEditor={setQuill} />
           </EditorSection>
           <ToolsSection>
-            <Collapse isOpen={!isOpenEditorField}>
-              <ScollingTool>
+            <ScollingTool>
+              <Collapse isOpen={!isOpenEditorField}>
                 <ToolsHeader>
                   <Tips>
                     <TipsIcon src={TipsImg.src} alt="tips" />
@@ -334,6 +343,32 @@ const BlogGenerator = () => {
                     value={about.item}
                     rows="4"
                   ></textarea>
+                  {/* <StyledBlogLength>
+                    <strong>Blog Length</strong>
+                    <select>
+                      <option>Short</option>
+                      <option>Long</option>
+                    </select>
+                  </StyledBlogLength>
+                  <StyledKeyword>
+                    <strong>Keywords</strong>
+                    <ReactTagInput
+                      tags={tags}
+                      maxTags={3}
+                      onChange={(newTags) => setTags(newTags)}
+                      validator={(value) => {
+                        const validateValue = value
+                          .trim()
+                          .split(" ")
+                          .filter((item) => Boolean(item));
+                        if (validateValue.length > 3) {
+                          toastMessage.warn("Type max 3 words");
+                          return;
+                        }
+                        return validateValue.join(" ");
+                      }}
+                    />
+                  </StyledKeyword> */}
                 </ToolsHeader>
                 <ToolsBody>
                   <BlogHeadline aboutRef={aboutRef} />
@@ -342,7 +377,7 @@ const BlogGenerator = () => {
                     aboutRef={aboutRef}
                     quillRef={quill}
                   />
-                  {/* <BlogOutline aboutRef={aboutRef} quillRef={quill} /> */}
+                  <BlogOutline aboutRef={aboutRef} quillRef={quill} />
                   <BlogOutro
                     titleRef={titleRef}
                     aboutRef={aboutRef}
@@ -354,10 +389,8 @@ const BlogGenerator = () => {
                   <button onClick={handleResetBlog}>Reset</button>
                   <button onClick={handleSaveOrUpdate}>Save</button>
                 </ToolBottom>
-              </ScollingTool>
-            </Collapse>
-            <Collapse isOpen={isOpenEditorField}>
-              <ScollingTool>
+              </Collapse>
+              <Collapse isOpen={isOpenEditorField}>
                 <ToolsHeader>
                   <strong>Selected Text</strong>
                   <br />
@@ -494,14 +527,14 @@ const BlogGenerator = () => {
                     </div>
                   )}
                 </ToolsBody>
-              </ScollingTool>
-            </Collapse>
+              </Collapse>
+            </ScollingTool>
           </ToolsSection>
           <BlogResetModal quill={quill} id={AI_BLOG_WRITER} />
         </BlogContainer>
       )}
       {subscriber?.usage && <SubscriberModal />}
-      <BlogData textData={quillCounter}/>
+      <BlogData textData={quillCounter} />
     </Layout>
   );
 };
@@ -509,7 +542,6 @@ const BlogGenerator = () => {
 const BlogContainer = styled.div`
   display: flex;
   min-height: 100vh;
-  // padding: 0 15px;
 
   @media (max-width: 768px) {
     padding: 0;
@@ -538,9 +570,9 @@ const ToolsSection = styled.div`
 `;
 
 const ScollingTool = styled.div`
-  position: sticky;
-  max-height: 100vh;
-  overflow-y: scroll;
+  /* position: fixed;
+  height: 100vh;
+  overflow-y: scroll; */
 
   &::-webkit-scrollbar {
     width: 0;
@@ -688,6 +720,28 @@ const StyledEditorSelectorOptions = styled.div`
     outline: 0;
     width: 100%;
     padding: 2px 4px;
+  }
+`;
+
+const StyledKeyword = styled.div`
+  .react-tag-input {
+    margin-top: 8px;
+    border: 1px solid #878787;
+  }
+  margin: 10px 0;
+  strong {
+    margin-bottom: 10px;
+  }
+`;
+
+const StyledBlogLength = styled.div`
+  margin: 10px 0;
+  select {
+    width: 100%;
+    margin-top: 8px;
+    outline: none;
+    height: 2.2rem;
+    padding: 0 5px;
   }
 `;
 

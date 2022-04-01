@@ -9,6 +9,7 @@ import externalLink from "@/data/externallink.json";
 import { postUserLogout } from "@/redux/slices/auth";
 import {
   getSubscriptions,
+  postCustomerPortal,
   selectors as paymentSelector,
 } from "@/redux/slices/payment";
 import { setSubscriptionsCancelModal } from "@/redux/slices/ui";
@@ -26,6 +27,8 @@ const MainSidebar = () => {
     refreshToken: { token },
   } = authToken;
   const [blogDrop, setBlogDrop] = useState(false);
+  const [redirectURL, setRedirectURL] = useState(null);
+  const [loadingManageSubs, setLoadingManageSubs] = useState(false);
   const { items: subscriptions } = useSelector(paymentSelector.getSubscription);
 
   const handleShowSubscriptionsCancelModal = () => {
@@ -45,6 +48,18 @@ const MainSidebar = () => {
   useEffect(() => {
     isRehydrated && isAuth && dispatch(getSubscriptions({ status: "active" }));
   }, [dispatch, isAuth, isRehydrated]);
+
+  useEffect(() => {
+    if (redirectURL) window.location.href = redirectURL;
+  }, [redirectURL]);
+
+  const handleCreateCustomerPortal = () => {
+    setLoadingManageSubs(true);
+    !loadingManageSubs &&
+      dispatch(postCustomerPortal()).then(({ payload }) =>
+        setRedirectURL(payload.data)
+      );
+  };
 
   return (
     <Sidebar className="col-md-3">
@@ -94,7 +109,11 @@ const MainSidebar = () => {
                 {subscriptions.length > 0 && (
                   <div>
                     <button onClick={handleShowSubscriptionsCancelModal}>
-                      Subscriptions
+                      Switch Subscriptions
+                    </button>
+                    <br />
+                    <button onClick={handleCreateCustomerPortal}>
+                      {loadingManageSubs ? "Loading..." : "Manage Subscription"}
                     </button>
                   </div>
                 )}

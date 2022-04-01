@@ -74,7 +74,8 @@ const BlogOutro = ({ titleRef, aboutRef, quillRef }) => {
   };
 
   const handleSelectItem = (item) => {
-    quillRef.setText(item);
+    const lastIndex = quillRef.getLength();
+    quillRef.insertText(lastIndex, item);
     dispatch(writeAlongActions.setOutro({ item }));
     dispatch(writeAlongActions.setCurrentTask(BLOG_HEADLINE));
   };

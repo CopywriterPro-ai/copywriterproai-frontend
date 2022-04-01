@@ -10,7 +10,7 @@ import {
 import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
 import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem } from "./styles";
-import { BLOG_INTRO, BLOG_OUTRO } from "@/appconstants";
+import { BLOG_INTRO, BLOG_OUTLINE } from "@/appconstants";
 import { toastMessage } from "@/utils";
 import { useUser, useSubscriberModal } from "@/hooks";
 import { ToolAction, ToolInput } from "./styles";
@@ -82,9 +82,10 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
   };
 
   const handleSelectItem = (item) => {
-    quillRef.setText(item);
+    const lastIndex = quillRef.getLength();
+    quillRef.insertText(lastIndex, item);
     dispatch(writeAlongActions.setIntro({ item }));
-    dispatch(writeAlongActions.setCurrentTask(BLOG_OUTRO));
+    dispatch(writeAlongActions.setCurrentTask(BLOG_OUTLINE));
   };
 
   return (
