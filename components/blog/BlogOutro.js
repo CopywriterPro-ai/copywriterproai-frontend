@@ -12,7 +12,7 @@ import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem } from "./styles";
 import { BLOG_OUTRO, BLOG_HEADLINE } from "@/appconstants";
 import { toastMessage } from "@/utils";
-import { useUser, useSubscriberModal } from "@/hooks";
+import { useUser, useSubscriberModal, useToolAccess } from "@/hooks";
 import { ToolAction, ToolInput } from "./styles";
 import GenerateButton from "./components/GenerateButton";
 
@@ -32,6 +32,7 @@ const BlogOutro = ({ titleRef, aboutRef, quillRef }) => {
   const validHeadline =
     trimedHeadline.length >= 10 && trimedHeadline.length <= 150;
   const validAbout = trimedAbout.length >= 10 && trimedAbout.length <= 200;
+  const [accessBlogOutro] = useToolAccess([BLOG_OUTRO]);
 
   const handleSubscriberModalOpen = (message) => {
     dispatch(setSubscriberUsageModal({ usage: true, message }));
@@ -39,7 +40,7 @@ const BlogOutro = ({ titleRef, aboutRef, quillRef }) => {
 
   const handleBlogOutro = () => {
     if (validHeadline && validAbout) {
-      if (isAuth) {
+      if (isAuth && accessBlogOutro) {
         if (showSubscriberModal) {
           return handleSubscriberModalOpen();
         }

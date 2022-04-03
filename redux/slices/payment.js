@@ -357,7 +357,10 @@ export const selectors = {
   ),
   getSubscription: createSelector(
     (state) => state.payment.subscription,
-    (subscription) => subscription
+    (subscription) => {
+      const items = Array.isArray(subscription.items) ? subscription.items : [];
+      return { ...subscription, items };
+    }
   ),
   getCheckout: createSelector(
     (state) => state.payment.checkout,

@@ -12,7 +12,7 @@ import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem } from "./styles";
 import { BLOG_INTRO, BLOG_OUTLINE } from "@/appconstants";
 import { toastMessage } from "@/utils";
-import { useUser, useSubscriberModal } from "@/hooks";
+import { useUser, useSubscriberModal, useToolAccess } from "@/hooks";
 import { ToolAction, ToolInput } from "./styles";
 import GenerateButton from "./components/GenerateButton";
 
@@ -33,13 +33,15 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
     trimedHeadline.length >= 10 && trimedHeadline.length <= 150;
   const validAbout = trimedAbout.length >= 10 && trimedAbout.length <= 200;
 
+  const [accessBlogIntro] = useToolAccess([BLOG_INTRO]);
+
   const handleSubscriberModalOpen = (message) => {
     dispatch(setSubscriberUsageModal({ usage: true, message }));
   };
 
   const handleBlogIntro = () => {
     if (validHeadline && validAbout) {
-      if (isAuth) {
+      if (isAuth && accessBlogIntro) {
         if (showSubscriberModal) {
           return handleSubscriberModalOpen();
         }

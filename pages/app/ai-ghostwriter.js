@@ -40,6 +40,7 @@ import {
   useQuillSelected,
   useUser,
   useSidebar,
+  useToolAccess,
 } from "@/hooks";
 import { SubscriberModal } from "@/components/modals/subscriber";
 import { BlogResetModal } from "@/components/modals/blogs";
@@ -150,6 +151,8 @@ const CompleteBlogGenerator = () => {
   const { isEditorChange } = useQuillValueIsChange(quill);
   const [tags, setTags] = useState([]);
   const [blogLength, setBlogLength] = useState(SHORT_BLOG);
+  const [accessBlog] = useToolAccess([blogLength]);
+  const [accessEditorTool] = useToolAccess([editorCurrentTaskInput.task]);
 
   const isNewBlog = activeId === "";
 
@@ -297,31 +300,35 @@ const CompleteBlogGenerator = () => {
   };
 
   const handleGenerateCompleteBlog = () => {
-    if (about.input.length < 10) {
-      return toastMessage.warn(
-        "Blog about length must be at least 10 characters long"
-      );
-    }
-    if (about.input.length > 400) {
-      return toastMessage.warn(
-        "Blog about length must be max 400 characters long"
-      );
-    }
-    const editorText = quill && quill.getText();
-    dispatch(setCurrentTask(BLOG_WRITING));
-    dispatch(
-      postBlogContents({
-        task: blogLength,
-        data: {
+    if (accessBlog) {
+      if (about.input.length < 10) {
+        return toastMessage.warn(
+          "Blog about length must be at least 10 characters long"
+        );
+      }
+      if (about.input.length > 400) {
+        return toastMessage.warn(
+          "Blog about length must be max 400 characters long"
+        );
+      }
+      const editorText = quill && quill.getText();
+      dispatch(setCurrentTask(BLOG_WRITING));
+      dispatch(
+        postBlogContents({
           task: blogLength,
-          about: about.input,
-          headline: headline.input,
-          keywords: tags,
-          ...(blogLength === LONG_BLOG &&
-            editorText.length >= 10 && { contents: editorText }),
-        },
-      })
-    );
+          data: {
+            task: blogLength,
+            about: about.input,
+            headline: headline.input,
+            keywords: tags,
+            ...(blogLength === LONG_BLOG &&
+              editorText.length >= 10 && { contents: editorText }),
+          },
+        })
+      );
+    } else {
+      dispatch(setSigninModal(true));
+    }
   };
 
   const handleSelectedContentItem = (item) => {
@@ -347,28 +354,33 @@ const CompleteBlogGenerator = () => {
   }, [editorCurrentTaskInput.userText, selectedText?.length]);
 
   const onFieldFormSubmit = (values) => {
-    const task = editorCurrentTaskInput.task;
+    if (accessEditorTool) {
+      const task = editorCurrentTaskInput.task;
 
-    let datas = {
-      task,
-      userText: selectedText,
-      ...values,
-    };
-
-    if (task === BLOG_TOPIC) {
-      if (about.input.length === 0) {
-        return toastMessage.warn("Blog about required");
-      } else if (headline.input.length === 0) {
-        return toastMessage.warn("Blog headline required");
-      }
-      datas = {
-        ...datas,
-        about: about.input,
-        headline: headline.input,
+      let datas = {
+        task,
+        userText: selectedText,
+        ...values,
       };
-    }
 
-    isOk && dispatch(postEditorToolsContent({ data: datas, task: datas.task }));
+      if (task === BLOG_TOPIC) {
+        if (about.input.length === 0) {
+          return toastMessage.warn("Blog about required");
+        } else if (headline.input.length === 0) {
+          return toastMessage.warn("Blog headline required");
+        }
+        datas = {
+          ...datas,
+          about: about.input,
+          headline: headline.input,
+        };
+      }
+
+      isOk &&
+        dispatch(postEditorToolsContent({ data: datas, task: datas.task }));
+    } else {
+      dispatch(setSigninModal(true));
+    }
   };
 
   return (
