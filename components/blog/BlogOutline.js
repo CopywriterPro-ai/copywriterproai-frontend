@@ -17,6 +17,7 @@ import {
   useUser,
   useSubscriberModal,
   useQuillConentTypingInsert,
+  useToolAccess,
 } from "@/hooks";
 import GenerateButton from "./components/GenerateButton";
 
@@ -35,6 +36,7 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
   const { isAuth } = useUser();
   const showSubscriberModal = useSubscriberModal();
   const isTyping = useQuillConentTypingInsert(quillRef, outlineblog.item);
+  const [accessBlogOutline] = useToolAccess([BLOG_OUTLINE]);
 
   const handleSubscriberModalOpen = (message) => {
     dispatch(setSubscriberUsageModal({ usage: true, message }));
@@ -48,7 +50,7 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
 
   const handleBlogOutline = () => {
     if (about.item.trim().length && headline.item.trim().length) {
-      if (isAuth) {
+      if (isAuth && accessBlogOutline) {
         if (showSubscriberModal) {
           return handleSubscriberModalOpen();
         }

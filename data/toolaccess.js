@@ -2,7 +2,7 @@ import * as tasks from "@/appconstants/task";
 
 const taskArr = Object.values(tasks);
 
-const excludefreemium = ["paraphrasing", "expander"];
+const excludefreemium = ["paraphrasing", "expander", "blog-topic"];
 const excludebasic = ["paraphrasing", "active-passive"];
 const excludestandard = [];
 const excludeprofessional = ["paraphrasing"];

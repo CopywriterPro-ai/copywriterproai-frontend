@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 
 import useUser from "./useUser";
+// import useDeepCompareEffect from "./useDeepCompareEffect";
 import toolaccess from "@/data/toolaccess";
 
 const useToolAccess = (taskArr = [], unknownGrand = true) => {
@@ -15,19 +16,25 @@ const useToolAccess = (taskArr = [], unknownGrand = true) => {
     return { userPackage, packageAccess };
   }, [subscription]);
 
+  const taskState = useMemo(() => {
+    return taskArr.filter((task) => Boolean(task));
+  }, [taskArr]);
+
   useEffect(() => {
-    const freemiumEligible =
-      userAccess.userPackage === "freemium" && freeTrial?.eligible;
-    if (!isRehydrated || !isAuth) {
-      taskArr.map(() => setHasAccess((access) => [...access, false]));
-    } else if (subscriberInfo.isPaidSubscribers || freemiumEligible) {
-      taskArr.map((task) => {
-        const unknownTask = unknownGrand && !toolaccess._all.includes(task);
-        const grant = unknownTask || userAccess.packageAccess.includes(task);
-        setHasAccess((access) => [...access, grant]);
-      });
-    } else {
-      taskArr.map(() => setHasAccess((access) => [...access, false]));
+    if (taskState.length) {
+      const freemiumEligible =
+        userAccess.userPackage === "freemium" && freeTrial?.eligible;
+      if (!isRehydrated || !isAuth) {
+        taskState.map(() => setHasAccess((access) => [...access, false]));
+      } else if (subscriberInfo.isPaidSubscribers || freemiumEligible) {
+        taskState.map((task) => {
+          const unknownTask = unknownGrand && !toolaccess._all.includes(task);
+          const grant = unknownTask || userAccess.packageAccess.includes(task);
+          setHasAccess((access) => [...access, grant]);
+        });
+      } else {
+        taskState.map(() => setHasAccess((access) => [...access, false]));
+      }
     }
     return () => {
       setHasAccess([]);
@@ -39,6 +46,7 @@ const useToolAccess = (taskArr = [], unknownGrand = true) => {
     isRehydrated,
     subscriberInfo.isPaidSubscribers,
     userAccess,
+    // taskState,
   ]);
 
   return hasAccess;
