@@ -126,6 +126,10 @@ const initialState = {
   modalpricing: { current: null },
 };
 
+const validArray = (arr) => {
+  return Array.isArray(arr) ? arr : [];
+};
+
 const payment = createSlice({
   name: "payment",
   initialState,
@@ -329,7 +333,17 @@ export const {
 export const selectors = {
   getPayment: createSelector(
     (state) => state.payment,
-    (data) => data
+    (data) => {
+      return {
+        ...data,
+        payment: { ...data.payment, items: validArray(data.payment.items) },
+        subscription: {
+          ...data.subscription,
+          items: validArray(data.subscription.items),
+        },
+        price: { ...data.price, items: validArray(data.price.items) },
+      };
+    }
   ),
   getPriceList: (interval_count = 1) =>
     createSelector(
@@ -358,7 +372,7 @@ export const selectors = {
   getSubscription: createSelector(
     (state) => state.payment.subscription,
     (subscription) => {
-      const items = Array.isArray(subscription.items) ? subscription.items : [];
+      const items = validArray(subscription.items);
       return { ...subscription, items };
     }
   ),
