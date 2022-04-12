@@ -108,13 +108,12 @@ const MainSidebar = () => {
                 <p>Plan</p>
                 {subscriptions.length > 0 && (
                   <div>
-                    <button onClick={handleShowSubscriptionsCancelModal}>
+                    <StyledPlanBtn onClick={handleShowSubscriptionsCancelModal}>
                       Switch Subscriptions
-                    </button>
-                    <br />
-                    <button onClick={handleCreateCustomerPortal}>
+                    </StyledPlanBtn>
+                    <StyledPlanBtn onClick={handleCreateCustomerPortal}>
                       {loadingManageSubs ? "Loading..." : "Manage Subscription"}
-                    </button>
+                    </StyledPlanBtn>
                   </div>
                 )}
               </div>
@@ -302,6 +301,17 @@ const Community = styled(SidebarSection)`
       }
     }
   }
+`;
+
+const StyledPlanBtn = styled.button`
+  display: block;
+  margin: 5px 0;
+  background-color: white;
+  border: 1.5px solid #3a4841;
+  padding: 3px 10px;
+  border-radius: 3px;
+  line-height: 22px;
+  justify-content: center;
 `;
 
 export default MainSidebar;

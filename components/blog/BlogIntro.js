@@ -1,20 +1,34 @@
 import { useState } from "react";
 import { Collapse } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
+import * as yup from "yup";
 
 import {
   postWriteAlongContents,
   writeAlongActions,
   selectors as writeAlongSelector,
 } from "@/redux/slices/blog";
-import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
+import { setAccessTask } from "@/redux/slices/ui";
 import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem } from "./styles";
 import { BLOG_INTRO, BLOG_OUTLINE } from "@/appconstants";
-import { toastMessage } from "@/utils";
-import { useUser, useSubscriberModal, useToolAccess } from "@/hooks";
+import { yupValidate } from "@/utils";
+import { useSubscriberModal, useToolAccess } from "@/hooks";
 import { ToolAction, ToolInput } from "./styles";
 import GenerateButton from "./components/GenerateButton";
+
+const schemaValidation = {
+  blogIntro: {
+    task: yup.string().required(),
+    headline: yup.string().required().min(10).max(150).label("Blog headline"),
+    about: yup.string().min(10).max(200).required().label("Blog about"),
+    numberOfSuggestions: yup
+      .number()
+      .min(1)
+      .required()
+      .label("Number of Suggestions"),
+  },
+};
 
 const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
   const dispatch = useDispatch();
@@ -24,62 +38,36 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
   );
   const { headline, about } = useSelector(writeAlongSelector.getWriteAlong);
 
-  const { isAuth } = useUser();
-  const showSubscriberModal = useSubscriberModal();
-
-  const trimedHeadline = headline.item.trim();
-  const trimedAbout = about.item.trim();
-  const validHeadline =
-    trimedHeadline.length >= 10 && trimedHeadline.length <= 150;
-  const validAbout = trimedAbout.length >= 10 && trimedAbout.length <= 200;
-
   const [accessBlogIntro] = useToolAccess([BLOG_INTRO]);
-
-  const handleSubscriberModalOpen = (message) => {
-    dispatch(setSubscriberUsageModal({ usage: true, message }));
-  };
+  const [showSubscriberModal, setShowSubscriberModal] = useSubscriberModal();
 
   const handleBlogIntro = () => {
-    if (validHeadline && validAbout) {
-      if (isAuth && accessBlogIntro) {
-        if (showSubscriberModal) {
-          return handleSubscriberModalOpen();
-        }
+    if (showSubscriberModal.block) {
+      setShowSubscriberModal({ ...showSubscriberModal, isOpen: true });
+      return;
+    }
 
-        dispatch(
-          postWriteAlongContents({
-            task: BLOG_INTRO,
-            data: {
-              task: BLOG_INTRO,
-              headline: headline.item,
-              numberOfSuggestions: suggestionNum,
-              about: about.item,
-            },
-          })
-        );
-      } else {
-        dispatch(setSigninModal(true));
-      }
-    } else {
-      if (!validHeadline) {
-        titleRef.current?.focus();
-        toastMessage.customWarn(
-          "Blog headline length need must be min 10 and max 150 characters",
-          3000,
-          {
-            toastId: "headline",
-          }
-        );
-      } else if (!validAbout) {
-        aboutRef.current?.focus();
-        toastMessage.customWarn(
-          "Blog about need must be min 10 and max 200 characters",
-          3000,
-          {
-            toastId: "about",
-          }
-        );
-      }
+    if (!accessBlogIntro) {
+      dispatch(
+        setAccessTask({ isOpen: true, message: "please upgrade your plan" })
+      );
+      return;
+    }
+
+    const { isValid, values } = yupValidate(schemaValidation.blogIntro, {
+      task: BLOG_INTRO,
+      headline: headline.item,
+      numberOfSuggestions: suggestionNum,
+      about: about.item,
+    });
+
+    if (isValid) {
+      dispatch(
+        postWriteAlongContents({
+          task: BLOG_INTRO,
+          data: { ...values },
+        })
+      );
     }
   };
 

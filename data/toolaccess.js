@@ -2,10 +2,10 @@ import * as tasks from "@/appconstants/task";
 
 const taskArr = Object.values(tasks);
 
-const excludefreemium = ["paraphrasing", "expander", "blog-topic"];
-const excludebasic = ["paraphrasing", "active-passive"];
+const excludefreemium = [];
+const excludebasic = [];
 const excludestandard = [];
-const excludeprofessional = ["paraphrasing"];
+const excludeprofessional = [];
 
 const excludeFunc = (excludeArr = []) => {
   return taskArr.filter((task) => !excludeArr.includes(task));

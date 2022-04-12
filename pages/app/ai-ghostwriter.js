@@ -5,6 +5,8 @@ import { Collapse } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "@pathofdev/react-tag-input/build/index.css";
 import ReactTagInput from "@pathofdev/react-tag-input";
+import * as yup from "yup";
+import "@pathofdev/react-tag-input/build/index.css";
 
 import { UserLayout as Layout } from "@/layout";
 import EditorJS from "@/components/completeblogeditor";
@@ -28,8 +30,8 @@ import {
   selectors as draftSelector,
 } from "@/redux/slices/draft";
 import {
+  setAccessTask,
   setBlogResetModal,
-  setSigninModal,
   selectors as uiSelector,
 } from "@/redux/slices/ui";
 import {
@@ -41,13 +43,14 @@ import {
   useUser,
   useSidebar,
   useToolAccess,
+  useSubscriberModal,
 } from "@/hooks";
 import { SubscriberModal } from "@/components/modals/subscriber";
 import { BlogResetModal } from "@/components/modals/blogs";
 import { MainSidebar } from "@/components/sidebar";
 import GenerateButton from "@/components/blog/components/GenerateButton";
 import TipsImg from "@/assets/images/generate-tips.png";
-import { toastMessage } from "@/utils";
+import { toastMessage, yupValidate } from "@/utils";
 import {
   AI_COMPLETE_BLOG_WRITER,
   BLOG_WRITING,
@@ -129,6 +132,24 @@ const reactTagValidation = (value) => {
   return validateValue.join(" ");
 };
 
+const schemaValidation = {
+  blogSaveOrUpdate: {
+    blogAbout: yup.string().required().min(10).max(200).label("Blog about"),
+    headline: yup.string().required().min(10).max(200).label("Blog headline"),
+    blogPost: yup.string().required().min(10).label("Blog content"),
+    blogType: yup.string().required(),
+  },
+  generateCompleteBlog: {
+    task: yup.string().required(),
+    about: yup.string().required().min(10).max(400).label("Blog about"),
+    headline: yup.string().required().min(10).max(200).label("Blog about"),
+  },
+  blogTopicOnFieldForm: {
+    about: yup.string().required().label("Blog about"),
+    headline: yup.string().required().label("Blog headline"),
+  },
+};
+
 const CompleteBlogGenerator = () => {
   const dispatch = useDispatch();
   const aboutRef = useRef(null);
@@ -143,7 +164,7 @@ const CompleteBlogGenerator = () => {
     blogSelector.getEditor()
   );
   const { activeId } = useSelector(draftSelector.getDraftBlogs());
-  const { isAuth, subscribe } = useUser();
+  const { subscribe } = useUser();
   const { showSidebar, showContent } = useSidebar();
   const quillCounter = useQuillCounter(quill);
   const { range, text: selectedText } = useQuillSelected(quill);
@@ -153,6 +174,7 @@ const CompleteBlogGenerator = () => {
   const [blogLength, setBlogLength] = useState(SHORT_BLOG);
   const [accessBlog] = useToolAccess([blogLength]);
   const [accessEditorTool] = useToolAccess([editorCurrentTaskInput.task]);
+  const [showSubscriberModal, setShowSubscriberModal] = useSubscriberModal();
 
   const isNewBlog = activeId === "";
 
@@ -210,53 +232,19 @@ const CompleteBlogGenerator = () => {
     dispatch(setBlogResetModal(true));
   };
 
-  const isValidatedOk = (toastId) => {
-    let isValid = false;
-    const headlineLength = headline.input.trim().length;
-    const aboutLength = about.input.trim().length;
-    const bodyLength = quill.getLength();
-
-    if (headlineLength < 10 || headlineLength > 200) {
-      isValid = false;
-      toastMessage.customWarn(
-        "Blog headline must be between 10 and 200 characters",
-        3000,
-        { toastId }
-      );
-    } else if (aboutLength < 10 || aboutLength > 200) {
-      isValid = false;
-      toastMessage.customWarn(
-        "Blog about must be between 10 and 200 characters",
-        3000,
-        { toastId }
-      );
-    } else if (bodyLength < 10) {
-      isValid = false;
-      toastMessage.customWarn("Blog content must be 10 characters", 3000, {
-        toastId,
-      });
-    } else {
-      isValid = true;
-    }
-    return isValid;
-  };
-
   const handleSaveOrUpdate = () => {
-    if (!isNewBlog) {
-      if (!isValidatedOk("updateBlog")) {
-        return;
-      }
-
-      if (isAuth) {
+    const { isValid, values } = yupValidate(schemaValidation.blogSaveOrUpdate, {
+      blogAbout: about.input,
+      headline: headline.input,
+      blogPost: JSON.stringify(value),
+      blogType: "GHOSTWRITER",
+    });
+    if (isValid) {
+      if (!isNewBlog) {
         dispatch(
           updateBlog({
             id: activeId,
-            data: {
-              blogAbout: about.input,
-              headline: headline.input,
-              blogPost: JSON.stringify(value),
-              blogType: "GHOSTWRITER",
-            },
+            data: { ...values },
           })
         ).then(({ payload }) => {
           if (payload.status === 200) {
@@ -264,30 +252,15 @@ const CompleteBlogGenerator = () => {
           }
         });
       } else {
-        dispatch(setSigninModal(true));
-      }
-    } else {
-      if (!isValidatedOk("createBlog")) {
-        return;
-      }
-
-      if (isAuth) {
         dispatch(
           createBlog({
-            data: {
-              blogAbout: about.input,
-              headline: headline.input,
-              blogPost: JSON.stringify(value),
-              blogType: "GHOSTWRITER",
-            },
+            data: { ...values },
           })
         ).then(({ payload }) => {
           if (payload.status === 201) {
             toastMessage.success("Blog saved successfully");
           }
         });
-      } else {
-        dispatch(setSigninModal(true));
       }
     }
   };
@@ -300,34 +273,41 @@ const CompleteBlogGenerator = () => {
   };
 
   const handleGenerateCompleteBlog = () => {
-    if (accessBlog) {
-      if (about.input.length < 10) {
-        return toastMessage.warn(
-          "Blog about length must be at least 10 characters long"
-        );
+    if (showSubscriberModal.block) {
+      setShowSubscriberModal({ ...showSubscriberModal, isOpen: true });
+      return;
+    }
+
+    if (!accessBlog) {
+      dispatch(
+        setAccessTask({ isOpen: true, message: "please upgrade your plan" })
+      );
+      return;
+    }
+
+    const { isValid, values } = yupValidate(
+      schemaValidation.generateCompleteBlog,
+      {
+        task: blogLength,
+        about: about.input,
+        headline: headline.input,
       }
-      if (about.input.length > 400) {
-        return toastMessage.warn(
-          "Blog about length must be max 400 characters long"
-        );
-      }
+    );
+
+    if (isValid) {
       const editorText = quill && quill.getText();
       dispatch(setCurrentTask(BLOG_WRITING));
       dispatch(
         postBlogContents({
           task: blogLength,
           data: {
-            task: blogLength,
-            about: about.input,
-            headline: headline.input,
+            ...values,
             keywords: tags,
             ...(blogLength === LONG_BLOG &&
               editorText.length >= 10 && { contents: editorText }),
           },
         })
       );
-    } else {
-      dispatch(setSigninModal(true));
     }
   };
 
@@ -343,44 +323,50 @@ const CompleteBlogGenerator = () => {
     dispatch(setEditor({ currenttask: task }));
   };
 
-  const isOk = useMemo(() => {
+  const isonFieldFormOk = useMemo(() => {
     const selectedLength = selectedText?.length * 1;
     const userText = editorCurrentTaskInput.userText;
 
     const isMin = selectedLength < userText?.min;
     const isMax = selectedLength > userText?.max;
-    const isOk = !isMin && !isMax;
-    return isOk;
+    const result = !isMin && !isMax;
+    return result;
   }, [editorCurrentTaskInput.userText, selectedText?.length]);
 
   const onFieldFormSubmit = (values) => {
-    if (accessEditorTool) {
-      const task = editorCurrentTaskInput.task;
+    if (showSubscriberModal.block) {
+      setShowSubscriberModal({ ...showSubscriberModal, isOpen: true });
+      return;
+    }
 
-      let datas = {
-        task,
-        userText: selectedText,
+    if (!accessEditorTool) {
+      dispatch(
+        setAccessTask({ isOpen: true, message: "please upgrade your plan" })
+      );
+      return;
+    }
+
+    const task = editorCurrentTaskInput.task;
+    let datas = {
+      task,
+      userText: selectedText,
+      ...values,
+    };
+    if (task === BLOG_TOPIC) {
+      const { isValid, values } = yupValidate(
+        schemaValidation.blogTopicOnFieldForm,
+        { about: about.input, headline: headline.input }
+      );
+      datas = {
+        ...datas,
         ...values,
       };
-
-      if (task === BLOG_TOPIC) {
-        if (about.input.length === 0) {
-          return toastMessage.warn("Blog about required");
-        } else if (headline.input.length === 0) {
-          return toastMessage.warn("Blog headline required");
-        }
-        datas = {
-          ...datas,
-          about: about.input,
-          headline: headline.input,
-        };
+      if (!isValid) {
+        return;
       }
-
-      isOk &&
-        dispatch(postEditorToolsContent({ data: datas, task: datas.task }));
-    } else {
-      dispatch(setSigninModal(true));
     }
+    isonFieldFormOk &&
+      dispatch(postEditorToolsContent({ data: datas, task: datas.task }));
   };
 
   return (
@@ -419,11 +405,6 @@ const CompleteBlogGenerator = () => {
                     value={about.input}
                     rows="4"
                   ></textarea>
-                  {/* <Collapse
-                    isOpen={!complete.success && about.input.trim().length > 0}
-                  > */}
-
-                  {/* </Collapse> */}
                   <StyledBlogLength>
                     <strong>Blog Length</strong>
                     <select
@@ -454,9 +435,7 @@ const CompleteBlogGenerator = () => {
                     onClick={
                       complete.success
                         ? handleResetBlog
-                        : about.input.trim().length > 0
-                        ? handleGenerateCompleteBlog
-                        : null
+                        : handleGenerateCompleteBlog
                     }
                   >
                     {complete.success
@@ -588,7 +567,7 @@ const CompleteBlogGenerator = () => {
                           </StyledEditorSelectorOptions>
                         )}
                         <GenerateButton
-                          disabled={!isOk}
+                          disabled={!isonFieldFormOk}
                           onClick={null}
                           loading={content.loading === "pending"}
                         >

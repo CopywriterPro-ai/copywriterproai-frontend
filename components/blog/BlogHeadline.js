@@ -1,20 +1,33 @@
 import { useState } from "react";
 import { Collapse } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
+import * as yup from "yup";
 
 import {
   postWriteAlongContents,
   writeAlongActions,
   selectors as writeAlongSelector,
 } from "@/redux/slices/blog";
-import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
+import { setAccessTask } from "@/redux/slices/ui";
 import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem } from "./styles";
 import { BLOG_HEADLINE, BLOG_INTRO } from "@/appconstants";
-import { toastMessage } from "@/utils";
-import { useUser, useSubscriberModal, useToolAccess } from "@/hooks";
+import { yupValidate } from "@/utils";
+import { useSubscriberModal, useToolAccess } from "@/hooks";
 import { ToolAction, ToolInput } from "./styles";
 import GenerateButton from "./components/GenerateButton";
+
+const schemaValidation = {
+  blogHeadline: {
+    task: yup.string().required(),
+    about: yup.string().min(10).max(200).required().label("Blog about"),
+    numberOfSuggestions: yup
+      .number()
+      .min(1)
+      .required()
+      .label("Number of Suggestions"),
+  },
+};
 
 const BlogHeadline = ({ aboutRef }) => {
   const dispatch = useDispatch();
@@ -23,45 +36,34 @@ const BlogHeadline = ({ aboutRef }) => {
     writeAlongSelector.getContentItem(BLOG_HEADLINE)
   );
   const { about } = useSelector(writeAlongSelector.getWriteAlong);
-  const { isAuth } = useUser();
-  const showSubscriberModal = useSubscriberModal();
   const [accessBlogHeadline] = useToolAccess([BLOG_HEADLINE]);
-
-  const trimedAbout = about.item.trim();
-  const validAbout = trimedAbout.length >= 10 && trimedAbout.length <= 200;
-
-  const handleSubscriberModalOpen = (message) => {
-    dispatch(setSubscriberUsageModal({ usage: true, message }));
-  };
+  const [showSubscriberModal, setShowSubscriberModal] = useSubscriberModal();
 
   const handleBlogHeadline = () => {
-    if (validAbout) {
-      if (isAuth && accessBlogHeadline) {
-        if (showSubscriberModal) {
-          return handleSubscriberModalOpen();
-        }
+    if (showSubscriberModal.block) {
+      setShowSubscriberModal({ ...showSubscriberModal, isOpen: true });
+      return;
+    }
 
-        dispatch(
-          postWriteAlongContents({
-            task: BLOG_HEADLINE,
-            data: {
-              task: BLOG_HEADLINE,
-              about: about.item,
-              numberOfSuggestions: suggestionNum,
-            },
-          })
-        );
-      } else {
-        dispatch(setSigninModal(true));
-      }
-    } else {
-      aboutRef.current?.focus();
-      toastMessage.customWarn(
-        "Blog about need must be min 10 and max 200 characters",
-        3000,
-        {
-          toastId: "about",
-        }
+    if (!accessBlogHeadline) {
+      dispatch(
+        setAccessTask({ isOpen: true, message: "please upgrade your plan" })
+      );
+      return;
+    }
+
+    const { isValid, values } = yupValidate(schemaValidation.blogHeadline, {
+      task: BLOG_HEADLINE,
+      about: about.item,
+      numberOfSuggestions: suggestionNum,
+    });
+
+    if (isValid) {
+      dispatch(
+        postWriteAlongContents({
+          task: BLOG_HEADLINE,
+          data: { ...values },
+        })
       );
     }
   };

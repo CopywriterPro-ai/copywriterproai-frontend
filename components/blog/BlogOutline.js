@@ -2,24 +2,44 @@ import { useState, useEffect } from "react";
 import { Collapse } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import * as yup from "yup";
 
 import {
   postWriteAlongContents,
   writeAlongActions,
   selectors as writeAlongSelector,
 } from "@/redux/slices/blog";
-import { setSigninModal, setSubscriberUsageModal } from "@/redux/slices/ui";
+import { setAccessTask } from "@/redux/slices/ui";
 import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem, ToolAction, ToolInput } from "./styles";
 import { BLOG_OUTLINE, BLOG_FROM_OUTLINE } from "@/appconstants";
-import { toastMessage } from "@/utils";
+import { yupValidate } from "@/utils";
 import {
-  useUser,
-  useSubscriberModal,
   useQuillConentTypingInsert,
+  useSubscriberModal,
   useToolAccess,
 } from "@/hooks";
 import GenerateButton from "./components/GenerateButton";
+
+const schemaValidation = {
+  blogOutline: {
+    task: yup.string().required(),
+    headline: yup.string().required().label("Blog headline"),
+    about: yup.string().min(10).max(200).required().label("Blog about"),
+    numberOfPoints: yup.number().min(3).required().label("Number of points"),
+    numberOfSuggestions: yup
+      .number()
+      .min(1)
+      .required()
+      .label("Number of Suggestions"),
+  },
+  blogFromOutline: {
+    task: yup.string().required(),
+    headline: yup.string().required().label("Blog headline"),
+    intro: yup.string().required().label("Blog intro"),
+    outline: yup.string().required().label("Blog outline"),
+  },
+};
 
 const BlogOutline = ({ aboutRef, quillRef }) => {
   const dispatch = useDispatch();
@@ -33,14 +53,10 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
   const { isCurrentTask } = useSelector(
     writeAlongSelector.getContentItem(BLOG_OUTLINE)
   );
-  const { isAuth } = useUser();
-  const showSubscriberModal = useSubscriberModal();
   const isTyping = useQuillConentTypingInsert(quillRef, outlineblog.item);
+  const [showSubscriberModal, setShowSubscriberModal] = useSubscriberModal();
   const [accessBlogOutline] = useToolAccess([BLOG_OUTLINE]);
-
-  const handleSubscriberModalOpen = (message) => {
-    dispatch(setSubscriberUsageModal({ usage: true, message }));
-  };
+  const [accessBlogFromOutline] = useToolAccess([BLOG_FROM_OUTLINE]);
 
   useEffect(() => {
     if (!isTyping) {
@@ -49,48 +65,65 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
   }, [dispatch, isTyping]);
 
   const handleBlogOutline = () => {
-    if (about.item.trim().length && headline.item.trim().length) {
-      if (isAuth && accessBlogOutline) {
-        if (showSubscriberModal) {
-          return handleSubscriberModalOpen();
-        }
+    if (showSubscriberModal.block) {
+      setShowSubscriberModal({ ...showSubscriberModal, isOpen: true });
+      return;
+    }
 
-        dispatch(
-          postWriteAlongContents({
-            task: BLOG_OUTLINE,
-            data: {
-              task: BLOG_OUTLINE,
-              headline: headline.item,
-              numberOfPoints: number,
-              numberOfSuggestions: suggestionNum,
-              about: about.item,
-            },
-          })
-        );
-      } else {
-        dispatch(setSigninModal(true));
-      }
-    } else {
-      aboutRef.current?.focus();
-      toastMessage.customWarn("Blog about required", 3000, {
-        toastId: "about",
-      });
+    if (!accessBlogOutline) {
+      dispatch(
+        setAccessTask({ isOpen: true, message: "please upgrade your plan" })
+      );
+      return;
+    }
+
+    const { isValid, values } = yupValidate(schemaValidation.blogOutline, {
+      task: BLOG_OUTLINE,
+      headline: headline.item,
+      numberOfPoints: number,
+      numberOfSuggestions: suggestionNum,
+      about: about.item,
+    });
+
+    if (isValid) {
+      dispatch(
+        postWriteAlongContents({
+          task: BLOG_OUTLINE,
+          data: { ...values },
+        })
+      );
     }
   };
 
   const handleWriteMore = (outline, index) => {
-    setCurrentOutlineIndex(index);
-    dispatch(
-      postWriteAlongContents({
-        task: BLOG_FROM_OUTLINE,
-        data: {
+    if (showSubscriberModal.block) {
+      setShowSubscriberModal({ ...showSubscriberModal, isOpen: true });
+      return;
+    }
+
+    if (!accessBlogFromOutline) {
+      dispatch(
+        setAccessTask({ isOpen: true, message: "please upgrade your plan" })
+      );
+      return;
+    }
+
+    const { isValid, values } = yupValidate(schemaValidation.blogFromOutline, {
+      task: BLOG_FROM_OUTLINE,
+      headline: headline.item,
+      intro: intro.item,
+      outline,
+    });
+
+    if (isValid) {
+      setCurrentOutlineIndex(index);
+      dispatch(
+        postWriteAlongContents({
           task: BLOG_FROM_OUTLINE,
-          headline: headline.item,
-          intro: intro.item,
-          outline,
-        },
-      })
-    );
+          data: { ...values },
+        })
+      );
+    }
   };
 
   const isLoading = outlineblog.loading === "pending";

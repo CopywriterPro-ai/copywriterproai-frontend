@@ -245,6 +245,9 @@ const auth = createSlice({
     },
     [postUserLogout.fulfilled]: (state, action) => {
       if (state.auth.loading === "pending") {
+        if (typeof window !== "undefined") {
+          localStorage.clear();
+        }
         return initialState;
       }
     },

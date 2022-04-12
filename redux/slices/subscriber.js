@@ -103,8 +103,6 @@ const subscriber = createSlice({
   },
 });
 
-// export const {} = subscriber.reducer;
-
 export const selectors = {
   getSubscriber: createSelector(
     (state) => state.subscriber,
@@ -113,16 +111,21 @@ export const selectors = {
   getOwnSubscriber: createSelector(
     (state) => state.subscriber,
     (subscriber) => {
+      const date = new Date().toISOString();
       if (Object.values(subscriber.data).length === 0) {
         return {
           ...subscriber,
           data: {
+            activeSubscription: {
+              subscription: "Freemium",
+              subscriptionExpire: date,
+              words: 0,
+            },
             copycounter: 0,
-            dailyCreaditUsage: { usage: 0, date: new Date().toDateString() },
+            dailyCreaditUsage: { usage: 0, date },
             freeTrial: { eligible: false, dailyLimitExceeded: true },
             subscriberInfo: { isPaidSubscribers: false, inputLimit: true },
-            subscription: "Freemium",
-            words: 0,
+            subscriptionAll: [],
           },
         };
       }

@@ -9,7 +9,6 @@ import { SpecialLayout as Layout } from "@/layout";
 import { GenerateSidebar, MainSidebar } from "@/components/sidebar";
 import { setCurrentActiveKeyState } from "@/redux/slices/content";
 import { selectors as uiSelector } from "@/redux/slices/ui";
-import { SubscriberModal } from "@/components/modals/subscriber";
 import { useWindowSize, useSidebar } from "@/hooks";
 import AppTaskModal from "@/components/modals/tutorial/apptask";
 
@@ -59,7 +58,6 @@ const AppItem = ({ doc }) => {
         </div>
       </div>
       <AppTaskModal doc={doc} showTutorialState={showTutorialState} />
-      {subscriber?.usage && <SubscriberModal />}
     </Layout>
   );
 };

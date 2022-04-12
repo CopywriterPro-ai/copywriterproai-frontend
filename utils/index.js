@@ -10,3 +10,4 @@ export { default as isProductionClient } from "./isProductionClient";
 export { default as pick } from "./pick";
 // export { default as quillValueConvert } from "./quillValueConvert";
 export { default as markdownToHtml } from "./markdownToHtml";
+export { default as yupValidate } from "./yupValidate";

@@ -1,19 +1,23 @@
 import { useState, useMemo, useEffect } from "react";
 
 import useUser from "./useUser";
-// import useDeepCompareEffect from "./useDeepCompareEffect";
 import toolaccess from "@/data/toolaccess";
 
-const useToolAccess = (taskArr = [], unknownGrand = true) => {
-  const [hasAccess, setHasAccess] = useState([]);
+const useToolAccess = (taskArr = [], unknownGrand = false) => {
+  const [hasAccess, setHasAccess] = useState("[]");
   const { isRehydrated, isAuth, subscribe } = useUser();
-  const { subscriberInfo, subscription, freeTrial } = subscribe;
+  const { subscriberInfo, activeSubscription, freeTrial } = subscribe;
+  const { subscription } = activeSubscription;
+  const { isPaidSubscribers } = subscriberInfo;
 
-  const userAccess = useMemo(() => {
-    const subscriptionName = subscription.split("_")[0];
-    const userPackage = subscriptionName.toLowerCase();
-    const packageAccess = toolaccess[userPackage];
-    return { userPackage, packageAccess };
+  const user = useMemo(() => {
+    if (subscription) {
+      const userPackage = subscription.split("_")[0].toLowerCase();
+      const packageAccess = toolaccess[userPackage];
+      return { userPackage, packageAccess };
+    } else {
+      return { userPackage: "", packageAccess: [] };
+    }
   }, [subscription]);
 
   const taskState = useMemo(() => {
@@ -23,33 +27,38 @@ const useToolAccess = (taskArr = [], unknownGrand = true) => {
   useEffect(() => {
     if (taskState.length) {
       const freemiumEligible =
-        userAccess.userPackage === "freemium" && freeTrial?.eligible;
-      if (!isRehydrated || !isAuth) {
-        taskState.map(() => setHasAccess((access) => [...access, false]));
-      } else if (subscriberInfo.isPaidSubscribers || freemiumEligible) {
-        taskState.map((task) => {
+        user.userPackage === "freemium" && freeTrial?.eligible;
+      const ready = isRehydrated && isAuth;
+      if ((ready && isPaidSubscribers) || (ready && freemiumEligible)) {
+        const accessArr = taskState.map((task) => {
           const unknownTask = unknownGrand && !toolaccess._all.includes(task);
-          const grant = unknownTask || userAccess.packageAccess.includes(task);
-          setHasAccess((access) => [...access, grant]);
+          return unknownTask || user.packageAccess.includes(task);
         });
+        setHasAccess(JSON.stringify(accessArr));
       } else {
-        taskState.map(() => setHasAccess((access) => [...access, false]));
+        const accessArr = taskState.map(() => false);
+        setHasAccess(JSON.stringify(accessArr));
       }
     }
-    return () => {
-      setHasAccess([]);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     freeTrial?.eligible,
     isAuth,
+    isPaidSubscribers,
     isRehydrated,
-    subscriberInfo.isPaidSubscribers,
-    userAccess,
-    // taskState,
+    taskState,
+    unknownGrand,
+    user,
   ]);
 
-  return hasAccess;
+  const taskAccess = useMemo(() => {
+    if (typeof hasAccess === "string") {
+      const json = JSON.parse(hasAccess);
+      return Array.isArray(json) ? json : [];
+    }
+    return [];
+  }, [hasAccess]);
+
+  return taskAccess;
 };
 
 export default useToolAccess;

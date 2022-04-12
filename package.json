@@ -6,6 +6,7 @@
     "dev": "next dev",
     "clean": "del-cli .next",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "serve": "next start -p 5000",
     "lint": "next lint",
     "start": "npm-run-all clean build serve --parallel"
@@ -64,7 +65,7 @@
     "del-cli": "^4.0.1",
     "eslint": "7.31.0",
     "eslint-config-next": "11.0.1",
-    "next-sitemap": "^1.6.203",
+    "next-sitemap": "^2.5.19",
     "npm-run-all": "^4.1.5"
   },
   "browser": {

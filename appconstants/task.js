@@ -66,3 +66,5 @@ export const ATTENTION_INTEREST_DESIRE_ACTION =
 export const AMAZON_PRODUCT_LISTINGS = "amazon-product-listings";
 export const GENERATE_RECIPE = "generate-recipe";
 export const YOUTUBE_VIDEO_SCRIPT = "youtube-video-script";
+export const SHORT_BLOG = "short-blog";
+export const LONG_BLOG = "long-blog";
