@@ -5,10 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import prices from "@/data/price.json";
-import {
-  setCurrentSubscriptionWords,
-  selectors as paymentSelector,
-} from "@/redux/slices/payment";
+import { selectors as paymentSelector } from "@/redux/slices/payment";
 import {
   postSubscriptionSwitch,
   selectors as subscriberSelector,
@@ -64,7 +61,9 @@ const SubscriptionsPlanModal = () => {
 
   const {
     loading,
-    data: { subscriptionId, words: currentWords },
+    data: {
+      activeSubscription: { subscriptionId, words: currentWords },
+    },
   } = useSelector(subscriberSelector.getOwnSubscriber);
 
   const handleCloseModal = () => {

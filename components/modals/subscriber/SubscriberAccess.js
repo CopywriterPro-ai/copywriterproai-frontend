@@ -8,14 +8,13 @@ import {
   selectors as subscriberSelector,
 } from "@/redux/slices/subscriber";
 import {
-  postCreateCustomer,
   postCreateCheckoutSession,
   getPriceList,
   setCurrentModalPrice,
   selectors as paymentSelector,
 } from "@/redux/slices/payment";
+import { selectors as uiSelector, setAccessTask } from "@/redux/slices/ui";
 import { stripe as getStripe } from "@/utils";
-import { useSubscriberModal } from "@/hooks";
 import { PricingCard, customStyles } from "./components/Price";
 import {
   Container,
@@ -29,12 +28,12 @@ import {
   StyledUpgradeButton,
 } from "./styles";
 
-const Subscriber = () => {
+const SubscriberAccess = () => {
   const dispatch = useDispatch();
 
   const [periodSelect, setPeriodSelect] = useState(1);
   const [redirectCheckout, setRedirectCheckout] = useState(false);
-  const [subsModal, setSubsModal] = useSubscriberModal();
+  const { taskaccess } = useSelector(uiSelector.getModal);
   const {
     data: {
       subscriptionAll,
@@ -47,11 +46,10 @@ const Subscriber = () => {
   const { items: priceItems, loading: loadingItems } = useSelector(
     paymentSelector.getPriceList(periodSelect)
   );
-  const { id: customerId } = useSelector(paymentSelector.getCustomer);
   const { loading: checkoutLoading } = useSelector(paymentSelector.getCheckout);
 
   const closeModal = () => {
-    setSubsModal({ ...subsModal, isOpen: false });
+    dispatch(setAccessTask({ ...taskaccess, isOpen: false, message: null }));
   };
 
   useEffect(() => {
@@ -61,13 +59,6 @@ const Subscriber = () => {
   useEffect(() => {
     dispatch(setCurrentModalPrice(null));
   }, [dispatch, periodSelect]);
-
-  useEffect(() => {
-    if (!customerId) {
-      dispatch(postCreateCustomer());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
 
   const selectedPriceItem = useCallback(() => {
     const findPrice = priceItems.find(
@@ -123,15 +114,15 @@ const Subscriber = () => {
 
   return (
     <Modal
-      isOpen={subsModal.isOpen}
+      isOpen={taskaccess.isOpen}
       onRequestClose={closeModal}
       style={customStyles}
       contentLabel="Subscriber Modal"
     >
       <Container>
-        {(!words || subsModal.message) && (
+        {(!words || taskaccess.message) && (
           <HeadingMessage>
-            <h4>{subsModal.message}</h4>
+            <h4>{taskaccess.message}</h4>
           </HeadingMessage>
         )}
         <StyledCurrentPlan>
@@ -186,4 +177,4 @@ const Subscriber = () => {
   );
 };
 
-export default Subscriber;
+export default SubscriberAccess;

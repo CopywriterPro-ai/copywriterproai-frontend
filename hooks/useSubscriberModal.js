@@ -1,20 +1,61 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
+import {
+  setSubscriberUsageModal,
+  selectors as uiSelector,
+} from "@/redux/slices/ui";
 import useUser from "./useUser";
 
 const useSubscriberModal = () => {
-  const [showSubscriberModal, setShowSubscriberModal] = useState(false);
-  const { isAuth, userInfo, subscribe, isRehydrated } = useUser();
+  const dispatch = useDispatch();
+
+  const { isAuth, subscribe, isRehydrated } = useUser();
+  const { subscriber: subscriberModalState } = useSelector(uiSelector.getModal);
 
   useEffect(() => {
-    if (isRehydrated && isAuth) {
-      if (subscribe?.words * 1 > 0 || userInfo?.role === "admin") {
-        setShowSubscriberModal(false);
-      } else setShowSubscriberModal(true);
-    }
-  }, [isAuth, isRehydrated, subscribe?.words, userInfo]);
+    const isReady = isRehydrated && isAuth;
+    if (isReady) {
+      const { activeSubscription, freeTrial, subscriberInfo } = subscribe;
+      const words = activeSubscription.words;
+      const isFreemium =
+        activeSubscription.subscription === "Freemium" && freeTrial.eligible;
+      const isPaid = subscriberInfo.isPaidSubscribers;
+      const wordsFinished = words <= 0;
 
-  return showSubscriberModal;
+      if (isPaid && wordsFinished) {
+        dispatch(
+          setSubscriberUsageModal({
+            block: true,
+            isOpen: true,
+            message: "your subscription words finished",
+          })
+        );
+      } else if (isFreemium && wordsFinished) {
+        dispatch(
+          setSubscriberUsageModal({
+            block: true,
+            isOpen: true,
+            message: "your freemium subscription words finished",
+          })
+        );
+      } else {
+        dispatch(
+          setSubscriberUsageModal({
+            block: false,
+            isOpen: false,
+            message: null,
+          })
+        );
+      }
+    }
+  }, [dispatch, isAuth, isRehydrated, subscribe]);
+
+  const setSubscriberUsageModalState = (state) => {
+    dispatch(setSubscriberUsageModal({ ...state }));
+  };
+
+  return [subscriberModalState, setSubscriberUsageModalState];
 };
 
 export default useSubscriberModal;

@@ -14,13 +14,13 @@ import {
 import {
   setSigninModal,
   setContentSidebar,
-  setSubscriberUsageModal,
+  setAccessTask,
 } from "@/redux/slices/ui";
 import Loader from "@/components/common/Loader";
 import Spinner from "@/components/common/Spinner";
 import GenerateResult from "./GenerateResult";
 import TipsImg from "@/assets/images/generate-tips.png";
-import { useUser, useSubscriberModal } from "@/hooks";
+import { useUser, useSubscriberModal, useToolAccess } from "@/hooks";
 import toolsvalidation from "@/data/toolsvalidation";
 
 const InputGeneratingBox = ({ showTutorialState }) => {
@@ -38,10 +38,13 @@ const InputGeneratingBox = ({ showTutorialState }) => {
   const isToolAvailable = useSelector(contentSelector.isHasTool(queryTool));
   const {
     isAuth,
-    subscribe: { words, subscription },
+    subscribe: {
+      activeSubscription: { words, subscription },
+    },
   } = useUser();
-  const showSubscriberModal = useSubscriberModal();
   const setShowTutorial = showTutorialState[1];
+  const [accessTask] = useToolAccess([queryTool]);
+  const [showSubscriberModal, setShowSubscriberModal] = useSubscriberModal();
 
   const { contentTexts } = content;
   const { isReady, query } = router;
@@ -78,7 +81,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
   }, [activeKey, dispatch]);
 
   const handleSubscriberModalOpen = (message) => {
-    dispatch(setSubscriberUsageModal({ usage: true, message }));
+    setShowSubscriberModal({ ...showSubscriberModal, isOpen: true, message });
   };
 
   const validationSchema = useMemo(() => {
@@ -93,12 +96,24 @@ const InputGeneratingBox = ({ showTutorialState }) => {
     const task = activeKey;
     const data = { ...formData, task };
 
-    if (isAuth) {
-      if (!showSubscriberModal) dispatch(postGenerateContents({ data, task }));
-      else handleSubscriberModalOpen();
-    } else {
+    if (!isAuth) {
       dispatch(setSigninModal(true));
+      return;
     }
+
+    if (showSubscriberModal.block) {
+      setShowSubscriberModal({ ...showSubscriberModal, isOpen: true });
+      return;
+    }
+
+    if (!accessBlog) {
+      dispatch(
+        setAccessTask({ isOpen: true, message: "please upgrade your plan" })
+      );
+      return;
+    }
+
+    dispatch(postGenerateContents({ data, task }));
   };
 
   const handleSidebar = () => {

@@ -2,5 +2,17 @@ const siteUrl = "https://copywriterpro.ai";
 
 module.exports = {
   siteUrl,
-  //   generateRobotsTxt: true,
+  exclude: [
+    "/account",
+    "/app/ai-ghostwriter",
+    "/app/ai-write-along",
+    "/bookmarks",
+    "/contenttools/categories",
+    "/contenttools/tools",
+    "/draft",
+    "/notice/update",
+    "/pricing-new",
+    "/processing",
+    "/reward",
+  ],
 };

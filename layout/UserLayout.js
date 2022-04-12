@@ -14,8 +14,12 @@ import {
 import { selectors as uiSelector } from "@/redux/slices/ui";
 import { getFavouriteTools } from "@/redux/slices/user";
 import { getOwnSubscriber } from "@/redux/slices/subscriber";
-import { useUser, useAuth } from "@/hooks";
+import { useUser, useAuth, useSubscriberModal } from "@/hooks";
 import { SigninModal } from "@/components/modals/auth";
+import {
+  SubscriberModal,
+  SubscriberAccessModal,
+} from "@/components/modals/subscriber";
 
 import Processing from "@/pages/processing";
 
@@ -35,6 +39,7 @@ const UserLayout = ({
   const {
     userInfo: { id: userId },
   } = useUser();
+  const [subsModal] = useSubscriberModal();
 
   useEffect(() => {
     if (isRehydrated && !isAuth && !isSpecial) router.push("/signin");
@@ -79,6 +84,7 @@ const UserLayout = ({
   const { topBarHeigth, navBarHeigth, showTopBar } = useSelector(
     uiSelector.getHeaderSize
   );
+  const { taskaccess } = useSelector(uiSelector.getModal);
 
   const redirectPath = useSelector(uiSelector.getRedirectPath);
 
@@ -118,6 +124,8 @@ const UserLayout = ({
               `,
         }}
       ></Script> */}
+      {subsModal.isOpen && <SubscriberModal />}
+      {taskaccess.isOpen && <SubscriberAccessModal />}
     </Layout>
   );
 };

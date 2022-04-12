@@ -6,8 +6,6 @@ import {
 import { HYDRATE } from "next-redux-wrapper";
 
 import { uiApi } from "@/api";
-import { selectors as authSelector } from "./auth";
-import { selectors as subscriberSelector } from "./subscriber";
 import asyncThunkError from "@/utils/asyncThunkError";
 
 export const getNotice = createAsyncThunk(
@@ -50,7 +48,12 @@ const initialState = {
       reset: false,
     },
     subscriber: {
-      usage: false,
+      isOpen: false,
+      block: false,
+      message: null,
+    },
+    taskaccess: {
+      isOpen: false,
       message: null,
     },
     subscriptions: {
@@ -118,12 +121,16 @@ const ui = createSlice({
       state.modal.blogs.reset = action.payload;
     },
     setSubscriberUsageModal: (state, action) => {
-      state.modal.subscriber.usage = action.payload.usage;
-      if (action.payload.usage === true) {
+      state.modal.subscriber.isOpen = action.payload.isOpen;
+      state.modal.subscriber.block = action.payload.block;
+      if (action.payload.isOpen === true) {
         state.modal.subscriber.message = action.payload.message;
       } else {
         state.modal.subscriber.message = null;
       }
+    },
+    setAccessTask: (state, action) => {
+      state.modal.taskaccess = action.payload;
     },
     setSigninModal: (state, action) => {
       state.modal.auth.signin = action.payload;
@@ -210,6 +217,7 @@ export const {
   setBlogDeleteModal,
   setBlogResetModal,
   setSubscriberUsageModal,
+  setAccessTask,
   setSigninModal,
   setContentSidebar,
   setTopBarHeigth,
@@ -229,25 +237,8 @@ export const selectors = {
     (data) => data
   ),
   getModal: createSelector(
-    [
-      (state) => state.ui.modal,
-      authSelector.getAuthenticate,
-      authSelector.getInfo,
-      subscriberSelector.getOwnSubscriber,
-    ],
-    (modal, auth, authInfo, { data: subscriberData }) => {
-      const { isAuth } = auth;
-      const isTrial = subscriberData?.freeTrial?.eligible === true;
-      const hasWords = subscriberData?.words > 0;
-      if (isAuth) {
-        if (authInfo.role === "admin") {
-          return { ...modal, subscriber: { usage: false, message: null } };
-        } else if (authInfo.role === "user" && isTrial && hasWords) {
-          return { ...modal, subscriber: { usage: false, message: null } };
-        }
-      }
-      return { ...modal };
-    }
+    (state) => state.ui.modal,
+    (modal) => modal
   ),
   getContentSidebar: createSelector(
     (state) => state.ui.contentSidebar,

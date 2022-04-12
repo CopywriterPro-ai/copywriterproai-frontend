@@ -34,14 +34,14 @@ const useQuillEditor = (id = AI_BLOG_WRITER) => {
   });
 
   const editor1 = useQuill({
-    placeholder: "Start writing here...",
+    placeholder: "Start writing here and select text to unlock more features.",
     theme: "snow",
     modules,
     formats,
   });
 
   const editor2 = useQuill({
-    placeholder: "Start writing here...",
+    placeholder: "Start writing here and select text to unlock more features.",
     theme: "snow",
     modules,
     formats,
