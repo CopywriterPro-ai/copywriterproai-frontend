@@ -106,7 +106,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
       return;
     }
 
-    if (!accessBlog) {
+    if (!accessTask) {
       dispatch(
         setAccessTask({ isOpen: true, message: "please upgrade your plan" })
       );

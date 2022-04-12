@@ -37,7 +37,7 @@ const schemaValidation = {
     task: yup.string().required(),
     headline: yup.string().required().label("Blog headline"),
     intro: yup.string().required().label("Blog intro"),
-    outline: yup.string().required().label("Blog outline"),
+    outline: yup.mixed().required().label("Blog outline"),
   },
 };
 

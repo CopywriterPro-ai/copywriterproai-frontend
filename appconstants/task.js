@@ -68,3 +68,4 @@ export const GENERATE_RECIPE = "generate-recipe";
 export const YOUTUBE_VIDEO_SCRIPT = "youtube-video-script";
 export const SHORT_BLOG = "short-blog";
 export const LONG_BLOG = "long-blog";
+export const BLOG_FROM_OUTLINE = "blog-from-outline";
