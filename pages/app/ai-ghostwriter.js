@@ -142,7 +142,7 @@ const schemaValidation = {
   generateCompleteBlog: {
     task: yup.string().required(),
     about: yup.string().required().min(10).max(400).label("Blog about"),
-    headline: yup.string().required().min(10).max(200).label("Blog about"),
+    headline: yup.string().required().min(10).max(200).label("Blog headline"),
   },
   blogTopicOnFieldForm: {
     about: yup.string().required().label("Blog about"),
