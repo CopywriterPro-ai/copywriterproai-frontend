@@ -20,12 +20,23 @@ import GenerateButton from "./components/GenerateButton";
 const schemaValidation = {
   blogIntro: {
     task: yup.string().required(),
-    headline: yup.string().required().min(10).max(150).label("Blog headline"),
-    about: yup.string().min(10).max(200).required().label("Blog about"),
+    headline: yup
+      .string()
+      .required(
+        "Generate or Write the Blog Headline first and then generate the Intro."
+      )
+      .min(10, "Blog Headline must be at least 10 characters long.")
+      .max(150, "Blog Headline must be less than or equal 150 characters."),
+    about: yup
+      .string()
+      .required("Write the Blog About first and then generate the Intro.")
+      .min(10, "Blog About must be at least 10 characters long.")
+      .max(200, "Blog About must be less than or equal 200 characters."),
     numberOfSuggestions: yup
       .number()
-      .min(1)
       .required()
+      .min(1)
+      .max(10)
       .label("Number of Suggestions"),
   },
 };

@@ -141,12 +141,36 @@ const schemaValidation = {
   },
   generateCompleteBlog: {
     task: yup.string().required(),
-    about: yup.string().required().min(10).max(400).label("Blog about"),
-    headline: yup.string().required().min(10).max(200).label("Blog headline"),
+    about: yup
+      .string()
+      .required("Write the Blog About first and then generate the Blog.")
+      .min(10, "Blog About must be at least 10 characters long.")
+      .max(400, "Blog About must be less than or equal 400 characters."),
+    headline: yup
+      .string()
+      .required(
+        "Generate or Write the Blog Headline first and then generate the Blog."
+      )
+      .min(10, "Blog Headline must be at least 10 characters long.")
+      .max(150, "Blog Headline must be less than or equal 150 characters."),
   },
   blogTopicOnFieldForm: {
-    about: yup.string().required().label("Blog about"),
-    headline: yup.string().required().label("Blog headline"),
+    about: yup
+      .string()
+      .required(
+        "Write the Blog About first and then generate the Topic Writing."
+      )
+      .min(10, "Blog About must be at least 10 characters long.")
+      .max(200, "Blog About must be less than or equal 200 characters.")
+      .label("Blog about"),
+    headline: yup
+      .string()
+      .required(
+        "Generate or Write the Blog Headline first and then generate the Topic Writing."
+      )
+      .min(10, "Blog Headline must be at least 10 characters long.")
+      .max(150, "Blog Headline must be less than or equal 150 characters.")
+      .label("Blog headline"),
   },
 };
 
