@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 import toastMessage from "./toastMessage";
 
-const AUTO_CLOSE_TIME = 3000;
+const AUTO_CLOSE_TIME = 5000;
 
 const yupValidate = (schemaObject = {}, inputObject = {}) => {
   let result = { isValid: false, values: inputObject };

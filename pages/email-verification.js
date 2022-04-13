@@ -13,10 +13,11 @@ const EmailVerify = () => {
         <div className="text-center mt-5">
           {type === "account-verify" && (
             <>
-              <h3>Thank You For Being Our Early Adopter</h3>
+              <h3>Thank you for joining the CopywriterPro family!</h3>
               <p>
                 You are just one step away. Please verify your account by
-                clicking on the verification link we sent you in an email.
+                clicking on the verification link we sent you in an email. This
+                link will be valid for 15 minutes.
               </p>
               {/* <button className="btn btn-primary">Learn more</button> */}
             </>
@@ -32,8 +33,7 @@ const EmailVerify = () => {
           )}
           {!type && (
             <>
-              <h3>Invalid Request Type</h3>
-              <p>Please check your request</p>
+              <h3>Loading...</h3>
               {/* <button className="btn btn-primary">Learn more</button> */}
             </>
           )}
