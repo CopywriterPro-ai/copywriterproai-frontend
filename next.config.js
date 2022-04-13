@@ -1,3 +1,5 @@
+/** @type {import('next').NextConfig} */
+
 const { withSentryConfig } = require("@sentry/nextjs");
 const path = require("path");
 
@@ -7,6 +9,12 @@ const nextConfig = {
   reactStrictMode: false,
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
+  },
+  compiler: {
+    styledComponents: true,
+  },
+  sentry: {
+    hideSourceMaps: true,
   },
 };
 

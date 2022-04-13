@@ -13,11 +13,7 @@ export default class MyDocument extends Document {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) =>
-            sheet.collectStyles(
-              // <PersistGate loading={null} persistor={persistor}>
-              <App {...props} />
-              // </PersistGate>
-            ),
+            sheet.collectStyles(<App {...props} />),
         });
 
       const initialProps = await Document.getInitialProps(ctx);
