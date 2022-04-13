@@ -20,6 +20,7 @@ import { BlogResetModal } from "@/components/modals/blogs";
 import { SubscriberModal } from "@/components/modals/subscriber";
 import { MainSidebar } from "@/components/sidebar";
 import GenerateButton from "@/components/blog/components/GenerateButton";
+import CreditsLeft from "@/components/CreditsLeft";
 import {
   useSidebar,
   useUser,
@@ -317,6 +318,7 @@ const BlogGenerator = () => {
             <ScollingTool>
               <Collapse isOpen={!isOpenEditorField}>
                 <ToolsHeader>
+                  <CreditsLeft />
                   <Tips>
                     <TipsIcon src={TipsImg.src} alt="tips" />
                     <span>

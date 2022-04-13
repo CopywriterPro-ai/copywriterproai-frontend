@@ -49,6 +49,7 @@ import { SubscriberModal } from "@/components/modals/subscriber";
 import { BlogResetModal } from "@/components/modals/blogs";
 import { MainSidebar } from "@/components/sidebar";
 import GenerateButton from "@/components/blog/components/GenerateButton";
+import CreditsLeft from "@/components/CreditsLeft";
 import TipsImg from "@/assets/images/generate-tips.png";
 import { toastMessage, yupValidate } from "@/utils";
 import {
@@ -415,6 +416,7 @@ const CompleteBlogGenerator = () => {
             <Collapse isOpen={!isOpenEditorField}>
               <ScollingTool>
                 <ToolsHeader>
+                  <CreditsLeft />
                   <Tips>
                     <TipsIcon src={TipsImg.src} alt="tips" />
                     <span>
