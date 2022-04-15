@@ -14,5 +14,6 @@ module.exports = {
     "/pricing-new",
     "/processing",
     "/reward",
+    "/playground22",
   ],
 };

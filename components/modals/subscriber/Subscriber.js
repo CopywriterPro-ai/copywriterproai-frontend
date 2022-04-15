@@ -14,7 +14,7 @@ import {
   setCurrentModalPrice,
   selectors as paymentSelector,
 } from "@/redux/slices/payment";
-import { stripe as getStripe } from "@/utils";
+import { stripe as getStripe, getRewardfulClientReferenceId } from "@/utils";
 import { useSubscriberModal } from "@/hooks";
 import { PricingCard, customStyles } from "./components/Price";
 import {
@@ -106,6 +106,7 @@ const Subscriber = () => {
           const stripe = await getStripe();
           stripe?.redirectToCheckout({
             sessionId: data.session.id,
+            clientReferenceId: getRewardfulClientReferenceId(),
           });
         }
       });

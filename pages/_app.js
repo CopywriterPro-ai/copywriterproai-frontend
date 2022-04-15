@@ -47,6 +47,15 @@ const App = ({ Component, pageProps, err }) => {
           gtag('config', '${ga4code}');
         `}
           </Script>
+          <Script id="rewardful-affiliate" strategy="afterInteractive">
+            {`(function(w,r){w._rwq=r;w[r]=w[r]||function(){(w[r].q=w[r].q||[]).push(arguments)}})(window,'rewardful');`}
+          </Script>
+
+          <Script
+            strategy="afterInteractive"
+            src="https://r.wdfl.co/rw.js"
+            data-rewardful="d9f50a"
+          ></Script>
         </>
       )}
 

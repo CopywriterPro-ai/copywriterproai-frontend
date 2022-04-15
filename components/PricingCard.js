@@ -15,7 +15,7 @@ import {
 import { selectors as authSelector } from "@/redux/slices/auth";
 import { selectors as subscriberSelector } from "@/redux/slices/subscriber";
 import { setRedirectPath } from "@/redux/slices/ui";
-import getStripe from "@/utils/stripe";
+import { getRewardfulClientReferenceId, stripe as getStripe } from "@/utils";
 import PricingListImg from "@/assets/images/pricing/pricing-ul-li.png";
 import MoneyBackImg from "@/assets/images/money-back-guarantee.png";
 import pricesInfo from "@/data/price.json";
@@ -161,6 +161,7 @@ const SinglePriceItem = ({
             const stripe = await getStripe();
             stripe?.redirectToCheckout({
               sessionId: data.session.id,
+              clientReferenceId: getRewardfulClientReferenceId(),
             });
           }
         }
