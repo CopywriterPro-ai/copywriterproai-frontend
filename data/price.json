@@ -6,7 +6,7 @@
     "maxInput": "400",
     "maxOutput": "600",
     "user": "1",
-    "hasAiBlog": true
+    "hasAiBlog": false
   },
   "BASIC_6MONTH": {
     "name": "Basic",
@@ -15,7 +15,7 @@
     "maxInput": "400",
     "maxOutput": "600",
     "user": "1",
-    "hasAiBlog": true
+    "hasAiBlog": false
   },
   "STANDARD_1MONTH": {
     "name": "Standard",
