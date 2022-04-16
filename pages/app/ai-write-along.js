@@ -59,6 +59,7 @@ import {
   ACTIVE_PASSIVE,
   BLOG_TOPIC,
 } from "@/appconstants";
+import * as MESSAGE from "@/appconstants/message";
 import toolsvalidation from "@/data/toolsvalidation";
 import TipsImg from "@/assets/images/generate-tips.png";
 
@@ -266,7 +267,10 @@ const BlogGenerator = () => {
 
     if (!accessEditorTool) {
       dispatch(
-        setAccessTask({ isOpen: true, message: "please upgrade your plan" })
+        setAccessTask({
+          isOpen: true,
+          message: MESSAGE.WRITING_TOOLS_NOT_ACCESS,
+        })
       );
       return;
     }

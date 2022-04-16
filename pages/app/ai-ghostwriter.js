@@ -58,6 +58,7 @@ import {
   SHORT_BLOG,
   LONG_BLOG,
 } from "@/appconstants";
+import * as MESSAGE from "@/appconstants/message";
 import toolsvalidation from "@/data/toolsvalidation";
 import {
   PARAPHRASING,
@@ -305,7 +306,10 @@ const CompleteBlogGenerator = () => {
 
     if (!accessBlog) {
       dispatch(
-        setAccessTask({ isOpen: true, message: "please upgrade your plan" })
+        setAccessTask({
+          isOpen: true,
+          message: MESSAGE.WRITING_TOOLS_NOT_ACCESS,
+        })
       );
       return;
     }
@@ -366,7 +370,10 @@ const CompleteBlogGenerator = () => {
 
     if (!accessEditorTool) {
       dispatch(
-        setAccessTask({ isOpen: true, message: "please upgrade your plan" })
+        setAccessTask({
+          isOpen: true,
+          message: MESSAGE.WRITING_TOOLS_NOT_ACCESS,
+        })
       );
       return;
     }

@@ -12,6 +12,7 @@ import { setAccessTask } from "@/redux/slices/ui";
 import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem } from "./styles";
 import { BLOG_INTRO, BLOG_OUTLINE } from "@/appconstants";
+import * as MESSAGE from "@/appconstants/message";
 import { yupValidate } from "@/utils";
 import { useSubscriberModal, useToolAccess } from "@/hooks";
 import { ToolAction, ToolInput } from "./styles";
@@ -60,7 +61,10 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
 
     if (!accessBlogIntro) {
       dispatch(
-        setAccessTask({ isOpen: true, message: "please upgrade your plan" })
+        setAccessTask({
+          isOpen: true,
+          message: MESSAGE.WRITING_TOOLS_NOT_ACCESS,
+        })
       );
       return;
     }

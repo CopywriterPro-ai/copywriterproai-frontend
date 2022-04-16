@@ -123,7 +123,7 @@ const SubscriberAccess = () => {
       <Container>
         {(!words || taskaccess.message) && (
           <HeadingMessage>
-            <h4>{taskaccess.message}</h4>
+            <strong>{taskaccess.message}</strong>
           </HeadingMessage>
         )}
         <StyledCurrentPlan>
