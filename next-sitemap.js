@@ -15,5 +15,12 @@ module.exports = {
     "/processing",
     "/reward",
     "/playground22",
+    "/account-verification",
+    "/auth",
+    "/email-verification",
+    "/extension-auth",
+    "/extension/access",
+    "/payment/canceled",
+    "/payment/success",
   ],
 };

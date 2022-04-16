@@ -13,7 +13,9 @@ export const StyledLoading = styled.div`
 
 export const HeadingMessage = styled.div`
   margin-bottom: 2rem;
-  h4 {
+  max-width: fit-content;
+
+  /* h4 {
     font-weight: 600;
     font-size: 25px;
   }
@@ -23,7 +25,7 @@ export const HeadingMessage = styled.div`
       font-weight: 500;
       font-size: 20px;
     }
-  }
+  } */
 `;
 
 export const StyledCurrentPlan = styled.div`

@@ -50,9 +50,9 @@ const makeStore = () => {
     const { persistStore, persistReducer } = require("redux-persist");
 
     const persistConfig = {
-      key: "ai_copywriter",
+      key: "CopywriterPro",
       storage,
-      version: 1.0,
+      version: 2.0,
       whitelist: ["auth", "payment"],
     };
 

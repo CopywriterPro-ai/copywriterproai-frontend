@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
 import { getAllDocs, getDocByTask } from "@/api/docs/app";
@@ -8,7 +8,6 @@ import GeneratingBox from "components/contentgenerate";
 import { SpecialLayout as Layout } from "@/layout";
 import { GenerateSidebar, MainSidebar } from "@/components/sidebar";
 import { setCurrentActiveKeyState } from "@/redux/slices/content";
-import { selectors as uiSelector } from "@/redux/slices/ui";
 import { useWindowSize, useSidebar } from "@/hooks";
 import AppTaskModal from "@/components/modals/tutorial/apptask";
 
@@ -19,7 +18,6 @@ const AppItem = ({ doc }) => {
   const showTutorialState = useState(false);
   const { query, isReady } = router;
   const { task } = query;
-  const { subscriber } = useSelector(uiSelector.getModal);
 
   useEffect(() => {
     if (isReady && task) dispatch(setCurrentActiveKeyState(task));

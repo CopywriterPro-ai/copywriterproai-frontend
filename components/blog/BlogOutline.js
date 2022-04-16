@@ -13,6 +13,7 @@ import { setAccessTask } from "@/redux/slices/ui";
 import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem, ToolAction, ToolInput } from "./styles";
 import { BLOG_OUTLINE, BLOG_FROM_OUTLINE } from "@/appconstants";
+import * as MESSAGE from "@/appconstants/message";
 import { yupValidate } from "@/utils";
 import {
   useQuillConentTypingInsert,
@@ -90,7 +91,10 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
 
     if (!accessBlogOutline) {
       dispatch(
-        setAccessTask({ isOpen: true, message: "please upgrade your plan" })
+        setAccessTask({
+          isOpen: true,
+          message: MESSAGE.WRITING_TOOLS_NOT_ACCESS,
+        })
       );
       return;
     }
