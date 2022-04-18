@@ -233,6 +233,7 @@ const AppHeader = () => {
                 )}
                 {/* {!isAuth && <NavItem link="/ai-blog-generator" title="Blog" />} */}
                 <NavItem link="/pricing" title="Pricing" />
+                <NavItem link="/affiliates" title="Affiliates" />
                 <NavComDropdownMenuItem
                   isOpen={comIsOpen}
                   toggle={comToggle}
@@ -304,7 +305,7 @@ const TopNotice = styled.div`
   justify-content: center;
   align-items: center;
   padding: 12px 0;
-   position: fixed;
+  position: fixed;
   background: #2cae97;
   color: white;
   margin: 0px;
@@ -355,7 +356,7 @@ const DropdownToggleOptions = styled(DropdownToggle)`
 `;
 
 const NavDropdownMenus = styled(DropdownMenu)`
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
   top: 25px !important;
 
@@ -387,7 +388,7 @@ const NavDropdownItem = styled(DropdownItem)`
 `;
 
 const MyNavbar = styled.nav`
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: row;
@@ -408,7 +409,7 @@ const MyNavbar = styled.nav`
 
   @media (min-width: 768px) {
     padding: 35px 0px;
-     position: fixed;
+    position: fixed;
     top: 0;
     width: 100%;
     z-index: 9999;

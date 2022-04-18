@@ -99,6 +99,7 @@ const AppHeader = () => {
             <Nav className="ml-auto" navbar>
               <AppNavLink to="/#features" title="Features" />
               <AppNavLink to="/pricing" title="Pricing" />
+              <AppNavLink to="/affiliates" title="Affiliates" />
               <UncontrolledDropdown nav inNavbar>
                 <StyledDropdownToggle nav caret>
                   Community
