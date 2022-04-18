@@ -6,14 +6,14 @@ import "rc-slider/assets/index.css";
 
 import { SpecialLayout as Layout } from "@/layout";
 
-const AFFILIATE_PARCENTAGE = 30;
+const AFFILIATE_PARCENTAGE = 35;
 const MIN_RANGE = 1;
 const MAX_RANGE = 100;
 
 const plans = [
-  { name: "Basic", price: 10, key: "basic", interval: "month" },
-  { name: "Standard", price: 60, key: "standard", interval: "month" },
-  { name: "Professional", price: 90, key: "professional", interval: "month" },
+  { name: "Basic", price: 5, key: "basic", interval: "month" },
+  { name: "Standard", price: 31, key: "standard", interval: "month" },
+  { name: "Professional", price: 91, key: "professional", interval: "month" },
 ];
 
 const AffiliateCalculate = ({ name, price, affiliateAmound, planKey }) => {
@@ -88,7 +88,7 @@ const works = [
   },
   {
     icon: "fas fa-money-bill",
-    text: "You'll get 30% recurring commission for every successful referral",
+    text: "You'll get 35% recurring commission for every successful referral",
   },
 ];
 
@@ -97,21 +97,35 @@ const Affiliates = () => {
   const [amound] = affiliateAmound;
   const affiliateTotal = arrayAdd(Object.values(amound));
 
+  const handleJoinAffiliate = () => {
+    if (typeof window !== "undefined") {
+      window.location.href = "https://copywriterpro.getrewardful.com/signup";
+    }
+  };
+
+  const handlLoginAffiliate = () => {
+    if (typeof window !== "undefined") {
+      window.location.href = "https://copywriterpro.getrewardful.com/login";
+    }
+  };
+
   return (
     <Layout>
       <Container>
         <Section>
           <SectionHead>
-            <h1>Be our affiliate. Earn 30% commission!</h1>
+            <h1>Become Our Partner, Get 35% Commission</h1>
             <p>
-              Partner with us to earn a recurring 30% commission every month!{" "}
+              Partner with us to earn a recurring 35% commission every month!{" "}
               <br />
-              Your referred customer will also get 15% off for the first year.
+              {/* Your referred customer will also get 15% off for the first year. */}
             </p>
           </SectionHead>
           <ButtonGroup>
-            <JoinAffiliateBtn>Join our affiliate program</JoinAffiliateBtn>
-            <LoginAffiliateDashboard>
+            <JoinAffiliateBtn onClick={handleJoinAffiliate}>
+              Join our affiliate program
+            </JoinAffiliateBtn>
+            <LoginAffiliateDashboard onClick={handlLoginAffiliate}>
               Login to affiliate dashboard
             </LoginAffiliateDashboard>
           </ButtonGroup>
@@ -188,7 +202,9 @@ const Affiliates = () => {
         >
           <SectionHead>
             <h2>Ready to partner with us?</h2>
-            <JoinAffiliateBtn>Join our affiliate program</JoinAffiliateBtn>
+            <JoinAffiliateBtn onClick={handleJoinAffiliate}>
+              Join our affiliate program
+            </JoinAffiliateBtn>
           </SectionHead>
         </Section>
       </Container>
