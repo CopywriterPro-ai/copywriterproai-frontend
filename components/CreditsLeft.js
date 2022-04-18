@@ -13,9 +13,7 @@ const CreditsLeft = () => {
 
   if (isAuth) {
     return (
-      <StyledCreditsLeft>
-        Your word is left: {words ? words : 0}
-      </StyledCreditsLeft>
+      <StyledCreditsLeft>Words left: {words ? words : 0}</StyledCreditsLeft>
     );
   }
   return null;
