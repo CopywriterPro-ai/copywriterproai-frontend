@@ -1,7 +1,6 @@
 import Switch from "react-switch";
 import styled from "styled-components";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { Spinner } from "reactstrap";
@@ -17,6 +16,7 @@ import { selectors as subscriberSelector } from "@/redux/slices/subscriber";
 import { setRedirectPath } from "@/redux/slices/ui";
 import { getRewardfulClientReferenceId, stripe as getStripe } from "@/utils";
 import PricingListImg from "@/assets/images/pricing/pricing-ul-li.png";
+import PricingListDelImg from "@/assets/images/pricing/pricing-ul-li-del.png";
 import MoneyBackImg from "@/assets/images/money-back-guarantee.png";
 import pricesInfo from "@/data/price.json";
 
@@ -108,7 +108,7 @@ const CustomItem = ({
             <ul>
               <li>Unlimited words</li>
               <li>600 characters input limit</li>
-              <li>45+ copywriting tools</li>
+              <li>50+ copywriting tools</li>
               <li>AI blog writer</li>
               <li>Multiple user login</li>
               <li>24/7 support</li>
@@ -121,7 +121,7 @@ const CustomItem = ({
               BgColor={mainColor}
               disabled={isCheckoutPending}
             >
-              Let’s Talk
+              Let&apos;s Talk
             </ClaimButton>
           </ButtonWrapper>
         </PriceCardBody>
@@ -188,17 +188,25 @@ const SinglePriceItem = ({
         <PriceCardBody BgColor={bgColor}>
           <PriceCardItemList>
             <ul>
-              <li>
+              <PriceCardItemListItem>
                 {priceInfo?.words} words/{priceInfo?.period}
-              </li>
-              <li>{priceInfo?.maxInput} characters input limit</li>
-              <li>45+ copywriting tools</li>
-              <li style={priceInfo?.hasAiBlog ? {} : { color: "#afafaf" }}>
+              </PriceCardItemListItem>
+              <PriceCardItemListItem>
+                {priceInfo?.maxInput} characters input limit
+              </PriceCardItemListItem>
+              <PriceCardItemListItem>
+                {priceInfo?.totalTools} copywriting tools
+              </PriceCardItemListItem>
+              <PriceCardItemListItem
+                Disabled={priceInfo?.hasAiBlog ? "false" : "true"}
+              >
                 AI blog writer
-              </li>
-              <li>{priceInfo?.user} user login</li>
-              <li>24/7 support</li>
-              <li>Community support</li>
+              </PriceCardItemListItem>
+              <PriceCardItemListItem>
+                {priceInfo?.user} user login
+              </PriceCardItemListItem>
+              <PriceCardItemListItem>24/7 support</PriceCardItemListItem>
+              <PriceCardItemListItem>Community support</PriceCardItemListItem>
             </ul>
           </PriceCardItemList>
           <ButtonWrapper>
@@ -299,6 +307,16 @@ const PriceCardItemList = styled.div`
       padding: 8px 0;
     }
   }
+`;
+
+const PriceCardItemListItem = styled.li`
+  list-style: ${({ Disabled }) =>
+    Disabled === "true"
+      ? `url(${PricingListDelImg.src})`
+      : `url(${PricingListImg.src})`}!important;
+
+  color: ${({ Disabled }) =>
+    Disabled === "true" ? `#afafaf` : `inherit`}!important;
 `;
 
 const PricingCard = () => {
