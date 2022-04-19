@@ -24,6 +24,7 @@ const customStyles = {
     height: "80vh",
     overlfow: "scroll",
   },
+  overlay: { zIndex: 9999 },
 };
 
 const InputGroup = ({ register, name, label, type = "text", placeholder }) => {

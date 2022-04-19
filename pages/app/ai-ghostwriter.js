@@ -203,6 +203,7 @@ const CompleteBlogGenerator = () => {
   const [showSubscriberModal, setShowSubscriberModal] = useSubscriberModal();
 
   const isNewBlog = activeId === "";
+  const editorTexts = quill ? quill.getText() : "";
 
   useBeforeunload((event) => {
     if (isEditorChange) {
@@ -324,7 +325,6 @@ const CompleteBlogGenerator = () => {
     );
 
     if (isValid) {
-      const editorText = quill && quill.getText();
       dispatch(setCurrentTask(BLOG_WRITING));
       dispatch(
         postBlogContents({
@@ -333,7 +333,7 @@ const CompleteBlogGenerator = () => {
             ...values,
             keywords: tags,
             ...(blogLength === LONG_BLOG &&
-              editorText.length >= 10 && { contents: editorText }),
+              editorTexts.length >= 10 && { contents: editorTexts }),
           },
         })
       );
@@ -445,7 +445,13 @@ const CompleteBlogGenerator = () => {
                       onChange={(e) => setBlogLength(e.target.value)}
                     >
                       {blogLengthItems.map(({ name, key }) => (
-                        <option key={key} value={key}>
+                        <option
+                          key={key}
+                          value={key}
+                          disabled={
+                            editorTexts.length > 10 && blogLength !== key
+                          }
+                        >
                           {name}
                         </option>
                       ))}
@@ -473,7 +479,7 @@ const CompleteBlogGenerator = () => {
                   >
                     {complete.success
                       ? "Reset Blog"
-                      : quill?.getText().length >= 10
+                      : editorTexts.length >= 10
                       ? "Generate More"
                       : "Generate Blog"}
                   </GenerateButton>
