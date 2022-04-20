@@ -1,4 +1,4 @@
-import { getRewardfulClientReferenceId, stripe as getStripe } from "@/utils";
+import { getRewardfulClientReferenceId } from "@/utils";
 import fetcher from "./fetcher";
 
 const content = {
