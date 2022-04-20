@@ -14,7 +14,7 @@ import {
 import { selectors as authSelector } from "@/redux/slices/auth";
 import { selectors as subscriberSelector } from "@/redux/slices/subscriber";
 import { setRedirectPath } from "@/redux/slices/ui";
-import { getRewardfulClientReferenceId, stripe as getStripe } from "@/utils";
+import { stripe as getStripe } from "@/utils";
 import PricingListImg from "@/assets/images/pricing/pricing-ul-li.png";
 import PricingListDelImg from "@/assets/images/pricing/pricing-ul-li-del.png";
 import MoneyBackImg from "@/assets/images/money-back-guarantee.png";
@@ -161,7 +161,6 @@ const SinglePriceItem = ({
             const stripe = await getStripe();
             stripe?.redirectToCheckout({
               sessionId: data.session.id,
-              clientReferenceId: getRewardfulClientReferenceId(),
             });
           }
         }
@@ -368,7 +367,7 @@ const PricingCard = () => {
 
   return (
     <PriceSection>
-      <SectionTitle>Grow Your Business With Copywriterpro</SectionTitle>
+      <SectionTitle>Grow Your Business With CopywriterPro</SectionTitle>
       <PriceSwitch>
         <span>One Month</span>
         <PriceSwitchButton

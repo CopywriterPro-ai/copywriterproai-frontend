@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import YouTubeEmbed from "@/components/YouTubeEmbed";
 
 import Choose from "@/assets/images/landing/schedule-section/choose.png";
 import Define from "@/assets/images/landing/schedule-section/define.png";
 import Generate from "@/assets/images/landing/schedule-section/generate.png";
-import { PrimaryButton } from "@/components/common/Button";
 import { useWindowSize } from "@/hooks";
 import { isServer } from "@/utils";
 
@@ -302,7 +302,7 @@ const GenerateSchedule = () => {
     <ScheduleSection>
       <div className="row" style={{ alignItems: "center", margin: "0" }}>
         <ScheduleTextContainer className="col-md-6">
-          <ScheduleCardText>
+          {/* <ScheduleCardText>
             <h4>3 Steps to make your copywriting masterpiece!</h4>
             {isDesktop && (
               <PrimaryButton
@@ -311,7 +311,15 @@ const GenerateSchedule = () => {
                 title="Try it now!"
               />
             )}
-          </ScheduleCardText>
+          </ScheduleCardText> */}
+          <YoutubeVideo>
+            <YouTubeEmbed
+              id="YdBLH0B_72M"
+              title="How to Use CopywriterPro AI To Create Brilliant Ad Copies."
+              poster="hqdefault"
+              webp={true}
+            />
+          </YoutubeVideo>
         </ScheduleTextContainer>
         <ScheduleCardContainer className="col-md-6">
           <ScheduleCard
@@ -443,6 +451,13 @@ const ScheduleCardContainer = styled.div`
   @media only screen and (max-width: 768px) and (min-width: 768px) {
     display: contents;
   }
+`;
+
+const YoutubeVideo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 `;
 
 export default GenerateSchedule;

@@ -1,3 +1,4 @@
+import { getRewardfulClientReferenceId, stripe as getStripe } from "@/utils";
 import fetcher from "./fetcher";
 
 const content = {
@@ -14,7 +15,7 @@ const content = {
   postCreateCheckoutSession: ({ data }) => {
     return fetcher("/payments/create-checkout-session", {
       method: "post",
-      data,
+      data: { ...data, referenceId: getRewardfulClientReferenceId() },
     });
   },
   getCheckoutSession: ({ sessionId }) => {
