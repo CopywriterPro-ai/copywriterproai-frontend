@@ -301,7 +301,10 @@ const GenerateSchedule = () => {
   return (
     <ScheduleSection>
       <div className="row" style={{ alignItems: "center", margin: "0" }}>
-        <ScheduleTextContainer className="col-md-6">
+        <ScheduleTextContainer
+          className="col-md-12"
+          style={{ marginTop: "5rem" }}
+        >
           {/* <ScheduleCardText>
             <h4>3 Steps to make your copywriting masterpiece!</h4>
             {isDesktop && (
@@ -321,7 +324,7 @@ const GenerateSchedule = () => {
             />
           </YoutubeVideo>
         </ScheduleTextContainer>
-        <ScheduleCardContainer className="col-md-6">
+        {/* <ScheduleCardContainer className="col-md-6">
           <ScheduleCard
             imgSrc={Choose}
             title="Choose"
@@ -341,7 +344,7 @@ const GenerateSchedule = () => {
             title="Generate"
             description="Get multiple results just by clicking “Generate” and edit them to match your need."
           />
-        </ScheduleCardContainer>
+        </ScheduleCardContainer> */}
       </div>
     </ScheduleSection>
   );

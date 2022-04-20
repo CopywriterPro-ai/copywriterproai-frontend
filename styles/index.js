@@ -67,6 +67,7 @@ body {
     background-position: 50%;
     background-size: cover;
     cursor: pointer;
+    border-radius: 10px;
   }
   .yt-embed:before {
     content: "";

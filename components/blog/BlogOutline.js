@@ -19,6 +19,7 @@ import {
   useQuillConentTypingInsert,
   useSubscriberModal,
   useToolAccess,
+  useWriterAccess,
 } from "@/hooks";
 import GenerateButton from "./components/GenerateButton";
 
@@ -76,6 +77,7 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
   const [showSubscriberModal, setShowSubscriberModal] = useSubscriberModal();
   const [accessBlogOutline] = useToolAccess([BLOG_OUTLINE]);
   const [accessBlogFromOutline] = useToolAccess([BLOG_FROM_OUTLINE]);
+  const hasWriterAccess = useWriterAccess();
 
   useEffect(() => {
     if (!isTyping) {
@@ -89,7 +91,7 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
       return;
     }
 
-    if (!accessBlogOutline) {
+    if (!accessBlogOutline || !hasWriterAccess) {
       dispatch(
         setAccessTask({
           isOpen: true,
@@ -123,9 +125,12 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
       return;
     }
 
-    if (!accessBlogFromOutline) {
+    if (!accessBlogFromOutline || !hasWriterAccess) {
       dispatch(
-        setAccessTask({ isOpen: true, message: "please upgrade your plan" })
+        setAccessTask({
+          isOpen: true,
+          message: MESSAGE.WRITING_TOOLS_NOT_ACCESS,
+        })
       );
       return;
     }

@@ -31,6 +31,7 @@ import {
   useWarnIfUnsavedChanges,
   useToolAccess,
   useSubscriberModal,
+  useWriterAccess,
 } from "@/hooks";
 import { UserLayout as Layout } from "@/layout";
 import { selectors as uiSelector, setBlogResetModal } from "@/redux/slices/ui";
@@ -156,6 +157,7 @@ const BlogGenerator = () => {
   const [editorCurrentTaskInput, setEditorCurrentTaskInput] = useState({});
   const [accessEditorTool] = useToolAccess([editorCurrentTaskInput.task]);
   const [showSubscriberModal, setShowSubscriberModal] = useSubscriberModal();
+  const hasWriterAccess = useWriterAccess();
 
   useBeforeunload((event) => {
     if (isEditorChange) {
@@ -265,7 +267,7 @@ const BlogGenerator = () => {
       return;
     }
 
-    if (!accessEditorTool) {
+    if (!accessEditorTool || !hasWriterAccess) {
       dispatch(
         setAccessTask({
           isOpen: true,

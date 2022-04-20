@@ -14,7 +14,7 @@ import { ToolItem, TextItem } from "./styles";
 import { BLOG_INTRO, BLOG_OUTLINE } from "@/appconstants";
 import * as MESSAGE from "@/appconstants/message";
 import { yupValidate } from "@/utils";
-import { useSubscriberModal, useToolAccess } from "@/hooks";
+import { useSubscriberModal, useToolAccess, useWriterAccess } from "@/hooks";
 import { ToolAction, ToolInput } from "./styles";
 import GenerateButton from "./components/GenerateButton";
 
@@ -52,6 +52,7 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
 
   const [accessBlogIntro] = useToolAccess([BLOG_INTRO]);
   const [showSubscriberModal, setShowSubscriberModal] = useSubscriberModal();
+  const hasWriterAccess = useWriterAccess();
 
   const handleBlogIntro = () => {
     if (showSubscriberModal.block) {
@@ -59,7 +60,7 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
       return;
     }
 
-    if (!accessBlogIntro) {
+    if (!accessBlogIntro || !hasWriterAccess) {
       dispatch(
         setAccessTask({
           isOpen: true,
