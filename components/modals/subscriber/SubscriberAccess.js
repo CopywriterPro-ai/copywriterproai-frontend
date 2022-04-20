@@ -14,7 +14,7 @@ import {
   selectors as paymentSelector,
 } from "@/redux/slices/payment";
 import { selectors as uiSelector, setAccessTask } from "@/redux/slices/ui";
-import { stripe as getStripe, getRewardfulClientReferenceId } from "@/utils";
+import { stripe as getStripe } from "@/utils";
 import { PricingCard, customStyles } from "./components/Price";
 import {
   Container,
@@ -97,7 +97,6 @@ const SubscriberAccess = () => {
           const stripe = await getStripe();
           stripe?.redirectToCheckout({
             sessionId: data.session.id,
-            clientReferenceId: getRewardfulClientReferenceId(),
           });
         }
       });

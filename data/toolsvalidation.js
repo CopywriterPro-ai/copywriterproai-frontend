@@ -4,37 +4,37 @@ const singleValidation = (task, limit = true) => {
   const validateSchema = {
     paraphrasing: {
       task: "paraphrasing",
-      userText: { min: 5, max: isLimit ? 400 : 600, required: true },
+      userText: { min: 5, max: 400, required: true },
       numberOfSuggestions: { min: 1, max: 10, required: true },
     },
     expander: {
       task: "expander",
-      userText: { min: 5, max: isLimit ? 400 : 600, required: true },
+      userText: { min: 5, max: 400, required: true },
       numberOfSuggestions: { min: 1, max: 10, required: true },
     },
     simplifier: {
       task: "simplifier",
-      userText: { min: 5, max: isLimit ? 400 : 600, required: true },
+      userText: { min: 5, max: 400, required: true },
       numberOfSuggestions: { min: 1, max: 10, required: true },
     },
     summarizer: {
       task: "summarizer",
-      userText: { min: 5, max: isLimit ? 400 : 600, required: true },
+      userText: { min: 5, max: 400, required: true },
       numberOfSuggestions: { min: 1, max: 10, required: true },
     },
     abstract: {
       task: "abstract",
-      userText: { min: 5, max: isLimit ? 400 : 600, required: true },
+      userText: { min: 5, max: 400, required: true },
       numberOfSuggestions: { min: 1, max: 10, required: true },
     },
     "notes-from-passage": {
       task: "notes-from-passage",
-      userText: { min: 5, max: isLimit ? 400 : 600, required: true },
+      userText: { min: 5, max: 400, required: true },
       numberOfPoints: { min: 2, max: 10, required: true },
     },
     "grammar-fixer": {
       task: "grammar-fixer",
-      userText: { min: 5, max: isLimit ? 400 : 600, required: true },
+      userText: { min: 5, max: 400, required: true },
     },
     proofread: {
       task: "proofread",
@@ -42,7 +42,7 @@ const singleValidation = (task, limit = true) => {
     },
     "change-tone": {
       task: "change-tone",
-      userText: { min: 5, max: isLimit ? 400 : 600, required: true },
+      userText: { min: 5, max: 400, required: true },
       numberOfSuggestions: { min: 1, max: 10, required: true },
       tone: [
         "Formal",
@@ -231,7 +231,7 @@ const singleValidation = (task, limit = true) => {
     },
     "email-subject-from-body": {
       task: "email-subject-from-body",
-      emailBody: { min: 10, max: isLimit ? 400 : 600, required: true },
+      emailBody: { min: 10, max: 400, required: true },
     },
     "website-short-description": {
       task: "website-short-description",
@@ -241,15 +241,15 @@ const singleValidation = (task, limit = true) => {
     },
     "website-keywords-from-text": {
       task: "website-keywords-from-text",
-      primaryText: { min: 10, max: isLimit ? 400 : 600, required: true },
+      primaryText: { min: 10, max: 400, required: true },
     },
     "youtube-video-tags-from-description": {
       task: "youtube-video-tags-from-description",
-      primaryText: { min: 10, max: isLimit ? 400 : 600, required: true },
+      primaryText: { min: 10, max: 400, required: true },
     },
     "youtube-channel-tags-from-description": {
       task: "youtube-channel-tags-from-description",
-      primaryText: { min: 10, max: isLimit ? 400 : 600, required: true },
+      primaryText: { min: 10, max: 400, required: true },
     },
     "website-seo-friendly-blog-ideas": {
       task: "website-seo-friendly-blog-ideas",
