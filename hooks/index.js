@@ -26,3 +26,4 @@ export { default as useQuillCounter } from "./editor/useQuillCounter";
 export { default as useQuillConentDirectInsert } from "./editor/useQuillConentDirectInsert";
 export { default as useQuillValueIsChange } from "./editor/useQuillValueIsChange";
 export { default as useToolAccess } from "./useToolAccess";
+export { default as useWriterAccess } from "./useWriterAccess";

@@ -44,6 +44,7 @@ import {
   useSidebar,
   useToolAccess,
   useSubscriberModal,
+  useWriterAccess,
 } from "@/hooks";
 import { SubscriberModal } from "@/components/modals/subscriber";
 import { BlogResetModal } from "@/components/modals/blogs";
@@ -201,6 +202,7 @@ const CompleteBlogGenerator = () => {
   const [accessBlog] = useToolAccess([blogLength]);
   const [accessEditorTool] = useToolAccess([editorCurrentTaskInput.task]);
   const [showSubscriberModal, setShowSubscriberModal] = useSubscriberModal();
+  const hasWriterAccess = useWriterAccess();
 
   const isNewBlog = activeId === "";
   const editorTexts = quill ? quill.getText() : "";
@@ -305,7 +307,7 @@ const CompleteBlogGenerator = () => {
       return;
     }
 
-    if (!accessBlog) {
+    if (!accessBlog && !hasWriterAccess) {
       dispatch(
         setAccessTask({
           isOpen: true,
@@ -368,7 +370,7 @@ const CompleteBlogGenerator = () => {
       return;
     }
 
-    if (!accessEditorTool) {
+    if (!accessEditorTool && !hasWriterAccess) {
       dispatch(
         setAccessTask({
           isOpen: true,
