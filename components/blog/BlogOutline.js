@@ -91,7 +91,7 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
       return;
     }
 
-    if (!accessBlogOutline || !hasWriterAccess) {
+    if (!accessBlogOutline && !hasWriterAccess) {
       dispatch(
         setAccessTask({
           isOpen: true,
@@ -125,7 +125,7 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
       return;
     }
 
-    if (!accessBlogFromOutline || !hasWriterAccess) {
+    if (!accessBlogFromOutline && !hasWriterAccess) {
       dispatch(
         setAccessTask({
           isOpen: true,

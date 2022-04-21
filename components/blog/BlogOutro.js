@@ -60,7 +60,7 @@ const BlogOutro = ({ titleRef, aboutRef, quillRef }) => {
       return;
     }
 
-    if (!accessBlogOutro || !hasWriterAccess) {
+    if (!accessBlogOutro && !hasWriterAccess) {
       dispatch(
         setAccessTask({
           isOpen: true,

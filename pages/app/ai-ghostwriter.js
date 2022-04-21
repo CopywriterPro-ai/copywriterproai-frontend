@@ -307,7 +307,7 @@ const CompleteBlogGenerator = () => {
       return;
     }
 
-    if (!accessBlog || !hasWriterAccess) {
+    if (!accessBlog && !hasWriterAccess) {
       dispatch(
         setAccessTask({
           isOpen: true,
@@ -370,7 +370,7 @@ const CompleteBlogGenerator = () => {
       return;
     }
 
-    if (!accessEditorTool || !hasWriterAccess) {
+    if (!accessEditorTool && !hasWriterAccess) {
       dispatch(
         setAccessTask({
           isOpen: true,

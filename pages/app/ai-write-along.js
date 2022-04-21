@@ -267,7 +267,7 @@ const BlogGenerator = () => {
       return;
     }
 
-    if (!accessEditorTool || !hasWriterAccess) {
+    if (!accessEditorTool && !hasWriterAccess) {
       dispatch(
         setAccessTask({
           isOpen: true,

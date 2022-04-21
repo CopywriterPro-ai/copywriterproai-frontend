@@ -54,7 +54,7 @@ const BlogHeadline = ({ aboutRef }) => {
       return;
     }
 
-    if (!accessBlogHeadline || !hasWriterAccess) {
+    if (!accessBlogHeadline && !hasWriterAccess) {
       dispatch(
         setAccessTask({
           isOpen: true,

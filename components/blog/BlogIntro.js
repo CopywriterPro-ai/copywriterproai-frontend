@@ -60,7 +60,7 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
       return;
     }
 
-    if (!accessBlogIntro || !hasWriterAccess) {
+    if (!accessBlogIntro && !hasWriterAccess) {
       dispatch(
         setAccessTask({
           isOpen: true,
