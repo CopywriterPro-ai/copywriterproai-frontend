@@ -9,3 +9,4 @@ export { default as supportApi } from "./supportApi";
 export { default as toolsApi } from "./toolsApi";
 export { default as demoGenerateApi } from "./demoGenerateApi";
 export { default as uiApi } from "./uiApi";
+export { default as plagiarismApi } from "./plagiarismApi";

@@ -39,6 +39,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
   const {
     isAuth,
     subscribe: {
+      freeTrial: { eligible: freeTrailEligible },
       activeSubscription: { words, subscription },
     },
   } = useUser();
@@ -145,6 +146,12 @@ const InputGeneratingBox = ({ showTutorialState }) => {
 
   return (
     <Container>
+      {subscription === "Freemium" && !freeTrailEligible && (
+        <SubscriptionOver>
+          Your subscription is over, click here to re-subscribe
+        </SubscriptionOver>
+      )}
+
       <ContentHeader>
         <ContentTitle>
           <span onClick={handleSidebar} className="fas fa-bars"></span>
@@ -162,7 +169,6 @@ const InputGeneratingBox = ({ showTutorialState }) => {
           </CreditsLeft>
         )}
       </ContentHeader>
-
       <MainContent>
         <Tips>
           <TipsIcon src={TipsImg.src} alt="tips" />
@@ -309,6 +315,17 @@ const EmptyTool = styled.div`
 
 const Container = styled.div`
   padding-top: 15px;
+`;
+
+const SubscriptionOver = styled.div`
+  background: #f44336;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 15px 0;
+  text-align: center;
+  user-select: none;
 `;
 
 const ContentHeader = styled.div`

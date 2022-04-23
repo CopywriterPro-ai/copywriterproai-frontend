@@ -319,7 +319,7 @@ const GenerateSchedule = () => {
             <YouTubeEmbed
               id="YdBLH0B_72M"
               title="How to Use CopywriterPro AI To Create Brilliant Ad Copies."
-              poster="hqdefault"
+              poster="sddefault"
               webp={true}
             />
           </YoutubeVideo>
@@ -351,7 +351,7 @@ const GenerateSchedule = () => {
 };
 
 const ScheduleSection = styled.div`
-  margin: 100px 0px;
+  margin: 120px 0px;
 
   @media (max-width: 768px) {
     margin: 35px 0;
@@ -359,7 +359,7 @@ const ScheduleSection = styled.div`
 `;
 
 const ScheduleTextContainer = styled.div`
-  margin-left: -60px;
+  /* margin-left: -60px; */
   height: 450px;
 
   @media (max-width: 768px) {
