@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Collapse } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -14,12 +14,12 @@ import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem, ToolAction, ToolInput } from "./styles";
 import { BLOG_OUTLINE, BLOG_FROM_OUTLINE } from "@/appconstants";
 import * as MESSAGE from "@/appconstants/message";
-import { yupValidate } from "@/utils";
+import { yupValidate, quillTypingInsert } from "@/utils";
 import {
-  useQuillConentTypingInsert,
   useSubscriberModal,
   useToolAccess,
   useWriterAccess,
+  useQuillSelected,
 } from "@/hooks";
 import GenerateButton from "./components/GenerateButton";
 
@@ -73,17 +73,11 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
   const { isCurrentTask } = useSelector(
     writeAlongSelector.getContentItem(BLOG_OUTLINE)
   );
-  const isTyping = useQuillConentTypingInsert(quillRef, outlineblog.item);
+  const { range, lastIndex } = useQuillSelected(quillRef);
   const [showSubscriberModal, setShowSubscriberModal] = useSubscriberModal();
   const [accessBlogOutline] = useToolAccess([BLOG_OUTLINE]);
   const [accessBlogFromOutline] = useToolAccess([BLOG_FROM_OUTLINE]);
   const hasWriterAccess = useWriterAccess();
-
-  useEffect(() => {
-    if (!isTyping) {
-      dispatch(writeAlongActions.setOutlineBlog({ item: "" }));
-    }
-  }, [dispatch, isTyping]);
 
   const handleBlogOutline = () => {
     if (showSubscriberModal.block) {
@@ -149,7 +143,16 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
           task: BLOG_FROM_OUTLINE,
           data: { ...values },
         })
-      );
+      ).then(({ payload }) => {
+        const typingComplate = quillTypingInsert(
+          quillRef,
+          payload.data.generatedTexts,
+          { range, lastIndex }
+        );
+        if (typingComplate) {
+          dispatch(writeAlongActions.setOutlineBlog({ item: "" }));
+        }
+      });
     }
   };
 

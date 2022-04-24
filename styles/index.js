@@ -102,6 +102,7 @@ body {
     opacity: 0.8;
     border-radius: 14%;
     transition: all 0.2s cubic-bezier(0, 0, 0.2, 1);
+    border: none;
   }
   .yt-embed:hover > .yt-embed-pbtn {
     background-color: red;

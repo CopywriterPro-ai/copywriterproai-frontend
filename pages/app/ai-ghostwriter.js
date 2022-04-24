@@ -20,6 +20,7 @@ import {
   postBlogContents,
   postEditorToolsContent,
   setBlogContent,
+  setBlogComplete,
   setEditor,
   selectors as blogSelector,
 } from "@/redux/slices/completeBlog";
@@ -52,7 +53,7 @@ import { MainSidebar } from "@/components/sidebar";
 import GenerateButton from "@/components/blog/components/GenerateButton";
 import CreditsLeft from "@/components/CreditsLeft";
 import TipsImg from "@/assets/images/generate-tips.png";
-import { toastMessage, yupValidate } from "@/utils";
+import { toastMessage, yupValidate, quillTypingInsert } from "@/utils";
 import {
   AI_COMPLETE_BLOG_WRITER,
   BLOG_WRITING,
@@ -194,7 +195,7 @@ const CompleteBlogGenerator = () => {
   const { subscribe } = useUser();
   const { showSidebar, showContent } = useSidebar();
   const quillCounter = useQuillCounter(quill);
-  const { range, text: selectedText } = useQuillSelected(quill);
+  const { range, text: selectedText, lastIndex } = useQuillSelected(quill);
   const [editorCurrentTaskInput, setEditorCurrentTaskInput] = useState({});
   const { isEditorChange } = useQuillValueIsChange(quill);
   const [tags, setTags] = useState([]);
@@ -333,12 +334,23 @@ const CompleteBlogGenerator = () => {
           task: blogLength,
           data: {
             ...values,
+
             keywords: tags,
             ...(blogLength === LONG_BLOG &&
               editorTexts.length >= 10 && { contents: editorTexts }),
           },
         })
-      );
+      ).then(({ payload }) => {
+        const content = payload.data.generatedTexts[0] || "";
+
+        const typingComplate = quillTypingInsert(quill, content, {
+          range,
+          lastIndex,
+        });
+        if (typingComplate) {
+          dispatch(setBlogComplete({ items: [] }));
+        }
+      });
     }
   };
 

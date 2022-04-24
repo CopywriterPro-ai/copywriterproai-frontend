@@ -12,6 +12,7 @@ import toolsReducer from "@/redux/slices/tools";
 import demoGenerateReducer from "@/redux/slices/demoGenerate";
 import completeBlogReducer from "@/redux/slices/completeBlog";
 import draftReducer from "@/redux/slices/draft";
+import plagiarism from "@/redux/slices/plagiarism";
 
 const reducers = combineReducers({
   ui: uiReducer,
@@ -26,6 +27,7 @@ const reducers = combineReducers({
   demoGenerate: demoGenerateReducer,
   completeBlog: completeBlogReducer,
   draft: draftReducer,
+  [plagiarism.name]: plagiarism.reducer,
 });
 
 export default reducers;

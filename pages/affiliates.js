@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 
-import { SpecialLayout as Layout } from "@/layout";
+import { CondLayout as Layout } from "@/layout";
 
 const AFFILIATE_PARCENTAGE = 35;
 const MIN_RANGE = 1;
