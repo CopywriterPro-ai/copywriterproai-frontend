@@ -319,7 +319,7 @@ const GenerateSchedule = () => {
             <YouTubeEmbed
               id="YdBLH0B_72M"
               title="How to Use CopywriterPro AI To Create Brilliant Ad Copies."
-              poster="sddefault"
+              poster="maxresdefault"
               webp={true}
             />
           </YoutubeVideo>
