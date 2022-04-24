@@ -6,7 +6,6 @@ import "quill/dist/quill.snow.css";
 
 import {
   setEditor,
-  setBlogComplete,
   setBlogContent,
   selectors,
 } from "@/redux/slices/completeBlog";
@@ -17,7 +16,6 @@ import {
   useQuillSelected,
   useQuillContentChange,
   useQuillPlainPaste,
-  useQuillConentTypingInsert,
   useQuillConentDirectInsert,
 } from "@/hooks";
 import { AI_COMPLETE_BLOG_WRITER } from "@/appconstants";
@@ -42,7 +40,6 @@ const QuillEditor = ({ setQuillEditor }) => {
   } = useSelector(draftSelector.getDraftBlogs());
   const currentContent = useQuillContentChange(quill);
   const editorcontainerRef = useRef(null);
-  const isTyping = useQuillConentTypingInsert(quill, completeItems);
   const isContentTyping = useQuillConentDirectInsert(quill, contentItem, true);
   const [editorContent] = useDebounce(currentContent, 1000);
   useQuillPlainPaste(quill);
@@ -50,12 +47,6 @@ const QuillEditor = ({ setQuillEditor }) => {
   useEffect(() => {
     if (quill) setQuillEditor(quill);
   }, [quill, setQuillEditor]);
-
-  useEffect(() => {
-    if (!isTyping) {
-      dispatch(setBlogComplete({ items: [] }));
-    }
-  }, [dispatch, isTyping]);
 
   useEffect(() => {
     if (!isContentTyping) {
