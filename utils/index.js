@@ -13,3 +13,4 @@ export { default as markdownToHtml } from "./markdownToHtml";
 export { default as yupValidate } from "./yupValidate";
 export { default as getRewardfulClientReferenceId } from "./getRewardfulClientReferenceId";
 export { default as quillTypingInsert } from "./quillTypingInsert";
+export { default as quillPlagiarism } from "./quillPlagiarism";

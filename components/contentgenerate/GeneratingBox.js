@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { UncontrolledTooltip } from "reactstrap";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import styled from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 
@@ -147,9 +148,12 @@ const InputGeneratingBox = ({ showTutorialState }) => {
   return (
     <Container>
       {subscription === "Freemium" && !freeTrailEligible && (
-        <SubscriptionOver>
-          Your subscription is over, click here to re-subscribe
-        </SubscriptionOver>
+        <Link href="/pricing" passHref>
+          <SubscriptionOver>
+            Your trial has come to an end! Click here to subscribe and keep
+            writing great content!
+          </SubscriptionOver>
+        </Link>
       )}
 
       <ContentHeader>
@@ -326,6 +330,7 @@ const SubscriptionOver = styled.div`
   padding: 15px 0;
   text-align: center;
   user-select: none;
+  margin-bottom: 20px;
 `;
 
 const ContentHeader = styled.div`
