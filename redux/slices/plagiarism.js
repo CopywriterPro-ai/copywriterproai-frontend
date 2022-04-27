@@ -7,6 +7,7 @@ import { HYDRATE } from "next-redux-wrapper";
 
 import asyncThunkError from "@/utils/asyncThunkError";
 import { plagiarismApi } from "@/api";
+import { pick, toastMessage } from "@/utils";
 
 export const postCheckPlagiarism = createAsyncThunk(
   "plagiarism/postCheckPlagiarismFetching",
@@ -31,7 +32,12 @@ const initialState = {
 const plagiarism = createSlice({
   name: "plagiarism",
   initialState,
-  reducers: {},
+  reducers: {
+    setWriterPlagiarism: (state, action) => {
+      const payload = pick(action.payload, ["loading", "data", "error"]);
+      state.writer = { ...state.writer, ...payload };
+    },
+  },
   extraReducers: {
     [HYDRATE]: (state, { payload }) => ({
       ...state,
@@ -46,8 +52,16 @@ const plagiarism = createSlice({
     },
     [postCheckPlagiarism.fulfilled]: (state, action) => {
       if (state.writer.loading === "pending") {
+        const result = action.payload.data.result;
         state.writer.loading = "idle";
-        state.writer.data = action.payload.data.result;
+        state.writer.data = result;
+
+        if (Array.isArray(result) && result.length === 0) {
+          toastMessage.success(
+            "Congratulations, not plagiarism detected",
+            5000
+          );
+        }
       }
     },
     [postCheckPlagiarism.rejected]: (state, action) => {

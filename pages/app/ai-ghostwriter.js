@@ -51,6 +51,7 @@ import { SubscriberModal } from "@/components/modals/subscriber";
 import { BlogResetModal } from "@/components/modals/blogs";
 import { MainSidebar } from "@/components/sidebar";
 import GenerateButton from "@/components/blog/components/GenerateButton";
+import Plagiarism from "@/components/Plagiarism";
 import CreditsLeft from "@/components/CreditsLeft";
 import TipsImg from "@/assets/images/generate-tips.png";
 import { toastMessage, yupValidate, quillTypingInsert } from "@/utils";
@@ -430,6 +431,7 @@ const CompleteBlogGenerator = () => {
               placeholder="Blog Headline"
               onChange={handleChangeBlogHeadline}
             />
+            {/* <Plagiarism quill={quill} /> */}
             <CustomToolbar />
             <EditorJS setQuillEditor={setQuill} />
           </EditorSection>
