@@ -6,6 +6,8 @@ module.exports = {
     "/account",
     // "/app/ai-ghostwriter",
     // "/app/ai-write-along",
+    "/about",
+    "/app",
     "/bookmarks",
     "/contenttools/categories",
     "/contenttools/tools",
@@ -22,5 +24,7 @@ module.exports = {
     "/extension/access",
     "/payment/canceled",
     "/payment/success",
+    "/app/Blog",
+    "/tutorial/tools/*",
   ],
 };

@@ -53,7 +53,7 @@ const makeStore = () => {
       key: "CopywriterPro",
       storage,
       version: 2.0,
-      whitelist: ["auth", "payment"],
+      whitelist: ["auth"],
     };
 
     const persistedReducer = persistReducer(persistConfig, reducer);
