@@ -88,10 +88,10 @@ const contentTools = [
     name: "Summarizer",
     key: SUMMARIZER,
   },
-  {
-    name: "Abstract",
-    key: ABSTRACT,
-  },
+  // {
+  //   name: "Abstract",
+  //   key: ABSTRACT,
+  // },
   {
     name: "Key Takeaways",
     key: NOTES_FROM_PASSAGE,
@@ -221,7 +221,7 @@ const BlogGenerator = () => {
           })
         ).then(({ payload }) => {
           if (payload.status === 200) {
-            toastMessage.success("Blog update successfully");
+            toastMessage.success("Blog updated successfully");
           }
         });
       } else {
