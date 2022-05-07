@@ -101,10 +101,10 @@ const contentTools = [
     name: "Summarizer",
     key: SUMMARIZER,
   },
-  {
-    name: "Abstract",
-    key: ABSTRACT,
-  },
+  // {
+  //   name: "Abstract",
+  //   key: ABSTRACT,
+  // },
   {
     name: "Key Takeaways",
     key: NOTES_FROM_PASSAGE,

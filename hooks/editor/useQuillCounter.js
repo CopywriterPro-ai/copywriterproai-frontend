@@ -2,6 +2,24 @@ import { useEffect, useState } from "react";
 import rs from "text-readability";
 import readingTime from "reading-time";
 
+const numberOfWords = (text) => {
+  let words;
+  const textWithoutSpace = text.replace(/\s+/g, '');
+  const matches = textWithoutSpace.match(/([^\x00-\x7F\u2013\u2014])+/gi);
+  const latinOnly = matches === null;
+  if (!latinOnly) {
+    words = text.match(/\S+/g);
+  } else {
+    words = text
+      .replace(/[;!:\-—\/]/g, ' ')
+      .replace(/\.\s+/g, ' ')
+      .replace(/[^a-zA-Z\d\s&:,]/g, '')
+      .replace(/,([^0-9])/g, ' $1')
+      .match(/\S+/g);
+  }
+  return words.length;
+};
+
 const useQuillCounter = (quill) => {
   const [texts, setTexts] = useState("");
   const [optimizeTexts, setOptimizeTexts] = useState("");
@@ -47,7 +65,7 @@ const useQuillCounter = (quill) => {
         timeToRead: readTime,
         readabilityScore: Math.min(Math.max(parseInt(readScore), 0), 100),
         sentence: rs.sentenceCount(optimizeTexts),
-        word: rs.syllableCount(optimizeTexts, "en-US"),
+        word: numberOfWords(optimizeTexts),
         character: optimizeTexts.length,
       });
     } else {
