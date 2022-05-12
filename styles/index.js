@@ -129,6 +129,13 @@ body {
     opacity: 0;
     pointer-events: none;
   }
+
+  .p-mark{
+    background: #fccecc;
+    color: black;
+    line-height: 28px;
+    font-weight: 500;
+}
 `;
 
 export default GlobalStyle;

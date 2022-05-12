@@ -14,3 +14,4 @@ export { default as yupValidate } from "./yupValidate";
 export { default as getRewardfulClientReferenceId } from "./getRewardfulClientReferenceId";
 export { default as quillTypingInsert } from "./quillTypingInsert";
 export { default as quillPlagiarism } from "./quillPlagiarism";
+export { default as decodeEntities } from "./decodeEntities";

@@ -24,6 +24,8 @@ export const postCheckPlagiarism = createAsyncThunk(
 const initialState = {
   writer: {
     loading: "idle",
+    content: "",
+    position: { index: 0, length: 0 },
     data: [],
     error: null,
   },
@@ -34,7 +36,13 @@ const plagiarism = createSlice({
   initialState,
   reducers: {
     setWriterPlagiarism: (state, action) => {
-      const payload = pick(action.payload, ["loading", "data", "error"]);
+      const payload = pick(action.payload, [
+        "loading",
+        "content",
+        "position",
+        "data",
+        "error",
+      ]);
       state.writer = { ...state.writer, ...payload };
     },
   },
@@ -52,11 +60,11 @@ const plagiarism = createSlice({
     },
     [postCheckPlagiarism.fulfilled]: (state, action) => {
       if (state.writer.loading === "pending") {
-        const result = action.payload.data.result;
+        const results = action.payload.data.results;
         state.writer.loading = "idle";
-        state.writer.data = result;
+        state.writer.data = results;
 
-        if (Array.isArray(result) && result.length === 0) {
+        if (Array.isArray(results) && results.length === 0) {
           toastMessage.success(
             "Congratulations, not plagiarism detected",
             5000
@@ -73,10 +81,93 @@ const plagiarism = createSlice({
   },
 });
 
+const between = (x, min, max) => {
+  return x >= min && x <= max;
+};
+
 export const plagiarismSelector = {
   getPlagiarism: createSelector(
     (state) => state.plagiarism,
     (plagiarism) => plagiarism
+  ),
+  getPlagiarismWriterMark: createSelector(
+    (state) => state.plagiarism.writer,
+    (writer) => {
+      const { data, position, content } = writer;
+      if (Array.isArray(data) && data.length > 0) {
+        const isSelectedText = position.index !== 0;
+
+        const formattedMark = data.map((item) => {
+          const ranges = item.ranges[0];
+          const index = isSelectedText ? ranges[0] + position.index : ranges[0];
+          const length = isSelectedText
+            ? ranges[1] + position.index
+            : ranges[1];
+          const wordsMatched = item.source.wordsMatched;
+
+          return {
+            text: item.text,
+            position: { index, length },
+            wordsMatched,
+          };
+        });
+
+        formattedMark.sort((a, b) => a.position.index - b.position.index);
+
+        let newdata = [];
+
+        // Array object merge start
+        for (let i = 0; i < formattedMark.length; i++) {
+          const item = formattedMark[i];
+          const itemPosition = item.position;
+
+          if (i === 0) {
+            newdata.push({ position: itemPosition });
+            continue;
+          }
+
+          const { position: prevPosition } = newdata[newdata.length - 1];
+          const inBetween = between(
+            itemPosition.index,
+            prevPosition.index,
+            prevPosition.length
+          );
+
+          if (!inBetween) {
+            newdata.push({ position: itemPosition });
+          } else {
+            if (prevPosition.length <= itemPosition.length) {
+              prevPosition.length = itemPosition.length;
+            }
+          }
+        }
+        // Array object merge end
+
+        let html = "";
+        let lastLength = 0;
+
+        for (let i = 0; i < newdata.length; i++) {
+          const { position } = newdata[i];
+          const isLastItem = newdata.length === i + 1;
+
+          if (typeof window !== "undefined") {
+            let span = document.createElement("span");
+            span.className = "p-mark";
+            const prevLastContent = content.slice(lastLength, position.index);
+            const spanContent = content.slice(position.index, position.length);
+            span.appendChild(document.createTextNode(spanContent));
+            html += prevLastContent + span.outerHTML;
+            lastLength = position.length;
+            if (isLastItem) {
+              html += content.slice(position.length, content.length);
+            }
+          }
+        }
+
+        return html;
+      }
+      return "<h5>No Plagiarism Detect</h5>";
+    }
   ),
 };
 

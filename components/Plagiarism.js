@@ -8,11 +8,10 @@ import {
   plagiarismActions,
 } from "@/redux/slices/plagiarism";
 import { useQuillSelected } from "@/hooks";
-import { quillPlagiarism } from "@/utils";
+// import { quillPlagiarism } from "@/utils";
 
 const Plagiarism = ({ quill }) => {
   const dispatch = useDispatch();
-  const [textPosition, setTextPosition] = useState({ index: 0, length: 0 });
   const { range: selectedRange, text: selectedText } = useQuillSelected(quill);
   const { writer } = useSelector(plagiarismSelector.getPlagiarism);
 
@@ -40,25 +39,35 @@ const Plagiarism = ({ quill }) => {
 
   const handleFullContentPla = () => {
     if (activeFullContent) {
-      setTextPosition({ index: 0, length: quill.getLength() });
+      dispatch(
+        plagiarismActions.setWriterPlagiarism({
+          content: quillText,
+          position: { index: 0, length: quill.getLength() },
+        })
+      );
       dispatch(postCheckPlagiarism({ data: { text: quillText } }));
     }
   };
 
   const handleSelectedContentPla = () => {
     if (activeSelectedContent) {
-      setTextPosition(selectedRange);
+      dispatch(
+        plagiarismActions.setWriterPlagiarism({
+          content: quillText,
+          position: selectedRange,
+        })
+      );
       dispatch(postCheckPlagiarism({ data: { text: selectedText } }));
     }
   };
 
-  useEffect(() => {
-    quillPlagiarism(quill, writer.data, textPosition);
-  }, [quill, textPosition, writer.data]);
+  // useEffect(() => {
+  //   quillPlagiarism(quill, writer.data, textPosition);
+  // }, [quill, textPosition, writer.data]);
 
-  //   useEffect(() => {
-  //     dispatch(plagiarismActions.setWriterPlagiarism({ data: {} }));
-  //   }, [dispatch]);
+  useEffect(() => {
+    dispatch(plagiarismActions.setWriterPlagiarism({ data: [] }));
+  }, [dispatch]);
 
   return (
     <StyledPlagiarism>
