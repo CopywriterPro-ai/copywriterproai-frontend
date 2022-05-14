@@ -52,6 +52,8 @@ import { BlogResetModal } from "@/components/modals/blogs";
 import { MainSidebar } from "@/components/sidebar";
 import GenerateButton from "@/components/blog/components/GenerateButton";
 import Plagiarism from "@/components/Plagiarism";
+import WriterPlagiarism from "@/components/WriterPlagiarism";
+import WriterToolTab from "@/components/WriterToolTab";
 import CreditsLeft from "@/components/CreditsLeft";
 import TipsImg from "@/assets/images/generate-tips.png";
 import { toastMessage, yupValidate, quillTypingInsert } from "@/utils";
@@ -200,6 +202,7 @@ const CompleteBlogGenerator = () => {
   const [editorCurrentTaskInput, setEditorCurrentTaskInput] = useState({});
   const { isEditorChange } = useQuillValueIsChange(quill);
   const [tags, setTags] = useState([]);
+  const [showPlagi, setShowPlagi] = useState(false);
   const [blogLength, setBlogLength] = useState(SHORT_BLOG);
   const [accessBlog] = useToolAccess([blogLength]);
   const [accessEditorTool] = useToolAccess([editorCurrentTaskInput.task]);
@@ -431,228 +434,240 @@ const CompleteBlogGenerator = () => {
               placeholder="Blog Headline"
               onChange={handleChangeBlogHeadline}
             />
-            {/* <Plagiarism quill={quill} /> */}
+            <Plagiarism quill={quill} />
             <CustomToolbar />
             <EditorJS setQuillEditor={setQuill} />
           </EditorSection>
           <ToolsSection>
-            <Collapse isOpen={!isOpenEditorField}>
-              <ScollingTool>
-                <ToolsHeader>
-                  <CreditsLeft />
-                  <Tips>
-                    <TipsIcon src={TipsImg.src} alt="tips" />
-                    <span>
-                      The results depend on the information you input. So be
-                      sure to spend some time making it as specific as possible.
-                    </span>
-                  </Tips>
-                  <strong>Blog About</strong>
-                  <textarea
-                    ref={aboutRef}
-                    onChange={handleChangeBlogAbout}
-                    value={about.input}
-                    rows="4"
-                  ></textarea>
-                  <StyledBlogLength>
-                    <strong>Blog Length</strong>
-                    <select
-                      value={blogLength}
-                      onChange={(e) => setBlogLength(e.target.value)}
+            <div>
+              <WriterToolTab
+                setShowPlagi={setShowPlagi}
+                showPlagi={showPlagi}
+              />
+              <Collapse isOpen={!showPlagi && !isOpenEditorField}>
+                <ScollingTool>
+                  <ToolsHeader>
+                    <CreditsLeft />
+                    <Tips>
+                      <TipsIcon src={TipsImg.src} alt="tips" />
+                      <span>
+                        The results depend on the information you input. So be
+                        sure to spend some time making it as specific as
+                        possible.
+                      </span>
+                    </Tips>
+                    <strong>Blog About</strong>
+                    <textarea
+                      ref={aboutRef}
+                      onChange={handleChangeBlogAbout}
+                      value={about.input}
+                      rows="4"
+                    ></textarea>
+                    <StyledBlogLength>
+                      <strong>Blog Length</strong>
+                      <select
+                        value={blogLength}
+                        onChange={(e) => setBlogLength(e.target.value)}
+                      >
+                        {blogLengthItems.map(({ name, key }) => (
+                          <option
+                            key={key}
+                            value={key}
+                            disabled={
+                              editorTexts.length > 10 && blogLength !== key
+                            }
+                          >
+                            {name}
+                          </option>
+                        ))}
+                      </select>
+                    </StyledBlogLength>
+                    <StyledKeyword>
+                      <strong>Keywords</strong>
+                      <ReactTagInput
+                        tags={tags}
+                        maxTags={blogLength === "short-blog" ? 2 : 3}
+                        onChange={(newTags) => setTags(newTags)}
+                        placeholder="Press enter to add keyword"
+                        validator={reactTagValidation}
+                      />
+                    </StyledKeyword>
+                    <GenerateButton
+                      loading={
+                        loading === "pending" && currenttask === BLOG_WRITING
+                      }
+                      onClick={
+                        complete.success
+                          ? handleResetBlog
+                          : handleGenerateCompleteBlog
+                      }
                     >
-                      {blogLengthItems.map(({ name, key }) => (
-                        <option
-                          key={key}
-                          value={key}
-                          disabled={
-                            editorTexts.length > 10 && blogLength !== key
-                          }
-                        >
-                          {name}
-                        </option>
-                      ))}
-                    </select>
-                  </StyledBlogLength>
-                  <StyledKeyword>
-                    <strong>Keywords</strong>
-                    <ReactTagInput
-                      tags={tags}
-                      maxTags={blogLength === "short-blog" ? 2 : 3}
-                      onChange={(newTags) => setTags(newTags)}
-                      placeholder="Press enter to add keyword"
-                      validator={reactTagValidation}
-                    />
-                  </StyledKeyword>
-                  <GenerateButton
-                    loading={
-                      loading === "pending" && currenttask === BLOG_WRITING
-                    }
-                    onClick={
-                      complete.success
-                        ? handleResetBlog
-                        : handleGenerateCompleteBlog
-                    }
-                  >
-                    {complete.success
-                      ? "Reset Blog"
-                      : editorTexts.length >= 10
-                      ? "Generate More"
-                      : "Generate Blog"}
-                  </GenerateButton>
-                </ToolsHeader>
+                      {complete.success
+                        ? "Reset Blog"
+                        : editorTexts.length >= 10
+                        ? "Generate More"
+                        : "Generate Blog"}
+                    </GenerateButton>
+                  </ToolsHeader>
 
-                <ToolsBody>
-                  <BlogHeadlineComplete aboutRef={aboutRef} />
-                </ToolsBody>
-                <ToolBottom>
-                  <button onClick={handleNewBlog}>New Blog</button>
-                  <button onClick={handleSaveOrUpdate}>Save</button>
-                  {/* <button onClick={() => console.log("coming soon")}>
+                  <ToolsBody>
+                    <BlogHeadlineComplete aboutRef={aboutRef} />
+                  </ToolsBody>
+                  <ToolBottom>
+                    <button onClick={handleNewBlog}>New Blog</button>
+                    <button onClick={handleSaveOrUpdate}>Save</button>
+                    {/* <button onClick={() => console.log("coming soon")}>
                     Save
                   </button> */}
-                </ToolBottom>
-              </ScollingTool>
-            </Collapse>
-            <Collapse isOpen={isOpenEditorField}>
-              <ScollingTool>
-                <ToolsHeader>
-                  <strong>Selected Text</strong>
-                  <br />
-                  <StyledSelectedText>{selectedText}</StyledSelectedText>
-                  <p style={{ textAlign: "right" }}>
-                    {selectedText?.length}/{editorCurrentTaskInput.userText.max}{" "}
-                    Max Characters
-                  </p>
-                </ToolsHeader>
-                <ToolsBody>
-                  <StyledToolSelection>
-                    {contentTools.map((tool) => (
-                      <StyledToolItem
-                        onClick={() => handleSelectTool(tool.key)}
-                        key={tool.key}
-                        Active={tool.key === editorCurrentTask}
-                      >
-                        {tool.name}
-                      </StyledToolItem>
-                    ))}
-                  </StyledToolSelection>
-                  {Object.values(editorCurrentTaskInput).length > 0 && (
-                    <div>
-                      <form onSubmit={handleSubmit(onFieldFormSubmit)}>
-                        {editorCurrentTaskInput.from && (
-                          <StyledEditorSelectorOptions>
-                            <label>From</label>
-                            <select {...register("from")}>
-                              {editorCurrentTaskInput.from.map((i) => (
-                                <option key={i} value={i}>
-                                  {i}
-                                </option>
-                              ))}
-                            </select>
-                          </StyledEditorSelectorOptions>
-                        )}
-                        {editorCurrentTaskInput.to && (
-                          <StyledEditorSelectorOptions>
-                            <label>To</label>
-                            <select {...register("to")}>
-                              {editorCurrentTaskInput.to.map((i) => (
-                                <option key={i} value={i}>
-                                  {i}
-                                </option>
-                              ))}
-                            </select>
-                          </StyledEditorSelectorOptions>
-                        )}
-                        {editorCurrentTaskInput.tone && (
-                          <StyledEditorSelectorOptions>
-                            <label>Tone</label>
-                            <select {...register("tone")}>
-                              {editorCurrentTaskInput.tone.map((i) => (
-                                <option key={i} value={i}>
-                                  {i}
-                                </option>
-                              ))}
-                            </select>
-                          </StyledEditorSelectorOptions>
-                        )}
-                        {editorCurrentTaskInput.numberOfSuggestions && (
-                          <StyledEditorSelectorOptions>
-                            <label>Number Of Suggestions</label>
-                            <input
-                              type="number"
-                              min={
-                                editorCurrentTaskInput.numberOfSuggestions.min
-                              }
-                              max={
-                                editorCurrentTaskInput.numberOfSuggestions.max
-                              }
-                              defaultValue={
-                                editorCurrentTaskInput.numberOfSuggestions.min
-                              }
-                              {...register("numberOfSuggestions", {
-                                min: editorCurrentTaskInput.numberOfSuggestions
-                                  .min,
-                                max: editorCurrentTaskInput.numberOfSuggestions
-                                  .max,
-                                required:
-                                  editorCurrentTaskInput.numberOfSuggestions
-                                    .required,
-                              })}
-                            />
-                          </StyledEditorSelectorOptions>
-                        )}
-                        {editorCurrentTaskInput.numberOfPoints && (
-                          <StyledEditorSelectorOptions>
-                            <label>Number Of Points</label>
-                            <input
-                              type="number"
-                              min={editorCurrentTaskInput.numberOfPoints.min}
-                              max={editorCurrentTaskInput.numberOfPoints.max}
-                              defaultValue={
-                                editorCurrentTaskInput.numberOfPoints.min
-                              }
-                              {...register("numberOfPoints", {
-                                min: editorCurrentTaskInput.numberOfPoints.min,
-                                max: editorCurrentTaskInput.numberOfPoints.max,
-                                required:
-                                  editorCurrentTaskInput.numberOfPoints
-                                    .required,
-                              })}
-                            />
-                          </StyledEditorSelectorOptions>
-                        )}
-                        <GenerateButton
-                          disabled={!isonFieldFormOk}
-                          onClick={null}
-                          loading={content.loading === "pending"}
+                  </ToolBottom>
+                </ScollingTool>
+              </Collapse>
+              <Collapse isOpen={!showPlagi && isOpenEditorField}>
+                <ScollingTool>
+                  <ToolsHeader>
+                    <strong>Selected Text</strong>
+                    <br />
+                    <StyledSelectedText>{selectedText}</StyledSelectedText>
+                    <p style={{ textAlign: "right" }}>
+                      {selectedText?.length}/
+                      {editorCurrentTaskInput.userText.max} Max Characters
+                    </p>
+                  </ToolsHeader>
+                  <ToolsBody>
+                    <StyledToolSelection>
+                      {contentTools.map((tool) => (
+                        <StyledToolItem
+                          onClick={() => handleSelectTool(tool.key)}
+                          key={tool.key}
+                          Active={tool.key === editorCurrentTask}
                         >
-                          Generate
-                        </GenerateButton>
-                      </form>
-                      {content.items.length > 0 && (
-                        <div>
-                          {content.items.map((item, index) => (
-                            <div
-                              onClick={() => handleSelectedContentItem(item)}
-                              style={{
-                                border: "1px solid",
-                                padding: "5px",
-                                width: "100%",
-                                margin: "5px 0",
-                                cursor: "pointer",
-                              }}
-                              key={index}
-                            >
-                              {item}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </ToolsBody>
-              </ScollingTool>
-            </Collapse>
+                          {tool.name}
+                        </StyledToolItem>
+                      ))}
+                    </StyledToolSelection>
+                    {Object.values(editorCurrentTaskInput).length > 0 && (
+                      <div>
+                        <form onSubmit={handleSubmit(onFieldFormSubmit)}>
+                          {editorCurrentTaskInput.from && (
+                            <StyledEditorSelectorOptions>
+                              <label>From</label>
+                              <select {...register("from")}>
+                                {editorCurrentTaskInput.from.map((i) => (
+                                  <option key={i} value={i}>
+                                    {i}
+                                  </option>
+                                ))}
+                              </select>
+                            </StyledEditorSelectorOptions>
+                          )}
+                          {editorCurrentTaskInput.to && (
+                            <StyledEditorSelectorOptions>
+                              <label>To</label>
+                              <select {...register("to")}>
+                                {editorCurrentTaskInput.to.map((i) => (
+                                  <option key={i} value={i}>
+                                    {i}
+                                  </option>
+                                ))}
+                              </select>
+                            </StyledEditorSelectorOptions>
+                          )}
+                          {editorCurrentTaskInput.tone && (
+                            <StyledEditorSelectorOptions>
+                              <label>Tone</label>
+                              <select {...register("tone")}>
+                                {editorCurrentTaskInput.tone.map((i) => (
+                                  <option key={i} value={i}>
+                                    {i}
+                                  </option>
+                                ))}
+                              </select>
+                            </StyledEditorSelectorOptions>
+                          )}
+                          {editorCurrentTaskInput.numberOfSuggestions && (
+                            <StyledEditorSelectorOptions>
+                              <label>Number Of Suggestions</label>
+                              <input
+                                type="number"
+                                min={
+                                  editorCurrentTaskInput.numberOfSuggestions.min
+                                }
+                                max={
+                                  editorCurrentTaskInput.numberOfSuggestions.max
+                                }
+                                defaultValue={
+                                  editorCurrentTaskInput.numberOfSuggestions.min
+                                }
+                                {...register("numberOfSuggestions", {
+                                  min: editorCurrentTaskInput
+                                    .numberOfSuggestions.min,
+                                  max: editorCurrentTaskInput
+                                    .numberOfSuggestions.max,
+                                  required:
+                                    editorCurrentTaskInput.numberOfSuggestions
+                                      .required,
+                                })}
+                              />
+                            </StyledEditorSelectorOptions>
+                          )}
+                          {editorCurrentTaskInput.numberOfPoints && (
+                            <StyledEditorSelectorOptions>
+                              <label>Number Of Points</label>
+                              <input
+                                type="number"
+                                min={editorCurrentTaskInput.numberOfPoints.min}
+                                max={editorCurrentTaskInput.numberOfPoints.max}
+                                defaultValue={
+                                  editorCurrentTaskInput.numberOfPoints.min
+                                }
+                                {...register("numberOfPoints", {
+                                  min: editorCurrentTaskInput.numberOfPoints
+                                    .min,
+                                  max: editorCurrentTaskInput.numberOfPoints
+                                    .max,
+                                  required:
+                                    editorCurrentTaskInput.numberOfPoints
+                                      .required,
+                                })}
+                              />
+                            </StyledEditorSelectorOptions>
+                          )}
+                          <GenerateButton
+                            disabled={!isonFieldFormOk}
+                            onClick={null}
+                            loading={content.loading === "pending"}
+                          >
+                            Generate
+                          </GenerateButton>
+                        </form>
+                        {content.items.length > 0 && (
+                          <div>
+                            {content.items.map((item, index) => (
+                              <div
+                                onClick={() => handleSelectedContentItem(item)}
+                                style={{
+                                  border: "1px solid",
+                                  padding: "5px",
+                                  width: "100%",
+                                  margin: "5px 0",
+                                  cursor: "pointer",
+                                }}
+                                key={index}
+                              >
+                                {item}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </ToolsBody>
+                </ScollingTool>
+              </Collapse>
+              <Collapse isOpen={showPlagi}>
+                <WriterPlagiarism quill={quill} />
+              </Collapse>
+            </div>
           </ToolsSection>
           <BlogResetModal quill={quill} id={AI_COMPLETE_BLOG_WRITER} />
         </BlogContainer>
