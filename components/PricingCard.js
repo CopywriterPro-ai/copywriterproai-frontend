@@ -1,4 +1,5 @@
 import Switch from "react-switch";
+import Link from "next/link";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +20,10 @@ import PricingListImg from "@/assets/images/pricing/pricing-ul-li.png";
 import PricingListDelImg from "@/assets/images/pricing/pricing-ul-li-del.png";
 import MoneyBackImg from "@/assets/images/money-back-guarantee.png";
 import pricesInfo from "@/data/price.json";
+import * as mixUtils from "@/utils/mixUtils";
+
+const timezone = mixUtils.getTimezone();
+const isBD = timezone === "Asia/Dhaka";
 
 const TrialItem = ({
   mainColor = "rgb(87,197,139)",
@@ -368,6 +373,12 @@ const PricingCard = () => {
   return (
     <PriceSection>
       <SectionTitle>Grow Your Business With CopywriterPro</SectionTitle>
+      {isBD && (
+        <StyledMobileBanking>
+          To make a payment with Bkash, Rocket or Upay, please visit this page.{" "}
+          <Link href="/bd-pricing">Click</Link>
+        </StyledMobileBanking>
+      )}
       <PriceSwitch>
         <span>One Month</span>
         <PriceSwitchButton
@@ -423,6 +434,15 @@ const PricingCard = () => {
     </PriceSection>
   );
 };
+
+const StyledMobileBanking = styled.div`
+  text-align: center;
+  margin-top: 28px;
+  font-weight: 500;
+  a {
+    text-decoration: none;
+  }
+`;
 
 const StyledLoading = styled.div`
   height: 30vh;

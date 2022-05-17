@@ -26,5 +26,6 @@ module.exports = {
     "/payment/success",
     "/app/Blog",
     "/tutorial/tools/*",
+    "/bd-pricing",
   ],
 };

@@ -74,8 +74,13 @@ const plagiarism = createSlice({
     },
     [postCheckPlagiarism.rejected]: (state, action) => {
       if (state.writer.loading === "pending") {
+        const data = action.payload?.data;
         state.writer.loading = "idle";
-        state.writer.error = action.payload.data;
+        state.writer.error = data;
+        const errmessage = data?.message;
+        if (errmessage) {
+          toastMessage.error(errmessage);
+        }
       }
     },
   },

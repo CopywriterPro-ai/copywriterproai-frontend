@@ -57,8 +57,6 @@ const WriterPlagiarism = ({ quill }) => {
   const mark = useSelector(plagiarismSelector.getPlagiarismWriterMark);
   const { subscribe, isAuth } = useUser();
 
-  console.log({ subscribe });
-
   const {
     data: writerData,
     position: writerPosition,
