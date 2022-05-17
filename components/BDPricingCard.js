@@ -8,6 +8,7 @@ import { Spinner } from "reactstrap";
 
 import {
   getPriceList,
+  postCreateCustomer,
   selectors as paymentSelector,
 } from "@/redux/slices/payment";
 import { selectors as subscriberSelector } from "@/redux/slices/subscriber";
@@ -97,7 +98,6 @@ const SinglePriceItem = ({
         .post("/api/payment/udp/checkout", {
           full_name: `${firstName} ${lastName}`,
           email: email || "unknown@email.com",
-          amount: priceInfo?.price?.bdt,
           metadata: {
             user_id: userId,
             price_key: priceInfo?.key,
@@ -112,6 +112,9 @@ const SinglePriceItem = ({
         .catch((err) => {
           setIsCheckoutPending(false);
           console.warn(err);
+        })
+        .finally(() => {
+          setIsCheckoutPending(false);
         });
     }
   };
@@ -187,6 +190,7 @@ const PricingCard = () => {
   const { items, loading } = useSelector(
     paymentSelector.getPriceList(interval)
   );
+  const { id: customerId } = useSelector(paymentSelector.getCustomer);
   const { isAuth } = useUser();
   const { loading: checkoutLoading } = useSelector(paymentSelector.getCheckout);
   const { data: subscriptionInfo } = useSelector(
@@ -205,6 +209,13 @@ const PricingCard = () => {
   useEffect(() => {
     dispatch(setRedirectPath(null));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (isAuth && !customerId) {
+      dispatch(postCreateCustomer());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, isAuth]);
 
   if (loading === "pending" && !items.length) {
     return (
