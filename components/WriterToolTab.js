@@ -24,17 +24,18 @@ const TabController = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  background-color: white;
-  padding: 5px 10px;
+  background-color: #878787;
+  padding: 4px 10px 0 10px;
+  border-radius: 5px;
 `;
 
 const TabControllerBtn = styled.button`
-  width: 49%;
+  width: 50%;
   border: 0px;
-  background-color: ${({ IsActive }) => (IsActive ? "#878787" : "#dee2e6")};
-  border-radius: 4px;
-  padding: 5px 0;
-  color: ${({ IsActive }) => (IsActive ? "#e9ecef" : "#212529")};
+  background-color: ${({ IsActive }) => (IsActive ? "#fff" : "transparent")};
+  border-radius: 18px 18px 0 0;
+  padding: 6px 0;
+  color: ${({ IsActive }) => (IsActive ? "#000" : "#fff")};
 `;
 
 export default WriterToolTab;
