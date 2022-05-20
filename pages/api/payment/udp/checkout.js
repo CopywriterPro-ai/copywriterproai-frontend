@@ -37,6 +37,7 @@ export default async function handler(req, res) {
         return res.status(402).json({ success: false, message: "Bad request" });
       }
     } catch (error) {
+      console.log("Payment Error", error);
       const status = error.response?.status || 500;
       const message = error.response?.data?.message || "internal server error";
       res.status(status).json({ success: false, message });
