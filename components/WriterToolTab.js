@@ -8,13 +8,13 @@ const WriterToolTab = ({ showPlagi, setShowPlagi }) => {
         IsActive={showPlagi === false}
         onClick={() => setShowPlagi(false)}
       >
-        ToolBar
+        Writer Toolbox
       </TabControllerBtn>
       <TabControllerBtn
         IsActive={showPlagi === true}
         onClick={() => setShowPlagi(true)}
       >
-        Plagiarism
+        Plagiarism Checker
       </TabControllerBtn>
     </TabController>
   );
@@ -24,18 +24,18 @@ const TabController = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  background-color: #878787;
-  padding: 4px 10px 0 10px;
-  border-radius: 5px;
+  padding: 8px 0;
 `;
 
 const TabControllerBtn = styled.button`
+  background-color: transparent;
   width: 50%;
   border: 0px;
-  background-color: ${({ IsActive }) => (IsActive ? "#fff" : "transparent")};
-  border-radius: 18px 18px 0 0;
-  padding: 6px 0;
-  color: ${({ IsActive }) => (IsActive ? "#000" : "#fff")};
+  outline: 0;
+  padding: 8px 0;
+  border-bottom: 3px solid
+    ${({ IsActive }) => (IsActive ? "#40B1A7" : "#00000040")};
+  color: ${({ IsActive }) => (IsActive ? "#40B1A7" : "#000")};
 `;
 
 export default WriterToolTab;

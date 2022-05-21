@@ -115,6 +115,7 @@ const CustomItem = ({
               <li>600 characters input limit</li>
               <li>50+ copywriting tools</li>
               <li>AI blog writer</li>
+              <li>Plagiarism Checker</li>
               <li>Multiple user login</li>
               <li>24/7 support</li>
               <li>Community support</li>
@@ -205,6 +206,11 @@ const SinglePriceItem = ({
                 Disabled={priceInfo?.hasAiBlog ? "false" : "true"}
               >
                 AI blog writer
+              </PriceCardItemListItem>
+              <PriceCardItemListItem
+                Disabled={priceInfo?.hasPlagiarism ? "false" : "true"}
+              >
+                Plagiarism Checker
               </PriceCardItemListItem>
               <PriceCardItemListItem>
                 {priceInfo?.user} user login
