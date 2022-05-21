@@ -233,7 +233,7 @@ const AppHeader = () => {
                 )}
                 {/* {!isAuth && <NavItem link="/ai-blog-generator" title="Blog" />} */}
                 <NavItem link="/pricing" title="Pricing" />
-                <NavItem link="/affiliates" title="Affiliates" />
+                {/* <NavItem link="/affiliates" title="Affiliates" /> */}
                 <NavComDropdownMenuItem
                   isOpen={comIsOpen}
                   toggle={comToggle}

@@ -9,6 +9,7 @@
     "maxOutput": "600",
     "user": "1",
     "hasAiBlog": false,
+    "hasPlagiarism": false,
     "price": {
       "bdt": "399"
     }
@@ -23,6 +24,7 @@
     "maxOutput": "600",
     "user": "1",
     "hasAiBlog": false,
+    "hasPlagiarism": false,
     "price": {
       "bdt": "1999"
     }
@@ -37,6 +39,7 @@
     "maxOutput": "600",
     "user": "1",
     "hasAiBlog": true,
+    "hasPlagiarism": true,
     "price": {
       "bdt": "1999"
     }
@@ -51,6 +54,7 @@
     "maxOutput": "600",
     "user": "1",
     "hasAiBlog": true,
+    "hasPlagiarism": true,
     "price": {
       "bdt": "9999"
     }
@@ -65,6 +69,7 @@
     "maxOutput": "1000",
     "user": "5",
     "hasAiBlog": true,
+    "hasPlagiarism": true,
     "price": {
       "bdt": "4999"
     }
@@ -79,6 +84,7 @@
     "maxOutput": "1000",
     "user": "5",
     "hasAiBlog": true,
+    "hasPlagiarism": true,
     "price": {
       "bdt": "24999"
     }
