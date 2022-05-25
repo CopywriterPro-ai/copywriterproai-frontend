@@ -25,7 +25,7 @@ const GuestLayout = ({
   }, [isAuth, isRehydrated]);
 
   if (isAuth && isRehydrated) {
-    return <Processing color='#000'/>;
+    return <Processing color="#000" />;
   }
 
   return (

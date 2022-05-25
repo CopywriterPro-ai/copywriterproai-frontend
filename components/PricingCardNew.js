@@ -1,23 +1,70 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
 import styled from "styled-components";
 
 import PriceSlider from "./common/PriceSlider";
+import MoneyBackIcon from "@/assets/images/money-back-guarantee-2.png";
 
 const packages = [
-  { name: "Light", price: "$5", popular: false },
-  { name: "Basic", price: "$35", popular: false },
-  { name: "Professional", price: "$99", popular: true },
-  { name: "Enterprise", price: "Custom", popular: false },
+  { name: "Light", price: "$5", popular: false, features: [] },
+  { name: "Basic", price: "$35", popular: false, features: [] },
+  { name: "Professional", price: "$99", popular: true, features: [] },
+  { name: "Enterprise", price: "Custom", popular: false, features: [] },
 ];
+
+const Tick = ({ size = "16" }) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 20 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M2 8L8 14L18 2"
+        stroke="#007FFF"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+const Cross = ({ size = "14" }) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M16 16L2 2M16 2L2 16"
+        stroke="#EE3434"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+};
 
 const PricingCard = () => {
   const [months, setMonths] = useState(10);
 
   return (
     <PriceSection>
-      <SectionTitle>Make your writing smarter and faster</SectionTitle>
+      <PricingHead>
+        <h2>
+          Make your writing <span>smarter</span> and <span>faster</span>
+        </h2>
+        <strong>
+          Get <span>+5% discount</span> with 6 months of subscription
+        </strong>
+      </PricingHead>
       <PriceSlider months={months} setMonths={setMonths} />
-
       <PriceContainer>
         <SinglePriceCard>
           <SinglePriceCardHead></SinglePriceCardHead>
@@ -51,11 +98,21 @@ const PricingCard = () => {
                 <li>400 character</li>
                 <li>1 user </li>
                 <li>45+ templates</li>
-                <li>no</li>
-                <li>yes</li>
-                <li>yes</li>
-                <li>yes</li>
-                <li>no</li>
+                <li>
+                  <Tick size="16" />
+                </li>
+                <li>
+                  <Tick size="16" />
+                </li>
+                <li>
+                  <Cross size="14" />
+                </li>
+                <li>
+                  <Tick size="16" />
+                </li>
+                <li>
+                  <Cross size="14" />
+                </li>
               </PriceFeatureList>
             </SinglePriceCardBody>
             <SinglePriceCardFooter IsPopular={plan.popular}>
@@ -64,6 +121,19 @@ const PricingCard = () => {
           </SinglePriceCard>
         ))}
       </PriceContainer>
+      <StyledMoneyBack>
+        <StyledMoneyBackWrapper>
+          <img src={MoneyBackIcon.src} alt="Money Back Guarantee" />
+          <h3>7-day Money Back Guarantee</h3>
+          <p>
+            It&apos;s always hard to say goodbye. But we value our
+            customer&apos;s opinions.
+            <br /> To cancel your subscription just send us an email at
+            support@copywriterpro.ai
+            <br /> within 7 days of purchase for a full refund.
+          </p>
+        </StyledMoneyBackWrapper>
+      </StyledMoneyBack>
     </PriceSection>
   );
 };
@@ -74,24 +144,40 @@ const PriceFeatureList = styled.ul`
   margin: 0;
 
   li {
-    padding: 10px 0;
-    font-size: 14px;
+    padding: 14px 0;
+    font-size: 16px;
+    min-width: 180px;
+    line-height: 26px;
   }
 `;
 
-const SectionTitle = styled.h2`
-  text-align: center;
-  font-size: 30px;
-  font-weight: 500;
-  line-height: 45px;
-`;
-
 const PriceSection = styled.div``;
+
+const PricingHead = styled.div`
+  text-align: center;
+  margin-top: 8rem;
+  margin-bottom: 5rem;
+
+  h2 {
+    font-weight: 800;
+    margin-bottom: 2rem;
+    font-size: 40px;
+  }
+  strong {
+    font-weight: 600;
+    font-size: 22px;
+  }
+  span {
+    color: #007fff;
+  }
+`;
 
 const PriceContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 80px;
+  column-gap: 4rem;
 `;
 
 const SinglePriceCard = styled.div`
@@ -136,6 +222,42 @@ const SinglePriceCardFooter = styled.div`
     border-radius: 4px;
     outline: none;
     font-size: 14px;
+  }
+`;
+
+const StyledMoneyBack = styled.div`
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background: radial-gradient(50% 50% at 50% 50%, #013464 0%, #03294d 100%);
+  margin-top: 5rem;
+  margin-bottom: 10rem;
+`;
+
+const StyledMoneyBackWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 420px;
+  color: #fff;
+
+  img {
+    width: 100px;
+  }
+  h3 {
+    margin-top: 1rem;
+    font-weight: 700;
+    font-size: 32px;
+  }
+  p {
+    margin-top: 1rem;
+    font-weight: 500;
+    text-align: center;
   }
 `;
 
