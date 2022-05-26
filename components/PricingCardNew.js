@@ -1,15 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import styled from "styled-components";
+import numeral from "numeral";
 
 import PriceSlider from "./common/PriceSlider";
 import MoneyBackIcon from "@/assets/images/money-back-guarantee-2.png";
 
 const packages = [
-  { name: "Light", price: "$5", popular: false, features: [] },
-  { name: "Basic", price: "$35", popular: false, features: [] },
-  { name: "Professional", price: "$99", popular: true, features: [] },
-  { name: "Enterprise", price: "Custom", popular: false, features: [] },
+  { name: "Light", price: 5, popular: false, features: { words: 5000 } },
+  { name: "Basic", price: 35, popular: false, features: { words: 12000 } },
+  {
+    name: "Professional",
+    price: 99,
+    popular: true,
+    features: { words: 500000 },
+  },
+  {
+    name: "Enterprise",
+    price: "Custom",
+    popular: false,
+    features: { words: "Custom" },
+  },
 ];
 
 const Tick = ({ size = "16" }) => {
@@ -54,6 +65,45 @@ const Cross = ({ size = "14" }) => {
 const PricingCard = () => {
   const [months, setMonths] = useState(10);
 
+  const calculateprice = useMemo(() => {
+    return packages.map((item) => {
+      if (item.name === "Enterprise") {
+        return item;
+      } else {
+        let percentage = 0;
+        switch (true) {
+          case months === 24:
+            percentage = 20;
+            break;
+          case months >= 18:
+            percentage = 15;
+            break;
+          case months >= 12:
+            percentage = 10;
+            break;
+          case months >= 6:
+            percentage = 5;
+            break;
+          default:
+            percentage = 0;
+            break;
+        }
+        let productprice = item.price * months;
+        let words = item.features.words * months;
+        let formatedWords = numeral(words).format("0,0");
+        let floatnum = percentage / 100;
+        let percentageamount = productprice - productprice * floatnum;
+        let price = parseFloat(percentageamount).toFixed(2);
+
+        return {
+          ...item,
+          price,
+          features: { ...item.features, words: formatedWords },
+        };
+      }
+    });
+  }, [months]);
+
   return (
     <PriceSection>
       <PricingHead>
@@ -61,7 +111,7 @@ const PricingCard = () => {
           Make your writing <span>smarter</span> and <span>faster</span>
         </h2>
         <strong>
-          Get <span>+5% discount</span> with 6 months of subscription
+          Get <span>+5% discount</span> with extra 6 months of subscription
         </strong>
       </PricingHead>
       <PriceSlider months={months} setMonths={setMonths} />
@@ -86,15 +136,18 @@ const PricingCard = () => {
           </SinglePriceCardFooter>
         </SinglePriceCard>
 
-        {packages.map((plan) => (
+        {calculateprice.map((plan) => (
           <SinglePriceCard key={plan.name} IsPopular={plan.popular}>
             <SinglePriceCardHead>
               <strong>{plan.name}</strong>
-              <h4>{plan.price}</h4>
+              <h4>
+                {plan.name === "Enterprise" ? "" : "$"}
+                {plan.price}
+              </h4>
             </SinglePriceCardHead>
             <SinglePriceCardBody>
               <PriceFeatureList>
-                <li>10,000 words</li>
+                <li>{plan.features.words} words</li>
                 <li>400 character</li>
                 <li>1 user </li>
                 <li>45+ templates</li>
