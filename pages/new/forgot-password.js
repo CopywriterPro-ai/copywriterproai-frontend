@@ -1,17 +1,50 @@
+import * as Yup from "yup";
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 import { AuthLayout as Layout } from "@/layout";
+import {
+  postForgotPassword,
+  selectors as authSelector,
+} from "@/redux/slices/auth";
+import { toastMessage } from "@/utils";
 import logo from "@/assets/images/copywriterpro.ai-logo.png";
 
 const Forgotpassword = () => {
-  const { register, handleSubmit } = useForm();
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-  const onSubmit = (values) => {
-    alert(JSON.stringify(values));
+  const { loading } = useSelector(authSelector.getAuthenticate);
+  const isPending = loading === "pending";
+
+  const {
+    register,
+    handleSubmit,
+    reset: formReset,
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
+
+  const onSubmit = (data) => {
+    !isPending &&
+      dispatch(postForgotPassword({ data })).then(({ payload }) => {
+        const {
+          status,
+          data: { message },
+        } = payload;
+        if (status === 200) {
+          router.push("/email-verification?type=forgot-password");
+        } else if (status >= 400) {
+          toastMessage.error(message);
+          formReset();
+        }
+      });
   };
 
   return (
@@ -28,6 +61,10 @@ const Forgotpassword = () => {
               />
             </StyledLogo>
             <h4>Reset your password</h4>
+            <p>
+              Enter your email and we will send you a link to reset your
+              password.
+            </p>
           </StyledBrand>
           <div>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -40,7 +77,9 @@ const Forgotpassword = () => {
                 />
               </FormInput>
               <StyledCreateAccountBtn>
-                <button type="submit">Send Link</button>
+                <button disabled={isPending} type="submit">
+                  Send Link
+                </button>
               </StyledCreateAccountBtn>
             </form>
           </div>
@@ -56,9 +95,10 @@ const Forgotpassword = () => {
 
 const Container = styled.div`
   margin: 0 auto;
-  max-width: 300px;
-  padding: 5px;
+  max-width: 410px;
+  padding: 25px;
   position: relative;
+  font-family: "Montserrat";
 `;
 
 const FlexContainer = styled.div`
@@ -73,13 +113,20 @@ const StyledBrand = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 6rem;
   margin-top: 1rem;
   margin-bottom: 2rem;
 
   h4 {
     font-weight: 600;
-    font-size: 25px;
+    font-size: 32px;
+    font-family: "Poppins";
+  }
+
+  p {
+    text-align: center;
+    font-size: 18px;
+    margin: 1rem auto;
+    max-width: 80%;
   }
 `;
 
@@ -101,7 +148,7 @@ const Input = styled.input`
   box-shadow: inset 0px -1.5px 0px #007fff;
   border: 0;
   outline: 0;
-  height: 40px;
+  height: 60px;
   background-color: #fff;
   padding: 10px;
   font-size: 14px;
@@ -117,8 +164,8 @@ const StyledCreateAccountBtn = styled.div`
     background: #01315d;
     color: #fff;
     font-weight: 700;
-    font-size: 12px;
-    padding: 0.5rem 4rem;
+    font-size: 16px;
+    height: 60px;
     border: 0;
   }
 `;
@@ -126,7 +173,7 @@ const StyledCreateAccountBtn = styled.div`
 const StyledFooterBrand = styled.div`
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: 16px;
   margin-top: 1.5rem;
 
   a {
@@ -135,5 +182,9 @@ const StyledFooterBrand = styled.div`
     color: #007fff;
   }
 `;
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label("Email"),
+});
 
 export default Forgotpassword;
