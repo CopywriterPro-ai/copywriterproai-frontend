@@ -150,11 +150,11 @@ const StyledLogo = styled.div`
 const FormInput = styled.div`
   display: flex;
   flex-direction: column;
-  row-gap: 2.5rem;
+  row-gap: 1rem;
 `;
 
 const Input = styled.input`
-  flex: 0 0 48%;
+  width: 100%;
   box-shadow: inset 0px -1.5px 0px #007fff;
   border: 0;
   outline: 0;
