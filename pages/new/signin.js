@@ -150,9 +150,13 @@ const StyledBrand = styled.div`
 
   h4 {
     margin: 2rem auto;
-    font-weight: 600;
-    font-size: 38px;
+    font-weight: 700;
+    font-size: 6vw;
     font-family: "Poppins";
+
+    @media (min-width: 768px) {
+      font-size: 38px;
+    }
   }
 `;
 
@@ -198,9 +202,13 @@ const StyledStrategyAuthBtn = styled.button`
   height: 60px;
   font-size: 18px;
   font-weight: 600;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
-const FormInput = styled.form`
+const FormInput = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 2.5rem;

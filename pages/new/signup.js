@@ -168,8 +168,12 @@ const StyledBrand = styled.div`
   h4 {
     margin: 2rem auto;
     font-weight: 700;
-    font-size: 38px;
+    font-size: 6vw;
     font-family: "Poppins";
+
+    @media (min-width: 768px) {
+      font-size: 38px;
+    }
   }
 `;
 
@@ -183,6 +187,11 @@ const StyledStrategyAuth = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    row-gap: 1rem;
+  }
 `;
 
 const StyledDivider = styled.div`
@@ -213,13 +222,22 @@ const StyledStrategyAuthBtn = styled.button`
   height: 60px;
   font-size: 18px;
   font-weight: 600;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    font-size: 16px;
+  }
 `;
 
-const FormInput = styled.form`
+const FormInput = styled.div`
   display: flex;
   flex-wrap: wrap;
   column-gap: 1.2rem;
   row-gap: 1.8rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const Input = styled.input`

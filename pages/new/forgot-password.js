@@ -116,10 +116,20 @@ const StyledBrand = styled.div`
   margin-top: 1rem;
   margin-bottom: 2rem;
 
-  h4 {
+  /* h4 {
     font-weight: 600;
     font-size: 32px;
     font-family: "Poppins";
+  } */
+
+  h4 {
+    font-weight: 600;
+    font-size: 5vw;
+    font-family: "Poppins";
+
+    @media (min-width: 670px) {
+      font-size: 32px;
+    }
   }
 
   p {
@@ -137,7 +147,7 @@ const StyledLogo = styled.div`
   margin-bottom: 2rem;
 `;
 
-const FormInput = styled.form`
+const FormInput = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 2.5rem;
