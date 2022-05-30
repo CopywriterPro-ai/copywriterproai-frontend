@@ -86,7 +86,7 @@ const initialState = {
   redirectPath: null,
   notice: {
     loading: "idle",
-    data: { active: true },
+    data: { active: false },
     isLoaded: false,
     error: null,
   },
