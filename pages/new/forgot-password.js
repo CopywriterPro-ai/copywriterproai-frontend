@@ -136,7 +136,7 @@ const StyledBrand = styled.div`
     text-align: center;
     font-size: 18px;
     margin: 1rem auto;
-    max-width: 80%;
+    max-width: 85%;
   }
 `;
 
