@@ -27,5 +27,6 @@ module.exports = {
     "/app/Blog",
     "/tutorial/tools/*",
     "/bd-pricing",
+    "/new/*",
   ],
 };

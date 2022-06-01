@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import Header from "@/components/common/Header/new/GuestHeader";
+import NewFooter from "@/components/common/Footer/NewFooter";
 
 const Home = () => {
   return (
@@ -132,6 +133,7 @@ const Home = () => {
           </p>
         </Container>
       </main>
+      <NewFooter />
     </div>
   );
 };
