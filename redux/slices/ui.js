@@ -6,7 +6,7 @@ import {
 import { HYDRATE } from "next-redux-wrapper";
 
 import { uiApi } from "@/api";
-import asyncThunkError from "@/utils/asyncThunkError";
+import { asyncThunkError, pick } from "@/utils";
 
 export const getNotice = createAsyncThunk(
   "ui/getNoticeFetching",
@@ -83,6 +83,11 @@ const initialState = {
     navBarHeigth: 0,
     showTopBar: true,
   },
+  headerElementSize: {
+    noticeHeight: 0,
+    navHeight: 0,
+    showNoticeBar: false,
+  },
   redirectPath: null,
   notice: {
     loading: "idle",
@@ -158,6 +163,14 @@ const ui = createSlice({
     setSubscriptionsCancelModal: (state, action) => {
       state.modal.subscriptions.cancel = action.payload;
     },
+    setHeaderElementSize: (state, action) => {
+      const payload = pick(action.payload, [
+        "noticeHeight",
+        "navHeight",
+        "showNoticeBar",
+      ]);
+      state.headerElementSize = { ...state.headerElementSize, ...payload };
+    },
   },
   extraReducers: {
     [HYDRATE]: (state, { payload }) => ({
@@ -225,6 +238,7 @@ export const {
   setTopBarStatus,
   setRedirectPath,
   setSubscriptionsCancelModal,
+  setHeaderElementSize,
 } = ui.actions;
 
 export const selectors = {
@@ -247,6 +261,10 @@ export const selectors = {
   getHeaderSize: createSelector(
     (state) => state.ui.headerSize,
     (headerSize) => headerSize
+  ),
+  getHeaderElementSize: createSelector(
+    (state) => state.ui.headerElementSize,
+    (headerElementSize) => headerElementSize
   ),
   getRedirectPath: createSelector(
     (state) => state.ui.redirectPath,

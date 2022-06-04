@@ -1,49 +1,42 @@
 import { useState, useEffect } from "react";
 import ReactSlider from "react-slider";
 import styled from "styled-components";
-// import ReactTooltip from "react-tooltip";
 
 const Track = (props, state) => <StyledTrack {...props} index={state.index} />;
 
-const Thumb = ({ props, state, setProperties }) => {
-  // useEffect(() => {
-  //   ReactTooltip.rebuild();
-  // });
-
+const Thumb = ({ props, state, setPositionLeft, setCurrentMonths }) => {
   useEffect(() => {
     if (props) {
       const leftPX = props?.style?.left;
       const left = parseFloat(leftPX) - 40;
-      setProperties({ left: `${left}px`, value: state.valueNow });
+      setCurrentMonths(state.valueNow);
+      setPositionLeft(`${left}px`);
     }
-  }, [setProperties, props, state.valueNow]);
+  }, [props, state, setCurrentMonths, setPositionLeft]);
 
-  return (
-    <>
-      <StyledThumb
-        key={state.valueNow}
-        // data-for={`${state.valueNow}months`}
-        // data-tip={`${state.valueNow} Months`}
-        {...props}
-      ></StyledThumb>
-      {/* <ReactTooltip place="top" effect="solid" id={`${state.valueNow}months`} /> */}
-    </>
-  );
+  return <StyledThumb {...props}></StyledThumb>;
 };
 
 const PriceSlider = ({ months, setMonths }) => {
-  const [properties, setProperties] = useState({ left: "0px", value: 1 });
-  const { left, value: monthValue } = properties;
+  const [positionLeft, setPositionLeft] = useState("0px");
+  const [currentMonths, setCurrentMonths] = useState(1);
+
+  useEffect(() => {
+    const isPositive = months > 0;
+    if (!isPositive) {
+      setMonths(1);
+    }
+  }, [months, setMonths]);
 
   return (
     <>
-      <StyledMonthsShow style={{ left }}>
-        {monthValue} {monthValue <= 1 ? "Month" : "Months"}
+      <StyledMonthsShow style={{ left: positionLeft }}>
+        {currentMonths} {currentMonths <= 1 ? "Month" : "Months"}
       </StyledMonthsShow>
       <StyledSlider
-        min={1}
+        min={0}
         max={24}
-        defaultValue={months}
+        value={months}
         marks={[6, 12, 18]}
         onChange={(value) => {
           if (typeof setMonths === "function") {
@@ -53,7 +46,13 @@ const PriceSlider = ({ months, setMonths }) => {
         markClassName="pricing-slider-mark"
         renderTrack={Track}
         renderThumb={(props, state) => (
-          <Thumb setProperties={setProperties} props={props} state={state} />
+          <Thumb
+            key="pricing-slider"
+            setPositionLeft={setPositionLeft}
+            setCurrentMonths={setCurrentMonths}
+            props={props}
+            state={state}
+          />
         )}
       />
     </>

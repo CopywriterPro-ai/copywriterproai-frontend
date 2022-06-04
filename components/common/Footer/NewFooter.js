@@ -36,18 +36,18 @@ const Supports = [
   },
   {
     name: "Request a Feature",
-    link: "/feature-request",
-    external: false,
+    link: "mailto:support@copywriterpro.ai",
+    external: true,
   },
   {
     name: "Report a bug",
-    link: "/bug-report",
-    external: false,
+    link: "mailto:support@copywriterpro.ai",
+    external: true,
   },
   {
     name: "Contact Us",
-    link: "/contact-us",
-    external: false,
+    link: "mailto:support@copywriterpro.ai",
+    external: true,
   },
 ];
 
@@ -110,7 +110,7 @@ const LinkList = ({ links = [] }) => {
   return (
     <StyledLinkListUL>
       {links.map((item) => (
-        <li key={item.link}>
+        <li key={item.name}>
           {item.external ? (
             <a href={item.link} target="_blank" rel="noreferrer">
               {item.name}
@@ -126,8 +126,8 @@ const LinkList = ({ links = [] }) => {
 
 const NewFooter = () => {
   return (
-    <Container>
-      <div className="container">
+    <StyledFooter>
+      <Container>
         <StyledFooterContent>
           <div style={{ flex: 4 }}>
             <StyledFooterBrandIcon>
@@ -168,13 +168,20 @@ const NewFooter = () => {
             ))}
           </StyledFooterSocialLink>
         </StyledFooterBrand>
-      </div>
-    </Container>
+      </Container>
+    </StyledFooter>
   );
 };
 
-const Container = styled.footer`
+const StyledFooter = styled.footer`
   background-color: #f3f6f9;
+`;
+
+const Container = styled.div`
+  margin: 0 auto;
+  max-width: 1450px;
+  padding-left: 1rem;
+  padding-right: 1rem;
 `;
 
 const StyledFooterContent = styled.div`
@@ -191,6 +198,11 @@ const StyledFooterBrand = styled.div`
   align-items: center;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+
+  @media (max-width: 764px) {
+    flex-direction: column;
+    font-weight: 500;
+  }
 `;
 
 const StyledFooterHR = styled.hr`
@@ -207,6 +219,11 @@ const StyledFooterSocialLink = styled.div`
 
   a {
     color: black;
+  }
+
+  @media (max-width: 764px) {
+    padding-top: 1.5rem;
+    column-gap: 2.5rem;
   }
 `;
 
