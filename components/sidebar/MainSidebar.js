@@ -10,6 +10,7 @@ import { postUserLogout } from "@/redux/slices/auth";
 import {
   getSubscriptions,
   postCustomerPortal,
+  postTrialEndInstantly,
   selectors as paymentSelector,
 } from "@/redux/slices/payment";
 import { setSubscriptionsCancelModal } from "@/redux/slices/ui";
@@ -30,6 +31,7 @@ const MainSidebar = () => {
   const [redirectURL, setRedirectURL] = useState(null);
   const [loadingManageSubs, setLoadingManageSubs] = useState(false);
   const { items: subscriptions } = useSelector(paymentSelector.getSubscription);
+  const trialSelector = useSelector(paymentSelector.getTrail);
 
   const handleShowSubscriptionsCancelModal = () => {
     dispatch(setSubscriptionsCancelModal(true));
@@ -59,6 +61,13 @@ const MainSidebar = () => {
       dispatch(postCustomerPortal()).then(({ payload }) =>
         setRedirectURL(payload.data)
       );
+  };
+
+  const isTrail = subscribe.freeTrial.eligible;
+
+  const handleInstantTrailEnd = () => {
+    const isPending = trialSelector.loading === "pending";
+    isTrail && !isPending && dispatch(postTrialEndInstantly());
   };
 
   return (
@@ -106,14 +115,21 @@ const MainSidebar = () => {
             <>
               <div>
                 <p>Plan</p>
-                {subscriptions.length > 0 && (
+                {(subscriptions.length > 0 || isTrail) && (
                   <div>
                     <StyledPlanBtn onClick={handleShowSubscriptionsCancelModal}>
                       Switch Subscriptions
                     </StyledPlanBtn>
                     <StyledPlanBtn onClick={handleCreateCustomerPortal}>
-                      {loadingManageSubs ? "Loading..." : "Manage Subscription"}
+                      {loadingManageSubs ? "Loading..." : "Cancel Subscription"}
                     </StyledPlanBtn>
+                    {isTrail && !trialSelector.data.isSuccess && (
+                      <StyledPlanBtn onClick={handleInstantTrailEnd}>
+                        {trialSelector.loading === "pending"
+                          ? "Loading..."
+                          : "Instant Trail End"}
+                      </StyledPlanBtn>
+                    )}
                   </div>
                 )}
               </div>

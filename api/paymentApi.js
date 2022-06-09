@@ -59,6 +59,11 @@ const content = {
       method: "post",
     });
   },
+  postTrialEndInstantly: () => {
+    return fetcher("/payments/trial-end", {
+      method: "post",
+    });
+  },
 };
 
 export default content;

@@ -1,4 +1,5 @@
 // import Script from "next/script";
+import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -38,8 +39,19 @@ const UserLayout = ({
   const { isLoaded, isAuth, isRehydrated } = useAuth();
   const {
     userInfo: { id: userId },
+    subscribe,
   } = useUser();
   const [subsModal] = useSubscriberModal();
+
+  useEffect(() => {
+    const subscriptionExpire =
+      subscribe?.activeSubscription?.subscriptionExpire || null;
+    const hasExpire = dayjs(subscriptionExpire).isValid();
+    if (isAuth && isRehydrated && !hasExpire) {
+      router.push("/pricing");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth, isRehydrated, subscribe?.activeSubscription?.expire]);
 
   useEffect(() => {
     if (isRehydrated && !isAuth && !isSpecial) router.push("/signin");
