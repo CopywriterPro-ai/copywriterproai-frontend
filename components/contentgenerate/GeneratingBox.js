@@ -38,6 +38,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
   const [queryTool, setQueryTool] = useState(null);
   const isToolAvailable = useSelector(contentSelector.isHasTool(queryTool));
   const {
+    isRehydrated,
     isAuth,
     subscribe: {
       freeTrial: { eligible: freeTrailEligible },
@@ -147,7 +148,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
 
   return (
     <Container>
-      {subscription === "Freemium" && !freeTrailEligible && (
+      {isRehydrated && subscription === "Freemium" && !freeTrailEligible && (
         <Link href="/pricing" passHref>
           <SubscriptionOver>
             Your trial has come to an end! Click here to subscribe and keep

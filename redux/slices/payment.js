@@ -117,6 +117,18 @@ export const postCreateSubscription = createAsyncThunk(
   }
 );
 
+export const postTrialEndInstantly = createAsyncThunk(
+  "payment/postTrialEndInstantlyFetching",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await paymentApi.postTrialEndInstantly();
+      return { data: response.data, status: response.status };
+    } catch (error) {
+      return asyncThunkError(error, rejectWithValue);
+    }
+  }
+);
+
 const initialState = {
   payment: { loading: "idle", items: [], error: null },
   price: { loading: "idle", items: [...preprice], error: null },
@@ -124,6 +136,13 @@ const initialState = {
   subscription: { loading: "idle", items: [], error: null },
   checkout: { loading: "idle", session: {}, error: null },
   modalpricing: { current: null },
+  trail: {
+    loading: "idle",
+    data: {
+      isSuccess: false,
+    },
+    error: null,
+  },
 };
 
 const validArray = (arr) => {
@@ -321,6 +340,25 @@ const payment = createSlice({
         state.customer.error = action.payload.data;
       }
     },
+
+    [postTrialEndInstantly.pending]: (state, action) => {
+      if (state.trail.loading === "idle") {
+        state.trail.loading = "pending";
+        state.trail.error = null;
+      }
+    },
+    [postTrialEndInstantly.fulfilled]: (state, action) => {
+      if (state.trail.loading === "pending") {
+        state.trail.loading = "idle";
+        state.trail.data.isSuccess = true;
+      }
+    },
+    [postTrialEndInstantly.rejected]: (state, action) => {
+      if (state.trail.loading === "pending") {
+        state.trail.loading = "idle";
+        state.trail.error = action.payload.data;
+      }
+    },
   },
 });
 
@@ -383,6 +421,10 @@ export const selectors = {
   getModalPricing: createSelector(
     (state) => state.payment.modalpricing,
     (modalpricing) => modalpricing
+  ),
+  getTrail: createSelector(
+    (state) => state.payment.trail,
+    (trail) => trail
   ),
 };
 

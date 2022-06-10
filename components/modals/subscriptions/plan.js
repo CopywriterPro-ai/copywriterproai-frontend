@@ -76,12 +76,16 @@ const SubscriptionsPlanModal = () => {
       return [];
     } else {
       return subscriptions.map((subscription) => {
-        const { words } = paymentItems.find(
+        const paymentItem = paymentItems.find(
           (item) => item.subscriptionId === subscription.id
         );
         const priceKey = subscription.plan.metadata?.priceKey;
         const subscriptionName = prices[priceKey];
-        return { ...subscription, packageName: subscriptionName.name, words };
+        return {
+          ...subscription,
+          packageName: subscriptionName.name,
+          words: paymentItem?.words ? paymentItem.words : 0,
+        };
       });
     }
   }, [paymentItems, subscriptions]);
@@ -219,12 +223,11 @@ const StyledContainer = styled.div`
 `;
 
 const StyledSubscriptionContainer = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 15px 10px;
-    margin: 5px;
-}
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 15px 10px;
+  margin: 5px;
 `;
 
 const StyledSubscriptionContainerItem = styled.div`

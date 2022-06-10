@@ -15,3 +15,4 @@ export { default as getRewardfulClientReferenceId } from "./getRewardfulClientRe
 export { default as quillTypingInsert } from "./quillTypingInsert";
 export { default as quillPlagiarism } from "./quillPlagiarism";
 export { default as decodeEntities } from "./decodeEntities";
+export { default as strategyAction } from "./strategyAction";

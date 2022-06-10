@@ -3,20 +3,25 @@ import styled from "styled-components";
 
 import { CondLayout as Layout } from "@/layout";
 import PricingCard from "@/components/PricingCardNew";
-import Faq from "@/components/Faq";
+// import Faq from "@/components/Faq";
+import Faq from "@/components/FaqNew";
+import NewFooter from "@/components/common/Footer/NewFooter";
 
 const Pricing = () => {
   return (
-    <Layout>
-      <div className="container">
-        <Section>
-          <PricingCard />
-        </Section>
-        <Section>
-          <Faq />
-        </Section>
-      </div>
-    </Layout>
+    <>
+      <Layout>
+        <div className="container">
+          <Section>
+            <PricingCard />
+          </Section>
+          <Section>
+            <Faq />
+          </Section>
+        </div>
+      </Layout>
+      <NewFooter />
+    </>
   );
 };
 

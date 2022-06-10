@@ -20,7 +20,7 @@ import { BlogResetModal } from "@/components/modals/blogs";
 import { SubscriberModal } from "@/components/modals/subscriber";
 import { MainSidebar } from "@/components/sidebar";
 import GenerateButton from "@/components/blog/components/GenerateButton";
-import Plagiarism from "@/components/Plagiarism";
+// import Plagiarism from "@/components/Plagiarism";
 import WriterPlagiarism from "@/components/WriterPlagiarism";
 import WriterToolTab from "@/components/WriterToolTab";
 import CreditsLeft from "@/components/CreditsLeft";
@@ -321,17 +321,17 @@ const BlogGenerator = () => {
               placeholder="Blog Headline"
               onChange={handleChangeTitle}
             />
-            <Plagiarism quill={quill} />
-            <CustomToolbar />
+            {/* <Plagiarism quill={quill} /> */}
+            <CustomToolbar quill={quill} />
             <EditorJS setQuillEditor={setQuill} />
           </EditorSection>
           <ToolsSection>
             <ScollingTool>
-              <div>
-                <WriterToolTab
-                  setShowPlagi={setShowPlagi}
-                  showPlagi={showPlagi}
-                />
+              <WriterToolTab
+                setShowPlagi={setShowPlagi}
+                showPlagi={showPlagi}
+              />
+              <div style={{ padding: "10px" }}>
                 <Collapse isOpen={!showPlagi && !isOpenEditorField}>
                   <ToolsHeader>
                     <CreditsLeft />
@@ -549,7 +549,7 @@ const ToolsSection = styled.div`
   flex: 3;
   border: solid #cbcbcb;
   border-width: 0 0 0 1px;
-  padding: 10px;
+  /* padding: 10px; */
 
   @media (max-width: 768px) {
     flex: 100%;
