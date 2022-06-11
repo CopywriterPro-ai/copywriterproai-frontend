@@ -121,7 +121,7 @@ const SubscriptionsPlanModal = () => {
     >
       <StyledContainer>
         {formattedSubscriptions.length === 0 && (
-          <h4>You have no any plan Subscription</h4>
+          <h4>You are not subscribed to any package.</h4>
         )}
         {formattedSubscriptions.length > 0 && <h2>Subscriptions List</h2>}
         <StyledSubscriptionContainer>
