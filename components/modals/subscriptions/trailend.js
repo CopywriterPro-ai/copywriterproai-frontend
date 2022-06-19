@@ -58,18 +58,16 @@ const TrailEndModal = () => {
     >
       <StyledContainer>
         <StyledModalContent>
-          <h3>Trail End!</h3>
-          <p>
+          <h3>Are you sure you want to cancel your trial?</h3>
+          {/* <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
             vitae sunt consequatur.
-          </p>
+          </p> */}
         </StyledModalContent>
         <StyledModalControl>
-          <button className="cancel" onClick={handleCloseModal}>
-            Cancel
-          </button>
-          <button className="trail-end" onClick={handleTrialEnd}>
-            {isPending ? "Loading..." : "Trail End"}
+          <button onClick={handleCloseModal}>Go Back</button>
+          <button onClick={handleTrialEnd}>
+            {isPending ? "Loading..." : "End Trial"}
           </button>
         </StyledModalControl>
       </StyledContainer>
@@ -93,18 +91,14 @@ const StyledModalControl = styled.div`
   align-items: center;
 
   button {
-    border: 0;
-    border-radius: 5px;
-    padding: 4px 10px;
-  }
-
-  .cancel {
-    background-color: green;
-    color: white;
-  }
-  .trail-end {
-    background-color: red;
-    color: white;
+    background-color: white;
+    border: 1.5px solid #3a4841;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 15px;
+    line-height: 22px;
+    user-select: none;
+    margin: 15px 0 15px 0;
   }
 `;
 

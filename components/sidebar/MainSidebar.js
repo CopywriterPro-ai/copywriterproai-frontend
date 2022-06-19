@@ -31,8 +31,8 @@ const MainSidebar = () => {
   const {
     refreshToken: { token },
   } = authToken;
-  const [blogDrop, setBlogDrop] = useState(false);
-  const [planDrop, setPlanDrop] = useState(false);
+  const [blogDrop, setBlogDrop] = useState(true);
+  const [planDrop, setPlanDrop] = useState(true);
   const [redirectURL, setRedirectURL] = useState(null);
   const [loadingManageSubs, setLoadingManageSubs] = useState(false);
   const { items: subscriptions } = useSelector(paymentSelector.getSubscription);
@@ -128,7 +128,7 @@ const MainSidebar = () => {
               <DropDownMenuTitle
                 onClick={() => setPlanDrop((prevState) => !prevState)}
               >
-                Plan
+                Plan <span className="fas fa-angle-down" />
               </DropDownMenuTitle>
               <Collapse isOpen={planDrop}>
                 <DropDownList>
@@ -143,7 +143,7 @@ const MainSidebar = () => {
                       </li>
                       <li>
                         <StyledPlanItem onClick={handleCreateCustomerPortal}>
-                          {loadingManageSubs ? "Loading..." : "Cancel Plan"}
+                          {loadingManageSubs ? "Loading..." : "Manage Plan"}
                         </StyledPlanItem>
                       </li>
                       {isTrail && !trialSelector.data.isSuccess && (
@@ -162,7 +162,7 @@ const MainSidebar = () => {
               <DropDownMenuTitle
                 onClick={() => setBlogDrop((prevState) => !prevState)}
               >
-                Blog
+                Blog <span className="fas fa-angle-down" />
               </DropDownMenuTitle>
               <Collapse isOpen={blogDrop}>
                 <DropDownList>
