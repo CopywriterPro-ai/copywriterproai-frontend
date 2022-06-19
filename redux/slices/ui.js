@@ -58,6 +58,7 @@ const initialState = {
     },
     subscriptions: {
       cancel: false,
+      trailEnd: false,
     },
     auth: {
       signin: false,
@@ -163,6 +164,9 @@ const ui = createSlice({
     setSubscriptionsCancelModal: (state, action) => {
       state.modal.subscriptions.cancel = action.payload;
     },
+    setSubscriptionsTrailEndModal: (state, action) => {
+      state.modal.subscriptions.trailEnd = action.payload;
+    },
     setHeaderElementSize: (state, action) => {
       const payload = pick(action.payload, [
         "noticeHeight",
@@ -238,6 +242,7 @@ export const {
   setTopBarStatus,
   setRedirectPath,
   setSubscriptionsCancelModal,
+  setSubscriptionsTrailEndModal,
   setHeaderElementSize,
 } = ui.actions;
 

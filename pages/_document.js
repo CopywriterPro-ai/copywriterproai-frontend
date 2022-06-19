@@ -1,8 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 import Document, { Head, Html, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 // import { PersistGate } from "redux-persist/integration/react";
 
 // import { persistor } from "@/redux/store";
+import * as fbq from "@/utils/fpixel";
+import { isClientDevMode, isProductionClient } from "@/utils";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -32,6 +35,8 @@ export default class MyDocument extends Document {
   }
 
   render() {
+    const isProduction = !isClientDevMode && isProductionClient;
+
     return (
       <Html lang="en">
         <Head>
@@ -51,6 +56,17 @@ export default class MyDocument extends Document {
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
             rel="stylesheet"
           />
+          {isProduction && (
+            <noscript>
+              <img
+                alt="fbq"
+                height="1"
+                width="1"
+                style={{ display: "none" }}
+                src={`https://www.facebook.com/tr?id=${fbq.FB_PIXEL_ID}&ev=PageView&noscript=1`}
+              />
+            </noscript>
+          )}
         </Head>
         <body className="loading">
           <Main />

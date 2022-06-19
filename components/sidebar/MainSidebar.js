@@ -13,8 +13,12 @@ import {
   postTrialEndInstantly,
   selectors as paymentSelector,
 } from "@/redux/slices/payment";
-import { setSubscriptionsCancelModal } from "@/redux/slices/ui";
+import {
+  setSubscriptionsCancelModal,
+  setSubscriptionsTrailEndModal,
+} from "@/redux/slices/ui";
 import SubscriberModal from "@/components/modals/subscriptions/plan";
+import SubscriberTrialEndModal from "@/components/modals/subscriptions/trailend";
 import { useResponsive, useUser } from "@/hooks";
 
 const MainSidebar = () => {
@@ -27,7 +31,8 @@ const MainSidebar = () => {
   const {
     refreshToken: { token },
   } = authToken;
-  const [blogDrop, setBlogDrop] = useState(false);
+  const [blogDrop, setBlogDrop] = useState(true);
+  const [planDrop, setPlanDrop] = useState(true);
   const [redirectURL, setRedirectURL] = useState(null);
   const [loadingManageSubs, setLoadingManageSubs] = useState(false);
   const { items: subscriptions } = useSelector(paymentSelector.getSubscription);
@@ -58,16 +63,23 @@ const MainSidebar = () => {
   const handleCreateCustomerPortal = () => {
     setLoadingManageSubs(true);
     !loadingManageSubs &&
-      dispatch(postCustomerPortal()).then(({ payload }) =>
-        setRedirectURL(payload.data)
-      );
+      dispatch(postCustomerPortal())
+        .then(({ payload }) => {
+          if (payload.status === 200) {
+            setRedirectURL(payload.data);
+          }
+        })
+        .finally(() => {
+          setLoadingManageSubs(false);
+        });
   };
 
   const isTrail = subscribe.freeTrial.eligible;
 
   const handleInstantTrailEnd = () => {
-    const isPending = trialSelector.loading === "pending";
-    isTrail && !isPending && dispatch(postTrialEndInstantly());
+    dispatch(setSubscriptionsTrailEndModal(true));
+    // const isPending = trialSelector.loading === "pending";
+    // isTrail && !isPending && dispatch(postTrialEndInstantly());
   };
 
   return (
@@ -78,7 +90,7 @@ const MainSidebar = () => {
             <p className="sidebar-premium">
               {subscribe.subscriberInfo.isPaidSubscribers
                 ? "Premium "
-                : "Freemium "}
+                : "Trail "}
               Account
             </p>
             <SidebarUserAvatar>
@@ -113,30 +125,44 @@ const MainSidebar = () => {
 
           {isAuth && (
             <>
-              <div>
-                <p>Plan</p>
-                {(subscriptions.length > 0 || isTrail) && (
-                  <div>
-                    <StyledPlanBtn onClick={handleShowSubscriptionsCancelModal}>
-                      Switch Subscriptions
-                    </StyledPlanBtn>
-                    <StyledPlanBtn onClick={handleCreateCustomerPortal}>
-                      {loadingManageSubs ? "Loading..." : "Cancel Subscription"}
-                    </StyledPlanBtn>
-                    {isTrail && !trialSelector.data.isSuccess && (
-                      <StyledPlanBtn onClick={handleInstantTrailEnd}>
-                        {trialSelector.loading === "pending"
-                          ? "Loading..."
-                          : "Instant Trail End"}
-                      </StyledPlanBtn>
-                    )}
-                  </div>
-                )}
-              </div>
+              <DropDownMenuTitle
+                onClick={() => setPlanDrop((prevState) => !prevState)}
+              >
+                Plan <span className="fas fa-angle-down" />
+              </DropDownMenuTitle>
+              <Collapse isOpen={planDrop}>
+                <DropDownList>
+                  {(subscriptions.length > 0 || isTrail) && (
+                    <>
+                      <li>
+                        <StyledPlanItem
+                          onClick={handleShowSubscriptionsCancelModal}
+                        >
+                          Switch Plan
+                        </StyledPlanItem>
+                      </li>
+                      <li>
+                        <StyledPlanItem onClick={handleCreateCustomerPortal}>
+                          {loadingManageSubs ? "Loading..." : "Manage Plan"}
+                        </StyledPlanItem>
+                      </li>
+                      {isTrail && !trialSelector.data.isSuccess && (
+                        <li>
+                          <StyledPlanItem onClick={handleInstantTrailEnd}>
+                            {trialSelector.loading === "pending"
+                              ? "Loading..."
+                              : "End Trial"}
+                          </StyledPlanItem>
+                        </li>
+                      )}
+                    </>
+                  )}
+                </DropDownList>
+              </Collapse>
               <DropDownMenuTitle
                 onClick={() => setBlogDrop((prevState) => !prevState)}
               >
-                Blog
+                Blog <span className="fas fa-angle-down" />
               </DropDownMenuTitle>
               <Collapse isOpen={blogDrop}>
                 <DropDownList>
@@ -187,6 +213,7 @@ const MainSidebar = () => {
         </Community>
       </SidebarContainer>
       <SubscriberModal />
+      <SubscriberTrialEndModal />
     </Sidebar>
   );
 };
@@ -319,15 +346,10 @@ const Community = styled(SidebarSection)`
   }
 `;
 
-const StyledPlanBtn = styled.button`
-  display: block;
-  margin: 5px 0;
-  background-color: white;
-  border: 1.5px solid #3a4841;
-  padding: 3px 10px;
-  border-radius: 3px;
-  line-height: 22px;
-  justify-content: center;
+const StyledPlanItem = styled.div`
+  cursor: pointer;
+  color: #000;
+  font-weight: 500;
 `;
 
 export default MainSidebar;
