@@ -43,15 +43,16 @@ const UserLayout = ({
   } = useUser();
   const [subsModal] = useSubscriberModal();
 
-  useEffect(() => {
-    const subscriptionExpire =
-      subscribe?.activeSubscription?.subscriptionExpire || null;
-    const hasExpire = dayjs(subscriptionExpire).isValid();
-    if (isAuth && isRehydrated && !hasExpire) {
-      router.push("/pricing");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth, isRehydrated, subscribe?.activeSubscription?.expire]);
+  // disable trial redirect
+  // useEffect(() => {
+  //   const subscriptionExpire =
+  //     subscribe?.activeSubscription?.subscriptionExpire || null;
+  //   const hasExpire = dayjs(subscriptionExpire).isValid();
+  //   if (isAuth && isRehydrated && !hasExpire) {
+  //     router.push("/pricing");
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [isAuth, isRehydrated, subscribe?.activeSubscription?.expire]);
 
   useEffect(() => {
     if (isRehydrated && !isAuth && !isSpecial) router.push("/signin");
