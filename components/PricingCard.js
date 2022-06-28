@@ -231,7 +231,7 @@ const SinglePriceItem = ({
                     ? "Active"
                     : "Expired"
                   : "Get Started")}
-              {!isAuth && "Start 7 days free trail"}
+              {!isAuth && "Start 7 days free trial"}
             </ClaimButton>
           </ButtonWrapper>
         </PriceCardBody>
