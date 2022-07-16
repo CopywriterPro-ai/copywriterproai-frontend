@@ -80,19 +80,19 @@ const GuestFooter = () => {
                 <p>© {year} CopywriterPro. All rights reserved.</p>
                 <ul>
                   <ListItemSocial
-                    to={externalLink.twitter}
-                    title="Twitter"
-                    icon="twitter"
-                  />
-                  <ListItemSocial
                     to={externalLink.facebookPage}
                     title="Facebook"
                     icon="facebook-square"
                   />
                   <ListItemSocial
-                    to={externalLink.discord}
-                    title="Discord"
-                    icon="discord"
+                    to={externalLink.twitter}
+                    title="Twitter"
+                    icon="twitter"
+                  />
+                  <ListItemSocial
+                    to={externalLink.linkedin}
+                    title="LinkedIn"
+                    icon="linkedin"
                   />
                 </ul>
               </FooterBrand>

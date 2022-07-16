@@ -69,7 +69,7 @@ const SignUp = () => {
         nextLink="/signin"
         strategyTitle="Sign up"
       >
-        <SignForm onSubmit={handleSubmit(onSubmit)}>
+        {/* <SignForm onSubmit={handleSubmit(onSubmit)}>
           <InputField
             register={register("firstName")}
             placeholder="First Name"
@@ -92,7 +92,7 @@ const SignUp = () => {
             errors={errors}
           />
           <SubmitButton loading={isPending} title="SIGN UP" />
-        </SignForm>
+        </SignForm> */}
       </AuthForm>
     </Layout>
   );

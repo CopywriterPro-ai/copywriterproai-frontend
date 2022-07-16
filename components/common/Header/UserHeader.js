@@ -50,13 +50,13 @@ const NavComDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
         </DropdownToggleOptions>
         <NavDropdownMenus>
           <a href={externalLink.facebookGroup} target="__blank">
-            <NavDropdownItem tag="div">Facebook Group</NavDropdownItem>
-          </a>
-          <a href={externalLink.discord} target="__blank">
-            <NavDropdownItem tag="div">Discord Server</NavDropdownItem>
+            <NavDropdownItem tag="div">Facebook</NavDropdownItem>
           </a>
           <a href={externalLink.twitter} target="__blank">
-            <NavDropdownItem tag="div">Twitter Account</NavDropdownItem>
+            <NavDropdownItem tag="div">Twitter</NavDropdownItem>
+          </a>
+          <a href={externalLink.linkedin} target="__blank">
+            <NavDropdownItem tag="div">LinkedIn</NavDropdownItem>
           </a>
         </NavDropdownMenus>
       </Dropdown>

@@ -11,7 +11,7 @@ import Faq from "@/components/Faq";
 
 const seo = {
   description:
-    "Need help writing marketing content? Our AI copywriting tool will help you write compelling copy that ranks and converts visitors into customers. Don't miss out - get started today for free!",
+    "CopywriterPro is the highest quality AI copywriting tool that generates compelling and conversion-ready blog posts, website content, marketing and sales copy with ease.",
 };
 
 const additionalMeta = [

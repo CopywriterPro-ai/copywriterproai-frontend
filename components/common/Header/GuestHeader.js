@@ -109,10 +109,13 @@ const AppHeader = () => {
                     href={externalLink.facebookGroup}
                     target="__blank"
                   >
-                    Facebook Group
+                    Facebook
                   </DropdownItem>
-                  <DropdownItem href={externalLink.discord} target="__blank">
-                    Discord Server
+                  <DropdownItem href={externalLink.twitter} target="__blank">
+                    Twitter
+                  </DropdownItem>
+                  <DropdownItem href={externalLink.linkedin} target="__blank">
+                    LinkedIn
                   </DropdownItem>
                 </StyledDropdownMenu>
               </UncontrolledDropdown>

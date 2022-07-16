@@ -200,14 +200,14 @@ const MainSidebar = () => {
           <ul>
             <li>
               <a href={externalLink.facebookGroup} target="__blank">
-                Facebook Group
+                Facebook
               </a>
             </li>
             <li>
-              <a href={externalLink.discord}>Discord Server</a>
+              <a href={externalLink.twitter}>Twitter</a>
             </li>
             <li>
-              <a href={externalLink.twitter}>Twitter Account</a>
+              <a href={externalLink.linkedin}>LinkedIn</a>
             </li>
           </ul>
         </Community>

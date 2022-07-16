@@ -63,9 +63,9 @@ const AuthForm = ({
             </StrategyButton>
           )}
 
-          {showSignWithEmail && (
+          {/* {showSignWithEmail && (
             <OrSignWithEmail>- or {strategyTitle} with email -</OrSignWithEmail>
-          )}
+          )} */}
 
           {showDescription && <Description>{description}</Description>}
 
