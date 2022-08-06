@@ -8,20 +8,27 @@ import Faq from "@/components/Faq";
 const Pricing = () => {
   return (
     <Layout>
-      <div className="container">
+      <Container className="container">
         <Section>
           <PricingCard />
         </Section>
         <Section>
           <Faq />
         </Section>
-      </div>
+      </Container>
     </Layout>
   );
 };
 
+const Container = styled.div`
+`;
+
 const Section = styled.div`
-  margin: 85px 0;
+  margin: 55px 0;
+
+  @media (max-width: 768px) {
+    margin-top: 50px;
+  }
 `;
 
 export default Pricing;

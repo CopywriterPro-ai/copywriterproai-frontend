@@ -81,7 +81,7 @@ const DemoBlogHeadline = () => {
             ref={textAreaRef}
             Color={(maxInput && "red") || (!minInput && "green")}
             rows="8"
-            placeholder="Write your blog about"
+            placeholder="Write your blog topic"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             maxLength={MAX_LENGTH}

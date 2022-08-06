@@ -6,8 +6,8 @@ const AppSectionTitle = ({ title }) => {
 
 const SectionTitle = styled.h2`
   text-align: center;
-  font-size: 30px;
-  font-weight: 600;
+  font-size: 37px;
+  font-weight: 800;
   line-height: 45px;
   padding-bottom: 60px;
 
@@ -16,8 +16,9 @@ const SectionTitle = styled.h2`
     line-height: 40px;
   }
 
-  @media (max-width: 319px) {
+  @media (max-width: 375px) {
     font-size: 18px;
+    line-height: 0px;
   }
 `;
 

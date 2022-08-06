@@ -145,7 +145,7 @@ const GuestFooter = () => {
 const AppFooter = styled.footer`
   @media (min-width: 1450px) {
     background-position-y: center;
-    padding-top: 230px;
+    // padding-top: 230px;
   }
 
   // @media (max-width: 767px) {
