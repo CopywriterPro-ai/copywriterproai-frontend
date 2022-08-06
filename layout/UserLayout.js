@@ -145,12 +145,6 @@ const UserLayout = ({
 
 const Main = styled.main`
   min-height: 70vh;
-  @media (min-width: 768px) {
-    margin-top: ${({ topBarHeigth, navBarHeigth, showTopBar }) =>
-      showTopBar.toString() === "true"
-        ? `${topBarHeigth + navBarHeigth}px`
-        : `${navBarHeigth}px`};
-  }
 `;
 
 export default UserLayout;
