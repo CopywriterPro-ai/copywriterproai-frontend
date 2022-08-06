@@ -409,7 +409,6 @@ const MyNavbar = styled.nav`
 
   @media (min-width: 768px) {
     padding: 35px 0px;
-    position: fixed;
     top: 0;
     width: 100%;
     z-index: 9999;
