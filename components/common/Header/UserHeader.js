@@ -184,7 +184,7 @@ const AppHeader = () => {
 
   return (
     <div>
-      {showTopBar && (
+      {/* {showTopBar && (
         <TopNotice ref={noticeTopRef}>
           <div style={{ maxWidth: "80%" }}>
             {active && (
@@ -203,7 +203,7 @@ const AppHeader = () => {
             ></i>
           </div>
         </TopNotice>
-      )}
+      )} */}
       <MyNavbar
         ref={navRef}
         shownotice={showTopBar.toString()}
