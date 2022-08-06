@@ -44,7 +44,7 @@ const Home = () => {
           <Faq />
         </Section>
       </div>
-      <Section style={{ margin: "30px 0" }}>
+      <Section style={{ margin: "30px 0 0 0" }}>
         <QuickAuth />
       </Section>
     </Layout>
@@ -53,12 +53,6 @@ const Home = () => {
 
 const PageGlobalStyles = createGlobalStyle`
   body {
-    height: 842px;
-    width: 100%;
-    left: 0px;
-    top: 0px;
-    background: linear-gradient(180deg, rgba(255, 249, 227, 0.85) 0%, rgba(255, 248, 220, 0) 100%);
-    background-repeat: no-repeat;
   }
 `;
 

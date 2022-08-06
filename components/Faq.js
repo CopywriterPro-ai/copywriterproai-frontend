@@ -72,7 +72,7 @@ const FAQ = () => {
 
 const FAQSection = styled.div`
   padding-top: 60px;
-  padding-bottom: 60px;
+  padding-bottom: 20px;
 `;
 
 const Flex = styled.div`

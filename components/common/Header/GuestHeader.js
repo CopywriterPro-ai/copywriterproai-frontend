@@ -63,7 +63,7 @@ const AppHeader = () => {
 
   return (
     <header>
-      {showNotice && (
+      {/* {showNotice && (
         <TopNotice ref={noticeTopRef}>
           <div style={{ maxWidth: "80%" }}>
             {active && (
@@ -83,7 +83,7 @@ const AppHeader = () => {
             ></i>
           </div>
         </TopNotice>
-      )}
+      )} */}
       <NavBar
         shownotice={showNotice.toString()}
         noticeheight={`${topNoticeHeight}px`}
@@ -207,7 +207,6 @@ const NavBar = styled(Navbar)`
   }
 
   @media (max-width: 768px) {
-    margin-left: 10px;
     flex-wrap: wrap;
 
     .ml-auto:nth-of-type(1) {

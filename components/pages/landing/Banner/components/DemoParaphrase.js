@@ -81,7 +81,7 @@ const DemoParaphrase = () => {
             ref={textAreaRef}
             Color={(maxInput && "red") || (!minInput && "green")}
             rows="8"
-            placeholder="Write your paraphrase"
+            placeholder="Write your text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             maxLength={MAX_LENGTH}

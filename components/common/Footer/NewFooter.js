@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
 
-import Logo from "@/assets/images/logo2.png";
+import Logo from "@/assets/images/logo-color.png";
 
 const Explores = [
   {
@@ -129,7 +129,7 @@ const NewFooter = () => {
     <StyledFooter>
       <Container>
         <StyledFooterContent>
-          <div style={{ flex: 4 }}>
+          <div style={{ flex: 2 }}>
             <StyledFooterBrandIcon>
               <img src={Logo.src} height="45" alt="copywriterpro logo" />
               <div>
@@ -142,16 +142,18 @@ const NewFooter = () => {
               </div>
             </StyledFooterBrandIcon>
           </div>
-          {FooterLinks.map((item) => (
-            <StyledFooterContentItem key={item.name}>
-              <strong>{item.name}</strong>
-              <LinkList links={item.links} />
-            </StyledFooterContentItem>
-          ))}
+          <FooterLinksWrapper>
+            {FooterLinks.map((item) => (
+              <StyledFooterContentItem key={item.name}>
+                <LinkTitle>{item.name}</LinkTitle>
+                <LinkList links={item.links} />
+              </StyledFooterContentItem>
+            ))}
+          </FooterLinksWrapper>
         </StyledFooterContent>
         <StyledFooterHR />
         <StyledFooterBrand>
-          © 2022 CopywriterPro. All Rights Reserved.
+          <FooterCopyright>© 2022 CopywriterPro. All Rights Reserved.</FooterCopyright>
           <StyledFooterSocialLink>
             {Socials.map((item) => (
               <a
@@ -177,31 +179,85 @@ const StyledFooter = styled.footer`
   background-color: #f3f6f9;
 `;
 
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 1450px;
-  padding-left: 1rem;
-  padding-right: 1rem;
-`;
+const Container = styled.div``;
 
 const StyledFooterContent = styled.div`
+  padding: 6.5rem 3rem 4rem 3rem;
   display: flex;
   flex-wrap: wrap;
-  padding-top: 3rem;
-  padding-bottom: 2.5rem;
-  gap: 5rem;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    padding: 4rem 1.5rem 3rem 1.5rem;
+  }
+`;
+
+const FooterLinksWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rem;
+  margin-left: 2.5rem;
+
+  @media (max-width: 1352px) {
+    gap: 9rem;
+  }
+
+  @media (max-width: 1255px) {
+    gap: 7rem;
+  }
+
+  @media (max-width: 1159px) {
+    gap: 5rem;
+  }
+
+  @media (max-width: 992px) {
+    gap: 3rem;
+  }
+
+  @media (max-width: 800px) {
+    gap: 2.5rem;
+  }
+
+  @media (max-width: 767px) {
+    margin-left: 0rem;
+    margin-top: 4rem;
+    justify-content: space-between;
+  }
 `;
 
 const StyledFooterBrand = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding: 2.5rem 3rem 1.5rem 3rem;
 
-  @media (max-width: 764px) {
+  @media (max-width: 767px) {
     flex-direction: column;
     font-weight: 500;
+    padding: 2rem 2rem 1.5rem 2rem;
+  }
+`;
+
+const FooterCopyright = styled.span`
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+
+  @media (max-width: 1352px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 1064px) {
+    font-size: 13.5px;
+    line-height: 20px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 340px) {
+    font-size: 12px;
   }
 `;
 
@@ -212,24 +268,43 @@ const StyledFooterHR = styled.hr`
 
 const StyledFooterContentItem = styled.div``;
 
+const LinkTitle = styled.span`
+  font-family: 'Verdana';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 40px;
+
+  @media (max-width: 1352px) {
+    font-size: 17px;
+  }
+
+  @media (max-width: 1064px) {
+    font-size: 15px;
+    line-height: 35px;
+  }
+
+  @media (max-width: 767px) {
+    line-height: 25px;
+  }
+`;
+
 const StyledFooterSocialLink = styled.div`
   display: flex;
-  column-gap: 1rem;
+  column-gap: 2rem;
   align-items: center;
 
   a {
     color: black;
   }
 
-  @media (max-width: 764px) {
+  @media (max-width: 767px) {
     padding-top: 1.5rem;
-    column-gap: 2.5rem;
+    column-gap: 2rem;
   }
 `;
 
 const StyledFooterSocialLinkIcon = styled.i`
-  font-size: 18px;
-
   &:hover {
     color: ${({ Color }) => Color};
   }
@@ -238,26 +313,60 @@ const StyledFooterSocialLinkIcon = styled.i`
 const StyledLinkListUL = styled.ul`
   list-style: none;
   padding: 0;
+  margin-top: 15px;
 
   li {
-    margin: 0.8rem 0;
-    font-size: 15px;
+    line-height: 40px;
+
+    @media (max-width: 1352px) {
+      font-size: 17px;
+    }
+
+    @media (max-width: 1064px) {
+      font-size: 15px;
+      line-height: 35px;
+    }
 
     a {
+      font-size: 16px;
+      font-weight: 400;
       color: black;
       text-decoration: none;
+
+      @media (max-width: 1352px) {
+        font-size: 15px;
+      }
+
+      @media (max-width: 1064px) {
+        font-size: 13.5px;
+        line-height: 20px;
+      }
     }
   }
 `;
 
 const StyledFooterBrandIcon = styled.div`
-  font-weight: 500;
-  font-size: 15px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 30px;
+
+  @media (max-width: 1352px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 1064px) {
+    font-size: 13.5px;
+    line-height: 25px;
+  }
 
   img {
     margin-bottom: 2rem;
+    @media (max-width: 1024px) {
+      height: 2.5rem;
+    }
   }
   a {
+    font-weight: 500;
     color: #007fff;
     text-decoration: none;
   }
