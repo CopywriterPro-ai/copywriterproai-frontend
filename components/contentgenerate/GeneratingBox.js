@@ -23,6 +23,7 @@ import GenerateResult from "./GenerateResult";
 import TipsImg from "@/assets/images/generate-tips.png";
 import { useUser, useSubscriberModal, useToolAccess } from "@/hooks";
 import toolsvalidation from "@/data/toolsvalidation";
+import { isActionAllowed } from "redux-state-sync";
 
 const InputGeneratingBox = ({ showTutorialState }) => {
   const dispatch = useDispatch();
@@ -148,7 +149,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
 
   return (
     <Container>
-      {isRehydrated && subscription === "Freemium" && !freeTrailEligible && (
+      {isRehydrated && isAuth && subscription === "Freemium" && !freeTrailEligible && (
         <Link href="/pricing" passHref>
           <SubscriptionOver>
             Your trial has come to an end! Click here to subscribe and keep

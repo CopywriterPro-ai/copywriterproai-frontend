@@ -61,7 +61,7 @@ const DemoBlogHeadline = () => {
       ).then(({ payload }) => {
         if (payload.status === 200) {
           scrollAreaRef.current.scroll({
-            top: inputHeigth,
+            top: inputHeigth + 10,
             left: 0,
             behavior: "smooth",
           });

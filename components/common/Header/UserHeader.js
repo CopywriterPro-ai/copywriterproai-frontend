@@ -48,7 +48,7 @@ const NavComDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
         >
           {MenuName} <span className="fas fa-angle-down"></span>
         </DropdownToggleOptions>
-        <NavDropdownMenus>
+        <NavDropdownMenu>
           <a href={externalLink.facebookGroup} target="__blank">
             <NavDropdownItem tag="div">Facebook</NavDropdownItem>
           </a>
@@ -58,7 +58,7 @@ const NavComDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
           <a href={externalLink.linkedin} target="__blank">
             <NavDropdownItem tag="div">LinkedIn</NavDropdownItem>
           </a>
-        </NavDropdownMenus>
+        </NavDropdownMenu>
       </Dropdown>
     </li>
   );
@@ -75,7 +75,7 @@ const NavBlogDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
         >
           {MenuName} <span className="fas fa-angle-down"></span>
         </DropdownToggleOptions>
-        <NavDropdownMenus>
+        <NavDropdownMenu>
           <Link href="/app/ai-write-along">
             <a>
               <NavDropdownItem tag="div">
@@ -95,7 +95,7 @@ const NavBlogDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
               <NavDropdownItem tag="div">Drafts</NavDropdownItem>
             </a>
           </Link>
-        </NavDropdownMenus>
+        </NavDropdownMenu>
       </Dropdown>
     </li>
   );
@@ -258,11 +258,12 @@ const AppHeader = () => {
 
             {isAuth && (
               <NavbarMenu>
-                <Dropdown isOpen={isOpen} toggle={toggle}>
+                <DropdownOptions isOpen={isOpen} toggle={toggle}>
                   <DropdownToggleOptions
                     tag="span"
                     data-toggle="dropdown"
                     aria-expanded={isOpen}
+                    style={{float: "right"}}
                   >
                     <DropdownAvatar>
                       {profileAvatar ? (
@@ -277,7 +278,7 @@ const AppHeader = () => {
                       ></span>
                     </DropdownAvatar>
                   </DropdownToggleOptions>
-                  <NavDropdownMenu>
+                  <NavDropdownMenu userMenu="true">
                     <NavDropdownItem tag="div">
                       <Link href="/bookmarks">
                         <a>
@@ -289,7 +290,7 @@ const AppHeader = () => {
                       <span className="fas fa-sign-out-alt"></span> Log out
                     </NavDropdownItem>
                   </NavDropdownMenu>
-                </Dropdown>
+                </DropdownOptions>
               </NavbarMenu>
             )}
           </NavbarContainer>
@@ -326,7 +327,17 @@ const JoinButton = styled.button`
 `;
 
 const NavDropdownMenu = styled(DropdownMenu)`
-  background: white;
+  display: none;
+  position: absolute;
+  right: ${({ userMenu }) => userMenu === "true" ? "0px" : "auto"} !important;
+  left: ${({ userMenu }) => userMenu === "true" ? "auto" : "0px"} !important;
+  transform: translate3d(0px, 35px, 0px) !important;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 5px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  padding: 0px;
+  margin: 0px;
 
   @media (max-width: 992px) {
     font-size: 14px;
@@ -343,6 +354,12 @@ const NavDropdownMenu = styled(DropdownMenu)`
       text-decoration: none;
     }
   }
+`;
+
+const DropdownOptions = styled(Dropdown)`
+  position: relative;
+  display: inline-block;
+  right: 0;
 `;
 
 const DropdownToggleOptions = styled(DropdownToggle)`
@@ -380,10 +397,16 @@ const NavDropdownMenus = styled(DropdownMenu)`
 const NavDropdownItem = styled(DropdownItem)`
   color: black;
   cursor: pointer;
+  padding: 12px 16px;
+  
+  &:hover {
+    color: black;
+    background-color: #f1f1f1;
+  }
 
   &:active {
     color: black;
-    background-color: #e0e0e0;
+    background-color: #f1f1f1;
   }
 `;
 
