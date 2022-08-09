@@ -457,11 +457,11 @@ const PricingCard = () => {
   return (
     <PriceSection>
       <SectionTitle>Make your writing smarter and faster</SectionTitle>
-      {isBD && (
+      {/* {isBD && (
         <StyledMobileBanking>
           To make a payment with Bkash, Rocket or Upay, please visit  <Link href="/bd-pricing">this page.</Link>
         </StyledMobileBanking>
-      )}
+      )} */}
       <PriceSwitch>
         <span>Monthly</span>
         <PriceSwitchButton

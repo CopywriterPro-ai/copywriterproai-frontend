@@ -100,25 +100,25 @@ const AppHeader = () => {
               <AppNavLink to="/#features" title="Features" />
               <AppNavLink to="/pricing" title="Pricing" />
               {/* <AppNavLink to="/affiliates" title="Affiliates" /> */}
-              <UncontrolledDropdown nav inNavbar>
+              <Dropdown nav inNavbar>
                 <StyledDropdownToggle nav caret>
                   Community
                 </StyledDropdownToggle>
-                <StyledDropdownMenu left="true">
-                  <DropdownItem
+                <StyledDropdownMenu left="true" className="dropdown-content">
+                  <NavDropdownItem
                     href={externalLink.facebookGroup}
                     target="__blank"
                   >
                     Facebook
-                  </DropdownItem>
-                  <DropdownItem href={externalLink.twitter} target="__blank">
+                  </NavDropdownItem>
+                  <NavDropdownItem href={externalLink.twitter} target="__blank">
                     Twitter
-                  </DropdownItem>
-                  <DropdownItem href={externalLink.linkedin} target="__blank">
+                  </NavDropdownItem>
+                  <NavDropdownItem href={externalLink.linkedin} target="__blank">
                     LinkedIn
-                  </DropdownItem>
+                  </NavDropdownItem>
                 </StyledDropdownMenu>
-              </UncontrolledDropdown>
+              </Dropdown>
             </Nav>
 
             <Nav className="ml-auto" navbar>
@@ -231,14 +231,27 @@ const NavBar = styled(Navbar)`
   }
 `;
 
+const Dropdown = styled(UncontrolledDropdown)`
+  &:hover .dropdown-content {
+    display: block;
+  }
+`;
+
 const StyledDropdownToggle = styled(DropdownToggle)`
   padding: 12px 18px !important;
   color: black !important;
 `;
 
 const StyledDropdownMenu = styled(DropdownMenu)`
-  background-color: transparent;
-  border: none;
+  background-color: #fff;
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 2px 5px 0px rgb(0 0 0 / 15%);
+  z-index: 1;
+  padding: 0px;
+  margin: 0px;
 
   @media (max-width: 768px) {
     font-size: 16px;
@@ -250,6 +263,22 @@ const StyledDropdownMenu = styled(DropdownMenu)`
 
   @media (max-width: 425px) {
     font-size: 14px;
+  }
+`;
+
+const NavDropdownItem = styled(DropdownItem)`
+  color: black;
+  cursor: pointer;
+  padding: 10px 16px;
+
+  &:hover {
+    color: black;
+    background-color: #f1f1f1;
+  }
+
+  &:active {
+    color: black;
+    background-color: #f1f1f1;
   }
 `;
 

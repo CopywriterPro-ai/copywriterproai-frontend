@@ -144,16 +144,16 @@ export const Button = styled.button`
 `;
 
 export const DemoItem = styled.div`
-  border: 0;
-  border-radius: 2px;
+  border: none;
+  border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-  margin: 5px 1px;
-  padding: 5px;
+  margin: 15px 1px;
+  padding: 10px 15px;
   user-select: all;
   word-wrap: break-word;
 `;
 
 export const ResultSection = styled.div`
-  margin-top: 55px;
+  margin-top: 40px;
 `;

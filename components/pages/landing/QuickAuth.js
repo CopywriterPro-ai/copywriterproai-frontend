@@ -17,7 +17,7 @@ const Container = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
-  height: 450px;
+  height: 550px;
   background: linear-gradient(86.96deg, #0E2F6C 0%, #007FFF 100%);
 
   @media (max-width: 1092px) {

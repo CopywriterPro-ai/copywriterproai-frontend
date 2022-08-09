@@ -24,7 +24,7 @@ const Container = styled.div`
 `;
 
 const Section = styled.div`
-  margin: 55px 0;
+  margin: 80px 0 55px 0;
 
   @media (max-width: 768px) {
     margin-top: 50px;

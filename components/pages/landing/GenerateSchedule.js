@@ -317,7 +317,7 @@ const GenerateSchedule = () => {
           </ScheduleCardText> */}
           <YoutubeVideo>
             <YouTubeEmbed
-              id="YdBLH0B_72M"
+              id="aQFao8lz6C8"
               title="How to Use CopywriterPro AI To Create Brilliant Ad Copies."
               poster="maxresdefault"
               webp={true}

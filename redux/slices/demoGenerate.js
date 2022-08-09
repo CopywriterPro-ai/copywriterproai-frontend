@@ -49,7 +49,7 @@ const demoGenerate = createSlice({
       if (state.loading === "pending") {
         state.loading = "idle";
         state.task = action.meta.arg.data?.task;
-        state.items = action.payload.data;
+        state.items = action.payload.data?.generatedTexts;
       }
     },
     [postLandingDemo.rejected]: (state, action) => {

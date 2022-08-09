@@ -182,7 +182,7 @@ const StyledFooter = styled.footer`
 const Container = styled.div``;
 
 const StyledFooterContent = styled.div`
-  padding: 6.5rem 3rem 4rem 3rem;
+  padding: 7.5rem 3rem 5rem 3rem;
   display: flex;
   flex-wrap: wrap;
 
@@ -229,7 +229,7 @@ const StyledFooterBrand = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2.5rem 3rem 1.5rem 3rem;
+  padding: 2.5rem 3rem 2.5rem 3rem;
 
   @media (max-width: 767px) {
     flex-direction: column;
@@ -296,6 +296,10 @@ const StyledFooterSocialLink = styled.div`
 
   a {
     color: black;
+
+    @media (min-width: 1024px) {
+      font-size: 1.2rem;
+    }
   }
 
   @media (max-width: 767px) {
