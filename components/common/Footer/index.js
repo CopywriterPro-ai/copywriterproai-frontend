@@ -1,1 +1,1 @@
-export { default as GuestFooter } from "./NewFooter";
+export { default as GuestFooter } from "./GuestFooter";
