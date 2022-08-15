@@ -6,6 +6,7 @@ import Banner from "@/components/pages/landing/Banner";
 import Extension from "@/components/pages/landing/Extension";
 import GenerateSchedule from "@/components/pages/landing/GenerateSchedule";
 import CopywriterOffers from "@/components/pages/landing/CopywriterOffers";
+import Resources from "@/components/pages/landing/Resources";
 import QuickAuth from "@/components/pages/landing/QuickAuth";
 import Faq from "@/components/Faq";
 
@@ -40,11 +41,14 @@ const Home = () => {
         <Section>
           <CopywriterOffers />
         </Section>
-        <Section>
-          <Faq />
-        </Section>
       </div>
-      <Section style={{ margin: "30px 0 0 0" }}>
+      <Section>
+        <Resources />
+      </Section>
+      <Section>
+        <Faq />
+      </Section>
+      <Section>
         <QuickAuth />
       </Section>
     </Layout>
@@ -56,12 +60,6 @@ const PageGlobalStyles = createGlobalStyle`
   }
 `;
 
-const Section = styled.div`
-  margin: 40px 0;
-
-  @media (max-width: 375px) {
-    margin: 15px 0px;
-  }
-`;
+const Section = styled.div``;
 
 export default Home;
