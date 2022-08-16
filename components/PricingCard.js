@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { Spinner } from "./common/Spinner";
+import Spinner from "./common/Spinner";
 
 import {
   getPriceList,
