@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { AuthLayout as Layout } from "@/layout";
 import { postStrategyLogin } from "@/redux/slices/auth";
 import { toastMessage } from "@/utils";
-import Loader from "@/components/common/Loader";
+import Spinner from "@/components/common/Spinner";
 import { USER_DEFAULT_PATH } from "@/appconstants";
 
 const Strategyauth = () => {
@@ -36,7 +36,7 @@ const Strategyauth = () => {
   return (
     <Layout>
       <StrategyContainer>
-        <Loader size="90px" />
+        <Spinner size="90px" />
       </StrategyContainer>
     </Layout>
   );

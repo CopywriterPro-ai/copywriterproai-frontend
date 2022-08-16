@@ -104,6 +104,7 @@ const BannerSection = styled.div``;
 
 const BannerContainer = styled.div`
   padding-top: 10px;
+  margin-top: 40px;
 
   .demo {
     background-image: url(${PreGenerateBg.src});
@@ -143,16 +144,20 @@ const BannerContainer = styled.div`
   }
 
   @media (max-width: 992px) {
+    margin-top: 30px;
     margin-right: 0px;
   }
 
   @media (max-width: 768px) {
     background-image: none;
-    margin-right: 0px;
 
     .sign-up-text {
       font-weight: 600;
     }
+  }
+
+  @media (max-width: 525px) {
+    margin-top: 15px;
   }
 `;
 

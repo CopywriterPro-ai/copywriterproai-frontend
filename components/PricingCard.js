@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { AppSpinner } from "./common/Spinner";
+import { Spinner } from "./common/Spinner";
 
 import {
   getPriceList,
@@ -449,7 +449,7 @@ const PricingCard = () => {
   if (loading === "pending" && !items.length) {
     return (
       <StyledLoading>
-        <AppSpinner />
+        <Spinner />
       </StyledLoading>
     );
   }
