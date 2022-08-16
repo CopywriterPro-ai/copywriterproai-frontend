@@ -1,6 +1,6 @@
 import React from "react";
 
-import Loader from "@/components/common/Loader";
+import Spinner from "@/components/common/Spinner";
 import { GenButton } from "../styles";
 
 const GenerateButton = ({ loading, onClick, children, disabled = false }) => {
@@ -12,7 +12,7 @@ const GenerateButton = ({ loading, onClick, children, disabled = false }) => {
     >
       {loading ? (
         <div style={{ display: "flex" }}>
-          Generating <Loader style={{ marginLeft: "5px" }} size="10px" />
+          Generating <Spinner style={{ marginLeft: "5px" }} size="10px" />
         </div>
       ) : children ? (
         children

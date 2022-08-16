@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styled from "styled-components";
 
 const YouTubeEmbed = (props) => {
   const [preconnected, setPreconnected] = useState(false);
@@ -72,17 +73,12 @@ const YouTubeEmbed = (props) => {
           </>
         )}
       </>
-      <article
+      <Article
         onPointerOver={warmConnections}
         onClick={addIframe}
         className={`${wrapperClassImp} ${iframe ? activatedClassImp : ""}`}
         data-title={videoTitle}
-        style={{
-          backgroundImage: `url(${posterUrl})`,
-          ...{
-            "--aspect-ratio": `${(aspectHeight / aspectWidth) * 100}%`,
-          },
-        }}
+        posterUrl={posterUrl}
       >
         <button
           className={playerClassImp}
@@ -100,9 +96,19 @@ const YouTubeEmbed = (props) => {
             src={iframeSrc}
           ></iframe>
         )}
-      </article>
+      </Article>
     </>
   );
 };
+
+const Article = styled.article`
+  background-image: url(${({ posterUrl }) => posterUrl});
+  --aspect-ratio: 48.25%;
+  box-shadow: rgb(90 105 120 / 20%) 3px 3px 30px 2px;
+
+  &:before {
+    background-image: none;
+  }
+`;
 
 export default YouTubeEmbed;

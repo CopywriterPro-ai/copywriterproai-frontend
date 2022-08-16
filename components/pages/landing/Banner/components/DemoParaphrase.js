@@ -18,7 +18,7 @@ import {
   ResultSection,
   DemoItem,
 } from "./style";
-import Loader from "@/components/common/Loader";
+import Spinner from "@/components/common/Spinner";
 import { PARAPHRASING } from "@/appconstants";
 
 const MAX_LENGTH = 100;
@@ -94,7 +94,7 @@ const DemoParaphrase = () => {
               {isPending ? (
                 <div style={{ display: "flex", alignItems: "center" }}>
                   Generating{" "}
-                  <Loader style={{ marginLeft: "5px" }} size="10px" />
+                  <Spinner style={{ marginLeft: "5px" }} size="10px" />
                 </div>
               ) : (
                 "Generate"

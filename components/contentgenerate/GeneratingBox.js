@@ -17,7 +17,6 @@ import {
   setContentSidebar,
   setAccessTask,
 } from "@/redux/slices/ui";
-import Loader from "@/components/common/Loader";
 import Spinner from "@/components/common/Spinner";
 import GenerateResult from "./GenerateResult";
 import TipsImg from "@/assets/images/generate-tips.png";
@@ -295,7 +294,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
                 {isLoading ? (
                   <>
                     Generating
-                    <Loader style={{ marginLeft: "5px" }} size="10px" />
+                    <Spinner style={{ marginLeft: "5px" }} size="10px" />
                   </>
                 ) : contentTexts.length > 0 ? (
                   "Generate more"
