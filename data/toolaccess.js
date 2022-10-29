@@ -11,12 +11,6 @@ const excludebasic = [
   tasks.BLOG_INTRO,
   tasks.BLOG_OUTRO,
   tasks.BLOG_TOPIC,
-  tasks.PARAPHRASING,
-  tasks.EXPANDER,
-  tasks.CHANGE_TONE,
-  tasks.SIMPLIFIER,
-  tasks.NOTES_FROM_PASSAGE,
-  tasks.POINT_OF_VIEW,
 ];
 const excludestandard = [];
 const excludeprofessional = [];
