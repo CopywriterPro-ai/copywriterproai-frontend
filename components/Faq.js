@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { Card, CardText, Collapse } from "reactstrap";
 
-import SectionTitle from "@/components/common/SectionTitle";
+import SectionTitle from "@/components/common/AppSectionTitle";
 import FAQDatas from "data/faqsection.json";
 
 const MOBILE_SCREEN_MAX = 900;

@@ -10,10 +10,23 @@ import { hotjar } from "react-hotjar";
 import { wrapper } from "@/redux/store";
 import { isClientDevMode, isProductionClient } from "@/utils";
 import * as fbq from "@/utils/fpixel";
-import GlobalStyle from "@/styles";
+// import GlobalStyle from "@/styles";
 import theme from "@/styles/theme";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import "@/styles/global.scss";
+
+// import '@/assets/css/bootstrap.min.css';
+import '@/assets/fonts/fontawesome-all.min.css';
+import '@/assets/scss/main.scss';
+
+// Import Swiper style
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+
+//Modal Video
+import 'react-modal-video/scss/modal-video.scss';
 
 const ga4code = process.env.NEXT_PUBLIC_APP_GA4_CODE;
 
@@ -51,6 +64,11 @@ const App = ({ Component, pageProps, err }) => {
 
   return (
     <>
+      <Script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossOrigin="anonymous"
+      ></Script>
       {isProduction && (
         <>
           <Script
@@ -95,7 +113,7 @@ const App = ({ Component, pageProps, err }) => {
         </>
       )}
 
-      <GlobalStyle />
+      {/* <GlobalStyle /> */}
       <PersistGate loading={null} persistor={store.__persistor}>
         {() => (
           <ThemeProvider theme={theme}>

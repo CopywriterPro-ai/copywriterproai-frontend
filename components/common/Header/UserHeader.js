@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from 'next/image';
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -23,9 +24,10 @@ import {
   selectors as uiSelector,
 } from "@/redux/slices/ui";
 import { useResponsive } from "@/hooks";
-import LogoImg from "@/assets/images/logo-color.png";
 import { useElementSize, useUser, useNotice } from "@/hooks";
 import { USER_DEFAULT_PATH } from "@/appconstants";
+
+import {FaChevronDown, FaChevronUp, FaBars, FaSignOutAlt} from 'react-icons/fa';
 
 const NavItem = ({ link, title }) => {
   return (
@@ -46,7 +48,7 @@ const NavComDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
           data-toggle="dropdown"
           aria-expanded={isOpen}
         >
-          {MenuName} <span className="fas fa-angle-down"></span>
+          {MenuName} <i><FaChevronDown/></i>
         </DropdownToggleOptions>
         <NavDropdownMenu>
           <a href={externalLink.facebookGroup} target="__blank">
@@ -73,7 +75,7 @@ const NavBlogDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
           data-toggle="dropdown"
           aria-expanded={isOpen}
         >
-          {MenuName} <span className="fas fa-angle-down"></span>
+          {MenuName} <i><FaChevronDown/></i>
         </DropdownToggleOptions>
         <NavDropdownMenu>
           <Link href="/app/ai-write-along">
@@ -213,9 +215,14 @@ const AppHeader = () => {
           <NavbarContainer>
             <Logo>
               <Link href={isAuth ? USER_DEFAULT_PATH : "/"}>
-                <a>
-                  <LogoIcon src={LogoImg.src} alt="copywriterpro" />
-                </a>
+                <Image
+                  width={190}
+                  height={64}
+                  src="/logo-color.svg"
+                  alt="logo"
+                  className="img-fluid logo-color"
+                  style={{paddingTop: '20px'}}
+                />
               </Link>
             </Logo>
             <NavList>
@@ -232,7 +239,7 @@ const AppHeader = () => {
                   </>
                 )}
                 {/* {!isAuth && <NavItem link="/ai-blog-generator" title="Blog" />} */}
-                <NavItem link="/pricing" title="Pricing" />
+                <NavItem link="/user-pricing" title="Pricing" />
                 {/* <NavItem link="/affiliates" title="Affiliates" /> */}
                 <NavComDropdownMenuItem
                   isOpen={comIsOpen}
@@ -244,8 +251,7 @@ const AppHeader = () => {
 
             <MobileToogle
               onClick={toggleSidebar}
-              className="fas fa-bars"
-            ></MobileToogle>
+            ><i><FaBars/></i></MobileToogle>
 
             {!isAuth && (
               <NavbarMenu>
@@ -272,10 +278,7 @@ const AppHeader = () => {
                         <FirstCharAvatar>{firstName.charAt(0)}</FirstCharAvatar>
                       )}
                       <span>{fullName}</span>
-                      <span
-                        style={{ paddingLeft: "5px" }}
-                        className="fas fa-angle-down"
-                      ></span>
+                      <i style={{ paddingLeft: "5px" }}><FaChevronDown/></i>
                     </DropdownAvatar>
                   </DropdownToggleOptions>
                   <NavDropdownMenu userMenu="true">
@@ -287,7 +290,7 @@ const AppHeader = () => {
                       </Link>
                     </NavDropdownItem>
                     <NavDropdownItem tag="div" onClick={handleSignout}>
-                      <span className="fas fa-sign-out-alt"></span> Log out
+                      <i><FaChevronDown/></i> Log out
                     </NavDropdownItem>
                   </NavDropdownMenu>
                 </DropdownOptions>
@@ -415,7 +418,7 @@ const MyNavbar = styled.nav`
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: row;
-  height: 55px;
+  height: 80px;
   align-items: center;
   font-size: 16px;
 

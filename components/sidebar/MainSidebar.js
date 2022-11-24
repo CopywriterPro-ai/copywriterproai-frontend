@@ -21,6 +21,8 @@ import SubscriberModal from "@/components/modals/subscriptions/plan";
 import SubscriberTrialEndModal from "@/components/modals/subscriptions/trailend";
 import { useResponsive, useUser } from "@/hooks";
 
+import {FaChevronDown} from 'react-icons/fa';
+
 const MainSidebar = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -128,7 +130,7 @@ const MainSidebar = () => {
               <DropDownMenuTitle
                 onClick={() => setPlanDrop((prevState) => !prevState)}
               >
-                Plan <span className="fas fa-angle-down" />
+                Plan <i><FaChevronDown/></i>
               </DropDownMenuTitle>
               <Collapse isOpen={planDrop}>
                 <DropDownList>
@@ -162,7 +164,7 @@ const MainSidebar = () => {
               <DropDownMenuTitle
                 onClick={() => setBlogDrop((prevState) => !prevState)}
               >
-                Blog <span className="fas fa-angle-down" />
+                Blog <i><FaChevronDown/></i>
               </DropDownMenuTitle>
               <Collapse isOpen={blogDrop}>
                 <DropDownList>

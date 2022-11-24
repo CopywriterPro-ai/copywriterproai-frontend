@@ -1,0 +1,61 @@
+//
+// Typography
+// --------------------------------------------------
+
+
+// 404 display heading
+
+.display-404 {
+  color: $white;
+  text-shadow: -.0625rem 0 $primary, 0 .0625rem $primary, .0625rem 0 $primary, 0 -.0625rem $primary;
+}
+
+
+// Lists
+
+.list-style {
+  list-style: none;
+  li {
+    margin-bottom: $spacer * .4;
+    &::before {
+      display: inline-block;
+      width: 1em;
+      margin-left: -1em;
+      color: $list-style-color;
+      font-weight: bold;
+      content: '\2022';
+    }
+  }
+}
+ol.list-style {
+  counter-reset: li;
+  li {
+    counter-increment: li;
+    &::before {
+      margin: {
+        right: .5em;
+        left: -1.5em;
+      }
+      font-weight: inherit;
+      text-align: right;
+      direction: rtl;
+      white-space: nowrap;
+      content: '.' counter(li);
+    }
+  }
+}
+
+// Description list
+
+dt {
+  color: $headings-color;
+  margin-bottom: $spacer * .25;
+  font-weight: $headings-font-weight;
+  font-family: $headings-font-family;
+}
+dd {
+  font-size: $font-size-md;
+  margin-bottom: $spacer;
+}
+
+

@@ -1,0 +1,71 @@
+a,
+.btn-link {
+  color: rgba($primary, 0.85);
+  transition: $transition-base;
+}
+a:hover,
+.btn-link:hover {
+  color: $primary;
+  text-decoration: none;
+}
+.link-text,
+.watch-now-btn {
+  font-family: $headings-font-family;
+  font-weight: $font-weight-medium-light;
+}
+.watch-now-btn {
+  margin-top: 8px;
+  font-size: $font-size-sm;
+  color: darken($secondary, 5%);
+  text-align: center;
+  i {
+    width: 40px;
+    height: 40px;
+    line-height: 38px;
+    font-size: 12px;
+    transition: $transition-base;
+    border: 2px solid $white;
+    margin-right: 10px;
+    border-radius: 50%;
+    color: $secondary;
+  }
+  &:hover {
+    color: $white;
+    i {
+      background: $white;
+      color: $primary;
+    }
+  }
+}
+
+.watch-now-btn svg {
+  font-size: 45px;
+  transition: all 0.3s ease-in-out;
+  color: var(--bs-light);
+}
+
+.watch-now-btn:hover svg {
+  color: var(--bs-white);
+}
+
+@media (min-width: 367px) and (max-width: 575px) {
+  .watch-now-btn {
+    margin-left: 10px;
+  }
+}
+
+.read-more-link {
+  font-weight: 600;
+  font-family: $headings-font-family;
+  font-size: $font-size-md;
+  i {
+    vertical-align: middle;
+    transition: $transition-base;
+  }
+  &:hover {
+    i {
+      transform: translateX(3px);
+      margin-left: 10px;
+    }
+  }
+}

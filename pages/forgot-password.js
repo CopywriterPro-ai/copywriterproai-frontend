@@ -1,37 +1,26 @@
-import React from "react";
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import Layout from '@/layout/Layout';
+
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import styled from "styled-components";
 
-import { AuthLayout as Layout } from "@/layout";
-import SignInBgImg from "assets/images/signinbg.png";
-import {
-  InputField,
-  SubmitButton,
-  AuthForm,
-  FormStyles,
-} from "@/components/common/Form";
+import { InputField } from "@/components/common/Form";
 import {
   postForgotPassword,
   selectors as authSelector,
 } from "@/redux/slices/auth";
 import { toastMessage } from "@/utils";
 
-const { SignForm } = FormStyles;
-
-const AppBanner = () => {
-  return <Banner SignInBgImg={SignInBgImg} className="col-md-6" />;
-};
-
 const ForgotPassword = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { loading } = useSelector(authSelector.getAuthenticate);
-  const isPending = loading === "pending";
 
   const {
     register,
@@ -58,41 +47,70 @@ const ForgotPassword = () => {
   };
 
   return (
-    <Layout>
-      <AuthForm
-        Banner={<AppBanner />}
-        title="Forgot Your Password?"
-        description="Enter your email and we will send you a
-      link to reset your password"
-        nextTitle="Back to "
-        nextLink="/signin"
-        nextText="Sign in"
-        strategyTitle="Sign in"
-        showStrategy={false}
-        showSignWithEmail={false}
-        showDescription={true}
+    <Layout title="Password Reset" desc="This is password reset page">
+      <section
+        className="sign-up-in-section bg-dark ptb-60"
+        style={{
+          background: "url('/page-header-bg.svg')no-repeat right bottom",
+        }}
       >
-        <SignForm onSubmit={handleSubmit(onSubmit)}>
-          <InputField
-            register={register("email")}
-            placeholder="Email"
-            errors={errors}
-          />
-          <SubmitButton loading={isPending} title="SUBMIT" />
-        </SignForm>
-      </AuthForm>
+        <div className="container">
+          <div className="row align-items-center justify-content-center">
+            <div className="col-lg-5 col-md-8 col-12">
+              <Link href="/">
+                <a className="mb-4 d-block text-center">
+                  <Image
+                    width={190}
+                    height={64}
+                    src="/logo-white.svg"
+                    alt="logo"
+                    className="img-fluid"
+                  />
+                </a>
+              </Link>
+              <div className="register-wrap p-5 bg-light shadow rounded-custom">
+                <h1 className="fw-bold h3">Forgot your Password?</h1>
+                <p className="text-muted">
+                  Don&apos;t worry. Enter your email and we will send you a link to reset your password.
+                </p>
+                <form className="mt-5 register-form" onSubmit={handleSubmit(onSubmit)}>
+                  <div className="row">
+                    <div className="col-sm-12">
+                      <label htmlFor="email" className="mb-1">
+                        Email <span className="text-danger">*</span>
+                      </label>
+                      <div className="mb-3">
+                        <InputField
+                          register={register("email")}
+                          placeholder="Email"
+                          ariaLabel={"email"}
+                          errors={errors}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <button
+                        type="submit"
+                        className="btn btn-primary mt-3 d-block w-100"
+                      >
+                        Reset Password
+                      </button>
+                    </div>
+                  </div>
+                  <p className="font-monospace fw-medium text-center mt-3 pt-4 mb-0">
+                    <Link href="/signin">
+                      <a className="text-decoration-none">Back to login page</a>
+                    </Link>
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </Layout>
   );
 };
-
-const Banner = styled.div`
-  background-color: #304c55;
-  background-image: ${({ SignInBgImg }) => `url(${SignInBgImg.src})`};
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-height: 100vh;
-`;
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),

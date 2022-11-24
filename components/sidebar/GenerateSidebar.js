@@ -27,6 +27,9 @@ import {
 } from "@/redux/slices/ui";
 import { useWindowSize, useUser } from "@/hooks";
 
+import {FaSearch} from 'react-icons/fa';
+import {BsFillPinAngleFill, BsFillPinFill} from 'react-icons/bs';
+
 const BLOG_CATEGORY_KEY = "blog";
 
 const FavouriteAction = ({ itemKey }) => {
@@ -54,11 +57,8 @@ const FavouriteAction = ({ itemKey }) => {
     <span
       style={{ marginLeft: "15px" }}
       title={`${isFavouriteTools ? "Remove from" : "Add to"} Favourite`}
-      className={`far ${
-        isFavouriteTools ? "fa-minus-square" : "fa-plus-square"
-      } `}
       onClick={handleUpdateFavouriteTools}
-    ></span>
+    ><i>{isFavouriteTools ? <BsFillPinFill/> : <BsFillPinAngleFill/>}</i></span>
   );
 };
 
@@ -124,7 +124,7 @@ const GenerateSidebar = () => {
     >
       <SidebarHeader>
         <SearchTools>
-          <label htmlFor="search" className="fas fa-search"></label>
+          <label htmlFor="search"><i><FaSearch/></i></label>
           <input
             type="text"
             name="search"
@@ -266,7 +266,6 @@ const SearchTools = styled.div`
     width: 80%;
     border: 0;
     outline: 0;
-    box-shadow: inset 0px -1px 0px #b4b4b4;
   }
 `;
 

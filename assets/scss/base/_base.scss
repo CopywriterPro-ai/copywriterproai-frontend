@@ -1,0 +1,103 @@
+// -----------------------------------------------------------------------------
+// This file contains very basic styles.
+// -----------------------------------------------------------------------------
+
+/**
+ * Set up a decent box model on the root element
+ */
+html {
+  box-sizing: border-box;
+}
+
+/**
+ * Make all elements from the DOM inherit from the parent box-sizing
+ * Since `*` has a specificity of 0, it does not override the `html` value
+ * making all elements inheriting from the root box-sizing value
+ * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+//
+// Reboot
+// --------------------------------------------------
+
+// Import Google Fonts (Rubik)
+@import url($path-to-fonts);
+
+html * {
+  @include font-smoothing;
+}
+
+// Sticky footer
+html,
+body {
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  padding-right: 0 !important;
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+}
+
+.page-wrapper {
+  flex: 1 0 auto;
+}
+.footer {
+  flex-shrink: 0;
+}
+
+// Links
+a:focus {
+  outline: none;
+}
+a {
+  transition: $link-transition;
+}
+
+// Responsive iframes
+iframe {
+  width: 100%;
+}
+
+// Full height iframe
+.iframe-full-height-wrap {
+  position: relative;
+  min-height: 18rem;
+  overflow: hidden;
+}
+.iframe-full-height {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+// Text Selection Color
+::selection {
+  background: rgba($accent, 0.15);
+}
+::-moz-selection {
+  background: rgba($accent, 0.15);
+}
+
+small {
+  font-weight: inherit;
+}
+
+// Disable button :focus outline
+button:focus {
+  outline: none;
+}
+
+.rounded-custom {
+  border-radius: 1rem !important;
+}

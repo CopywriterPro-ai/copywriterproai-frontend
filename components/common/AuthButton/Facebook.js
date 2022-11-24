@@ -1,24 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 
-import FacebookIcon from "@/assets/images/landing/facebook-auth-no-background.png";
-import { AuthButton } from "./styles";
-
 const Facebook = ({ title, clickEvent }) => {
   return (
-    <FacebookButton onClick={clickEvent}>
-      <Image src={FacebookIcon.src} alt="facebook" />
-      {title}
+    <FacebookButton
+      type="button"
+      className="btn google-btn mt-4 d-block bg-white shadow-sm d-flex align-items-center text-decoration-none justify-content-center"
+      onClick={clickEvent}
+    >
+      <Image
+        width={30}
+        height={29}
+        src="/facebook-icon.svg"
+        alt="facebook"
+        style={{left: "-5px"}}
+      />
+      <span className="mx-2">{title}</span>
     </FacebookButton>
   );
 };
 
-const FacebookButton = styled(AuthButton)`
-  background: linear-gradient(
-    91.14deg,
-    rgba(131, 174, 215, 0.12) 0%,
-    rgba(199, 223, 245, 0.29) 100%
-  );
+const FacebookButton = styled.button`
+  width: 100%;
 `;
 
 const Image = styled.img`

@@ -1,0 +1,144 @@
+/*work process promo*/
+.process-card {
+  position: relative;
+  display: block;
+  transition: $transition-base;
+}
+.process-card-two {
+  transition: $transition-base;
+}
+
+.custom-shadow {
+  box-shadow: 0 5px 20px 0 rgba(210, 210, 245, 0.5);
+}
+.shadow-hover:hover {
+  box-shadow: 0 5px 20px 0 rgba(210, 210, 245, 0.5);
+  z-index: 3;
+}
+.process-icon {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: $transition-base;
+  margin: 0 auto 35px;
+}
+.process-card-two:hover .process-icon {
+  background-color: $white;
+  color: $primary;
+}
+.process-card:hover {
+  background: $white;
+}
+.process-card:hover .process-icon {
+  background: $primary !important;
+}
+.process-card:hover .process-icon span,
+.process-card:hover .process-icon span i {
+  color: $white !important;
+}
+.dots-line {
+  position: relative;
+  top: auto;
+  right: auto;
+  z-index: 2;
+  width: 100px;
+  height: 1px;
+  padding-top: 0;
+  flex: 1;
+  border-bottom: 2px dashed $primary;
+}
+
+.dots-line.first {
+  position: relative;
+  margin-right: -43px;
+  margin-left: -43px;
+}
+@media screen and (max-width: 991px) {
+  .dots-line {
+    display: none;
+  }
+}
+/*process icon two*/
+
+.process-icon-2 i {
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  font-size: 22px;
+}
+.process-icon-2 {
+  position: relative;
+}
+.process-icon-2:after {
+  content: "";
+  position: absolute;
+  top: -20px;
+  width: 0;
+  right: 47%;
+  transform: translate(-50%, 50%);
+  height: 150px;
+  z-index: -1;
+  border-style: dashed;
+  border-width: 1px;
+  border-color: $border-color;
+  background-color: transparent;
+}
+.work-process-list li:last-child .process-icon-2:after {
+  display: none;
+}
+.work-process-list li,
+.process-icon-2 i {
+  transition: all 0.3s ease-in-out;
+}
+.process-icon-2 i {
+  opacity: 0.6;
+}
+.work-process-list li:hover .process-icon-2 i {
+  color: var(--bs-primary);
+  opacity: 1;
+}
+.promo-card-info h3 i {
+  font-size: 38px;
+}
+/*setup process*/
+.setup-process-list {
+  justify-content: space-between;
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  justify-items: center;
+}
+.setup-process-item {
+  width: 100%;
+}
+li.setup-process-item:not(:last-child) {
+  position: relative;
+}
+li.setup-process-item:not(:last-child):before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -10px;
+  bottom: 0;
+  width: 2px;
+  background: rgba(116, 143, 181, 0.15);
+}
+@media only screen and (max-width: 767px) {
+  .setup-process-list {
+    display: block;
+    max-width: 250px;
+    margin: 0 auto;
+  }
+  li.setup-process-item:not(:last-child):before {
+    top: auto;
+    right: 0;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+  }
+}

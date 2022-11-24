@@ -1,0 +1,428 @@
+.text-orange {
+  color: #ff3951;
+}
+.bg-orange {
+  background-color: #ff3951;
+  color: #fff;
+  border: 1px solid transparent;
+  &:hover {
+    background-color: transparent;
+    color: #ff3951;
+    border: 1px solid #ff3951;
+  }
+}
+
+.bg-soft-blue {
+  background-color: #f5f7fc;
+}
+.span-arrow {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #ff3951;
+  font-weight: 600;
+}
+
+//Hero
+.digi-hero-text {
+  .action-btns {
+    .watch-now-btn {
+      color: #14142b;
+      i {
+        background-color: #ffc226;
+        width: 56px;
+        height: 56px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $white;
+      }
+    }
+  }
+}
+.digi-hero-img {
+  ul {
+    li {
+      position: absolute;
+      &:nth-child(1) {
+        top: -14%;
+        left: -4%;
+      }
+      &:nth-child(2) {
+        bottom: -30%;
+        left: -16%;
+      }
+      &:nth-child(3) {
+        right: 13%;
+        bottom: -1%;
+      }
+      &:nth-child(4) {
+        top: 18%;
+        right: -10%;
+      }
+    }
+  }
+}
+//Service
+.digi-service-single {
+  img {
+    margin-bottom: 24px;
+  }
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #e7e7e780;
+  padding: 48px 24px 30px 24px;
+
+  p {
+    font-size: 16px;
+  }
+
+  a {
+    font-size: 14px;
+    color: #575757;
+    font-weight: 600;
+  }
+
+  &:hover {
+    background-color: #fff;
+    border: 1px solid transparent;
+    box-shadow: 14px 14px 56px rgba(33, 38, 106, 0.1);
+  }
+}
+//News Letter
+.digi-newsletter {
+  .digi-news-form {
+    position: relative;
+    .form-control {
+      background: #ffffff;
+      border-radius: 50px;
+      height: 52px;
+      border: 0;
+    }
+    .digi-news-button {
+      position: absolute;
+      right: 0;
+      top: 0;
+      background: #ff3951;
+      border-radius: 0px 50px 50px 0px;
+      padding: 14px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      border: 0;
+      display: inline-block;
+      color: #fff;
+    }
+  }
+}
+//Contact
+.digi-contact-left {
+  .contact-box {
+    background: #ffffff;
+    box-shadow: 0px 10px 65px rgba(11, 9, 27, 0.04);
+    border-radius: 4px;
+    padding: 24px 32px;
+    img {
+      margin-bottom: 24px;
+    }
+  }
+}
+.digi-contact-form-bg {
+  background: #ffffff;
+  padding: 48px 40px;
+  box-shadow: 14px 14px 56px rgba(33, 38, 106, 0.1);
+  border-radius: 10px;
+  ul {
+    li {
+      &:first-child {
+        width: 90px;
+        height: 90px;
+        border: 15px solid #ff3951;
+        border-radius: 50%;
+        left: -6%;
+        position: absolute;
+        top: -8%;
+        z-index: -4;
+      }
+      &:last-child {
+        width: 140px;
+        height: 140px;
+        background-color: #ffc226;
+        border-radius: 50%;
+        right: -60px;
+        position: absolute;
+        bottom: -60px;
+        z-index: -5;
+      }
+    }
+  }
+}
+//Blog
+.digi-blog-single {
+  .digi-blog-thumb {
+    position: relative;
+    .d-tag {
+      padding: 8px 30px;
+      border-radius: 50px;
+      color: #fff;
+      position: absolute;
+      bottom: -20px;
+      right: 30px;
+    }
+    .d-tag.marketing {
+      background-color: #ffc226;
+    }
+    .d-tag.design {
+      background-color: #ff3951;
+    }
+  }
+  .digi-blog-info {
+    span {
+      color: #575757;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: block;
+    }
+    h4 {
+      font-size: 20px;
+      color: #14142b;
+    }
+    p {
+      color: #575757;
+      font-weight: 400;
+    }
+    a {
+      color: #14142b;
+      font-weight: 600;
+      &:hover {
+        color: #ff3951;
+      }
+    }
+  }
+}
+
+.digi-blog-list {
+  .list-header {
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #14142b;
+    border-radius: 8px 8px 0px 0px;
+    h5 {
+      color: #fff;
+      font-weight: 600;
+      font-weight: 20px;
+      margin-bottom: 0;
+    }
+  }
+  .digi-blog-posts {
+    border-radius: 0 0 8px 8px;
+    background: #f5f7fc;
+    padding: 35px 24px;
+  }
+}
+//Why Choose
+.digi-why-left {
+  position: relative;
+  ul li {
+    position: absolute;
+    &:nth-child(1) {
+      top: 40px;
+      left: 60px;
+    }
+    &:nth-child(2) {
+      right: 0;
+      bottom: -10px;
+    }
+  }
+}
+
+.digi-why-right {
+  ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    @media (min-width: 320px) and (max-width: 575px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    li {
+      background: #ffffff;
+      box-shadow: 14px 14px 56px rgba(33, 38, 106, 0.1);
+      border-radius: 4px;
+    }
+  }
+}
+
+// How It Works
+.digi-how-works {
+  padding-top: 120px;
+  padding-bottom: 420px;
+}
+.digi-how-works-right {
+  background-color: #f5f7fc;
+  border-radius: 10px;
+  position: relative;
+  padding: 40px 25px;
+  overflow: hidden;
+  .dig-how-steps {
+    ul li {
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0px 110.121px 88.0972px rgba(0, 0, 0, 0.03);
+      backdrop-filter: blur(64px);
+      border-radius: 10px;
+      padding: 20px;
+      position: relative;
+      z-index: 6;
+    }
+    .shape {
+      ul li {
+        position: absolute;
+        &:nth-child(1) {
+          width: 250px;
+          height: 250px;
+          border-radius: 50%;
+          background-color: #ffd08a;
+          top: -88px;
+          left: -103px;
+          z-index: 3;
+        }
+        &:nth-child(2) {
+          width: 195px;
+          height: 195px;
+          border-radius: 50%;
+          background: #52f5d8;
+          z-index: 3;
+          left: -100px;
+          bottom: -90px;
+        }
+        &:nth-child(3) {
+          width: 250px;
+          height: 250px;
+          border-radius: 50%;
+          background-color: #888efe;
+          z-index: 3;
+          right: -122px;
+          top: 39%;
+        }
+      }
+    }
+  }
+}
+
+// Testimonial
+.digi-testimonial-single {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+}
+.digi-nav-control {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  right: 20px;
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $white;
+    color: $dark;
+    box-shadow: 0px 110.121px 88px rgba(0, 0, 0, 0.03);
+    &:hover {
+      background-color: #ff3951;
+      color: $white;
+    }
+    &::after {
+      content: '';
+    }
+  }
+  .swiper-button-prev {
+    right: 60px;
+    left: auto;
+  }
+  .swiper-button-next {
+    right: 0;
+  }
+}
+
+//Integration
+.digi-integration {
+  padding-top: 200px;
+  padding-bottom: 200px;
+  .digi-testimonial {
+    margin-top: -500px;
+    padding-bottom: 120px;
+  }
+}
+@media (min-width: 320px) and (max-width: 991px) {
+  .digi-integration {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    .digi-testimonial {
+      margin-top: -400px;
+      padding-bottom: 70px;
+    }
+  }
+}
+.int-icons {
+  ul {
+    li {
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      &:nth-child(1) {
+        width: 56px;
+        left: 114px;
+        height: 56px;
+        background: #ffffff;
+        box-shadow: 20px 20px 82px rgba(33, 38, 106, 0.1);
+      }
+      &:nth-child(2) {
+        top: 95px;
+        width: 80px;
+        height: 80px;
+        background: #ffffff;
+        box-shadow: 20px 20px 82px rgba(33, 38, 106, 0.1);
+      }
+      &:nth-child(3) {
+        width: 75px;
+        height: 75px;
+        right: 0;
+        top: 43px;
+        background: #ffffff;
+        box-shadow: 20px 20px 82px rgba(33, 38, 106, 0.1);
+      }
+      &:nth-child(4) {
+        width: 56px;
+        left: 114px;
+        height: 56px;
+        top: 166px;
+        background: #ffffff;
+        box-shadow: 20px 20px 82px rgba(33, 38, 106, 0.1);
+      }
+      &:nth-child(5) {
+        width: 75px;
+        height: 75px;
+        right: 0;
+        top: 210px;
+        background: #ffffff;
+        box-shadow: 20px 20px 82px rgba(33, 38, 106, 0.1);
+      }
+      &:nth-child(6) {
+        width: 56px;
+        left: 60px;
+        height: 56px;
+        top: 226px;
+        background: #ffffff;
+        box-shadow: 20px 20px 82px rgba(33, 38, 106, 0.1);
+      }
+    }
+  }
+}

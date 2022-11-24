@@ -1,0 +1,140 @@
+//color
+
+@each $color,
+$value in $theme-colors {
+  .bg-#{$color}-alt {
+    background-color: rgba($value, .12);
+  }
+}
+
+.bg-white-alt{
+  background-color: rgba($white, .12);
+}
+
+//Social brand
+@each $color,
+$value in $brand-colors {
+  .brand-#{$color} {
+    color: $value;
+  }
+}
+
+@each $color,
+$value in $brand-colors {
+  .bg-#{$color}-alt {
+    background-color: rgba($value, .12);
+  }
+}
+
+
+/*color utility*/
+.color {
+  position: relative;
+  display: block;
+  min-height: 50px;
+  padding: 1rem 1rem;
+}
+.color span {
+  color: $white;
+}
+.text-off-white {
+  color: rgba(255, 255, 255, 0.8);
+}
+.border-light {
+  border-color: rgba(101, 101, 101, 0.1) !important;
+}
+
+
+.bg-primary h1,
+.bg-primary h2,
+.bg-primary h3,
+.bg-primary h4,
+.bg-primary h5,
+.bg-primary h6,
+.bg-dark h1,
+.bg-dark h2,
+.bg-dark h3,
+.bg-dark h4,
+.bg-dark h5,
+.bg-dark h6,
+.bg-gradient h1,
+.bg-gradient h2,
+.bg-gradient h3,
+.bg-gradient h4,
+.bg-gradient h5,
+.bg-gradient h6,
+.bg-purple h1,
+.bg-purple h2,
+.bg-purple h3,
+.bg-purple h4,
+.bg-purple h5,
+.bg-purple h6 {
+  color: $white;
+}
+.bg-primary p,
+.bg-primary li,
+.bg-primary span,
+.bg-dark p,
+.bg-dark li,
+.bg-dark span,
+.bg-gradient p,
+.bg-gradient li,
+.bg-gradient span,
+.bg-purple p,
+.bg-purple li,
+.bg-purple span {
+  color: darken($white, 15%)
+}
+.bg-white h1,
+.bg-white h2,
+.bg-white h3,
+.bg-white h4,
+.bg-white h5,
+.bg-white h6,
+.bg-light h1,
+.bg-light h2,
+.bg-light h3,
+.bg-light h4,
+.bg-light h5,
+.bg-light h6 {
+  color: initial;
+}
+.bg-light > .bg-dark h1,
+.bg-light .bg-dark h2,
+.bg-light .bg-dark h3,
+.bg-light .bg-dark h4,
+.bg-light .bg-dark h5,
+.bg-light .bg-dark h6,
+.bg-light > .bg-gradient h1,
+.bg-light .bg-gradient h2,
+.bg-light .bg-gradient h3,
+.bg-light .bg-gradient h4,
+.bg-light .bg-gradient h5,
+.bg-light .bg-gradient h6 {
+  color: $white;
+}
+.bg-white p,
+.bg-white li,
+.bg-white span {
+  color: $body-color;
+}
+.text-white-60 {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+.text-white-70 {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+.text-white-80 {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+.text-white-90 {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.bg-light{
+  .author-info{
+    span{
+      color: $body-color;
+    }
+  }
+}

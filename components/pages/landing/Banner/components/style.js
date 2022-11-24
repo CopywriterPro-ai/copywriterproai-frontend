@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background: rgba(255, 255, 255, 0.8);
+  background: #fbfbfb;
   border-radius: 8px;
-  border: 1px solid #979797;
-  padding: 25px;
+  padding: 35px;
+  margin-top: 0;
+  width: 100%;
+  height: 400px;
 
-  @media (max-width: 375px) {
-    padding: 18px;
+  @media screen and (max-width: 1250px) {
+    padding: 30px;
   }
 `;
 
@@ -26,42 +28,40 @@ export const Scroll = styled.div`
   }
 `;
 
-export const InputSection = styled.div``;
+export const InputSection = styled.div`
+  margin: 0 5px;
+`;
 
-export const Title = styled.div`
-  font-size: 25px;
+export const Title = styled.h1`
+  font-size: 23px;
+  font-weight: 600;
   line-height: 29px;
-  color: #535353;
-  text-align: center;
-  border-bottom: 1px solid #7d7d7d;
-  padding: 5px 0 15px 0;
-  margin-bottom: 10px;
+  color: black !important;
+  padding: 5px 0 10px 0;
 
-  @media (max-width: 992px) {
-    font-size: 20px;
+  @media screen and (max-width: 1250px) {
+    padding: 0 0 5px 0;
   }
+`;
 
-  @media (max-width: 375px) {
-    font-size: 18px;
-    padding: 0 0 15px 0;
-    margin-bottom: 0;
-  }
-
-  @media (max-width: 319px) {
-    font-size: 16px;
-  }
+export const Divider = styled.hr`
+  margin: .8rem 0;
+  border-top: 1px solid rgba(0, 0, 0, .1);
 `;
 
 export const TextArea = styled.textarea`
   margin: 15px 0;
+  height: 150px;
   width: 100%;
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid ${({ Color }) => (Color ? Color : "#7d7d7d")};
+  background: #fbfbfb;
+  box-shadow: rgba(0, 0, 0, 0.20) 0px 0px 4px;
   box-sizing: border-box;
-  border-radius: 9px;
+  border-radius: 5px;
+  padding: 20px;
   resize: none;
-  outline: 0;
-  padding: 8px;
+  border: none;
+  outline: none;
+  font-size: 18px;
 
   &::placeholder {
     font-weight: 500;
@@ -70,8 +70,15 @@ export const TextArea = styled.textarea`
     color: #8a8a8a;
   }
 
-  @media (max-width: 1200px) {
-    height: 160px;
+  @media (max-width: 1250px) {
+    height: 135px;
+    padding: 16px;
+    margin: 10px 0;
+    font-size: 16px;
+
+    &::placeholder {
+      font-size: 16px;
+    }
   }
 
   @media (max-width: 992px) {
@@ -115,44 +122,60 @@ export const Counter = styled.p`
   margin: 0;
   font-size: 17px;
   line-height: 25px;
-  color: #8a8a8a;
+  color: #4c4c4c !important;
 
   @media (max-width: 992px) {
     font-size: 15px;
-  }
-`;
-
-export const Button = styled.button`
-  background: #2cae97;
-  border-radius: 5px;
-  border: none;
-  color: white;
-  font-size: 18px;
-  font-weight: 500;
-  outline: 0;
-  padding: 8px 25px;
-
-  @media (max-width: 992px) {
-    font-size: 15px;
-    padding: 5px 18px;
-  }
-
-  @media (max-width: 319px) {
-    font-size: 13px;
   }
 `;
 
 export const DemoItem = styled.div`
-  border: none;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-  margin: 15px 1px;
-  padding: 10px 15px;
+  // border: none;
+  // border-radius: 5px;
+  // box-shadow: rgb(0 0 0 / 5%) 0px 0px 6px 0px;;
+  margin: 15px 0px;
+  padding: 13px 15px;
   user-select: all;
   word-wrap: break-word;
+
+  &:first-child {
+    margin: 0;
+  }
+
+  &:last-child {
+    margin: 0;
+  }
 `;
 
 export const ResultSection = styled.div`
-  margin-top: 40px;
+  color: black;
+`;
+
+export const Header = styled.div`
+  height: 50px;
+`;
+
+export const Body = styled.div`
+  height: 190px;
+  overflow: scroll;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ff0000;
+  }
+`;
+
+export const Action = styled.div`
+  height: 50px;
+  margin-top: .8rem;
+`;
+
+export const TryAgain = styled.button`
+  float: right;
 `;

@@ -1,0 +1,54 @@
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: $gray-300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 999999;
+}
+.preloader-icon {
+  width: 60px;
+  height: 60px;
+}
+.loading-bar {
+  width: 120px;
+  height: 3px;
+  margin-top: 30px;
+  position: relative;
+  overflow: hidden;
+  background: $white;
+}
+
+.loading-bar::before {
+  content: "";
+  width: 35px;
+  height: 3px;
+  background: $primary;
+  position: absolute;
+  left: -34px;
+  animation: bluebar 1.5s infinite ease;
+}
+
+@keyframes bluebar {
+  50% {
+    left: 96px;
+  }
+}
+.section-heading {
+  margin-bottom: 50px;
+}
+@media (min-width: 991px) and (max-width: 1199px) {
+  .action-btns.me-lg-0 {
+    margin-right: 3rem !important;
+  }
+}
+@media (max-width: 991px) {
+  .section-heading {
+    margin-bottom: 30px;
+  }
+}

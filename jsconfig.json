@@ -13,7 +13,8 @@
       "@/hooks/*": ["hooks/*"],
       "@/styles/*": ["styles/*"],
       "@/api/*": ["api/*"],
-      "@/layout/*": ["layout/*"]
+      "@/layout/*": ["layout/*"],
+      "@/lib/*": ["lib/*"]
     }
   },
   "exclude": ["node_modules", ".next"]

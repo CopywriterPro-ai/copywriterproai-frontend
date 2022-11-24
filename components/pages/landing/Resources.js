@@ -1,7 +1,7 @@
 import React from "react";
 import Image from 'next/image'
 import styled from "styled-components";
-import SectionTitle from "@/components/common/SectionTitle";
+import SectionTitle from "@/components/common/AppSectionTitle";
 import blogs from "data/resourceblogs.json";
 
 import blogImageOne from "@/assets/images/blog/How AI can Help Make Your Writing Dreams a Reality.webp";
