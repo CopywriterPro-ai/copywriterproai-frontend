@@ -8,7 +8,6 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Badge,
 } from "reactstrap";
 import styled from "styled-components";
 import dayjs from "dayjs";
@@ -27,7 +26,7 @@ import { useResponsive } from "@/hooks";
 import { useElementSize, useUser, useNotice } from "@/hooks";
 import { USER_DEFAULT_PATH } from "@/appconstants";
 
-import {FaChevronDown, FaChevronUp, FaBars, FaSignOutAlt} from 'react-icons/fa';
+import {FaChevronDown, FaChevronUp, FaBars, FaSignOutAlt, FaUser} from 'react-icons/fa';
 
 const NavItem = ({ link, title }) => {
   return (
@@ -81,14 +80,14 @@ const NavBlogDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
           <Link href="/app/ai-write-along">
             <a>
               <NavDropdownItem tag="div">
-                Blog writer (Write along){" "}
+                Write along
               </NavDropdownItem>
             </a>
           </Link>
           <Link href="/app/ai-ghostwriter">
             <a>
               <NavDropdownItem tag="div">
-                Blog writer (Ghostwriter) <Badge color="warning">New</Badge>
+                Ghostwriter <Badge>New</Badge>
               </NavDropdownItem>
             </a>
           </Link>
@@ -285,12 +284,12 @@ const AppHeader = () => {
                     <NavDropdownItem tag="div">
                       <Link href="/bookmarks">
                         <a>
-                          <span className="far fa-user"></span> My account
+                          <i style={{ paddingRight: "5px" }}><FaUser/></i> My account
                         </a>
                       </Link>
                     </NavDropdownItem>
                     <NavDropdownItem tag="div" onClick={handleSignout}>
-                      <i><FaChevronDown/></i> Log out
+                      <i style={{ paddingRight: "5px" }}><FaSignOutAlt/></i> Log out
                     </NavDropdownItem>
                   </NavDropdownMenu>
                 </DropdownOptions>
@@ -336,7 +335,7 @@ const NavDropdownMenu = styled(DropdownMenu)`
   left: ${({ userMenu }) => userMenu === "true" ? "auto" : "0px"} !important;
   transform: translate3d(0px, 35px, 0px) !important;
   background-color: #f9f9f9;
-  min-width: 160px;
+  min-width: 200px;
   box-shadow: 0px 5px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   padding: 0px;
@@ -549,6 +548,16 @@ const AvatarImg = styled.img`
   height: 20px;
   object-fit: contain;
   width: 20px;
+`;
+
+const Badge = styled.span`
+  background-color: #40b1a7;
+  color: #fff;
+  border-radius: 5px;
+  margin-left: 10px;
+  padding: 5px 15px;
+  font-size: 13px;
+  font-weight: 600;
 `;
 
 export default AppHeader;

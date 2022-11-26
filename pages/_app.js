@@ -10,7 +10,7 @@ import { hotjar } from "react-hotjar";
 import { wrapper } from "@/redux/store";
 import { isClientDevMode, isProductionClient } from "@/utils";
 import * as fbq from "@/utils/fpixel";
-// import GlobalStyle from "@/styles";
+import GlobalStyle from "@/styles";
 import theme from "@/styles/theme";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "@/styles/global.scss";
@@ -113,7 +113,7 @@ const App = ({ Component, pageProps, err }) => {
         </>
       )}
 
-      {/* <GlobalStyle /> */}
+      <GlobalStyle />
       <PersistGate loading={null} persistor={store.__persistor}>
         {() => (
           <ThemeProvider theme={theme}>
