@@ -1,0 +1,123 @@
+const blogs = [
+	{
+		id: "how-to-use-ai-to-write-better-cold-emails",
+		title: "How to Use AI to Write Better Cold Emails",
+		description: "Almost everyone hates cold emailing, but it's a necessary evil if you want to grow your business. What if there was a way to make cold emailing more bearable, and even fun?",
+    link: "/how-to-use-ai-to-write-better-cold-emails",
+    tags: 'Design',
+    date: 'April 24, 2021',
+    class: 'bg-warning-soft',
+    author: {
+      name: 'Md. Abu Ryan',
+      photo: '/blog-authors/ryan.jpg',
+    },
+	},
+  {
+		id: "best-extensions-to-boost-your-content-in-2022",
+		title: "Best Extensions To Boost Your Content in 2022",
+		description: "Quality content is the key to a successful blog. However, creating quality content can be time-consuming and challenging. Luckily, there are a few simple Extensions that can help boost your content and make the process easier. In this blog post, we will share some of the best extensions for content creation. These extensions will help you save time while creating high-quality content. So if you are looking for ways to improve your content, then be sure to check out these great extensions!",
+    link: "/best-extensions-to-boost-your-content-in-2022",
+    tags: 'Design',
+    date: 'April 24, 2021',
+    class: 'bg-primary-soft',
+    author: {
+      name: 'Md. Abu Ryan',
+      photo: '/blog-authors/ryan.jpg',
+    },
+	},
+  {
+		id: "tips-for-achieving-technical-seo-success",
+		title: "Tips for Achieving Technical SEO Success",
+		description: "Having a sound technical SEO strategy is critical to the success of any online business. After all, if your website isn't properly optimized for search engines, then it's likely that potential customers will never even find you in the first place.",
+    link: "/tips-for-achieving-technical-seo-success",
+    tags: 'Design',
+    date: 'May 20, 2021',
+    class: 'bg-danger-soft',
+    author: {
+      name: 'Md. Abu Ryan',
+      photo: '/blog-authors/ryan.jpg',
+    },
+	},
+  {
+		id: "googles-ranking-algorithm-how-to-rank-higher-on-google",
+		title: "Google's Ranking Algorithm: How To Rank Higher on Google",
+		description: "We all want to rank higher on Google. After all, Google is the most popular search engine in the world, and getting found on the first page can mean more traffic, leads, and sales for your business. But what exactly does Google's ranking algorithm look for? In this blog post, we'll break down some of the key factors that go into Google's ranking algorithm so that you can learn how to optimize your website for higher rankings.",
+    link: "/googles-ranking-algorithm-how-to-rank-higher-on-google",
+    tags: 'Design',
+    date: 'June 10, 2021',
+    class: 'bg-primary-soft',
+    author: {
+      name: 'Md. Abu Ryan',
+      photo: '/blog-authors/ryan.jpg',
+    },
+	},
+  {
+		id: "the-best-copywriting-tips-for-2022",
+		title: "The Best Copywriting Tips for 2022",
+		description: "Most people think that copywriting is all about trying to sell something. But the best copywriters know that it's so much more than that. At its core, copywriting is about understanding people and using the right words to connect with them on an emotional level.",
+    link: "/the-best-copywriting-tips-for-2022",
+    tags: 'Design',
+    date: 'April 24, 2021',
+    class: 'bg-warning-soft',
+    author: {
+      name: 'Md. Abu Ryan',
+      photo: '/blog-authors/ryan.jpg',
+    },
+	},
+  {
+		id: "best-books-to-learn-copywriting-in-2022",
+		title: "Best Books to Learn Copywriting in 2022",
+		description: "Have you ever thought about learning to Copywrite? It's a skill that can be incredibly useful in a variety of different fields, from marketing to advertising to sales. If you're interested in learning more about copywriting, then you're in luck. There are several great books out there that can teach you everything you need to know. In this blog post, we'll take a look at some of the best copywriting books available, so you can choose the one that's right for you.",
+    link: "/best-books-to-learn-copywriting-in-2022",
+    tags: 'Design',
+    date: 'July 24, 2021',
+    class: 'bg-warning-soft',
+    author: {
+      name: 'Md. Abu Ryan',
+      photo: '/blog-authors/ryan.jpg',
+    },
+	},
+  {
+		id: "how-you-can-make-money-from-writing-killer-copy",
+		title: "How You Can Make Money From Writing Killer Copy",
+		description: "As a freelance copywriter, you may be wondering what's the best way to make money from your skills. After all, there are many ways to earn income as a writer, and it can be tough to know which one will work best for you.",
+    link: "/how-you-can-make-money-from-writing-killer-copy",
+    tags: 'Design',
+    date: 'August 25, 2021',
+    class: 'bg-danger-soft',
+    author: {
+      name: 'Md. Abu Ryan',
+      photo: '/blog-authors/ryan.jpg',
+    },
+	},
+  {
+		id: "why-right-copywriting-tools-can-make-a-difference-in-your-content-quality",
+		title: "Why Right Copywriting Tools Can Make a Difference in Your Content Quality",
+		description: "We all know that copywriting is a key element in any marketing or advertising campaign. But what many people don't realize is that using the right copywriting tool can make a big difference in the success of your campaign.",
+    link: "/why-right-copywriting-tools-can-make-a-difference-in-your-content-quality",
+    tags: 'Design',
+    date: 'September 24, 2021',
+    class: 'bg-danger-soft',
+    author: {
+      name: 'Md. Abu Ryan',
+      photo: '/blog-authors/ryan.jpg',
+    },
+	},
+  {
+		id: "how-ai-can-help-make-your-writing-dreams-a-reality",
+		title: "How AI can Help Make Your Writing Dreams a Reality",
+		description: "Artificial intelligence (AI) can seem like a daunting concept, but it doesn't have to be. AI can be a powerful tool to help you achieve your writing goals. If you're wondering how AI can help you with your writing, this blog is for you. We'll explore the ways AI can assist you in the writing process, from coming up with ideas to editing your work. So if you're ready to learn more about how AI can help make your writing dreams a reality, read on!",
+    link: "/how-ai-can-help-make-your-writing-dreams-a-reality",
+    tags: 'Design',
+    date: 'October 24, 2021',
+    class: 'bg-primary-soft',
+    author: {
+      name: 'Md. Abu Ryan',
+      photo: '/blog-authors/ryan.jpg',
+    },
+	},
+]
+
+export {
+  blogs,
+}

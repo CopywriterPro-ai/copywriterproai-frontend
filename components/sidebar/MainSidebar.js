@@ -21,6 +21,8 @@ import SubscriberModal from "@/components/modals/subscriptions/plan";
 import SubscriberTrialEndModal from "@/components/modals/subscriptions/trailend";
 import { useResponsive, useUser } from "@/hooks";
 
+import {FaChevronDown} from 'react-icons/fa';
+
 const MainSidebar = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -90,7 +92,7 @@ const MainSidebar = () => {
             <p className="sidebar-premium">
               {subscribe.subscriberInfo.isPaidSubscribers
                 ? "Premium "
-                : "Trail "}
+                : "Trial "}
               Account
             </p>
             <SidebarUserAvatar>
@@ -125,55 +127,59 @@ const MainSidebar = () => {
 
           {isAuth && (
             <>
-              <DropDownMenuTitle
-                onClick={() => setPlanDrop((prevState) => !prevState)}
-              >
-                Plan <span className="fas fa-angle-down" />
-              </DropDownMenuTitle>
-              <Collapse isOpen={planDrop}>
-                <DropDownList>
-                  {(subscriptions.length > 0 || isTrail) && (
-                    <>
-                      <li>
-                        <StyledPlanItem
-                          onClick={handleShowSubscriptionsCancelModal}
-                        >
-                          Switch Plan
-                        </StyledPlanItem>
-                      </li>
-                      <li>
-                        <StyledPlanItem onClick={handleCreateCustomerPortal}>
-                          {loadingManageSubs ? "Loading..." : "Manage Plan"}
-                        </StyledPlanItem>
-                      </li>
-                      {isTrail && !trialSelector.data.isSuccess && (
-                        <li>
-                          <StyledPlanItem onClick={handleInstantTrailEnd}>
-                            {trialSelector.loading === "pending"
-                              ? "Loading..."
-                              : "End Trial"}
-                          </StyledPlanItem>
-                        </li>
+              {subscriptions.length > 0 && (
+                <div>
+                  <DropDownMenuTitle
+                    onClick={() => setPlanDrop((prevState) => !prevState)}
+                  >
+                    Plan <i><FaChevronDown/></i>
+                  </DropDownMenuTitle>
+                  <Collapse isOpen={planDrop}>
+                    <DropDownList>
+                      {isTrail && (
+                        <>
+                          <li>
+                            <StyledPlanItem
+                              onClick={handleShowSubscriptionsCancelModal}
+                            >
+                              Switch Plan
+                            </StyledPlanItem>
+                          </li>
+                          <li>
+                            <StyledPlanItem onClick={handleCreateCustomerPortal}>
+                              {loadingManageSubs ? "Loading..." : "Manage Plan"}
+                            </StyledPlanItem>
+                          </li>
+                          {isTrail && !trialSelector.data.isSuccess && (
+                            <li>
+                              <StyledPlanItem onClick={handleInstantTrailEnd}>
+                                {trialSelector.loading === "pending"
+                                  ? "Loading..."
+                                  : "End Trial"}
+                              </StyledPlanItem>
+                            </li>
+                          )}
+                        </>
                       )}
-                    </>
-                  )}
-                </DropDownList>
-              </Collapse>
+                    </DropDownList>
+                  </Collapse>
+                </div>
+              )}
               <DropDownMenuTitle
                 onClick={() => setBlogDrop((prevState) => !prevState)}
               >
-                Blog <span className="fas fa-angle-down" />
+                Blog <i><FaChevronDown/></i>
               </DropDownMenuTitle>
               <Collapse isOpen={blogDrop}>
                 <DropDownList>
                   <li>
                     <Link href="/app/ai-write-along" passHref>
-                      <UserActionLink>Blog writer (Write along)</UserActionLink>
+                      <UserActionLink>Write along</UserActionLink>
                     </Link>
                   </li>
                   <li>
                     <Link href="/app/ai-ghostwriter" passHref>
-                      <UserActionLink>Blog writer (Ghostwriter)</UserActionLink>
+                      <UserActionLink>Ghostwriter</UserActionLink>
                     </Link>
                   </li>
                   <li>
@@ -191,7 +197,7 @@ const MainSidebar = () => {
               </Link>
             </>
           )}
-          <Link href="/pricing" passHref>
+          <Link href="/user-pricing" passHref>
             <UserActionLink>Pricing</UserActionLink>
           </Link>
         </SidebarUserAction>

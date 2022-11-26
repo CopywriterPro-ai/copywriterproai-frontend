@@ -1,0 +1,223 @@
+.hero-subscribe-form-wrap {
+  max-width: 460px;
+}
+.skewed-wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+.skewed-1 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-bottom: 282px solid $white;
+  border-left: 100vw solid transparent;
+}
+.hero-bg-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+@media (min-width: 320px) and (max-width: 414px) {
+  .hero-subscribe-form input.btn {
+    position: relative;
+    right: 0;
+    top: 10px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease-in;
+  }
+  .hero-subscribe-form input.form-control {
+    padding: 0.75rem 1rem;
+  }
+}
+.app-screen-bg {
+  background-position: 50% 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.app-screen-wrap {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 3;
+  grid-column-end: 5;
+  transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(29.4046deg)
+    rotateY(0deg) rotateZ(-19.4046deg) skew(0deg, 0deg);
+  transform-style: preserve-3d;
+}
+.screen-grid {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-template-rows: auto auto;
+  grid-row-gap: 16px;
+  grid-column-gap: 16px;
+}
+.grid-app-screens {
+  width: 130%;
+  max-width: 1100px;
+  padding-left: 5%;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: 1fr 2.2fr;
+  perspective: 1000px;
+  transform: perspective(1000px);
+}
+.screen-1 {
+  grid-row-start: span 2;
+  grid-row-end: span 2;
+  width: 100%;
+}
+.screen-3 {
+  justify-self: start;
+}
+
+.circle-shape-wrap {
+  grid-column-end: 4;
+  -ms-grid-column: 3;
+  grid-column-start: 3;
+  -ms-grid-row-span: 1;
+  grid-row-end: 2;
+  -ms-grid-row: 1;
+  grid-row-start: 1;
+}
+.circle-img-1 {
+  position: absolute;
+  width: 16%;
+  margin-top: 2%;
+  margin-left: 44%;
+}
+.circle-img-2 {
+  position: absolute;
+  width: 10%;
+  margin-top: -7%;
+  margin-left: 57%;
+}
+.circle-img-3 {
+  position: absolute;
+  width: 8%;
+  margin-top: -19%;
+  margin-left: 36%;
+}
+
+/*hero-3*/
+.hero-screen-wrap {
+  display: flex;
+  align-items: flex-end;
+  margin-right: -120px;
+}
+.hero-screen-wrap .phone-screen {
+  flex: 0 0 220px;
+  width: 220px;
+  margin-bottom: -30px;
+  margin-right: -220px;
+  z-index: 2;
+}
+.hero-screen-wrap .mac-screen {
+  flex: 0 0 885px;
+  width: 885px;
+  margin-right: -180px;
+  z-index: 1;
+}
+@media (min-width: 1480px) and (max-width: 1836px) {
+  .hero-screen-wrap {
+    margin-right: 0;
+  }
+  .hero-screen-wrap .phone-screen {
+    flex: 0 0 165px;
+  }
+  .hero-screen-wrap .mac-screen {
+    flex: 0 0 765px;
+    margin-right: 0;
+  }
+}
+@media (min-width: 320px) and (max-width: 1479px) {
+  .hero-screen-wrap {
+    margin-right: 0;
+  }
+  .hero-screen-wrap .phone-screen {
+    flex: 0 0 100px;
+    margin-right: 0;
+  }
+  .hero-screen-wrap .mac-screen {
+    flex: 0 0 465px;
+    margin-right: 0;
+  }
+}
+@media (min-width: 320px) and (max-width: 767px) {
+  .hero-screen-wrap {
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-screen-wrap .phone-screen {
+    display: none;
+  }
+  .hero-screen-wrap .mac-screen {
+    flex: auto;
+  }
+}
+/*hero-5*/
+.widget-img-1 {
+  top: 22%;
+  left: -90px;
+}
+
+.widget-img-2 {
+  bottom: -12%;
+  left: -75px;
+}
+.widget-img-3 {
+  top: 40%;
+  right: -100px;
+}
+.widget-img-4 {
+  bottom: -10%;
+  right: 35px;
+}
+
+.widget-img-5 {
+  top: -35%;
+  left: -35%;
+}
+.widget-img-6 {
+  top: -30%;
+  right: -35%;
+}
+/*hero-8*/
+.hero-app-img::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  border-radius: 50%;
+  background-color: #f6c37b;
+  width: 500px;
+  height: 500px;
+}
+
+.hero-app-img img {
+  position: relative;
+  z-index: 5;
+}
+
+@media (min-width: 320px) and (max-width: 991px) {
+  .widget-img-wrap {
+    display: none;
+  }
+  .hero-app-img::before,
+  .app-two-mockup::before {
+    display: none;
+  }
+}

@@ -3,7 +3,7 @@ import Head from "@/components/common/Head";
 import { Fragment } from "react";
 
 import ToastContainer from "@/components/ToastContainer";
-import { useScrollTop } from "@/hooks";
+// import { useScrollTop } from "@/hooks";
 import { isServer } from "@/utils";
 
 if (!isServer) {
@@ -11,7 +11,7 @@ if (!isServer) {
 }
 
 const Layout = ({ children, title, description, otherSEO, additionalMeta }) => {
-  useScrollTop();
+  // useScrollTop();
 
   return (
     <Fragment>

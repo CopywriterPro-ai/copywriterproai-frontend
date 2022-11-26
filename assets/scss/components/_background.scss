@@ -1,0 +1,135 @@
+
+.bg-light{
+  background-color: $gray-200 !important;
+}
+
+.bg-primary-soft {
+  background-color: rgba($primary, .2)
+}
+.bg-primary-light {
+  background-color: rgba($primary, .75)
+}
+.bg-primary {
+  background-color: $primary !important;
+}
+.bg-primary-dark {
+  background-color: darken($primary, 10%);
+}
+
+.bg-info-soft {
+  background-color: rgba($info, .2)
+}
+.bg-info-light {
+  background-color: rgba($info, .75)
+}
+.bg-info {
+  background-color: $info !important;
+}
+.bg-info-dark {
+  background-color: darken($info, 10%);
+}
+
+.bg-success-soft {
+  background-color: rgba($success, .2)
+}
+.bg-success-light {
+  background-color: rgba($success, .75)
+}
+.bg-success {
+  background-color: $success !important;
+}
+.bg-success-dark {
+  background-color: darken($success, 10%);
+}
+
+.bg-warning-soft {
+  background-color: rgba($warning, .2)
+}
+.bg-warning-light {
+  background-color: rgba($warning, .75)
+}
+.bg-warning {
+  background-color: $warning !important;
+}
+.bg-warning-dark {
+  background-color: darken($warning, 10%);
+}
+
+.bg-danger-soft {
+  background-color: rgba($danger, .2)
+}
+.bg-danger-light {
+  background-color: rgba($danger, .75)
+}
+.bg-danger {
+  background-color: $danger !important;
+}
+.bg-danger-dark {
+  background-color: darken($danger, 10%);
+}
+
+.bg-dark-soft {
+  background-color: rgba($secondary, .5)
+}
+.bg-dark-light {
+  background-color: $gray-700;
+}
+.bg-dark {
+  background-color: $dark !important;
+}
+.bg-dark-dark {
+  background-color: darken($dark, 10%);
+}
+
+.bg-purple {
+  background-color: var(--bs-purple) !important;
+}
+
+.bg-secondary-light {
+  background-color: rgba($secondary, .2);
+}
+.bg-secondary {
+  background-color: $secondary !important;
+}
+.bg-secondary-dark {
+  background-color:darken($secondary, 10%);
+}
+.bg-custom-light {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.bg-black, .bg-dark-black {
+  background-color: $black;
+}
+
+.bg-soft-black{
+  background-color: $github;
+}
+/*gradient bg*/
+.primary-bg-gradient {
+  background: linear-gradient( 90deg, $dark, $primary ) !important;
+}
+
+.info-bg-gradient {
+  background: linear-gradient( 90deg, $primary, $info ) !important;
+}
+
+.success-bg-gradient {
+  background: linear-gradient( 90deg, $success, darken($success, 15%) ) !important;
+}
+.warning-bg-gradient {
+  background: linear-gradient( 90deg, $warning, darken($warning, 15%) ) !important;
+}
+
+.danger-bg-gradient {
+  background: linear-gradient( 90deg, $danger, darken($danger, 15%) ) !important;
+}
+
+.dark-bg-gradient {
+  background: linear-gradient( 90deg, $primary,  $dark ) !important;
+}
+.secondary-bg-gradient {
+  background: linear-gradient( 90deg, $secondary, darken($secondary, 15%) ) !important;
+}
+.bg-gradient {
+  background: linear-gradient(90deg, $gray-700, darken($primary, 25%)) !important;
+}

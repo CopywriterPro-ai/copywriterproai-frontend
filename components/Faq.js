@@ -2,8 +2,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import { Card, CardText, Collapse } from "reactstrap";
 
-import SectionTitle from "@/components/common/SectionTitle";
+import SectionTitle from "@/components/common/AppSectionTitle";
 import FAQDatas from "data/faqsection.json";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const MOBILE_SCREEN_MAX = 900;
 const FAQDataListBreakPoint = FAQDatas.length / 2;
@@ -33,9 +34,9 @@ const Faq = () => {
                     <StyledFaqTitle>
                       <FAQQuestion>{faq.question}</FAQQuestion>
                       {isActive ? (
-                        <i className="fas fa-chevron-up"></i>
+                        <i><FaChevronUp/></i>
                       ) : (
-                        <i className="fas fa-chevron-down"></i>
+                        <i><FaChevronDown/></i>
                       )}
                     </StyledFaqTitle>
                     <StyledCollapse isOpen={isActive}>
@@ -59,9 +60,9 @@ const Faq = () => {
                     <StyledFaqTitle>
                       <FAQQuestion>{faq.question}</FAQQuestion>
                       {isActive ? (
-                        <i className="fas fa-chevron-up"></i>
+                        <i><FaChevronUp/></i>
                       ) : (
-                        <i className="fas fa-chevron-down"></i>
+                        <i><FaChevronDown/></i>
                       )}
                     </StyledFaqTitle>
                     <StyledCollapse isOpen={isActive}>

@@ -4,22 +4,22 @@ const InputField = ({
   type = "text",
   placeholder,
   register,
+  required = true,
   errors,
-  height = "55px",
-  width = "432px",
 }) => {
   return (
-    <FormGroup>
-      <Input
+    <div>
+      <input
         type={type}
+        className="form-control"
         {...register}
         placeholder={placeholder}
-        customStyle={{ height, width }}
+        required={required}
       />
-      {errors[register.name] && (
+      {/* {errors[register.name] && (
         <ErrorMessage>{errors[register.name].message}</ErrorMessage>
-      )}
-    </FormGroup>
+      )} */}
+    </div>
   );
 };
 

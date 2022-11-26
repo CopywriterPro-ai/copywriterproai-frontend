@@ -1,25 +1,20 @@
-import React from "react";
+import React from 'react';
+import Layout from '@/layout/Layout';
+import Footer from '@/layout/Footer/Footer';
+import Navbar from '@/layout/Header/Navbar';
+import PageHeader from '@/components/common/PageHeader';
 
-import { CondLayout as Layout } from "@/layout";
+import { termsOfUse as metaData } from '@/utils/metaData';
+import { termsOfUse as pageHeader } from '@/utils/pageHeader';
 
-const Terms = () => {
+const TermsOfUse = () => {
   return (
-    <Layout>
-      <div
-        className="container"
-        style={{ margin: "0 auto", marginTop: "20px" }}
-      >
-        <p style={{ textAlign: "center" }}>
-          <strong>TERMS OF SERVICE</strong>
-        </p>
-        <p style={{ textAlign: "justify" }}>Last updated:&nbsp;05/08/2021</p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>1. Introduction</strong>
-            </span>
-          </strong>
-        </ol>
+    <Layout title={metaData.title} description={metaData.description}>
+      <Navbar classOption="navbar-light" />
+      <PageHeader title={pageHeader.title} description={pageHeader.description} />
+
+      <div className="container mt-100">
+        <h4 className="mb-4">1. Introduction</h4>
         <p style={{ textAlign: "justify" }}>
           Welcome to&nbsp;<strong>CopywriterProAI</strong>&nbsp;(“
           <strong>Company</strong>”, “<strong>we</strong>”, “
@@ -53,13 +48,8 @@ const Terms = () => {
           Service.
         </p>
         <p style={{ textAlign: "justify" }}>Thank you for being responsible.</p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>2. Communications</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">2. Communications</h4>
         <p style={{ textAlign: "justify" }}>
           By creating an Account on our Service, you agree to subscribe to
           newsletters, marketing or promotional materials and other information
@@ -67,13 +57,8 @@ const Terms = () => {
           these communications from us by following the unsubscribe link or by
           emailing at.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>3. Purchases</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">3. Purchases</h4>
         <p style={{ textAlign: "justify" }}>
           If you wish to purchase any product or service made available through
           Service (“<strong>Purchase</strong>”), you may be asked to supply
@@ -103,13 +88,8 @@ const Terms = () => {
           We reserve the right to refuse or cancel your order if fraud or an
           unauthorized or illegal transaction is suspected.&nbsp;
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>4. Contests, Sweepstakes and Promotions</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">4. Contests, Sweepstakes and Promotions</h4>
         <p style={{ textAlign: "justify" }}>
           Any contests, sweepstakes or other promotions (collectively, “
           <strong>Promotions</strong>”) made available through Service may be
@@ -118,13 +98,8 @@ const Terms = () => {
           rules&nbsp;as well as our Privacy Policy. If the rules for a Promotion
           conflict with these Terms of Service, Promotion rules will apply.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>5. Subscriptions</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">5. Subscriptions</h4>
         <p style={{ textAlign: "justify" }}>
           Some parts of Service are billed on a subscription basis (“
           <strong>Subscription(s)</strong>”). You will be billed in advance on a
@@ -157,13 +132,8 @@ const Terms = () => {
           date, with the full payment corresponding to the billing period as
           indicated on the invoice.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>6. Free Trial</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">6. Free Trial</h4>
         <p style={{ textAlign: "justify" }}>
           CopywriterProAI&nbsp;may, at its sole discretion, offer a Subscription
           with a free trial for a limited period of time (“
@@ -186,13 +156,8 @@ const Terms = () => {
           right to (i) modify Terms of Service of Free Trial offer, or (ii)
           cancel such Free Trial offer.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>7. Fee Changes</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">7. Fee Changes</h4>
         <p style={{ textAlign: "justify" }}>
           CopywriterProAI, in its sole discretion and at any time, may modify
           Subscription fees for the Subscriptions. Any Subscription fee change
@@ -208,24 +173,14 @@ const Terms = () => {
           effect constitutes your agreement to pay the modified Subscription fee
           amount.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>8. Refunds</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">8. Refunds</h4>
         <p style={{ textAlign: "justify" }}>
           We issue refunds for Contracts within three (3) days of the original
           purchase of the Contract.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>9. Content</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">9. Content</h4>
         <p style={{ textAlign: "justify" }}>
           Our Service allows you to post, link, store, share and otherwise make
           available certain information, text, graphics, videos, or other
@@ -266,13 +221,8 @@ const Terms = () => {
           said Content, whether in whole or in part, for commercial purposes or
           for personal gain, without express advance written permission from us.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>10. Prohibited Uses</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">10. Prohibited Uses</h4>
         <p style={{ textAlign: "justify" }}>
           You may use Service only for lawful purposes and in accordance with
           Terms. You agree not to use Service:
@@ -343,13 +293,8 @@ const Terms = () => {
         <ol>
           (i) Otherwise attempt to interfere with the proper working of Service.
         </ol>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>11. Analytics</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">11. Analytics</h4>
         <p style={{ textAlign: "justify" }}>
           We may use third-party Service Providers to monitor and analyze the
           use of our Service.
@@ -407,13 +352,8 @@ const Terms = () => {
             </span>
           </a>
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>12. No Use By Minors</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">12. No Use By Minors</h4>
         <p style={{ textAlign: "justify" }}>
           Service is intended only for access and use by individuals at least
           eighteen (18) years old. By accessing or using any of Company, you
@@ -423,13 +363,8 @@ const Terms = () => {
           you are not at least eighteen (18) years old, you are prohibited from
           both the access and usage of Service.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>13. Accounts</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">13. Accounts</h4>
         <p style={{ textAlign: "justify" }}>
           When you create an account with us, you guarantee that you are above
           the age of 18, and that the information you provide us is accurate,
@@ -458,13 +393,8 @@ const Terms = () => {
           We reserve the right to refuse service, terminate accounts, remove or
           edit content, or cancel orders in our sole discretion.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>14. Intellectual Property</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">14. Intellectual Property</h4>
         <p style={{ textAlign: "justify" }}>
           Service and its original content (excluding Content provided by
           users), features and functionality are and will remain the exclusive
@@ -474,13 +404,8 @@ const Terms = () => {
           be used in connection with any product or service without the prior
           written consent of&nbsp;CopywriterProAI.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>15. Copyright Policy</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">15. Copyright Policy</h4>
         <p style={{ textAlign: "justify" }}>
           We respect the intellectual property rights of others. It is our
           policy to respond to any claim that Content posted on Service
@@ -502,15 +427,8 @@ const Terms = () => {
           infringement of any Content found on and/or through Service on your
           copyright.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>
-                16. DMCA Notice and Procedure for Copyright Infringement Claims
-              </strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">16. DMCA Notice and Procedure for Copyright Infringement Claims</h4>
         <p style={{ textAlign: "justify" }}>
           You may submit a notification pursuant to the Digital Millennium
           Copyright Act (DMCA) by providing our Copyright Agent with the
@@ -545,13 +463,8 @@ const Terms = () => {
           You can contact our Copyright Agent via email
           at&nbsp;support@copywriterpro.ai
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>17. Error Reporting and Feedback</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">17. Error Reporting and Feedback</h4>
         <p style={{ textAlign: "justify" }}>
           You may provide us&nbsp;either directly at support@copywriterpro.ai or
           via third party sites and tools&nbsp;with information and feedback
@@ -584,13 +497,8 @@ const Terms = () => {
             <span style={{ color: "#0000ff" }}>https://sentry.io/privacy/</span>
           </a>
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>18. Links To Other Web Sites</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">18. Links To Other Web Sites</h4>
         <p style={{ textAlign: "justify" }}>
           Our Service may contain links to third party web sites or services
           that are not owned or controlled by&nbsp;CopywriterProAI
@@ -612,13 +520,8 @@ const Terms = () => {
           WE STRONGLY ADVISE YOU TO READ THE TERMS OF SERVICE AND PRIVACY
           POLICIES OF ANY THIRD PARTY WEB SITES OR SERVICES THAT YOU VISIT.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>19. Disclaimer Of Warranty&nbsp;</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">19. Disclaimer Of Warranty&nbsp;</h4>
         <p style={{ textAlign: "justify" }}>
           THESE SERVICES ARE PROVIDED BY COMPANY ON AN “AS IS” AND “AS
           AVAILABLE” BASIS. COMPANY MAKES NO REPRESENTATIONS OR WARRANTIES OF
@@ -650,13 +553,8 @@ const Terms = () => {
           THE FOREGOING DOES NOT AFFECT ANY WARRANTIES WHICH CANNOT BE EXCLUDED
           OR LIMITED UNDER APPLICABLE LAW.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>20. Limitation Of Liability</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">20. Limitation Of Liability</h4>
         <p style={{ textAlign: "justify" }}>
           EXCEPT AS PROHIBITED BY LAW, YOU WILL HOLD US AND OUR OFFICERS,
           DIRECTORS, EMPLOYEES, AND AGENTS HARMLESS FOR ANY INDIRECT, PUNITIVE,
@@ -677,13 +575,8 @@ const Terms = () => {
           OF PUNITIVE, INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE PRIOR
           LIMITATION OR EXCLUSION MAY NOT APPLY TO YOU.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>21. Termination</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">21. Termination</h4>
         <p style={{ textAlign: "justify" }}>
           We may terminate or suspend your account and bar access to Service
           immediately, without prior notice or liability, under our sole
@@ -700,13 +593,8 @@ const Terms = () => {
           ownership provisions, warranty disclaimers, indemnity and limitations
           of liability.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>22. Governing Law</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">22. Governing Law</h4>
         <p style={{ textAlign: "justify" }}>
           These Terms shall be governed and construed in accordance with the
           laws of&nbsp;State of Delaware&nbsp;without regard to its conflict of
@@ -721,13 +609,8 @@ const Terms = () => {
           supersede and replace any prior agreements we might have had between
           us regarding Service.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>23. Changes To Service</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">23. Changes To Service</h4>
         <p style={{ textAlign: "justify" }}>
           We reserve the right to withdraw or amend our Service, and any service
           or material we provide via Service, in our sole discretion without
@@ -736,13 +619,8 @@ const Terms = () => {
           time, we may restrict access to some parts of Service, or the entire
           Service, to users, including registered users.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>24. Amendments To Terms</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">24. Amendments To Terms</h4>
         <p style={{ textAlign: "justify" }}>
           We may amend Terms at any time by posting the amended terms on this
           site. It is your responsibility to review these Terms periodically.
@@ -758,13 +636,8 @@ const Terms = () => {
           effective, you agree to be bound by the revised terms. If you do not
           agree to the new terms, you are no longer authorized to use Service.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>25. Waiver And Severability</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">25. Waiver And Severability</h4>
         <p style={{ textAlign: "justify" }}>
           No waiver by Company of any term or condition set forth in Terms shall
           be deemed a further or continuing waiver of such term or condition or
@@ -779,25 +652,15 @@ const Terms = () => {
           extent such that the remaining provisions of Terms will continue in
           full force and effect.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>26. Acknowledgement</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">26. Acknowledgement</h4>
         <p style={{ textAlign: "justify" }}>
           BY USING SERVICE OR OTHER SERVICES PROVIDED BY US, YOU ACKNOWLEDGE
           THAT YOU HAVE READ THESE TERMS OF SERVICE AND AGREE TO BE BOUND BY
           THEM.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>27. Contact Us</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">27. Contact Us</h4>
         <p style={{ textAlign: "justify" }}>
           Please send your feedback, comments, requests for technical support:
         </p>
@@ -807,9 +670,12 @@ const Terms = () => {
         <p style={{ textAlign: "justify" }}>
           By visiting this page on our website: https://copywriterpro.ai/contact
         </p>
+        <br/><br/><br/>
       </div>
+
+      <Footer />
     </Layout>
   );
 };
 
-export default Terms;
+export default TermsOfUse;

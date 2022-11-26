@@ -154,6 +154,7 @@ const CustomToolbar = ({ quill }) => {
           <button className="ql-clean"></button>
         </span>
       </div>
+
       <StyledPlagiarismTool>
         <ButtonDropdown isOpen={showPlagiarism} toggle={plagiarismToggle}>
           <StyledDropdownToggle color="default" caret size="sm">
@@ -182,18 +183,27 @@ const CustomToolbar = ({ quill }) => {
 const StyledDropdownToggle = styled(DropdownToggle)`
   box-shadow: none !important;
   background-color: #40b1a7;
-  border-radius: 0;
+  border-radius: 8px;
   color: #fff;
-  &:hover {
+  padding: 10px 20px;
+
+  &:hover, 
+  &:focus,
+  &:active {
+    background-color: #40b1a7;
+    border-radius: 8px;
     color: #fff;
   }
 `;
 
 const StyledDropdownItem = styled(DropdownItem)`
-  border-bottom: 0.25px solid #ffffff;
-  font-size: 14px;
-  font-weight: 400;
+  box-shadow: none !important;
+  border-radius: 8px;
   color: #fff;
+  padding: 10px 20px;
+  left: 0;
+  margin-right: 12px;
+
   &:active {
     background-color: inherit;
   }
@@ -207,9 +217,9 @@ const StyledPlagiarismTool = styled.div`
 `;
 
 const StyledDropdownMenu = styled(DropdownMenu)`
-  background: #40b1a7;
   padding: 0;
-  border-radius: 0;
+  border-radius: 8;
+  left: 0 !important;
 `;
 
 export default CustomToolbar;

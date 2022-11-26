@@ -1,65 +1,36 @@
-import React from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import Layout from '@/layout/Layout';
+import Navbar from '@/layout/Header/Navbar';
+import HeroSection from '@/components/hero-section/HeroSection';
+import WorkProcess from '@/components/workprocess/WorkProcess';
+import Feature from '@/components/features/Feature';
+import FeatureImgContent from '@/components/feature-img-content/FeatureImgContent';
+import Testimonial from '@/components/testimonial/Testimonial';
+import Pricing from '@/components/pricing/Packages';
+// import Integration from '@components/integration/IntegrationOne';
+import Faq from '@/components/faq/FaqThree';
+import Support from '@/components/support/SupportOne';
+import LatestBlog from '@/components/blogs/LatestBlog';
+import Footer from '@/layout/Footer/Footer';
 
-import { GuestLayout as Layout } from "@/layout";
-import Banner from "@/components/pages/landing/Banner";
-import Extension from "@/components/pages/landing/Extension";
-import GenerateSchedule from "@/components/pages/landing/GenerateSchedule";
-import CopywriterOffers from "@/components/pages/landing/CopywriterOffers";
-import Resources from "@/components/pages/landing/Resources";
-import QuickAuth from "@/components/pages/landing/QuickAuth";
-import Faq from "@/components/Faq";
+import { landing } from '@/utils/metaData';
 
-const seo = {
-  description:
-    "CopywriterPro is the highest quality AI copywriting tool that generates compelling and conversion-ready blog posts, website content, marketing and sales copy with ease.",
-};
+const {title, description} = landing;
 
-const additionalMeta = [
-  {
-    property: "keywords",
-    content: "ai content writer, ai copywriting tool, article content creator",
-  },
-];
-
-const Home = () => {
+export default function Home() {
   return (
-    <Layout description={seo.description} additionalMeta={additionalMeta}>
-      <PageGlobalStyles />
-      <div className="container">
-        <Section>
-          <Banner />
-        </Section>
-      </div>
-      <Section>
-        <Extension />
-      </Section>
-      <div className="container">
-        <Section>
-          <GenerateSchedule />
-        </Section>
-        <Section>
-          <CopywriterOffers />
-        </Section>
-      </div>
-      <Section>
-        <Resources />
-      </Section>
-      <Section>
-        <Faq />
-      </Section>
-      <Section>
-        <QuickAuth />
-      </Section>
+    <Layout title={title} description={description}>
+      <Navbar navDark />
+      <HeroSection />
+      <WorkProcess />
+      <Feature cardDark />
+      <FeatureImgContent />
+      <Testimonial darkBg />
+      <Pricing header="true" />
+      <Faq />
+      {/* <Integration /> */}
+      <Support />
+      <LatestBlog />
+      <Footer footerGradient />
     </Layout>
   );
-};
-
-const PageGlobalStyles = createGlobalStyle`
-  body {
-  }
-`;
-
-const Section = styled.div``;
-
-export default Home;
+}

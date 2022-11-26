@@ -1,0 +1,128 @@
+//call to action style
+
+@media (min-width: 767px) {
+  .cta-left-info {
+    width: 65% !important;
+  }
+}
+@media (min-width: 767px) {
+  .cta-img {
+    width: 35% !important;
+  }
+}
+@media (min-width: 320px) and (max-width: 767px) {
+  .cta-left-info {
+    width: 100%;
+  }
+  .cta-img {
+    display: none;
+  }
+}
+.software-uikit {
+  flex: 1;
+  background-position: 50px 100px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.img-with-shape-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.shape-image {
+  overflow: hidden;
+  border-radius: 1rem;
+}
+.shape-image .screen-img {
+  position: relative;
+  left: 80px;
+  top: 90px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 0 0;
+}
+
+.shape-bottom {
+  position: absolute;
+  left: 0;
+  top: auto;
+  right: auto;
+  bottom: -10%;
+  width: 100%;
+}
+
+/*circle shape*/
+
+.circle-shape-2 {
+  width: 335px;
+  min-height: 335px;
+  min-width: 335px;
+}
+.circle-shape-1 {
+  top: -240px;
+  width: 356px;
+  min-height: 356px;
+  min-width: 356px;
+}
+.circle-shape-3 {
+  bottom: -210px;
+  width: 300px;
+  min-height: 300px;
+  min-width: 300px;
+}
+@media (min-width: 320px) and (max-width: 991px) {
+  .circle-shape-2,
+  .circle-shape-1,
+  .circle-shape-3 {
+    display: none;
+  }
+}
+/*app two cta*/
+.app-two-mockup::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  background-color: rgb(245, 161, 42);
+  z-index: 5;
+}
+
+// CTA DOWNLOAD
+
+.action-btns ul li a {
+  background-color: transparent;
+  border: 2px solid #9b2cfa;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bs-light);
+  padding: 10px 23px;
+  line-height: 40px;
+}
+.action-btns ul li a i {
+  font-size: 30px;
+}
+.action-btns ul li a span {
+  line-height: 14px;
+  font-weight: 400;
+  text-align: left;
+}
+.action-btns ul li a span span {
+  font-size: 16px;
+  font-weight: 700;
+  display: block;
+  line-height: 20px;
+}
+.action-btns ul li a:hover {
+  background-color: $white;
+  border: 2px solid transparent;
+  color: $headings-color;
+}

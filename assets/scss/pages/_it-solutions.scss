@@ -1,0 +1,205 @@
+// Hero Nine
+.dots img {
+  position: absolute;
+}
+.dots .dot-1 {
+  bottom: 20px;
+  left: 65px;
+  z-index: -1;
+}
+.dots .dot-2 {
+  top: 115px;
+  right: 25px;
+  z-index: -1;
+}
+.bubble span {
+  position: absolute;
+  border-radius: 50%;
+}
+.bubble .bubble-1 {
+  height: 160px;
+  width: 160px;
+  background-color: #175cff;
+  left: 0;
+  bottom: 10%;
+}
+.bubble .bubble-2 {
+  height: 85px;
+  width: 85px;
+  background-color: #fff;
+  right: 0;
+  top: 30%;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
+}
+// Service
+.single-service:hover {
+  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+}
+
+// Brand Logo
+.brand-logo-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-column-gap: 25px;
+}
+@media (min-width: 767px) and (max-width: 992px) {
+  .brand-logo-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-row-gap: 25px;
+  }
+}
+@media (min-width: 320px) and (max-width: 767px) {
+  .brand-logo-grid {
+    grid-template-columns: repeat(1, 1fr);
+    grid-row-gap: 25px;
+  }
+}
+.brand-logo-grid li {
+  width: 100%;
+  border-radius: 20px 0px 30px 0px;
+  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 15px 30px 15px 30px;
+  text-align: center;
+}
+
+// About
+.about-icon-box .why-icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
+}
+.about-icon-box h5 {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+//Service Tab
+.service-tabs .nav-pills {
+  border-bottom: 2px solid var(--bs-secondary-light);
+}
+
+.service-tabs .nav-pills .nav-link {
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0;
+  padding-bottom: 20px;
+  color: #fff;
+  position: relative;
+}
+@media (min-width: 767px) and (max-width: 992px) {
+  .service-tabs .nav-pills {
+    border-bottom: 0;
+  }
+}
+@media (min-width: 320px) and (max-width: 767px) {
+  .service-tabs .nav-pills {
+    border-bottom: 0;
+  }
+}
+.service-tabs .nav-pills .nav-link.active,
+.service-tabs .nav-pills .show > .nav-link {
+  color: var(--bs-white);
+  background: none;
+  border-radius: 0;
+}
+.service-tabs .nav-pills .nav-link.active::after {
+  position: absolute;
+  content: "";
+  bottom: -2px;
+  height: 2px;
+  width: 100%;
+  left: 0;
+  background-color: var(--bs-primary);
+}
+.tab-right-content h2 {
+  font-size: 34px;
+}
+.tab-right-content p {
+  font-size: 18px;
+}
+.tab-right-content ul li span {
+  padding-left: 10px;
+}
+
+// Portfolio
+// Tab
+.tab-button .nav-pills .nav-link {
+  margin: 0 15px;
+  font-weight: 600;
+  color: var(--body-color);
+  padding: 0;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s;
+}
+.tab-button .nav-pills .nav-link.active,
+.tab-button .nav-pills .show > .nav-link {
+  color: var(--bs-primary);
+  background: none;
+  border-radius: 0;
+  border-bottom: 2px solid var(--bs-primary);
+  transition: all 0.3s;
+}
+.single-portfolio-item .portfolio-item-img {
+  position: relative;
+}
+.single-portfolio-item .portfolio-item-img::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  border-radius: 10px;
+  z-index: 2;
+}
+.single-portfolio-item:hover .portfolio-item-img::after {
+  opacity: 1;
+}
+
+.single-portfolio-item img {
+  border-radius: 10px;
+  width: 100%;
+}
+.portfolio-info {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  visibility: hidden;
+  z-index: 5;
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+}
+.single-portfolio-item:hover .portfolio-info {
+  visibility: visible;
+  opacity: 1;
+}
+.portfolio-info .categories {
+  font-size: 16px;
+  font-weight: normal;
+  color: rgba(255, 255, 255, 0.7);
+}
+// Portfolio Details
+.portfolio-feature-img img {
+  width: 100%;
+}
+// Testimonial Slider Three
+.testimonialThreeSwiper .swiper-slide p {
+  font-size: 18px;
+}
+
+// Price Header
+.pricing-header {
+  padding-bottom: 32px;
+  border-bottom: 1px dashed var(--bs-secondary);
+}

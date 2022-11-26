@@ -1,23 +1,21 @@
-import React from "react";
+import React from 'react';
+import Layout from '@/layout/Layout';
+import Footer from '@/layout/Footer/Footer';
+import Navbar from '@/layout/Header/Navbar';
+import PageHeader from '@/components/common/PageHeader';
 
-import { CondLayout as Layout } from "@/layout";
+import { privacyPolicy as metaData } from '@/utils/metaData';
+import { privacyPolicy as pageHeader } from '@/utils/pageHeader';
 
-const Privacy = () => {
+const PrivacyPolicy = () => {
   return (
-    <Layout>
-      <div
-        className="container"
-        style={{ margin: "0 auto", marginTop: "20px" }}
-      >
-        <h1 style={{ textAlign: "center" }}>PRIVACY POLICY</h1>
-        <p>Effective date: 05/08/2021</p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>1. Introduction</strong>
-            </span>
-          </strong>
-        </ol>
+    <Layout title={metaData.title} description={metaData.description}>
+      <Navbar classOption="navbar-light" />
+      <PageHeader title={pageHeader.title} description={pageHeader.description} />
+
+      <div className="container mt-100">
+
+        <h4 className="mb-4">1. Introduction</h4>
         <p style={{ textAlign: "justify" }}>
           Welcome to&nbsp;<strong>CopywriterProAI</strong>
         </p>
@@ -44,13 +42,8 @@ const Privacy = () => {
           our Service and together with the Privacy Policy constitutes your
           agreement with us (“<strong>Agreement</strong>”).
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>2. Definitions</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">2. Definitions</h4>
         <p style={{ textAlign: "justify" }}>
           <strong>SERVICE&nbsp;</strong>means the&nbsp;https://copywriterpro.ai
           website&nbsp;operated by&nbsp;CopywriterProAI
@@ -92,24 +85,14 @@ const Privacy = () => {
           The User corresponds to the Data Subject, who is the subject of
           Personal Data.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>3. Information Collection and Use</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">3. Information Collection and Use</h4>
         <p style={{ textAlign: "justify" }}>
           We collect several different types of information for various purposes
           to provide and improve our Service to you.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>4. Types of Data Collected</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">4. Types of Data Collected</h4>
         <p style={{ textAlign: "justify" }}>
           <strong>Personal Data</strong>
         </p>
@@ -188,13 +171,8 @@ const Privacy = () => {
           used to serve you with advertisements that may be relevant to you and
           your interests.
         </ol>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>5. Use of Data</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">5. Use of Data</h4>
         <p style={{ textAlign: "justify" }}>
           CopywriterProAI&nbsp;uses the collected data for various purposes:
         </p>
@@ -232,13 +210,8 @@ const Privacy = () => {
           (l) in any other way we may describe when you provide the information;
         </ol>
         <ol>(m) for any other purpose with your consent;</ol>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>6. Retention of Data</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">6. Retention of Data</h4>
         <p style={{ textAlign: "justify" }}>
           We will retain your Personal Data only for as long as is necessary for
           the purposes set out in this Privacy Policy. We will retain and use
@@ -254,13 +227,8 @@ const Privacy = () => {
           our Service, or we are legally obligated to retain this data for
           longer time periods.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>7. Transfer of Data</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">7. Transfer of Data</h4>
         <p style={{ textAlign: "justify" }}>
           Your information, including Personal Data, may be transferred to – and
           maintained on – computers located outside of your state, province,
@@ -284,13 +252,8 @@ const Privacy = () => {
           place including the security of your data and other personal
           information.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>8. Disclosure of Data</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">8. Disclosure of Data</h4>
         <p style={{ textAlign: "justify" }}>
           We may disclose personal information that we collect, or you provide:
         </p>
@@ -328,13 +291,8 @@ const Privacy = () => {
           the rights, property, or safety of the Company, our customers, or
           others.
         </ol>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>9. Security of Data</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">9. Security of Data</h4>
         <p style={{ textAlign: "justify" }}>
           The security of your data is important to us but remember that no
           method of transmission over the Internet or method of electronic
@@ -342,16 +300,9 @@ const Privacy = () => {
           means to protect your Personal Data, we cannot guarantee its absolute
           security.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>
-                10. Your Data Protection Rights Under General Data Protection
-                Regulation (GDPR)
-              </strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">10. Your Data Protection Rights Under General Data Protection
+                Regulation (GDPR)</h4>
         <p style={{ textAlign: "justify" }}>
           If you are a resident of the European Union (EU) and European Economic
           Area (EEA), you have certain data protection rights, covered by GDPR.
@@ -407,16 +358,9 @@ const Privacy = () => {
           please contact your local data protection authority in the European
           Economic Area (EEA).
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>
-                11. Your Data Protection Rights under the California Privacy
-                Protection Act (CalOPPA)
-              </strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">11. Your Data Protection Rights under the California Privacy
+                Protection Act (CalOPPA)</h4>
         <p style={{ textAlign: "justify" }}>
           CalOPPA is the first state law in the nation to require commercial
           websites and online services to post a privacy policy. The law’s reach
@@ -459,16 +403,9 @@ const Privacy = () => {
           You can enable or disable Do Not Track by visiting the Preferences or
           Settings page of your web browser.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>
-                12. Your Data Protection Rights under the California Consumer
-                Privacy Act (CCPA)
-              </strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">12. Your Data Protection Rights under the California Consumer
+                Privacy Act (CCPA)</h4>
         <p style={{ textAlign: "justify" }}>
           If you are a California resident, you are entitled to learn what data
           we collect about you, ask to delete your data and not to sell (share)
@@ -555,13 +492,8 @@ const Privacy = () => {
           the official California Legislative Information website. The CCPA took
           effect on 01/01/2020.&nbsp;
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>13. Service Providers</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">13. Service Providers</h4>
         <p style={{ textAlign: "justify" }}>
           We may employ third party companies and individuals to facilitate our
           Service (“<strong>Service Providers</strong>”), provide Service on our
@@ -573,13 +505,8 @@ const Privacy = () => {
           these tasks on our behalf and are obligated not to disclose or use it
           for any other purpose.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>14. Analytics</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">14. Analytics</h4>
         <p style={{ textAlign: "justify" }}>
           We may use third-party Service Providers to monitor and analyze the
           use of our Service.
@@ -635,13 +562,8 @@ const Privacy = () => {
           please visit the Terms of Use page of Mixpanel:
           https://mixpanel.com/terms/
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>15. CI/CD tools</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">15. CI/CD tools</h4>
         <p style={{ textAlign: "justify" }}>
           We may use third-party Service Providers to automate the development
           process of our Service.&nbsp;
@@ -667,13 +589,8 @@ const Privacy = () => {
           purpose and how the protection of the data is ensured, please visit
           GitLab CI/CD Privacy Policy page: https://about.gitlab.com/privacy/.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>16. Behavioral Remarketing</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">16. Behavioral Remarketing</h4>
         <p style={{ textAlign: "justify" }}>
           CopywriterProAI&nbsp;uses remarketing services to advertise on third
           party websites to you after you visited our Service. We and our
@@ -781,13 +698,8 @@ const Privacy = () => {
           Pinterest by visiting their Privacy Policy page:
           https://about.pinterest.com/en/privacy-policy
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>17. Payments</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">17. Payments</h4>
         <p style={{ textAlign: "justify" }}>
           We may provide paid products and/or services within Service. In that
           case, we use third-party services for payment processing (e.g. payment
@@ -812,13 +724,8 @@ const Privacy = () => {
         <p>
           Their Privacy Policy can be viewed at: https://stripe.com/us/privacy
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>18. Links to Other Sites</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">18. Links to Other Sites</h4>
         <p style={{ textAlign: "justify" }}>
           Our Service may contain links to other sites that are not operated by
           us. If you click a third party link, you will be directed to that
@@ -829,13 +736,8 @@ const Privacy = () => {
           We have no control over and assume no responsibility for the content,
           privacy policies or practices of any third party sites or services.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>19. Children&apos;s Privacy</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">19. Children&apos;s Privacy</h4>
         <p style={{ textAlign: "justify" }}>
           Our Services are not intended for use by children under the age of 13
           (“
@@ -848,13 +750,8 @@ const Privacy = () => {
           collected Personal Data from Children without verification of parental
           consent, we take steps to remove that information from our servers.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>20. Changes to This Privacy Policy</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">20. Changes to This Privacy Policy</h4>
         <p style={{ textAlign: "justify" }}>
           We may update our Privacy Policy from time to time. We will notify you
           of any changes by posting the new Privacy Policy on this page.
@@ -869,13 +766,8 @@ const Privacy = () => {
           changes. Changes to this Privacy Policy are effective when they are
           posted on this page.
         </p>
-        <ol>
-          <strong>
-            <span style={{ textDecoration: "underline" }}>
-              <strong>21. Contact Us</strong>
-            </span>
-          </strong>
-        </ol>
+
+        <h4 className="mt-5 mb-4">21. Contact Us</h4>
         <p style={{ textAlign: "justify" }}>
           If you have any questions about this Privacy Policy, please contact
           us:
@@ -885,9 +777,12 @@ const Privacy = () => {
           By visiting this page on our website:
           https://copywriterpro.ai/contact.
         </p>
+        <br/><br/><br/>
       </div>
+
+      <Footer />
     </Layout>
   );
 };
 
-export default Privacy;
+export default PrivacyPolicy;

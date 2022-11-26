@@ -1,0 +1,12 @@
+//
+// Button group
+// --------------------------------------------------
+
+
+// Fix secondary outline button inside button group
+
+.btn-group .btn-outline-secondary {
+  &:hover, &:active, &.active {
+    border-color: $border-color !important;
+  }
+}

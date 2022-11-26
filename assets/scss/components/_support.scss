@@ -1,0 +1,47 @@
+.support-article-tab {
+  display: inline-block;
+}
+.support-article-tab.nav-pills .nav-link.active,
+.support-article-tab.nav-pills .show > .nav-link {
+  color: $primary;
+  background: transparent;
+}
+.support-article-tab button.nav-link {
+  padding: 0.5rem 0;
+  display: inline-flex;
+  width: 100%;
+  color: $body-color;
+}
+.support-article-tab button.nav-link:hover,
+.support-article-tab a:hover {
+  color: $primary !important;
+}
+.quick-support a {
+  transition: all 0.3s ease;
+}
+.quick-support a:hover {
+  color: $primary !important;
+}
+.quick-support-icon i {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+}
+.support-article-title {
+  font-family: $font-family-sans-serif;
+  transition: $transition-base;
+}
+.support-article-list li a:hover .support-article-title {
+  color: $primary;
+}
+.support-article-list li a:hover .read-more-link i {
+  transform: translateX(3px);
+  margin-left: 10px;
+}
+.support-article-list li a:hover .read-more-link {
+  opacity: 0.9;
+}
+.support-article-list li a:hover p {
+  color: $body-color;
+}

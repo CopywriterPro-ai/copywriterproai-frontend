@@ -1,0 +1,349 @@
+//
+// Buttons
+// --------------------------------------------------
+
+// Override solid buttons
+
+@each $color, $value in $theme-colors {
+  .btn-#{$color} {
+    &:hover,
+    &:active,
+    &:focus,
+    &.active,
+    &.show {
+      border-color: darken($value, 10%);
+      background-color: darken($value, 10%);
+    }
+  }
+}
+.btn-primary,
+.btn-success,
+.btn-danger,
+.btn-warning,
+.btn-info,
+.btn-dark {
+  color: $btn-dark-color !important;
+}
+.btn-secondary,
+.btn-outline-secondary,
+.btn-light {
+  &,
+  &:hover {
+    color: $btn-light-color !important;
+    border-color: transparent;
+  }
+}
+
+.btn-secondary {
+  border-color: $border-color;
+}
+.btn-light:hover,
+.btn-light:not(:disabled):not(.disabled):active,
+.btn-light:not(:disabled):not(.disabled).active,
+.btn-light:not(:disabled):not(.disabled).show {
+  border-color: $light;
+  background-color: $light;
+}
+
+// Outline buttons
+
+@each $color, $value in $theme-colors {
+  .btn-outline-#{$color} {
+    border-color: rgba($value, 0.35);
+  }
+}
+[class^="btn-outline-"],
+[class*=" btn-outline-"] {
+  &:hover,
+  &:active,
+  &.active,
+  &.show {
+    color: $btn-dark-color !important;
+  }
+}
+.btn-outline-light {
+  &:hover,
+  &:active,
+  &.active,
+  &.show {
+    color: $btn-light-color !important;
+  }
+}
+.btn-outline-secondary {
+  border-color: $gray-400;
+  &:hover,
+  &:active,
+  &.active,
+  &.show {
+    border-color: $gray-400 !important;
+    color: $btn-light-color !important;
+  }
+}
+.btn-link {
+  font-weight: 500;
+}
+
+// Adding box-shadow to all solid buttons
+
+@each $color, $value in $theme-colors {
+  @if $color != "secondary" or $color != "light" {
+    .btn-#{$color}.btn-shadow {
+      box-shadow: 0 0.5rem 1.125rem -0.5rem rgba($value, 0.9);
+    }
+  }
+}
+.btn-secondary,
+.btn-light {
+  &.btn-shadow {
+    box-shadow: 0 0.5rem 1.125rem -0.5rem rgba($black, 0.15);
+  }
+}
+.btn-shadow:hover {
+  box-shadow: none;
+}
+
+// Icon inside button
+
+.btn > i {
+  vertical-align: middle;
+}
+
+// Icon button
+
+.btn-icon {
+  flex-shrink: 0;
+  width: $btn-icon-size;
+  height: $btn-icon-size;
+  padding: 0;
+
+  //> i {
+  //  font-size: 1.25rem;
+  //}
+
+  &.btn-sm {
+    width: $btn-icon-sm-size;
+    height: $btn-icon-sm-size;
+    //> i {
+    //  font-size: 1.125rem;
+    //}
+  }
+
+  &.btn-lg {
+    width: $btn-icon-lg-size;
+    height: $btn-icon-lg-size;
+    //> i {
+    //  font-size: 1.4375rem;
+    //}
+  }
+
+  &.btn-xl {
+    width: $btn-icon-xl-size;
+    height: $btn-icon-xl-size;
+    //> i {
+    //  font-size: 1.75rem;
+    //}
+  }
+}
+
+.link-with-icon {
+  display: inline-block;
+  font-size: 15px;
+  font-family: var(--bs-font-monospace);
+  font-weight: 500;
+  color: var(--body-color);
+}
+.link-with-icon i {
+  vertical-align: middle;
+  transition: all 0.2s ease;
+  padding-left: 4px;
+}
+.link-with-icon:hover i {
+  transform: translateX(3px);
+  margin-left: 3px;
+}
+.bg-dark .link-with-icon,
+.bg-gradient .link-with-icon {
+  color: var(--bs-secondary-dark);
+}
+.btn {
+  position: relative;
+  transition: $transition-base;
+  box-shadow: none;
+  border: 2px solid transparent;
+}
+
+.btn:focus,
+.btn:active,
+.btn-primary.active:focus,
+.btn-primary:active:focus,
+.btn-outline-primary:active:focus {
+  outline: none;
+  box-shadow: none;
+}
+.btn-group-lg > .btn,
+.btn-sm {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.btn-group-lg > .btn,
+.btn-lg {
+  padding: 1rem 1.875rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.btn-xl {
+  padding: 1.5rem 2rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+.button-style > .btn {
+  margin: 0.5rem 0.5rem 0.5rem 0;
+}
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.125rem;
+  height: 3.125rem;
+  padding: 0;
+}
+.btn-soft-primary {
+  color: $white;
+  background-color: rgba($primary, 0.15);
+  border-color: rgba($primary, 0.15);
+}
+
+.btn-outline-primary {
+  color: $primary;
+  border-color: $primary;
+}
+.btn-soft-primary:hover,
+.btn-outline-primary:hover {
+  color: $white;
+  background-color: $primary;
+  border-color: $primary;
+}
+.btn-soft-info {
+  color: $info;
+  background-color: rgba($info, 0.15);
+  border-color: rgba($info, 0.15);
+}
+.btn-outline-info {
+  color: var(--bs-info);
+  border-color: var(--bs-info);
+}
+.btn-soft-info:hover,
+.btn-outline-info:hover {
+  color: $white;
+  background-color: $info;
+  border-color: $info;
+}
+.btn-soft-success {
+  color: $success;
+  background-color: rgba($success, 0.15);
+  border-color: rgba($success, 0.15);
+}
+.btn-outline-success {
+  color: $success;
+  border-color: $success;
+}
+.btn-soft-success:hover,
+.btn-outline-success:hover {
+  color: $white;
+  background-color: $success;
+  border-color: $success;
+}
+.btn-soft-warning {
+  color: $warning;
+  background-color: rgba($warning, 0.15);
+  border-color: rgba($warning, 0.15);
+}
+.btn-outline-warning {
+  color: $warning;
+  border-color: $warning;
+}
+.btn-soft-warning:hover,
+.btn-outline-warning:hover {
+  color: $white;
+  background-color: $warning;
+  border-color: $warning;
+}
+.btn-soft-danger {
+  color: $danger;
+  background-color: rgba($danger, 0.15);
+  border-color: rgba($danger, 0.15);
+}
+.btn-outline-danger {
+  color: $danger;
+  border-color: $danger;
+}
+.btn-soft-danger:hover,
+.btn-outline-danger:hover {
+  color: $white;
+  background-color: $danger;
+  border-color: $danger;
+}
+.btn-soft-dark {
+  color: $dark;
+  background-color: rgba($dark, 0.15);
+  border-color: rgba($dark, 0.15);
+}
+.btn-outline-dark {
+  color: $dark;
+  border-color: $dark;
+}
+.btn-soft-dark:hover,
+.btn-outline-dark:hover {
+  color: $white;
+  background-color: $dark;
+  border-color: $dark;
+}
+.btn-outline-light {
+  color: $secondary;
+  border-color: $secondary;
+}
+.google-btn,
+.facebook-btn {
+  transition: $transition-base;
+}
+.google-btn:hover,
+.facebook-btn:hover {
+  background: rgba($primary, 0.15) !important;
+}
+
+.divider-bar {
+  width: 100%;
+  min-height: 1px;
+  background-color: $secondary;
+}
+.divider-text {
+  width: 60px;
+  min-width: 60px;
+  line-height: 1.056em;
+}
+
+.download-btn {
+  border: 1px solid $body-color;
+  margin-right: 20px;
+  align-items: center;
+  padding: 5px 20px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.download-btn span {
+  font-size: 28px;
+  line-height: 28px;
+  margin-right: 15px;
+  color: $primary;
+}
+.download-btn p {
+  line-height: 20px;
+  margin-bottom: 5px;
+  font-weight: 600;
+  text-align: left;
+}
+.download-btn p small {
+  opacity: 0.5;
+  font-size: 11px;
+}

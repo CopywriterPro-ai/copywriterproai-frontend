@@ -1,34 +1,31 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
 
-import { CondLayout as Layout } from "@/layout";
-import PricingCard from "@/components/PricingCard";
-import Faq from "@/components/Faq";
+import { CondLayout as Layout } from '@/layout/Layout';
+import Footer from '@/layout/Footer/Footer';
+import Navbar from '@/layout/Header/Navbar';
+import Faq from '@/components/faq/FaqThree';
+import Packages from '@/components/pricing/Packages';
+import PageHeader from '@/components/common/PageHeader';
+import TestimonialOne from '@/components/testimonial/Testimonial';
+
+import { pricing as metaData } from '@/utils/metaData';
+import { pricing as pageHeader } from '@/utils/pageHeader';
 
 const Pricing = () => {
   return (
-    <Layout>
-      <Container className="container">
-        <Section>
-          <PricingCard />
-        </Section>
-        <Section>
-          <Faq />
-        </Section>
-      </Container>
+    <Layout title={metaData.title} description={metaData.description}>
+      <Navbar classOption="navbar-light" />
+      <PageHeader
+        title={pageHeader.title}
+        description={pageHeader.description}
+      />
+
+      <Packages />
+      <Faq />
+      <TestimonialOne />
+      <Footer />
     </Layout>
   );
 };
-
-const Container = styled.div`
-`;
-
-const Section = styled.div`
-  margin: 80px 0 55px 0;
-
-  @media (max-width: 768px) {
-    margin-top: 50px;
-  }
-`;
 
 export default Pricing;

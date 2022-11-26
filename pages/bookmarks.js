@@ -16,6 +16,7 @@ import { getBookmarks, selectors as userSelector } from "@/redux/slices/user";
 import { getSubscriptionsMe } from "@/redux/slices/payment";
 import { selectors as authSelector } from "@/redux/slices/auth";
 import Spinner from "@/components/common/Spinner";
+import { FaSearch } from "react-icons/fa";
 
 const ContentItem = ({ item }) => {
   const { tool, input, output } = item;
@@ -145,7 +146,7 @@ const Bookmarks = () => {
               <ContentTitle>
                 <p>Bookmarks</p>
                 <SearchBar>
-                  <label htmlFor="search" className="fas fa-search"></label>
+                  <label htmlFor="search"><i><FaSearch/></i></label>
                   <input
                     name="search"
                     id="search"

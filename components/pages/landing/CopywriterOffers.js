@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import SectionTitle from "@/components/common/SectionTitle";
+import SectionTitle from "@/components/common/AppSectionTitle";
 import OffersDatas from "@/data/landing/offerssection";
 
 const OffersBox = ({ title, icon, list = [] }) => {

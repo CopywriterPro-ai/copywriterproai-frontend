@@ -3,6 +3,7 @@ import { writeAlongActions } from "@/redux/slices/blog";
 import { setCurrentTask as setCurrnetTask2 } from "@/redux/slices/completeBlog";
 
 import { ToolTitle, Title, ToolTitleName } from "../styles";
+import { FaCircle, FaRegCircle } from "react-icons/fa";
 
 const ToolTitleItem = ({ text, isActive, currentTask, id }) => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const ToolTitleItem = ({ text, isActive, currentTask, id }) => {
   return (
     <ToolTitle onClick={handleSetActiveTask}>
       <Title>
-        <span className={`fa${isActive ? "s" : "r"} fa-circle`}></span>
+        {isActive ? <i><FaCircle/></i> : <i><FaRegCircle/></i>}
         <ToolTitleName isActive={isActive.toString()}>{text}</ToolTitleName>
       </Title>
     </ToolTitle>

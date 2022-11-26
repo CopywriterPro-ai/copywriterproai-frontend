@@ -5,20 +5,23 @@ import {
   postLandingDemo,
   selectors as demoGenerateSelector,
 } from "@/redux/slices/demoGenerate";
-import { useElementSize } from "@/hooks";
 import {
   Container,
+  Header,
+  Body,
+  Action,
   Scroll,
   InputSection,
   Title,
+  Divider,
   TextArea,
   LiveActionContainer,
   Counter,
-  Button,
   ResultSection,
   DemoItem,
+  TryAgain
 } from "./style";
-import Spinner from "components/common/Spinner";
+import Processing from "@/pages/Loading";
 import { BLOG_HEADLINE } from "@/appconstants";
 
 const MAX_LENGTH = 100;
@@ -27,13 +30,12 @@ const MIN_LENGTH = 10;
 const DemoBlogHeadline = () => {
   const dispatch = useDispatch();
 
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
+  const [generate, setGenerate] = useState('pre-generate');
 
   const inputRef = useRef(null);
   const scrollAreaRef = useRef(null);
   const textAreaRef = useRef(null);
-
-  const { height: inputHeigth } = useElementSize(inputRef);
 
   const {
     items: demoItems,
@@ -51,6 +53,7 @@ const DemoBlogHeadline = () => {
 
   const handleGenerate = () => {
     if (!limitFailed && !isPending) {
+      setGenerate('pending');
       dispatch(
         postLandingDemo({
           data: {
@@ -60,11 +63,7 @@ const DemoBlogHeadline = () => {
         })
       ).then(({ payload }) => {
         if (payload.status === 200) {
-          scrollAreaRef.current.scroll({
-            top: inputHeigth + 10,
-            left: 0,
-            behavior: "smooth",
-          });
+          setGenerate('post-generate');
         }
       });
     } else {
@@ -72,47 +71,67 @@ const DemoBlogHeadline = () => {
     }
   };
 
+  const handleState = () => {
+    setGenerate('pre-generate');
+  }
+
   return (
     <Container>
-      <Title>Blog Headline</Title>
-      <Scroll ref={scrollAreaRef}>
-        <InputSection ref={inputRef}>
-          <TextArea
-            ref={textAreaRef}
-            Color={(maxInput && "red") || (!minInput && "green")}
-            rows="8"
-            placeholder="Write your blog topic"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            maxLength={MAX_LENGTH}
-          ></TextArea>
-          <LiveActionContainer>
-            <Counter>
-              {input.length}/{MAX_LENGTH}
-            </Counter>
-            <Button onClick={handleGenerate}>
-              {isPending ? (
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  Generating{" "}
-                  <Spinner style={{ marginLeft: "5px" }} size="10px" />
-                </div>
-              ) : (
-                "Generate"
-              )}
-            </Button>
-          </LiveActionContainer>
-        </InputSection>
-
-        {task === BLOG_HEADLINE && demoItems.length > 0 && (
-          <ResultSection>
-            {demoItems.map((item, index) => (
-              <DemoItem key={index}>{item}</DemoItem>
-            ))}
-          </ResultSection>
-        )}
-      </Scroll>
+      <Header>
+        <Title className="fw-bold display-5">Blog Headline</Title>
+      </Header>
+      <Divider/>
+      <div>
+        {generate === 'pending' ? (
+          <Processing color='#182538' height='240px'/>
+        ) : (
+          <>
+            <Body>
+              {generate === 'pre-generate' ? (
+                <InputSection ref={inputRef}>
+                  <TextArea
+                    ref={textAreaRef}
+                    Color={(maxInput && "red") || (!minInput && "green")}
+                    // rows="4"
+                    placeholder="Write your text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    maxLength={MAX_LENGTH}
+                  />
+                </InputSection>
+              ) : (task === BLOG_HEADLINE && demoItems.length > 0 && (
+                    <Scroll ref={scrollAreaRef}>
+                      <ResultSection>
+                        {demoItems.map((item, index) => (
+                          <DemoItem key={index}>{item}</DemoItem>
+                        ))}
+                      </ResultSection>
+                    </Scroll>
+                  )
+                )
+              }
+            </Body>
+            <Action>
+              {generate === 'pre-generate' ? (
+                <LiveActionContainer>
+                  <Counter>
+                    {input.length}/{MAX_LENGTH}
+                  </Counter>
+                  <button className="btn btn-primary" onClick={handleGenerate}> Generate </button>
+                </LiveActionContainer>
+              ) : (task === BLOG_HEADLINE && demoItems.length > 0 && (
+                    <TryAgain className="btn btn-primary" onClick={handleState}> Try Again </TryAgain>
+                  )
+                )
+              }
+            </Action>
+          </>
+        )
+      }
+    </div>
     </Container>
   );
 };
 
 export default DemoBlogHeadline;
+

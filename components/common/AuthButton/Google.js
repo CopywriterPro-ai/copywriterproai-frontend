@@ -1,24 +1,26 @@
 import React from "react";
 import styled from "styled-components";
 
-import GoogleIcon from "@/assets/images/landing/google-auth-no-background.png";
-import { AuthButton } from "./styles";
-
-const Google = ({ title, clickEvent }) => {
+const Google = ({ title, clickEvent, extras = "mt-4 google-btn" }) => {
   return (
-    <GoogleButton onClick={clickEvent}>
-      <Image src={GoogleIcon.src} alt="google" />
-      {title}
+    <GoogleButton
+      type="button"
+      className={`btn d-block bg-white shadow-sm d-flex align-items-center text-decoration-none justify-content-center ${extras}`}
+      onClick={clickEvent}
+    >
+      <Image
+        width={22}
+        height={21}
+        src="/google-icon.svg"
+        alt="google"
+      />
+      <span className="mx-2">{title}</span>
     </GoogleButton>
   );
 };
 
-const GoogleButton = styled(AuthButton)`
-  background: linear-gradient(
-    91.04deg,
-    rgba(131, 215, 184, 0.15) 1.36%,
-    rgba(131, 215, 184, 0.19) 99.82%
-  );
+const GoogleButton = styled.button`
+  width: 100%;
 `;
 
 const Image = styled.img`
