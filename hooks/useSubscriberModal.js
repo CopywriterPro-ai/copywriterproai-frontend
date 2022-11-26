@@ -28,7 +28,7 @@ const useSubscriberModal = () => {
           setSubscriberUsageModal({
             block: true,
             isOpen: true,
-            message: "your subscription words finished",
+            message: "Sorry! Your don't have enough words to generate content.",
           })
         );
       } else if (isFreemium && wordsFinished) {
@@ -36,7 +36,7 @@ const useSubscriberModal = () => {
           setSubscriberUsageModal({
             block: true,
             isOpen: true,
-            message: "your freemium subscription words finished",
+            message: "Sorry! Your trial has expired!",
           })
         );
       } else {

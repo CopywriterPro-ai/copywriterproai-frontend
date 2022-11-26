@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CondLayout as Layout } from '@/layout/Layout';
+import Layout from '@/layout/Layout';
 import Footer from '@/layout/Footer/Footer';
 import Navbar from '@/layout/Header/Navbar';
 import Faq from '@/components/faq/FaqThree';

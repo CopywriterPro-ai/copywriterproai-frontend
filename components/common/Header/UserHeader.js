@@ -337,7 +337,7 @@ const NavDropdownMenu = styled(DropdownMenu)`
   background-color: #f9f9f9;
   min-width: 200px;
   box-shadow: 0px 5px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+  z-index: 3;
   padding: 0px;
   margin: 0px;
 
