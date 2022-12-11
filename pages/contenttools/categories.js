@@ -13,6 +13,7 @@ import {
 import { AdminLayout as Layout } from "@/layout";
 import CreateOrEditCategoriesModal from "@/components/modals/tools/categories/CreateOrEdit";
 import DeleteCategoriesModal from "@/components/modals/tools/categories/Delete";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const Categories = () => {
   const dispatch = useDispatch();
@@ -69,13 +70,11 @@ const Categories = () => {
             <StyledActionButton
               title="Delete"
               onClick={() => handleDeleleModalOpen(cell.row.values.action)}
-              className="far fa-trash-alt"
-            ></StyledActionButton>
+            ><i><FaTrashAlt/></i></StyledActionButton>
             <StyledActionButton
               title="Edit"
               onClick={() => handleEditModalOpen(cell.row.values.action)}
-              className="far fa-edit"
-            ></StyledActionButton>
+            ><i><FaEdit/></i></StyledActionButton>
           </>
         ),
       },

@@ -23,6 +23,7 @@ import TipsImg from "@/assets/images/generate-tips.png";
 import { useUser, useSubscriberModal, useToolAccess } from "@/hooks";
 import toolsvalidation from "@/data/toolsvalidation";
 import { isActionAllowed } from "redux-state-sync";
+import { FaBars } from "react-icons/fa";
 
 const InputGeneratingBox = ({ showTutorialState }) => {
   const dispatch = useDispatch();
@@ -111,7 +112,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
 
     if (!accessTask) {
       dispatch(
-        setAccessTask({ isOpen: true, message: "please upgrade your plan" })
+        setAccessTask({ isOpen: true, message: "Upgrade Your Plan" })
       );
       return;
     }
@@ -159,7 +160,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
 
       <ContentHeader>
         <ContentTitle>
-          <span onClick={handleSidebar} className="fas fa-bars"></span>
+          <span onClick={handleSidebar}><i><FaBars/></i></span>
           <p>{formContent.name}</p>
           <TutorialButton onClick={() => setShowTutorial(true)}>
             [Tutorial]

@@ -43,6 +43,8 @@ const SubscriberAccess = () => {
   const { current: currentSelectedPrice } = useSelector(
     paymentSelector.getModalPricing
   );
+
+  
   const { items: priceItems, loading: loadingItems } = useSelector(
     paymentSelector.getPriceList(periodSelect)
   );
@@ -125,18 +127,18 @@ const SubscriberAccess = () => {
             <strong>{taskaccess.message}</strong>
           </HeadingMessage>
         )}
-        <StyledCurrentPlan>
+        {/* <StyledCurrentPlan>
           Current Plan: {subscription?.replace("_", " ")?.toLowerCase()}
-        </StyledCurrentPlan>
+        </StyledCurrentPlan> */}
         {loadingItems === "pending" && !priceItems.length ? (
           <StyledLoading>
             <Spinner />
           </StyledLoading>
         ) : (
           <>
-            <StyledPeriodTab>
-              <p>Select Your Plan</p>
-              <StyledTabs>
+            {/* <StyledPeriodTab>
+              <p>Select Your Plan</p> */}
+              {/* <StyledTabs>
                 <StyledTab
                   Active={periodSelect === 1 ? "active" : "inactive"}
                   onClick={() => setPeriodSelect(1)}
@@ -149,8 +151,8 @@ const SubscriberAccess = () => {
                 >
                   6 months
                 </StyledTab>
-              </StyledTabs>
-            </StyledPeriodTab>
+              </StyledTabs> */}
+            {/* </StyledPeriodTab> */}
             <PricingCard priceItems={priceItems} />
             <StyledUpgrade>
               <StyledUpgradeButton
@@ -165,7 +167,7 @@ const SubscriberAccess = () => {
                   ? "Switch Now"
                   : currentSelectedPrice
                   ? `[$${unit_amount / 100}] ${
-                      currentActivePackage ? "Current Active" : "Upgrade Now"
+                      currentActivePackage ? "Currently Active" : "Upgrade Now"
                     }`
                   : "Select Package"}
               </StyledUpgradeButton>

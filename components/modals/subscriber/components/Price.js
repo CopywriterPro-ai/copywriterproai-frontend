@@ -9,6 +9,9 @@ import {
   setCurrentModalPrice,
 } from "@/redux/slices/payment";
 
+import {FaDatabase, FaEdit, FaWrench} from 'react-icons/fa';
+import {TiTick} from 'react-icons/ti';
+
 export const customStyles = {
   content: {
     top: "50%",
@@ -21,7 +24,7 @@ export const customStyles = {
   overlay: { zIndex: 9999 },
 };
 
-const POPULAR_PACKAGE = ["PROFESSINAL_6MONTH"];
+const POPULAR_PACKAGE = ["PROFESSINAL_1MONTH"];
 
 export const MobilePriceCardItem = ({ price }) => {
   const packageWords = pricesInfo[price.metadata.priceKey]?.words;
@@ -29,17 +32,25 @@ export const MobilePriceCardItem = ({ price }) => {
   return (
     <div style={{ padding: "1rem" }}>
       <StyledCardRow>
-        <StyledRowIcon className="fas fa-database"></StyledRowIcon>
-        <StyledRowTitle>{packageWords} Words</StyledRowTitle>
+        <StyledRowIcon><i><TiTick/></i></StyledRowIcon>
+        <StyledRowTitle>{price.product.metadata.words} Words</StyledRowTitle>
       </StyledCardRow>
       <StyledCardRow>
-        <StyledRowIcon className="far fa-edit"></StyledRowIcon>
-        <StyledRowTitle>Short-form writing tools</StyledRowTitle>
+        <StyledRowIcon><i><TiTick/></i></StyledRowIcon>
+        <StyledRowTitle>{price.product.metadata.tools} Copywriting Tools</StyledRowTitle>
       </StyledCardRow>
-      <StyledCardRow>
-        <StyledRowIcon className="fas fa-wrench"></StyledRowIcon>
-        <StyledRowTitle>24/7 Support</StyledRowTitle>
-      </StyledCardRow>
+      {price.product.metadata.blog !== 'none' && (
+        <StyledCardRow>
+          <StyledRowIcon><i><TiTick/></i></StyledRowIcon>
+          <StyledRowTitle>AI Blog Writing</StyledRowTitle>
+        </StyledCardRow>
+      )}
+      {price.product.metadata.plagiarismChecker !== 'none' && (
+        <StyledCardRow>
+          <StyledRowIcon><i><TiTick/></i></StyledRowIcon>
+          <StyledRowTitle>Plagiarism Checker</StyledRowTitle>
+        </StyledCardRow>
+      )}
     </div>
   );
 };
@@ -71,17 +82,25 @@ export const PriceCardItem = ({ price }) => {
           <StyledPriceTitle>{price.product.name}</StyledPriceTitle>
         </StyledCardRow>
         <StyledCardRow>
-          <StyledRowIcon className="fas fa-database"></StyledRowIcon>
-          <StyledRowTitle>{packageWords} Words</StyledRowTitle>
+          <StyledRowIcon><i><TiTick/></i></StyledRowIcon>
+          <StyledRowTitle>{price.product.metadata.words} Words</StyledRowTitle>
         </StyledCardRow>
         <StyledCardRow>
-          <StyledRowIcon className="far fa-edit"></StyledRowIcon>
-          <StyledRowTitle>Short-form writing tools</StyledRowTitle>
+          <StyledRowIcon><i><TiTick/></i></StyledRowIcon>
+          <StyledRowTitle>{price.product.metadata.tools} Copywriting Tools</StyledRowTitle>
         </StyledCardRow>
-        <StyledCardRow>
-          <StyledRowIcon className="fas fa-wrench"></StyledRowIcon>
-          <StyledRowTitle>24/7 Support</StyledRowTitle>
-        </StyledCardRow>
+        {price.product.metadata.blog !== 'none' && (
+          <StyledCardRow>
+            <StyledRowIcon><i><TiTick/></i></StyledRowIcon>
+            <StyledRowTitle>AI Blog Writing</StyledRowTitle>
+          </StyledCardRow>
+        )}
+        {price.product.metadata.plagiarismChecker !== 'none' && (
+          <StyledCardRow>
+            <StyledRowIcon><i><TiTick/></i></StyledRowIcon>
+            <StyledRowTitle>Plagiarism Checker</StyledRowTitle>
+          </StyledCardRow>
+        )}
       </label>
     </StyledPriceCardItem>
   );
@@ -97,7 +116,7 @@ const StyledPriceCardItem = styled.div`
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
   margin: 8px;
-  padding: 15px;
+  padding: 10px 30px;
   width: 20rem;
 
   &:first-child {
@@ -169,6 +188,7 @@ const StyledCardRow = styled.div`
   margin: 1.5rem 0;
   display: flex;
   align-items: baseline;
+  font-size: 16px;
 
   input[type="radio"] {
     margin-right: 1rem;
@@ -177,17 +197,13 @@ const StyledCardRow = styled.div`
 `;
 
 const StyledRowIcon = styled.div`
-  padding: 0.7rem;
-  background: #ffffff;
-  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
   margin-right: 1rem;
-  color: #707070;
+  color: green;
+  font-size: 20px;
 `;
 
 const StyledRowTitle = styled.span`
   font-weight: 500;
-  font-size: 16px;
   line-height: 30px;
 `;
 
@@ -201,7 +217,6 @@ export const PricingCard = ({ priceItems }) => {
   const [currentPrice, setCurrentPrice] = useState(priceItems[0]);
   const { isDesktop, isMobile } = useResponsive();
   const { current } = useSelector(paymentSelector.getModalPricing);
-
   if (isDesktop) {
     return (
       <StyledPricingCard>
@@ -251,7 +266,7 @@ const StyledMobilePricingCardTitle = styled.div`
 `;
 
 const StyledMobilePricingCardButton = styled.div`
-  padding: 5px 0px;
+  padding: 10px;
   width: 100%;
   text-align: center;
   background-color: ${({ IsActive }) =>
@@ -260,6 +275,7 @@ const StyledMobilePricingCardButton = styled.div`
   font-weight: 600;
   font-size: 14px;
   color: ${({ IsActive }) => (IsActive === "active" ? "#FFF" : "#000")};
+  cursor: pointer;
 
   &:last-child {
     border-right: 0;

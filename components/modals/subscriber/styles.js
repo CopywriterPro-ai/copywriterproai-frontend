@@ -2,6 +2,10 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   position: relative;
+  margin: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const StyledLoading = styled.div`
@@ -11,7 +15,7 @@ export const StyledLoading = styled.div`
   align-items: center;
 `;
 
-export const HeadingMessage = styled.div`
+export const HeadingMessage = styled.h4`
   margin-bottom: 2rem;
   max-width: fit-content;
 
@@ -36,9 +40,6 @@ export const StyledCurrentPlan = styled.div`
 
 export const StyledPeriodTab = styled.div`
   margin: 25px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
   p {
     position: absolute;
@@ -89,7 +90,7 @@ export const StyledUpgrade = styled.div`
 export const StyledUpgradeButton = styled.button`
   min-width: 35%;
   height: 2.5rem;
-  background: #3a95e9;
+  background: #40b1a7;
   border: 0.5px solid #979797;
   border-radius: 7px;
   color: white;

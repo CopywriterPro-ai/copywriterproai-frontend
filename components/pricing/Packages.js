@@ -24,7 +24,7 @@ const Packages = ({ header, paddingTop = 'pt-120' }) => {
 
   const interval = 1;
 
-  const { pricedata, loading } = useSelector(
+  const { items: pricedata, loading } = useSelector(
     paymentSelector.getPriceList(interval)
   );
 

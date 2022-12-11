@@ -19,6 +19,8 @@ import {
   selectors as authSelector,
 } from "@/redux/slices/auth";
 
+import {FaClipboard, FaClone, FaEdit} from 'react-icons/fa';
+
 const GeneratingResult = () => {
   const dispatch = useDispatch();
 
@@ -161,7 +163,7 @@ const GeneratingResult = () => {
                   ) : (
                     "No Content"
                   )}{" "}
-                  <ContentEdit className="far fa-edit"></ContentEdit>
+                  <ContentEdit><i><FaEdit/></i></ContentEdit>
                 </div>
               )}
             </ResultContent>
@@ -173,16 +175,12 @@ const GeneratingResult = () => {
                   onCopy={(text, copied) => setCopyText({ copied, index })}
                 >
                   {copyText.copied && copyText.index === index ? (
-                    <IconButton
-                      isPending="false"
-                      className="far fa-clipboard"
-                    ></IconButton>
+                    <IconButton isPending="false"><i><FaClipboard/></i></IconButton>
                   ) : (
                     <IconButton
                       isPending="false"
                       onClick={() => handleCountCopy(index)}
-                      className="far fa-clone"
-                    ></IconButton>
+                    ><i><FaClone/></i></IconButton>
                   )}
                 </CopyToClipboard>
                 {isRigthContent && isBookmark ? (

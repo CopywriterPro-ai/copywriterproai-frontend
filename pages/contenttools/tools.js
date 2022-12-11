@@ -14,6 +14,7 @@ import {
 import { AdminLayout as Layout } from "@/layout";
 import CreateOrEditToolsModal from "@/components/modals/tools/tools/CreateOrEdit";
 import DeleteToolsModal from "@/components/modals/tools/tools/Delete";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const Tools = () => {
   const dispatch = useDispatch();
@@ -74,13 +75,11 @@ const Tools = () => {
             <StyledActionButton
               title="Delete"
               onClick={() => handleDeleleModalOpen(cell.row.values.action)}
-              className="far fa-trash-alt"
-            ></StyledActionButton>
+            ><i><FaTrashAlt/></i></StyledActionButton>
             <StyledActionButton
               title="Edit"
               onClick={() => handleEditModalOpen(cell.row.values.action)}
-              className="far fa-edit"
-            ></StyledActionButton>
+            ><i><FaEdit/></i></StyledActionButton>
           </>
         ),
       },
