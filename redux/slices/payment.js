@@ -399,7 +399,7 @@ export const selectors = {
           .slice()
           .sort((a, b) => (a.unit_amount > b.unit_amount ? 1 : -1));
 
-        return { loading, pricedata: sortedPrice, error };
+        return { loading, items: sortedPrice, error };
       }
     ),
 

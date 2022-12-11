@@ -23,7 +23,7 @@ const Explores = [
   },
   {
     name: "AI Blog Writing",
-    link: "/app",
+    link: "/app/ai-write-along",
     external: false,
   },
 ];

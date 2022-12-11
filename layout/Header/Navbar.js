@@ -45,6 +45,7 @@ const Navbar = ({ navDark, classOption }) => {
                   src="/logo-color.svg"
                   alt="logo"
                   className="img-fluid logo-color"
+                  style={{paddingTop: '15px !important'}}
                 />
               ) : (
                 <Image
@@ -155,7 +156,7 @@ const Navbar = ({ navDark, classOption }) => {
             id="offcanvasWithBackdrop"
           >
             <div className="offcanvas-header d-flex align-items-center mt-4">
-              <Link href="/">
+              <Link href="/app/paraphrasing">
                 <a className="d-flex align-items-center mb-md-0 text-decoration-none">
                   <Image
                     width={190}
@@ -163,6 +164,7 @@ const Navbar = ({ navDark, classOption }) => {
                     src="/logo-color.svg"
                     alt="logo"
                     className="img-fluid ps-2"
+                    style={{paddingTop: '15px !important'}}
                   />
                 </a>
               </Link>

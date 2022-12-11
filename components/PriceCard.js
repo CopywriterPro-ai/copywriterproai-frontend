@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { usePackages, useWindowSize } from "@/hooks";
 import { selectors as uiSelector } from "@/redux/slices/ui";
 
-const MOBILE_SCREEN_MAX = 764;
+const MOBILE_SCREEN_MAX = 960;
 const LAPTOP_SCREEN_MAX = 1150;
 // const LARGE_SCREEN_MIN = 1200;
 

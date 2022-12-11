@@ -10,6 +10,7 @@ import {
   setHeaderElementSize,
   selectors as uiSelector,
 } from "@/redux/slices/ui";
+import { FaBars } from "react-icons/fa";
 
 const leftMenu = [
   {
@@ -140,8 +141,7 @@ const Header = () => {
                 onClick={() =>
                   setMobileNav({ ...mobileNav, open: !mobileNav.open })
                 }
-                className="fas fa-bars"
-              ></i>
+              ><FaBars/></i>
             </MobileToogler>
           </NavFlex>
         </Container>

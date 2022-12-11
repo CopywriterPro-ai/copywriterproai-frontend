@@ -189,7 +189,6 @@ const SinglePriceItem = ({
           if (payload.status === 200) {
             const { data } = payload;
             const stripe = await getStripe();
-            console.log(stripe);
             stripe?.redirectToCheckout({
               sessionId: data.session.id,
             });

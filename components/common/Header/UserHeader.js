@@ -26,7 +26,7 @@ import { useResponsive } from "@/hooks";
 import { useElementSize, useUser, useNotice } from "@/hooks";
 import { USER_DEFAULT_PATH } from "@/appconstants";
 
-import {FaChevronDown, FaChevronUp, FaBars, FaSignOutAlt, FaUser} from 'react-icons/fa';
+import {FaChevronDown, FaBars, FaSignOutAlt, FaUser} from 'react-icons/fa';
 
 const NavItem = ({ link, title }) => {
   return (
@@ -220,7 +220,7 @@ const AppHeader = () => {
                   src="/logo-color.svg"
                   alt="logo"
                   className="img-fluid logo-color"
-                  style={{paddingTop: '20px'}}
+                  style={{paddingTop: '15px !important'}}
                 />
               </Link>
             </Logo>
@@ -228,7 +228,7 @@ const AppHeader = () => {
               <ul>
                 {isAuth && (
                   <>
-                    <NavItem link="/app" title="App" />
+                    <NavItem link="/app/paraphrasing" title="App" />
                     <NavBlogDropdownMenuItem
                       isOpen={blogIsOpen}
                       toggle={blogToggle}
@@ -337,7 +337,7 @@ const NavDropdownMenu = styled(DropdownMenu)`
   background-color: #f9f9f9;
   min-width: 200px;
   box-shadow: 0px 5px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+  z-index: 3;
   padding: 0px;
   margin: 0px;
 

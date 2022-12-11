@@ -23,7 +23,7 @@ export const DELETE = "delete";
 export const UPDATE = "update";
 export const CREATE = "create";
 
-export const USER_DEFAULT_PATH = "/app";
+export const USER_DEFAULT_PATH = "/app/paraphrasing";
 
 // Quill Editor
 export const AI_BLOG_WRITER = "ai_blog_writer";
