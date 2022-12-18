@@ -182,7 +182,7 @@ const CustomToolbar = ({ quill }) => {
 
 const StyledDropdownToggle = styled(DropdownToggle)`
   box-shadow: none !important;
-  background-color: #40b1a7;
+  background-color: #10a37f;
   border-radius: 8px;
   color: #fff;
   padding: 10px 20px;
@@ -190,7 +190,7 @@ const StyledDropdownToggle = styled(DropdownToggle)`
   &:hover, 
   &:focus,
   &:active {
-    background-color: #40b1a7;
+    background-color: #10a37f;
     border-radius: 8px;
     color: #fff;
   }

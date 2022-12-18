@@ -210,7 +210,7 @@ const AppHeader = () => {
         shownotice={showTopBar.toString()}
         noticeheight={topNoticeHeight}
       >
-        <div className="container-fluid">
+        <div className="container-fluid" style={{padding: "0"}}>
           <NavbarContainer>
             <Logo>
               <Link href={isAuth ? USER_DEFAULT_PATH : "/"}>
@@ -445,6 +445,7 @@ const NavbarContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin: 2rem;
 
   /* @media (max-width: 768px) {
     justify-content: space-between;
@@ -551,7 +552,7 @@ const AvatarImg = styled.img`
 `;
 
 const Badge = styled.span`
-  background-color: #40b1a7;
+  background-color: #10a37f;
   color: #fff;
   border-radius: 5px;
   margin-left: 10px;

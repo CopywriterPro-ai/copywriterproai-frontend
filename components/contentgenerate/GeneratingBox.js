@@ -168,7 +168,6 @@ const InputGeneratingBox = ({ showTutorialState }) => {
         </ContentTitle>
         {isAuth && (
           <CreditsLeft
-            onClick={() => handleSubscriberModalOpen()}
             style={{ cursor: "pointer" }}
           >
             Words Left: {words ? words : 0}
@@ -207,8 +206,8 @@ const InputGeneratingBox = ({ showTutorialState }) => {
                       autoComplete="off"
                       {...register(field.key, {
                         required,
-                        maxLength: maxChar,
-                        minLength: minChar,
+                        // maxLength: maxChar,
+                        // minLength: minChar,
                       })}
                       id={field.key}
                       defaultValue={
@@ -222,9 +221,9 @@ const InputGeneratingBox = ({ showTutorialState }) => {
                       </UncontrolledTooltip>
                     )}
 
-                    <WordCount exceededChar={exceededChar}>
+                    {/* <WordCount exceededChar={exceededChar}>
                       {watchChar}/{maxChar} Max Characters
-                    </WordCount>
+                    </WordCount> */}
                   </div>
                 );
               } else if (field.type === "selectBox") {
@@ -249,8 +248,8 @@ const InputGeneratingBox = ({ showTutorialState }) => {
                 );
               } else if (field.type === "InputNumber") {
                 const fieldValidation = validationSchema[field.key];
-                const minChar = fieldValidation?.min || 1;
-                const maxChar = fieldValidation?.max || 10;
+                // const minChar = fieldValidation?.min || 1;
+                // const maxChar = fieldValidation?.max || 10;
                 const required = fieldValidation?.required || false;
 
                 return (
@@ -259,16 +258,16 @@ const InputGeneratingBox = ({ showTutorialState }) => {
                     <InputNumber
                       type="number"
                       autoComplete="off"
-                      min={minChar}
-                      max={maxChar}
+                      // min={minChar}
+                      // max={maxChar}
                       {...register(field.key, {
                         required,
-                        max: maxChar,
-                        min: minChar,
+                        // max: maxChar,
+                        // min: minChar,
                       })}
                       id={field.key}
-                      defaultValue={
-                        isCurrentInput ? defaultInput.input[field.key] : null
+                      defaultValue={"1"
+                        // isCurrentInput ? defaultInput.input[field.key] : null
                       }
                       placeholder={field.placeholder}
                     />
@@ -320,7 +319,7 @@ const EmptyTool = styled.div`
 `;
 
 const Container = styled.div`
-  padding-top: 15px;
+  padding: 2rem;
 `;
 
 const SubscriptionOver = styled.div`
@@ -336,17 +335,18 @@ const SubscriptionOver = styled.div`
 `;
 
 const ContentHeader = styled.div`
-  align-items: center;
-  border-bottom: 1px solid #b4b4b4;
+  align-items: baseline;
   display: flex;
   justify-content: space-between;
-  padding: 0.4rem;
+  margin-bottom: 2rem;
 
   p {
     flex: 4;
-    font-size: 23px;
+    font-size: 24px;
     line-height: 34px;
     margin: 0;
+    font-weight: 700;
+    color: black;
   }
 
   @media (max-width: 768px) {
@@ -358,6 +358,10 @@ const ContentHeader = styled.div`
       font-size: 16px;
       line-height: 34px;
     }
+  }
+
+  @media (max-width: 420px) {
+    flex-direction: column;
   }
 `;
 
@@ -379,6 +383,15 @@ const ContentTitle = styled.div`
 const CreditsLeft = styled.div`
   font-size: 18px;
   font-weight: 500;
+
+  @media (max-width: 992px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 420px) {
+    margin-top: 1rem;
+    float: right;
+  }
 `;
 
 const MainContent = styled.div`
@@ -416,60 +429,69 @@ const SubmitAction = styled.div`
 const Input = styled(TextareaAutosize)`
   width: 100%;
   /* height: 45px; */
-  padding: 6px 15px;
+  padding: 15px 20px;
   outline: none;
   border: 1px solid #b4b4b4;
+  border-radius: 8px;
   color: black;
   font-size: 16px;
   display: block;
   resize: none;
+  margin: 15px 0 20px 0;
 `;
 
 const InputNumber = styled.input`
   width: 100%;
   height: 45px;
-  padding: 6px 15px;
+  padding: 15px 20px;
   outline: none;
   border: 1px solid #b4b4b4;
+  border-radius: 8px;
   color: black;
   font-size: 16px;
   display: block;
   resize: none;
+  margin: 15px 0 20px 0;
 `;
 
 const TextArea = styled(TextareaAutosize)`
   width: 100%;
   height: 270px;
-  padding: 6px 15px;
+  padding: 15px 20px;
   outline: none;
   border: 1px solid #b4b4b4;
+  border-radius: 8px;
   color: black;
   font-size: 16px;
   display: block;
   resize: none;
+  margin: 15px 0 20px 0;
 `;
 
 const OptionSelect = styled.select`
   width: 100%;
   height: 45px;
-  padding: 6px 15px;
+  padding: 15px 20px;
   outline: none;
   border: 1px solid #b4b4b4;
+  border-radius: 8px;
   color: #748194;
   font-size: 16px;
   display: block;
   background: transparent;
+  margin: 15px 0 20px 0;
 `;
 
 const Button = styled.button`
   display: inline-flex;
   font-size: 1rem;
-  font-weight: 500;
-  padding: 0.6rem 2.8rem;
-  border: 2px solid #3a4841;
+  font-weight: 600;
+  padding: 0.5rem 2.5rem;
+  border: none;
   border-radius: 5px;
   outline: none;
-  background-color: transparent;
+  background-color: #10a37f;
+  color: white;
   transition: all 0.5s;
 `;
 

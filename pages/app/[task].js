@@ -11,6 +11,8 @@ import { setCurrentActiveKeyState } from "@/redux/slices/content";
 import { useWindowSize, useSidebar } from "@/hooks";
 import AppTaskModal from "@/components/modals/tutorial/apptask";
 
+import styled from "styled-components";
+
 const AppItem = ({ doc }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -29,21 +31,18 @@ const AppItem = ({ doc }) => {
     <Layout>
       <div className="container-fluid">
         <div className="row">
+          {/* https://codepen.io/lpato/pen/bGKjEod */}
           {showSidebar && <MainSidebar />}
           {showContent && (
             <>
-              <div
+              <Sidebar
                 className={`col-lg-${windowWidth < 1600 ? "3" : "2"}`}
-                style={{
-                  paddingTop: "15px",
-                  borderRight: "1px solid rgba(0,0,0,.1)",
-                }}
               >
                 <GenerateSidebar />
-              </div>
+              </Sidebar>
               <div
                 className={`col-lg-${windowWidth < 1600 ? "9" : "10"}`}
-                style={{ position: "relative" }}
+                style={{ position: "relative", padding: "0" }}
               >
                 {task === "blog-writing" ? (
                   <p>Redirecting...</p>
@@ -59,6 +58,15 @@ const AppItem = ({ doc }) => {
     </Layout>
   );
 };
+
+const Sidebar = styled.div`
+  padding: 0px;
+  border-right: 1px solid rgba(0,0,0,.1);
+
+  @media(min-width: 992px) {
+    min-height: 100vh;
+  }
+`;
 
 export async function getStaticProps({ params }) {
   const doc = getDocByTask(params.task, ["title", "content", "seo"]);

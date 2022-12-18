@@ -114,8 +114,8 @@ const UserLayout = ({
     >
       <Header />
       <Main
-        topBarHeigth={topBarHeigth}
-        navBarHeigth={navBarHeigth}
+        topBarHeight={topBarHeigth}
+        navBarHeight={navBarHeigth}
         showTopBar={showTopBar}
       >
         {children}
@@ -144,7 +144,7 @@ const UserLayout = ({
 };
 
 const Main = styled.main`
-  min-height: 70vh;
+  // height: 100vh;
 `;
 
 export default UserLayout;

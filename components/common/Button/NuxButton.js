@@ -33,7 +33,7 @@ const AnimatingButton = styled.div`
   align-items: center;
   padding: 6px;
   border: 1.5px solid #50b5af;
-  background: ${({ showCaret }) => (showCaret === "true" ? null : "#0fa098")};
+  background: ${({ showCaret }) => (showCaret === "true" ? null : "#10a37f")};
   color: ${({ showCaret }) => (showCaret === "true" ? null : "#fff")};
   filter: drop-shadow(-2px 2px 0px rgba(0, 224, 255, 0.2));
   border-radius: 5px;
