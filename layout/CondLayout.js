@@ -3,6 +3,7 @@ import React from "react";
 import { useUser } from "@/hooks";
 import UserLayout from "./UserLayout";
 import GuestLayout from "./GuestLayout";
+import Processing from "@/pages/Loading";
 
 const CondLayout = ({
   children,
@@ -36,7 +37,7 @@ const CondLayout = ({
       </GuestLayout>
     );
   } else {
-    return <h4>Loading...</h4>;
+    return <Processing color="#000" />;
   }
 };
 

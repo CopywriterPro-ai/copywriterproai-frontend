@@ -10,7 +10,7 @@ if (!isServer) {
   ReactModal.setAppElement("#__next");
 }
 
-const Layout = ({ children, title, description, otherSEO, additionalMeta }) => {
+const Layout = ({ children, title, description, images, otherSEO, additionalMeta }) => {
   // useScrollTop();
 
   return (
@@ -18,6 +18,7 @@ const Layout = ({ children, title, description, otherSEO, additionalMeta }) => {
       <Head
         title={title}
         description={description}
+        images={images}
         otherSEO={otherSEO}
         additionalMeta={additionalMeta}
       />

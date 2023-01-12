@@ -226,9 +226,9 @@ const AppHeader = () => {
             </Logo>
             <NavList>
               <ul>
+                <NavItem link="/app/paraphrasing" title="App" />
                 {isAuth && (
                   <>
-                    <NavItem link="/app/paraphrasing" title="App" />
                     <NavBlogDropdownMenuItem
                       isOpen={blogIsOpen}
                       toggle={blogToggle}
@@ -399,7 +399,7 @@ const NavDropdownMenus = styled(DropdownMenu)`
 const NavDropdownItem = styled(DropdownItem)`
   color: black;
   cursor: pointer;
-  padding: 12px 16px;
+  padding: 1rem 3.5rem 1rem 1.2rem;
   
   &:hover {
     color: black;
@@ -476,7 +476,7 @@ const NavList = styled.div`
     padding: 0 16px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     display: none;
   }
 `;
@@ -498,11 +498,14 @@ const MobileToogle = styled.span`
   align-self: center;
   color: black;
   cursor: pointer;
-  font-size: 25px;
+  font-size: 20px;
   position: absolute;
   right: 0;
+  padding: 0px 8px;
+  border: 2px solid #8d8d8d;
+  border-radius: 5px;
 
-  @media (min-width: 768px) {
+  @media screen and (min-width: 1000px) {
     display: none;
   }
 `;
@@ -528,7 +531,7 @@ const NavbarMenu = styled.div`
   position: absolute;
   right: 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     display: none;
   }
 `;

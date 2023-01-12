@@ -17,6 +17,7 @@ import { selectors as uiSelector } from "@/redux/slices/ui";
 import { toastMessage } from "@/utils";
 import { USER_DEFAULT_PATH } from "@/appconstants";
 import { isServer } from "@/utils";
+import { signIn as metaData } from '@/utils/metaData';
 
 const baseURL = process.env.NEXT_PUBLIC_APP_API_URL;
 
@@ -57,7 +58,7 @@ const Login = () => {
   };
 
   return (
-    <Layout title="Login" desc="This is login page">
+    <Layout title={metaData.title} description={metaData.description}>
       <section
         className="sign-up-in-section bg-dark ptb-60"
         style={{

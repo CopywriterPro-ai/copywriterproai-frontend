@@ -8,6 +8,7 @@ import {
   selectors as paymentSelector,
 } from "@/redux/slices/payment";
 import { USER_DEFAULT_PATH } from "@/appconstants";
+import Processing from "@/pages/Loading";
 
 const REDIRECT_TIME = 5000;
 
@@ -51,7 +52,7 @@ const Success = () => {
   }, [emptySession]);
 
   if (loading === "pending") {
-    return <h2>Loading...</h2>;
+    return <Processing color="#000" />;
   }
 
   if (!session_id) {

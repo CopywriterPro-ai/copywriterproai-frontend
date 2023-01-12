@@ -25,6 +25,14 @@ const TabController = styled.div`
   justify-content: space-between;
   width: 100%;
   padding: 8px 0;
+
+  @media (max-width: 1400px) {
+    flex-direction: column;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+  }
 `;
 
 const TabControllerBtn = styled.button`
@@ -36,6 +44,14 @@ const TabControllerBtn = styled.button`
   border-bottom: 3px solid
     ${({ IsActive }) => (IsActive ? "#40B1A7" : "#00000040")};
   color: ${({ IsActive }) => (IsActive ? "#40B1A7" : "#000")};
+
+  @media (max-width: 1400px) {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    width: 50%;
+  }
 `;
 
 export default WriterToolTab;

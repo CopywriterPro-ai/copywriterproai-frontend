@@ -48,6 +48,16 @@ const termsOfUse = {
   description: "Welcome to CopywriterPro! This document outlines the terms of our agreement and what you can expect from our service. Please read it carefully before using our AI copywriting tool."
 }
 
+const signIn = {
+  title: "CopywriterPro | Unleash Your AI Writing Power!",
+  description: "Access our 50+ AI-Powered copywriting tools including paraphrasing, summarizer and many more."
+}
+
+const signUp = {
+  title: "CopywriterPro | Unlock the Power of AI Copywriting - Sign Up Now!",
+  description: "Ready to dive into the world of AI copywriting? Sign up now and start writing like a pro!"
+}
+
 export {
   landing,
   services,
@@ -59,4 +69,6 @@ export {
   reportBug,
   privacyPolicy,
   termsOfUse,
+  signIn,
+  signUp,
 }

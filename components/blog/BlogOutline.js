@@ -9,13 +9,14 @@ import {
   writeAlongActions,
   selectors as writeAlongSelector,
 } from "@/redux/slices/blog";
-import { setAccessTask } from "@/redux/slices/ui";
+import { setAccessTask, setSigninModal } from "@/redux/slices/ui";
 import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem, ToolAction, ToolInput } from "./styles";
 import { BLOG_OUTLINE, BLOG_FROM_OUTLINE } from "@/appconstants";
 import * as MESSAGE from "@/appconstants/message";
 import { yupValidate, quillTypingInsert } from "@/utils";
 import {
+  useUser,
   useSubscriberModal,
   useToolAccess,
   useWriterAccess,
@@ -78,8 +79,20 @@ const BlogOutline = ({ aboutRef, quillRef }) => {
   const [accessBlogOutline] = useToolAccess([BLOG_OUTLINE]);
   const [accessBlogFromOutline] = useToolAccess([BLOG_FROM_OUTLINE]);
   const hasWriterAccess = useWriterAccess();
+  const {
+    isAuth,
+    subscribe: {
+      freeTrial: { eligible: freeTrailEligible },
+      activeSubscription: { words, subscription },
+    },
+  } = useUser();
 
   const handleBlogOutline = () => {
+    if (!isAuth) {
+      dispatch(setSigninModal(true));
+      return;
+    }
+
     if (showSubscriberModal.block) {
       setShowSubscriberModal({ ...showSubscriberModal, isOpen: true });
       return;

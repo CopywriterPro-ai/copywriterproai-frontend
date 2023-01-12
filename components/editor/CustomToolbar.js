@@ -6,6 +6,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Button,
 } from "reactstrap";
 
 import {
@@ -13,7 +14,11 @@ import {
   plagiarismSelector,
   plagiarismActions,
 } from "@/redux/slices/plagiarism";
-import { useQuillSelected } from "@/hooks";
+import { useUser, useQuillSelected } from "@/hooks";
+import { selectors as subscriberSelector } from "@/redux/slices/subscriber";
+import pricesInfo from "@/data/price.json";
+import { toastMessage } from "@/utils";
+import { setSigninModal } from "@/redux/slices/ui";
 
 const CustomToolbar = ({ quill }) => {
   const dispatch = useDispatch();
@@ -21,6 +26,18 @@ const CustomToolbar = ({ quill }) => {
   const [showPlagiarism, setShowPlagiarism] = useState(false);
   const { range: selectedRange, text: selectedText } = useQuillSelected(quill);
   const { writer } = useSelector(plagiarismSelector.getPlagiarism);
+  const { data: subscriptionInfo } = useSelector(
+    subscriberSelector.getOwnSubscriber
+  );
+  const {
+    isAuth,
+    subscribe: {
+      freeTrial: { eligible: freeTrailEligible },
+      activeSubscription: { words, subscription },
+    },
+  } = useUser();
+
+  const plagiarismChecker = pricesInfo[subscriptionInfo?.activeSubscription?.subscription]?.hasPlagiarism;
 
   const isPending = writer.loading === "pending";
   const quillText = quill?.getText() || "";
@@ -42,22 +59,20 @@ const CustomToolbar = ({ quill }) => {
   );
 
   const activeSelectedContent = activeContent(selectedText);
-  const activeFullContent = activeContent(quillText) && !activeSelectedContent;
 
-  const handleFullContentPla = () => {
-    if (activeFullContent) {
-      dispatch(
-        plagiarismActions.setWriterPlagiarism({
-          content: quillText,
-          position: { index: 0, length: quill.getLength() },
-        })
-      );
-      dispatch(postCheckPlagiarism({ data: { text: quillText } }));
+  const handleContent = () => {
+    if (!isAuth) {
+      dispatch(setSigninModal(true));
+      return;
     }
-  };
 
-  const handleSelectedContentPla = () => {
-    if (activeSelectedContent) {
+    if(!plagiarismChecker) {
+      toastMessage.warn("Upgrade to Professional Package!");
+    }
+    else if (!selectedText) {
+      toastMessage.error("Please select text to check plagiarism!");
+    }
+    else if (activeSelectedContent) {
       dispatch(
         plagiarismActions.setWriterPlagiarism({
           content: quillText,
@@ -65,6 +80,9 @@ const CustomToolbar = ({ quill }) => {
         })
       );
       dispatch(postCheckPlagiarism({ data: { text: selectedText } }));
+    }
+    else {
+      toastMessage.error("Minimum 15 words are required!");
     }
   };
 
@@ -77,14 +95,8 @@ const CustomToolbar = ({ quill }) => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}
-    >
-      <div id="toolbar">
+    <Toolbar>
+      <div id="toolbar" style={{padding: "0"}}>
         <span className="ql-formats">
           <select
             className="ql-size"
@@ -156,70 +168,52 @@ const CustomToolbar = ({ quill }) => {
       </div>
 
       <StyledPlagiarismTool>
-        <ButtonDropdown isOpen={showPlagiarism} toggle={plagiarismToggle}>
-          <StyledDropdownToggle color="default" caret size="sm">
-            Plagiarism Checker
-          </StyledDropdownToggle>
-          <StyledDropdownMenu>
-            <StyledDropdownItem
-              disabled={!activeFullContent}
-              onClick={handleFullContentPla}
-            >
-              Full Content
-            </StyledDropdownItem>
-            <StyledDropdownItem
-              disabled={!activeSelectedContent}
-              onClick={handleSelectedContentPla}
-            >
-              Selected Content
-            </StyledDropdownItem>
-          </StyledDropdownMenu>
-        </ButtonDropdown>
+        <StyledButton onClick={handleContent}>
+          Plagiarism Checker
+        </StyledButton>
       </StyledPlagiarismTool>
-    </div>
+    </Toolbar>
   );
 };
 
-const StyledDropdownToggle = styled(DropdownToggle)`
+const Toolbar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const StyledButton = styled(Button)`
   box-shadow: none !important;
-  background-color: #10a37f;
+  background-color: #10a37f !important;
   border-radius: 8px;
-  color: #fff;
-  padding: 10px 20px;
+  color: #fff !important;
+  padding: 10px 25px;
 
   &:hover, 
   &:focus,
   &:active {
-    background-color: #10a37f;
+    background-color: #10a37f !important;
     border-radius: 8px;
-    color: #fff;
+    color: #fff !important;
   }
-`;
 
-const StyledDropdownItem = styled(DropdownItem)`
-  box-shadow: none !important;
-  border-radius: 8px;
-  color: #fff;
-  padding: 10px 20px;
-  left: 0;
-  margin-right: 12px;
-
-  &:active {
-    background-color: inherit;
+  @media (max-width: 1000px) {
+    padding: 5px 14px;
+    font-size: 14px;
   }
-  &:last-child {
-    border-bottom: 0;
+
+  @media (max-width: 900px) {
+    padding: 4px 12px;
+    font-size: 12px;
   }
 `;
 
 const StyledPlagiarismTool = styled.div`
-  margin-right: 2rem;
-`;
+  margin-right: 1rem;
 
-const StyledDropdownMenu = styled(DropdownMenu)`
-  padding: 0;
-  border-radius: 8;
-  left: 0 !important;
+  @media (max-width: 1000px) {
+    margin-right: 0;
+  }
 `;
 
 export default CustomToolbar;

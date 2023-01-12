@@ -17,6 +17,7 @@ import {
   setContentSidebar,
   setAccessTask,
 } from "@/redux/slices/ui";
+import Processing from "@/pages/Loading";
 import Spinner from "@/components/common/Spinner";
 import GenerateResult from "./GenerateResult";
 import TipsImg from "@/assets/images/generate-tips.png";
@@ -128,7 +129,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
   let isCurrentInput = defaultInput?.key === activeKey;
 
   if (!isToolFetched) {
-    return <Spinner />;
+    return <Processing color="#000" />;
   }
 
   if (!formContent) {
@@ -182,6 +183,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
             some time making it as accurate as possible.
           </span>
         </Tips>
+        <br/>
         <div>
           <form onSubmit={handleSubmit(onSubmit)} className="content-form">
             {formContent.fields.map((field, index) => {
@@ -355,12 +357,12 @@ const ContentHeader = styled.div`
 
     p {
       flex: none;
-      font-size: 16px;
+      font-size: 20px;
       line-height: 34px;
     }
   }
 
-  @media (max-width: 420px) {
+  @media (max-width: 480px) {
     flex-direction: column;
   }
 `;
@@ -371,9 +373,12 @@ const ContentTitle = styled.div`
 
   span {
     cursor: pointer;
-    font-size: 20px;
-    margin-right: 10px;
-
+    font-size: 18px;
+    font-weight: 500;
+    margin-right: 1.5rem;
+    padding: 0px 8px;
+    border: 2px solid #8d8d8d;
+    border-radius: 5px;
     @media (min-width: 990px) {
       display: none;
     }
@@ -385,10 +390,10 @@ const CreditsLeft = styled.div`
   font-weight: 500;
 
   @media (max-width: 992px) {
-    font-size: 14px;
+    font-size: 16px;
   }
 
-  @media (max-width: 420px) {
+  @media (max-width: 480px) {
     margin-top: 1rem;
     float: right;
   }
@@ -396,6 +401,10 @@ const CreditsLeft = styled.div`
 
 const MainContent = styled.div`
   margin: 1rem 0;
+
+  label {
+    font-size: 16px;
+  }
 `;
 
 const Tips = styled.div`

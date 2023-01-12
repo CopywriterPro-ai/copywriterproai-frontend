@@ -2,7 +2,7 @@ import NextHead from "next/head";
 import { DefaultSeo } from "next-seo";
 import config from "@/config/seo.json";
 
-const Head = ({ title, description, otherSEO = {}, additionalMeta = [] }) => {
+const Head = ({ title, description, images, otherSEO = {}, additionalMeta = [] }) => {
   const seoConfig = {
     ...config,
     ...(title && {
@@ -15,6 +15,7 @@ const Head = ({ title, description, otherSEO = {}, additionalMeta = [] }) => {
       ...config.openGraph,
       ...(title && { title }),
       ...(description && { description }),
+      ...(images && { images })
     },
     ...otherSEO,
   };

@@ -37,7 +37,7 @@ import {
   useWriterAccess,
 } from "@/hooks";
 import { UserLayout as Layout } from "@/layout";
-import { selectors as uiSelector, setBlogResetModal } from "@/redux/slices/ui";
+import { selectors as uiSelector, setBlogResetModal, setSigninModal } from "@/redux/slices/ui";
 import {
   postWriteAlongEditorToolsContent,
   writeAlongActions,
@@ -152,7 +152,7 @@ const BlogGenerator = () => {
   );
   const { activeId } = useSelector(draftSelector.getDraftBlogs());
   const { subscriber } = useSelector(uiSelector.getModal);
-  const { subscribe } = useUser();
+  const { isAuth, subscribe } = useUser();
   const [showPlagi, setShowPlagi] = useState(false);
   const { showSidebar, showContent } = useSidebar();
   const quillCounter = useQuillCounter(quill);
@@ -168,6 +168,7 @@ const BlogGenerator = () => {
       event.preventDefault();
     }
   });
+  
   useWarnIfUnsavedChanges(isEditorChange);
 
   const isNewBlog = activeId === "";
@@ -212,6 +213,10 @@ const BlogGenerator = () => {
   };
 
   const handleSaveOrUpdate = () => {
+    if (!isAuth) {
+      dispatch(setSigninModal(true));
+      return;
+    }
     const { isValid, values } = yupValidate(schemaValidation.blogSaveOrUpdate, {
       blogAbout: about.item,
       headline: headline.item,
@@ -306,7 +311,7 @@ const BlogGenerator = () => {
   };
 
   return (
-    <Layout>
+    <Layout isSpecial="true">
       {showSidebar && <MainSidebar />}
       {showContent && (
         <BlogContainer>
@@ -331,7 +336,7 @@ const BlogGenerator = () => {
                 setShowPlagi={setShowPlagi}
                 showPlagi={showPlagi}
               />
-              <div style={{ padding: "10px" }}>
+              <div style={{ margin: "1rem 1.4rem" }}>
                 <Collapse isOpen={!showPlagi && !isOpenEditorField}>
                   <ToolsHeader>
                     <CreditsLeft />
@@ -538,7 +543,7 @@ const BlogContainer = styled.div`
 
 const EditorSection = styled.div`
   flex: 9;
-  padding: 5px;
+  margin: 1rem 1.4rem;
 
   @media (max-width: 768px) {
     flex: 100%;
@@ -627,7 +632,7 @@ const TitleInput = styled.input`
   outline: 0;
   width: 100%;
   word-wrap: break-word;
-  padding: 22px 15px 22px 15px;
+  padding: 22px 9px 22px 9px;
   font-size: 25px;
   font-weight: 500;
   // background-color: rgb(232 232 232 / 45%);

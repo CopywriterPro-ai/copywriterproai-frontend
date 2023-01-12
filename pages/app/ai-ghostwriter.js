@@ -34,6 +34,7 @@ import {
   setAccessTask,
   setBlogResetModal,
   selectors as uiSelector,
+  setSigninModal,
 } from "@/redux/slices/ui";
 import {
   useBeforeunload,
@@ -195,7 +196,7 @@ const CompleteBlogGenerator = () => {
     blogSelector.getEditor()
   );
   const { activeId } = useSelector(draftSelector.getDraftBlogs());
-  const { subscribe } = useUser();
+  const { isAuth, subscribe } = useUser();
   const { showSidebar, showContent } = useSidebar();
   const quillCounter = useQuillCounter(quill);
   const { range, text: selectedText, lastIndex } = useQuillSelected(quill);
@@ -263,10 +264,18 @@ const CompleteBlogGenerator = () => {
   };
 
   const handleResetBlog = () => {
+    if (!isAuth) {
+      dispatch(setSigninModal(true));
+      return;
+    }
     dispatch(setBlogResetModal(true));
   };
 
   const handleSaveOrUpdate = () => {
+    if (!isAuth) {
+      dispatch(setSigninModal(true));
+      return;
+    }
     const { isValid, values } = yupValidate(schemaValidation.blogSaveOrUpdate, {
       blogAbout: about.input,
       headline: headline.input,
@@ -307,6 +316,10 @@ const CompleteBlogGenerator = () => {
   };
 
   const handleGenerateCompleteBlog = () => {
+    if (!isAuth) {
+      dispatch(setSigninModal(true));
+      return;
+    }
     if (showSubscriberModal.block) {
       setShowSubscriberModal({ ...showSubscriberModal, isOpen: true });
       return;
@@ -420,7 +433,7 @@ const CompleteBlogGenerator = () => {
   };
 
   return (
-    <Layout>
+    <Layout isSpecial="true">
       {showSidebar && <MainSidebar />}
       {showContent && (
         <BlogContainer>
@@ -440,7 +453,7 @@ const CompleteBlogGenerator = () => {
           </EditorSection>
           <ToolsSection>
             <WriterToolTab setShowPlagi={setShowPlagi} showPlagi={showPlagi} />
-            <div style={{ padding: "10px" }}>
+            <div style={{ margin: "1rem 1.4rem" }}>
               <Collapse isOpen={!showPlagi && !isOpenEditorField}>
                 <ScollingTool>
                   <ToolsHeader>
@@ -688,7 +701,7 @@ const BlogContainer = styled.div`
 
 const EditorSection = styled.div`
   flex: 9;
-  padding: 5px;
+  margin: 1rem 1.4rem;
 
   @media (max-width: 768px) {
     flex: 100%;
@@ -832,7 +845,7 @@ const TitleInput = styled.input`
   border: 0;
   outline: 0;
   width: 100%;
-  padding: 22px 15px 22px 15px;
+  padding: 22px 9px 22px 9px;
   font-size: 25px;
   font-weight: 500;
 `;

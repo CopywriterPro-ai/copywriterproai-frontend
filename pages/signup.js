@@ -21,6 +21,7 @@ import {
 } from "@/redux/slices/auth";
 import { toastMessage } from "@/utils";
 import { isServer } from "@/utils";
+import { signUp as metaData } from '@/utils/metaData';
 
 const baseURL = process.env.NEXT_PUBLIC_APP_API_URL;
 
@@ -58,7 +59,7 @@ const Register = () => {
   };
 
   return (
-    <Layout title="Sign Up" description="">
+    <Layout title={metaData.title} description={metaData.description}>
       <section
         className="sign-up-in-section bg-dark ptb-60"
         style={{

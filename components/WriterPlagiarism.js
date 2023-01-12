@@ -117,7 +117,7 @@ const WriterPlagiarism = ({ quill }) => {
   return (
     <StyledPlagiarismContainer>
       <StyledPlagiarismCredit>
-        Plagiarism words left: {isAuth && plagiwords > 0 ? plagiwords : 0}
+        Plagiarism checker words left: {isAuth && plagiwords > 0 ? plagiwords : 0}
       </StyledPlagiarismCredit>
       <StyledPlagiarismContent>
         <div dangerouslySetInnerHTML={{ __html: mark }}></div>

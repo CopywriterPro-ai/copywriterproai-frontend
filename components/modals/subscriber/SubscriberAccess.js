@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { Spinner } from "reactstrap";
+import Processing from "@/pages/Loading";
 
 import {
   postSubscriptionSwitch,
@@ -132,7 +132,7 @@ const SubscriberAccess = () => {
         </StyledCurrentPlan> */}
         {loadingItems === "pending" && !priceItems.length ? (
           <StyledLoading>
-            <Spinner />
+            <Processing color="#000" />
           </StyledLoading>
         ) : (
           <>
