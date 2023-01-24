@@ -31,17 +31,19 @@ body {
 
 .ql-editor {
   font-size: 16px;
-  max-height: 100vh;
-  min-height: 300px;
-  padding-top: 30px;
+  // max-height: 100vh;
+  // min-height: 300px;
   font-size: 17px;
   word-wrap: break-word;
   line-height: 34px;
+  height: 60vh;
+  overflow-y: scroll;
 
   &::-webkit-scrollbar {
     width: 0;
     height: 0;
     background: transparent;
+    // border-radius: 5px;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -56,6 +58,8 @@ body {
 .ql-container.ql-snow {
   border: 0;
   background-color: white;
+  height: auto;
+  font-family: "Open Sans", sans-serif;
 }
 
 .yt-embed {

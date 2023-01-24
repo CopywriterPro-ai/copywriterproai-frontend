@@ -31,13 +31,16 @@ const BlogSingle = ({ blogData }) => {
   const blogMetaData = {
     author,
     date,
-  }
-  const images = {
-    "url": `http://localhost:3000/blog-images${link}${link}.webp`,
-    "width": 800,
-    "height": 600,
-    "alt": title
   };
+
+  const images = [
+    {
+      "url": `https://copywriterpro.ai/blog-images${link}${link}.webp`,
+      "width": 800,
+      "height": 600,
+      "alt": title
+    }
+  ];
 
   return (
     <Layout title={ metaTitle } description={ description } images={ images }>

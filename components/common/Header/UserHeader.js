@@ -447,16 +447,15 @@ const NavbarContainer = styled.div`
   justify-content: center;
   margin: 2rem;
 
-  /* @media (max-width: 768px) {
-    justify-content: space-between;
-  } */
+  @media (max-width: 768px) {
+    margin: 1rem;
+  }
 `;
 
 const Logo = styled.div`
   position: absolute;
   left: 0;
   align-self: center;
-  margin-bottom: 5px;
 `;
 
 const LogoIcon = styled.img`

@@ -4,7 +4,7 @@ const useQuillSelected = (quill) => {
   const [quillSelected, setQuillSelected] = useState({
     range: { index: 0, length: 0 },
     lastIndex: 0,
-    text: null,
+    text: '',
     position: {
       bottom: 0,
       height: 0,
@@ -42,7 +42,7 @@ const useQuillSelected = (quill) => {
           setQuillSelected({
             range: { index: range.index, length: 0 },
             lastIndex: range.index,
-            text: null,
+            text: '',
             position: {
               bottom: 0,
               height: 0,

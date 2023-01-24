@@ -53,15 +53,15 @@ import { useUser } from "@/hooks";
 // `;
 
 const WriterPlagiarism = ({ quill }) => {
-  const { writer } = useSelector(plagiarismSelector.getPlagiarism);
+  // const { writer } = useSelector(plagiarismSelector.getPlagiarism);
   const mark = useSelector(plagiarismSelector.getPlagiarismWriterMark);
   const { subscribe, isAuth } = useUser();
 
-  const {
-    data: writerData,
-    position: writerPosition,
-    content: writerContent,
-  } = writer;
+  // const {
+  //   data: writerData,
+  //   position: writerPosition,
+  //   content: writerContent,
+  // } = writer;
 
   // useEffect(() => {
   //   ReactTooltip.rebuild();
@@ -136,8 +136,6 @@ const WriterPlagiarism = ({ quill }) => {
 // `;
 
 const StyledPlagiarismContainer = styled.div`
-  padding: 10px;
-  /* margin-top: 30px; */
 `;
 
 const StyledPlagiarismCredit = styled.div`
@@ -146,7 +144,7 @@ const StyledPlagiarismCredit = styled.div`
 `;
 
 const StyledPlagiarismContent = styled.div`
-  margin-top: 15px;
+  margin-top: 20px;
 `;
 
 export default WriterPlagiarism;

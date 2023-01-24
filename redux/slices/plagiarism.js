@@ -60,13 +60,12 @@ const plagiarism = createSlice({
     },
     [postCheckPlagiarism.fulfilled]: (state, action) => {
       if (state.writer.loading === "pending") {
-        const results = action.payload.data.results;
+        const results = action.payload.data;
         state.writer.loading = "idle";
-        state.writer.data = results;
-
+        state.writer.data = results.data;
         if (Array.isArray(results) && results.length === 0) {
           toastMessage.success(
-            "Congratulations, not plagiarism detected",
+            "No plagiarism detected!",
             5000
           );
         }
@@ -96,12 +95,13 @@ export const plagiarismSelector = {
     (plagiarism) => plagiarism
   ),
   getPlagiarismWriterMark: createSelector(
-    (state) => state.plagiarism.writer,
-    (writer) => {
-      const { data, position, content } = writer;
+    (state) => state.plagiarism,
+    (plagiarism) => {
+      const { data, position, content } = plagiarism.writer;
+
       if (Array.isArray(data) && data.length > 0) {
         const isSelectedText = position.index !== 0;
-
+       
         const formattedMark = data.map((item) => {
           const ranges = item.ranges[0];
           const index = isSelectedText ? ranges[0] + position.index : ranges[0];
@@ -168,10 +168,9 @@ export const plagiarismSelector = {
             }
           }
         }
-
         return html;
       }
-      return "<h5>No Plagiarism Detect</h5>";
+      return "<h5>Please select some text to check plagiarism!</h5>";
     }
   ),
 };
