@@ -103,17 +103,17 @@ export const plagiarismSelector = {
         const isSelectedText = position.index !== 0;
        
         const formattedMark = data.map((item) => {
-          const ranges = item.ranges[0];
+          const ranges = item;
           const index = isSelectedText ? ranges[0] + position.index : ranges[0];
           const length = isSelectedText
             ? ranges[1] + position.index
             : ranges[1];
-          const wordsMatched = item.source.wordsMatched;
+          // const wordsMatched = item.source.wordsMatched;
 
           return {
-            text: item.text,
+            // text: item.text,
             position: { index, length },
-            wordsMatched,
+            // wordsMatched,
           };
         });
 
