@@ -19,8 +19,8 @@ const blogs = {
 }
 
 const tutorial = {
-  title: "CopywriterPro | Get Started with CopywriterPro: A How-To Guide",
-  description: "Learn how to get started with copywriting. We'll walk you through the basics of using our AI copywriting tool to help you improve your content marketing."
+  title: "CopywriterPro | Learn How to Create Powerful Content with CopywriterPro!",
+  description: "Learn how to use CopywriterPro, the AI copywriting tool, to create powerful, engaging content for your website or blog. We will show you how to get the most out of CopywriterPro so you can start creating amazing content today!"
 }
 
 const contactUs = {
@@ -48,6 +48,16 @@ const termsOfUse = {
   description: "Welcome to CopywriterPro! This document outlines the terms of our agreement and what you can expect from our service. Please read it carefully before using our AI copywriting tool."
 }
 
+const signIn = {
+  title: "CopywriterPro | Unleash Your AI Writing Power!",
+  description: "Access our 50+ AI-Powered copywriting tools including paraphrasing, summarizer and many more."
+}
+
+const signUp = {
+  title: "CopywriterPro | Unlock the Power of AI Copywriting - Sign Up Now!",
+  description: "Ready to dive into the world of AI copywriting? Sign up now and start writing like a pro!"
+}
+
 export {
   landing,
   services,
@@ -59,4 +69,6 @@ export {
   reportBug,
   privacyPolicy,
   termsOfUse,
+  signIn,
+  signUp,
 }

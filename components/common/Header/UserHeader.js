@@ -210,7 +210,7 @@ const AppHeader = () => {
         shownotice={showTopBar.toString()}
         noticeheight={topNoticeHeight}
       >
-        <div className="container-fluid">
+        <div className="container-fluid" style={{padding: "0"}}>
           <NavbarContainer>
             <Logo>
               <Link href={isAuth ? USER_DEFAULT_PATH : "/"}>
@@ -226,9 +226,9 @@ const AppHeader = () => {
             </Logo>
             <NavList>
               <ul>
+                <NavItem link="/app/paraphrasing" title="App" />
                 {isAuth && (
                   <>
-                    <NavItem link="/app/paraphrasing" title="App" />
                     <NavBlogDropdownMenuItem
                       isOpen={blogIsOpen}
                       toggle={blogToggle}
@@ -399,7 +399,7 @@ const NavDropdownMenus = styled(DropdownMenu)`
 const NavDropdownItem = styled(DropdownItem)`
   color: black;
   cursor: pointer;
-  padding: 12px 16px;
+  padding: 1rem 3.5rem 1rem 1.2rem;
   
   &:hover {
     color: black;
@@ -445,17 +445,17 @@ const NavbarContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin: 2rem;
 
-  /* @media (max-width: 768px) {
-    justify-content: space-between;
-  } */
+  @media (max-width: 768px) {
+    margin: 1rem;
+  }
 `;
 
 const Logo = styled.div`
   position: absolute;
   left: 0;
   align-self: center;
-  margin-bottom: 5px;
 `;
 
 const LogoIcon = styled.img`
@@ -475,7 +475,7 @@ const NavList = styled.div`
     padding: 0 16px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     display: none;
   }
 `;
@@ -497,11 +497,14 @@ const MobileToogle = styled.span`
   align-self: center;
   color: black;
   cursor: pointer;
-  font-size: 25px;
+  font-size: 20px;
   position: absolute;
   right: 0;
+  padding: 0px 8px;
+  border: 2px solid #8d8d8d;
+  border-radius: 5px;
 
-  @media (min-width: 768px) {
+  @media screen and (min-width: 1000px) {
     display: none;
   }
 `;
@@ -527,7 +530,7 @@ const NavbarMenu = styled.div`
   position: absolute;
   right: 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     display: none;
   }
 `;
@@ -551,7 +554,7 @@ const AvatarImg = styled.img`
 `;
 
 const Badge = styled.span`
-  background-color: #40b1a7;
+  background-color: #10a37f;
   color: #fff;
   border-radius: 5px;
   margin-left: 10px;

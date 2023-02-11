@@ -14,8 +14,8 @@ const blogs = {
 }
 
 const tutorial = {
-  title: "CopywriterPro - First AI Copywriting tool that's affordable for everyone",
-  description: "CopywriterPro is the first AI copywriting tool that's affordable for everyone. With its easy-to-use interface, you can create high-quality, engaging content for your website, blog, or email campaign in minutes."
+  title: "Tutorials",
+  description: "We will walk you through the basics of using our AI copywriting tool to help you improve your content quality."
 }
 
 const contactUs = {

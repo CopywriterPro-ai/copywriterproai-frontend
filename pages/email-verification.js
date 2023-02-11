@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 
 import { AuthLayout as Layout } from "@/layout";
+import Processing from "@/pages/Loading";
 
 const EmailVerify = () => {
   const router = useRouter();
@@ -33,7 +34,7 @@ const EmailVerify = () => {
           )}
           {!type && (
             <>
-              <h3>Loading...</h3>
+              <Processing color="#000" />
               {/* <button className="btn btn-primary">Learn more</button> */}
             </>
           )}

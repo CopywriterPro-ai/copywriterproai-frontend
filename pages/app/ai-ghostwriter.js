@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useMemo, useCallback } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { Collapse } from "reactstrap";
+import { Collapse, Button } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "@pathofdev/react-tag-input/build/index.css";
 import ReactTagInput from "@pathofdev/react-tag-input";
@@ -34,6 +34,7 @@ import {
   setAccessTask,
   setBlogResetModal,
   selectors as uiSelector,
+  setSigninModal,
 } from "@/redux/slices/ui";
 import {
   useBeforeunload,
@@ -77,6 +78,14 @@ import {
   ACTIVE_PASSIVE,
   BLOG_TOPIC,
 } from "@/appconstants";
+
+import {
+  postCheckPlagiarism,
+  plagiarismSelector,
+  plagiarismActions,
+} from "@/redux/slices/plagiarism";
+import { selectors as subscriberSelector } from "@/redux/slices/subscriber";
+import pricesInfo from "@/data/price.json";
 
 const contentTools = [
   {
@@ -186,6 +195,7 @@ const CompleteBlogGenerator = () => {
   const aboutRef = useRef(null);
   const headlineRef = useRef(null);
   const [quill, setQuill] = useState(null);
+  const [showPlagiarisedContent, setShowPlagiarisedContent] = useState(false);
   const { register, handleSubmit, reset: resetForm } = useForm();
 
   const { subscriber } = useSelector(uiSelector.getModal);
@@ -195,7 +205,7 @@ const CompleteBlogGenerator = () => {
     blogSelector.getEditor()
   );
   const { activeId } = useSelector(draftSelector.getDraftBlogs());
-  const { subscribe } = useUser();
+  const { isAuth, subscribe } = useUser();
   const { showSidebar, showContent } = useSidebar();
   const quillCounter = useQuillCounter(quill);
   const { range, text: selectedText, lastIndex } = useQuillSelected(quill);
@@ -234,6 +244,12 @@ const CompleteBlogGenerator = () => {
   }, [blogLength]);
 
   useEffect(() => {
+    if(selectedText.trim().length > 0) {
+      setShowPlagiarisedContent(false);
+    }
+  }, [selectedText]);
+
+  useEffect(() => {
     if (editorCurrentTask) {
       resetForm();
       setEditorCurrentTaskInput(
@@ -263,10 +279,18 @@ const CompleteBlogGenerator = () => {
   };
 
   const handleResetBlog = () => {
+    if (!isAuth) {
+      dispatch(setSigninModal(true));
+      return;
+    }
     dispatch(setBlogResetModal(true));
   };
 
   const handleSaveOrUpdate = () => {
+    if (!isAuth) {
+      dispatch(setSigninModal(true));
+      return;
+    }
     const { isValid, values } = yupValidate(schemaValidation.blogSaveOrUpdate, {
       blogAbout: about.input,
       headline: headline.input,
@@ -307,6 +331,10 @@ const CompleteBlogGenerator = () => {
   };
 
   const handleGenerateCompleteBlog = () => {
+    if (!isAuth) {
+      dispatch(setSigninModal(true));
+      return;
+    }
     if (showSubscriberModal.block) {
       setShowSubscriberModal({ ...showSubscriberModal, isOpen: true });
       return;
@@ -419,290 +447,411 @@ const CompleteBlogGenerator = () => {
       dispatch(postEditorToolsContent({ data: datas, task: datas.task }));
   };
 
+  const { writer } = useSelector(plagiarismSelector.getPlagiarism);
+  const { data: subscriptionInfo } = useSelector(
+    subscriberSelector.getOwnSubscriber
+  );
+
+  const plagiarismChecker = pricesInfo[subscriptionInfo?.activeSubscription?.subscription]?.hasPlagiarism;
+
+  const isPending = writer.loading === "pending";
+  const quillText = quill?.getText() || "";
+
+  const activeContent = useCallback(
+    (texts) => {
+      if (typeof texts !== "string") {
+        return false;
+      }
+      const textsArr = texts
+        .toString()
+        .trim()
+        .split(" ")
+        .filter((text) => Boolean(text));
+
+      return !isPending && textsArr.length >= 15;
+    },
+    [isPending]
+  );
+
+  const activeSelectedContent = activeContent(selectedText);
+
+  const handleContent = () => {
+    if (!isAuth) {
+      dispatch(setSigninModal(true));
+      return;
+    }
+
+    if(!plagiarismChecker) {
+      toastMessage.warn("Please upgrade to Premium package!");
+    }
+    else if (!selectedText) {
+      toastMessage.error("Please select text to check plagiarism!");
+    }
+    else if (activeSelectedContent) {
+      dispatch(
+        plagiarismActions.setWriterPlagiarism({
+          content: quillText,
+          position: range,
+        })
+      );
+      dispatch(postCheckPlagiarism({ data: { text: selectedText } }));
+
+      setShowPlagiarisedContent(true);
+    }
+    else {
+      toastMessage.error("Minimum 15 words are required!");
+    }
+  };
+
+  useEffect(() => {
+    dispatch(plagiarismActions.setWriterPlagiarism({ data: [] }));
+  }, [dispatch]);
+
+
+
   return (
-    <Layout>
+    <Layout isSpecial="true">
       {showSidebar && <MainSidebar />}
       {showContent && (
         <BlogContainer>
-          <EditorSection>
-            <TitleInput
-              ref={headlineRef}
-              autoComplete="off"
-              type="text"
-              name="title"
-              value={headline.input}
-              placeholder="Blog Headline"
-              onChange={handleChangeBlogHeadline}
-            />
-            {/* <Plagiarism quill={quill} /> */}
-            <CustomToolbar quill={quill} />
-            <EditorJS setQuillEditor={setQuill} />
-          </EditorSection>
-          <ToolsSection>
-            <WriterToolTab setShowPlagi={setShowPlagi} showPlagi={showPlagi} />
-            <div style={{ padding: "10px" }}>
-              <Collapse isOpen={!showPlagi && !isOpenEditorField}>
-                <ScollingTool>
-                  <ToolsHeader>
-                    <CreditsLeft />
-                    <Tips>
-                      <TipsIcon src={TipsImg.src} alt="tips" />
-                      <span>
-                        The results depend on the information you input. So be
-                        sure to spend some time making it as specific as
-                        possible.
-                      </span>
-                    </Tips>
-                    <strong>Blog About</strong>
-                    <textarea
-                      ref={aboutRef}
-                      onChange={handleChangeBlogAbout}
-                      value={about.input}
-                      rows="4"
-                    ></textarea>
-                    <StyledBlogLength>
-                      <strong>Blog Length</strong>
-                      <select
-                        value={blogLength}
-                        onChange={(e) => setBlogLength(e.target.value)}
-                      >
-                        {blogLengthItems.map(({ name, key }) => (
-                          <option
-                            key={key}
-                            value={key}
-                            disabled={
-                              editorTexts.length > 10 && blogLength !== key
-                            }
-                          >
-                            {name}
-                          </option>
-                        ))}
-                      </select>
-                    </StyledBlogLength>
-                    <StyledKeyword>
-                      <strong>Keywords</strong>
-                      <ReactTagInput
-                        tags={tags}
-                        maxTags={blogLength === "short-blog" ? 2 : 3}
-                        onChange={(newTags) => setTags(newTags)}
-                        placeholder="Press enter to add keyword"
-                        validator={reactTagValidation}
-                      />
-                    </StyledKeyword>
-                    <GenerateButton
-                      loading={
-                        loading === "pending" && currenttask === BLOG_WRITING
-                      }
-                      onClick={
-                        complete.success
-                          ? handleResetBlog
-                          : handleGenerateCompleteBlog
-                      }
-                    >
-                      {complete.success
-                        ? "Reset Blog"
-                        : editorTexts.length >= 10
-                        ? "Generate More"
-                        : "Generate Blog"}
-                    </GenerateButton>
-                  </ToolsHeader>
-
-                  <ToolsBody>
-                    <BlogHeadlineComplete aboutRef={aboutRef} />
-                  </ToolsBody>
-                  <ToolBottom>
-                    <button onClick={handleNewBlog}>New Blog</button>
-                    <button onClick={handleSaveOrUpdate}>Save</button>
-                    {/* <button onClick={() => console.log("coming soon")}>
-                    Save
-                  </button> */}
-                  </ToolBottom>
-                </ScollingTool>
-              </Collapse>
-              <Collapse isOpen={!showPlagi && isOpenEditorField}>
-                <ScollingTool>
-                  <ToolsHeader>
-                    <strong>Selected Text</strong>
-                    <br />
-                    <StyledSelectedText>{selectedText}</StyledSelectedText>
-                    <p style={{ textAlign: "right" }}>
-                      {selectedText?.length}/
-                      {editorCurrentTaskInput.userText.max} Max Characters
-                    </p>
-                  </ToolsHeader>
-                  <ToolsBody>
-                    <StyledToolSelection>
-                      {contentTools.map((tool) => (
-                        <StyledToolItem
-                          onClick={() => handleSelectTool(tool.key)}
-                          key={tool.key}
-                          Active={tool.key === editorCurrentTask}
+          <Generator>
+            <EditorSection>
+              <TitleInput
+                ref={headlineRef}
+                autoComplete="off"
+                type="text"
+                name="headline"
+                value={headline.input}
+                placeholder="Blog Headline"
+                onChange={handleChangeBlogHeadline}
+              />
+              {/* <Plagiarism quill={quill} /> */}
+              <CustomToolbar quill={quill} />
+              <EditorJS setQuillEditor={setQuill} />
+            </EditorSection>
+            <ToolsSection>
+              <WriterToolTab setShowPlagi={setShowPlagi} showPlagi={showPlagi} />
+              <ScollingTool>
+                <WriterTools>
+                  <Collapse isOpen={!showPlagi && !isOpenEditorField}>
+                    <ToolsHeader>
+                      <CreditsLeft />
+                      <Tips>
+                        <TipsIcon src={TipsImg.src} alt="tips" />
+                        <span>
+                          The results depend on the information you input. So be
+                          sure to spend some time making it as specific as
+                          possible.
+                        </span>
+                      </Tips>
+                      <strong>Blog About</strong>
+                      <textarea
+                        ref={aboutRef}
+                        onChange={handleChangeBlogAbout}
+                        value={about.input}
+                        rows="4"
+                      ></textarea>
+                      <StyledBlogLength>
+                        <strong>Blog Length</strong>
+                        <select
+                          value={blogLength}
+                          onChange={(e) => setBlogLength(e.target.value)}
                         >
-                          {tool.name}
-                        </StyledToolItem>
-                      ))}
-                    </StyledToolSelection>
-                    {Object.values(editorCurrentTaskInput).length > 0 && (
-                      <div>
-                        <form onSubmit={handleSubmit(onFieldFormSubmit)}>
-                          {editorCurrentTaskInput.from && (
-                            <StyledEditorSelectorOptions>
-                              <label>From</label>
-                              <select {...register("from")}>
-                                {editorCurrentTaskInput.from.map((i) => (
-                                  <option key={i} value={i}>
-                                    {i}
-                                  </option>
-                                ))}
-                              </select>
-                            </StyledEditorSelectorOptions>
-                          )}
-                          {editorCurrentTaskInput.to && (
-                            <StyledEditorSelectorOptions>
-                              <label>To</label>
-                              <select {...register("to")}>
-                                {editorCurrentTaskInput.to.map((i) => (
-                                  <option key={i} value={i}>
-                                    {i}
-                                  </option>
-                                ))}
-                              </select>
-                            </StyledEditorSelectorOptions>
-                          )}
-                          {editorCurrentTaskInput.tone && (
-                            <StyledEditorSelectorOptions>
-                              <label>Tone</label>
-                              <select {...register("tone")}>
-                                {editorCurrentTaskInput.tone.map((i) => (
-                                  <option key={i} value={i}>
-                                    {i}
-                                  </option>
-                                ))}
-                              </select>
-                            </StyledEditorSelectorOptions>
-                          )}
-                          {editorCurrentTaskInput.numberOfSuggestions && (
-                            <StyledEditorSelectorOptions>
-                              <label>Number Of Suggestions</label>
-                              <input
-                                type="number"
-                                min={
-                                  editorCurrentTaskInput.numberOfSuggestions.min
-                                }
-                                max={
-                                  editorCurrentTaskInput.numberOfSuggestions.max
-                                }
-                                defaultValue={
-                                  editorCurrentTaskInput.numberOfSuggestions.min
-                                }
-                                {...register("numberOfSuggestions", {
-                                  min: editorCurrentTaskInput
-                                    .numberOfSuggestions.min,
-                                  max: editorCurrentTaskInput
-                                    .numberOfSuggestions.max,
-                                  required:
-                                    editorCurrentTaskInput.numberOfSuggestions
-                                      .required,
-                                })}
-                              />
-                            </StyledEditorSelectorOptions>
-                          )}
-                          {editorCurrentTaskInput.numberOfPoints && (
-                            <StyledEditorSelectorOptions>
-                              <label>Number Of Points</label>
-                              <input
-                                type="number"
-                                min={editorCurrentTaskInput.numberOfPoints.min}
-                                max={editorCurrentTaskInput.numberOfPoints.max}
-                                defaultValue={
-                                  editorCurrentTaskInput.numberOfPoints.min
-                                }
-                                {...register("numberOfPoints", {
-                                  min: editorCurrentTaskInput.numberOfPoints
-                                    .min,
-                                  max: editorCurrentTaskInput.numberOfPoints
-                                    .max,
-                                  required:
-                                    editorCurrentTaskInput.numberOfPoints
-                                      .required,
-                                })}
-                              />
-                            </StyledEditorSelectorOptions>
-                          )}
-                          <GenerateButton
-                            disabled={!isonFieldFormOk}
-                            onClick={null}
-                            loading={content.loading === "pending"}
+                          {blogLengthItems.map(({ name, key }) => (
+                            <option
+                              key={key}
+                              value={key}
+                              disabled={
+                                editorTexts.length > 10 && blogLength !== key
+                              }
+                            >
+                              {name}
+                            </option>
+                          ))}
+                        </select>
+                      </StyledBlogLength>
+                      <StyledKeyword>
+                        <strong>Keywords</strong>
+                        <ReactTagInput
+                          tags={tags}
+                          maxTags={blogLength === "short-blog" ? 2 : 3}
+                          onChange={(newTags) => setTags(newTags)}
+                          placeholder="Press enter to add keyword"
+                          validator={reactTagValidation}
+                        />
+                      </StyledKeyword>
+                      <GenerateButton
+                        loading={
+                          loading === "pending" && currenttask === BLOG_WRITING
+                        }
+                        onClick={
+                          complete.success
+                            ? handleResetBlog
+                            : handleGenerateCompleteBlog
+                        }
+                      >
+                        {complete.success
+                          ? "Reset Blog"
+                          : editorTexts.length >= 10
+                          ? "Generate More"
+                          : "Generate Blog"}
+                      </GenerateButton>
+                    </ToolsHeader>
+
+                    <ToolsBody>
+                      <BlogHeadlineComplete aboutRef={aboutRef} />
+                    </ToolsBody>
+                    <ToolBottom>
+                      <button onClick={handleNewBlog}>New Blog</button>
+                      <button onClick={handleSaveOrUpdate}>Save</button>
+                      {/* <button onClick={() => console.log("coming soon")}>
+                      Save
+                    </button> */}
+                    </ToolBottom>
+                  </Collapse>
+                  <Collapse isOpen={!showPlagi && isOpenEditorField}>
+                    <ToolsHeader>
+                      <strong>Selected Text</strong>
+                      <br />
+                      <StyledSelectedText>{selectedText}</StyledSelectedText>
+                      <p style={{ textAlign: "right" }}>
+                        {selectedText?.length}/
+                        {editorCurrentTaskInput.userText.max} Max Characters
+                      </p>
+                    </ToolsHeader>
+                    <ToolsBody>
+                      <StyledToolSelection>
+                        {contentTools.map((tool) => (
+                          <StyledToolItem
+                            onClick={() => handleSelectTool(tool.key)}
+                            key={tool.key}
+                            Active={tool.key === editorCurrentTask}
                           >
-                            Generate
-                          </GenerateButton>
-                        </form>
-                        {content.items.length > 0 && (
-                          <div>
-                            {content.items.map((item, index) => (
-                              <div
-                                onClick={() => handleSelectedContentItem(item)}
-                                style={{
-                                  border: "1px solid",
-                                  padding: "5px",
-                                  width: "100%",
-                                  margin: "5px 0",
-                                  cursor: "pointer",
-                                }}
-                                key={index}
-                              >
-                                {item}
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </ToolsBody>
-                </ScollingTool>
-              </Collapse>
-              <Collapse isOpen={showPlagi}>
-                <WriterPlagiarism quill={quill} />
-              </Collapse>
-            </div>
-          </ToolsSection>
-          <BlogResetModal quill={quill} id={AI_COMPLETE_BLOG_WRITER} />
+                            {tool.name}
+                          </StyledToolItem>
+                        ))}
+                      </StyledToolSelection>
+                      {Object.values(editorCurrentTaskInput).length > 0 && (
+                        <div>
+                          <form onSubmit={handleSubmit(onFieldFormSubmit)}>
+                            {editorCurrentTaskInput.from && (
+                              <StyledEditorSelectorOptions>
+                                <label>From</label>
+                                <select {...register("from")}>
+                                  {editorCurrentTaskInput.from.map((i) => (
+                                    <option key={i} value={i}>
+                                      {i}
+                                    </option>
+                                  ))}
+                                </select>
+                              </StyledEditorSelectorOptions>
+                            )}
+                            {editorCurrentTaskInput.to && (
+                              <StyledEditorSelectorOptions>
+                                <label>To</label>
+                                <select {...register("to")}>
+                                  {editorCurrentTaskInput.to.map((i) => (
+                                    <option key={i} value={i}>
+                                      {i}
+                                    </option>
+                                  ))}
+                                </select>
+                              </StyledEditorSelectorOptions>
+                            )}
+                            {editorCurrentTaskInput.tone && (
+                              <StyledEditorSelectorOptions>
+                                <label>Tone</label>
+                                <select {...register("tone")}>
+                                  {editorCurrentTaskInput.tone.map((i) => (
+                                    <option key={i} value={i}>
+                                      {i}
+                                    </option>
+                                  ))}
+                                </select>
+                              </StyledEditorSelectorOptions>
+                            )}
+                            {editorCurrentTaskInput.numberOfSuggestions && (
+                              <StyledEditorSelectorOptions>
+                                <label>Number Of Suggestions</label>
+                                <input
+                                  type="number"
+                                  min={
+                                    editorCurrentTaskInput.numberOfSuggestions.min
+                                  }
+                                  max={
+                                    editorCurrentTaskInput.numberOfSuggestions.max
+                                  }
+                                  defaultValue={
+                                    editorCurrentTaskInput.numberOfSuggestions.min
+                                  }
+                                  {...register("numberOfSuggestions", {
+                                    min: editorCurrentTaskInput
+                                      .numberOfSuggestions.min,
+                                    max: editorCurrentTaskInput
+                                      .numberOfSuggestions.max,
+                                    required:
+                                      editorCurrentTaskInput.numberOfSuggestions
+                                        .required,
+                                  })}
+                                />
+                              </StyledEditorSelectorOptions>
+                            )}
+                            {editorCurrentTaskInput.numberOfPoints && (
+                              <StyledEditorSelectorOptions>
+                                <label>Number Of Points</label>
+                                <input
+                                  type="number"
+                                  min={editorCurrentTaskInput.numberOfPoints.min}
+                                  max={editorCurrentTaskInput.numberOfPoints.max}
+                                  defaultValue={
+                                    editorCurrentTaskInput.numberOfPoints.min
+                                  }
+                                  {...register("numberOfPoints", {
+                                    min: editorCurrentTaskInput.numberOfPoints
+                                      .min,
+                                    max: editorCurrentTaskInput.numberOfPoints
+                                      .max,
+                                    required:
+                                      editorCurrentTaskInput.numberOfPoints
+                                        .required,
+                                  })}
+                                />
+                              </StyledEditorSelectorOptions>
+                            )}
+                            <GenerateButton
+                              disabled={!isonFieldFormOk}
+                              onClick={null}
+                              loading={content.loading === "pending"}
+                            >
+                              Generate
+                            </GenerateButton>
+                          </form>
+                          {content.items.length > 0 && (
+                            <div>
+                              {content.items.map((item, index) => (
+                                <div
+                                  onClick={() => handleSelectedContentItem(item)}
+                                  style={{
+                                    border: "1px solid",
+                                    padding: "5px",
+                                    width: "100%",
+                                    margin: "5px 0",
+                                    cursor: "pointer",
+                                  }}
+                                  key={index}
+                                >
+                                  {item}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </ToolsBody>
+                  </Collapse>
+                  
+                  <Collapse isOpen={showPlagi && !isOpenEditorField}>
+                    <WriterPlagiarism quill={quill} />
+                  </Collapse>
+
+                  <Collapse isOpen={showPlagi && isOpenEditorField}>
+                    {
+                      showPlagiarisedContent ? (
+                        <WriterPlagiarism quill={quill} />
+                      ) : (
+                        <>
+                          <ToolsHeader>
+                            <strong>Selected Text</strong>
+                            <br />
+                            <StyledSelectedText>{selectedText}</StyledSelectedText>
+                          </ToolsHeader>
+                          <ToolsBody>
+                            <StyledPlagiarismTool>
+                              <StyledButton onClick={handleContent}>
+                                Plagiarism Checker
+                              </StyledButton>
+                            </StyledPlagiarismTool>
+                          </ToolsBody>
+                        </>
+                      )
+                    }
+                  </Collapse>
+                </WriterTools>
+              </ScollingTool>
+              <BlogResetModal quill={quill} id={AI_COMPLETE_BLOG_WRITER} />
+            </ToolsSection>
+          </Generator>
+          <BlogData textData={quillCounter} />
         </BlogContainer>
       )}
       {subscriber?.usage && <SubscriberModal />}
-      <BlogData textData={quillCounter} />
     </Layout>
   );
 };
 
 const BlogContainer = styled.div`
   display: flex;
-  min-height: 100vh;
-  // padding: 0 15px;
+  flex-direction: column;
+
+  // @media (max-width: 992px) {
+  //   min-height: calc(100vh - 90px);
+  // }
 
   @media (max-width: 768px) {
     padding: 0;
+    min-height: 100vh;
+    max-height: none;
+    // flex-direction: column-reverse;
+  }
+`;
+
+const Generator = styled.div`
+  display: flex;
+  flex-direction: row;
+  min-height: calc(100vh - 80px);
+
+  @media (max-width: 1024px) {
+    min-height: calc(100vh - 100px);
+  }
+
+  @media (max-width: 1000px) {
+    padding: 0;
+    min-height: 100vh;
+    max-height: none;
+    margin-bottom: 2rem;
     flex-direction: column-reverse;
   }
 `;
 
 const EditorSection = styled.div`
-  flex: 9;
-  padding: 5px;
+  flex: 8;
+  margin: 1rem 2rem;
+
+  @media (max-width: 1024px) {
+    margin: 0.2rem 2rem 0rem 2rem;
+  }
+
+  @media (max-width: 768px) {
+    flex: 100%;
+    margin: 0.2rem 1rem 0rem 1rem;
+  }
+`;
+
+const ToolsSection = styled.div`
+  flex: 4;
+  border: solid #cbcbcb;
+  border-width: 0 0 0 1px;
 
   @media (max-width: 768px) {
     flex: 100%;
   }
 `;
 
-const ToolsSection = styled.div`
-  flex: 3;
-  border: solid #cbcbcb;
-  border-width: 0 0 0 1px;
-  /* padding: 10px; */
+const WriterTools = styled.div`
+  margin: 1rem 2rem;
 
   @media (max-width: 768px) {
-    flex: 100%;
+    margin: 1rem 1rem;
   }
 `;
 
@@ -733,7 +882,6 @@ const StyledEditorSelectorOptions = styled.div`
 
 const ScollingTool = styled.div`
   position: sticky;
-  max-height: 100vh;
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
@@ -745,10 +893,22 @@ const ScollingTool = styled.div`
   &::-webkit-scrollbar-thumb {
     background: #ff0000;
   }
+
+  @media (min-width: 1200px) {
+    min-height: 75vh;
+  }
+
+  @media (min-width: 1024px) {
+    min-height: 70vh;
+  }
+
+  @media (min-width: 768px) {
+    max-height: 65vh;
+  }
 `;
 
 const ToolControll = styled.div`
-  padding: 10px;
+  // padding: 10px;
 `;
 
 const ToolsHeader = styled(ToolControll)`
@@ -832,8 +992,8 @@ const TitleInput = styled.input`
   border: 0;
   outline: 0;
   width: 100%;
-  padding: 22px 15px 22px 15px;
-  font-size: 25px;
+  margin: 0.5rem 0 1.5rem 0;
+  font-size: 20px;
   font-weight: 500;
 `;
 
@@ -874,6 +1034,39 @@ const StyledBlogLength = styled.div`
     outline: none;
     height: 2.2rem;
     padding: 0 5px;
+  }
+`;
+
+const StyledPlagiarismTool = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin: 18px 0 30px;
+`;
+
+const StyledButton = styled(Button)`
+  box-shadow: none !important;
+  background-color: #10a37f !important;
+  border-radius: 6px;
+  color: #fff !important;
+  padding: 6px 16px;
+  font-size: 14px;
+
+  &:hover, 
+  &:focus,
+  &:active {
+    background-color: #10a37f !important;
+    border-radius: 8px;
+    color: #fff !important;
+  }
+
+  @media (max-width: 1000px) {
+    padding: 5px 14px;
+  }
+
+  @media (max-width: 900px) {
+    padding: 4px 12px;
+    font-size: 12px;
   }
 `;
 

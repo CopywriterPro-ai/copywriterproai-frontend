@@ -10,7 +10,7 @@ import { selectors as uiSelector } from "@/redux/slices/ui";
 import { SubscriberModal } from "@/components/modals/subscriber";
 import { useWindowSize } from "@/hooks";
 
-const MOBILE_DEFAULT_TOOL = "ads-facebook-primary-texts";
+const MOBILE_DEFAULT_TOOL = "paraphrasing";
 
 const App = () => {
   const { showSidebar, showContent } = useSidebar();

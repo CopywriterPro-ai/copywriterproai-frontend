@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { useResponsive } from "@/hooks";
 
 const BlogData = ({ textData }) => {
   const { timeToRead, readabilityScore, sentence, word, character } = textData;
-
+  const { isMobile } = useResponsive();
+  
   return (
     <BlogFooter>
       <BlogInformation>
@@ -19,7 +21,7 @@ const BlogData = ({ textData }) => {
 
 const BlogFooter = styled.footer`
   display: flex;
-  position: sticky;
+  position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
@@ -30,17 +32,19 @@ const BlogFooter = styled.footer`
 
   @media (max-width: 576px) {
     min-width: max-content;
+    display: none;
   }
 `;
 
 const BlogInformation = styled.div`
   display: flex;
   align-items: center;
+  padding-left: 2rem;
 
   p {
     font-size: 14.5px;
     font-weight: 500;
-    margin: 15px;
+    margin: 0 2rem 0 0;
 
     @media (max-width: 700px) {
       font-size: 12.5px;

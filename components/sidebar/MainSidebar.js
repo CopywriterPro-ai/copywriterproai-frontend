@@ -85,7 +85,7 @@ const MainSidebar = () => {
   };
 
   return (
-    <Sidebar className="col-md-3">
+    <Sidebar className={isMobile ? "col-md-12" : "col-md-3"}>
       <SidebarContainer>
         {isAuth && (
           <SidebarUser>
@@ -243,7 +243,7 @@ const Sidebar = styled.div`
   border-right: 1px solid #b4b4b4;
   min-height: 100vh;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     border: 0;
   }
 `;
@@ -261,7 +261,8 @@ const DropDownList = styled.ul`
 
 const SidebarContainer = styled.div`
   padding-top: 1rem;
-  padding-left: 0.5rem;
+  margin-left: 1.4rem;
+  margin-right: 1.4rem;
 `;
 
 const SidebarSection = styled.div`

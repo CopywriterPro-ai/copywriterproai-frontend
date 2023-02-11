@@ -16,17 +16,18 @@ import {
 } from "@/redux/slices/draft";
 import { setEditorDefault as setEditorCompleteBlogDefault } from "@/redux/slices/completeBlog";
 import { writeAlongActions } from "@/redux/slices/blog";
-import Spinner from "components/common/Spinner";
+import Processing from "@/pages/Loading";
 import { deltaToPlainText } from "utils/quillValueConvert";
 
 const TEXT_EXCERPT = 250;
 
 const SingleDraft = ({ item }) => {
+  const { isMobile } = useResponsive();
   const dispatch = useDispatch();
   const router = useRouter();
 
   const parseItem = { ...item, blogPost: JSON.parse(item.blogPost) };
-  const { headline, blogPost, id, blogType, blogAbout } = parseItem;
+  const { headline, blogPost, id, blogType, blogAbout, updatedAt } = parseItem;
   const { text } = deltaToPlainText(blogPost, TEXT_EXCERPT);
 
   const handleDeleteBlog = () => {
@@ -61,16 +62,16 @@ const SingleDraft = ({ item }) => {
   };
 
   return (
-    <ContentBody className="col-md-6">
+    <ContentBody className={`${isMobile} ? "col-md-12" : "col-md-6" col-lg-6 d-flex align-items-stretch mb-2`}>
       <Card className="card">
         <CardHeader>
           <strong>{headline}</strong>
-          <p>12:00 PM, 4th August, 2021</p>
         </CardHeader>
         <CardBody>
           <p>{text}</p>
         </CardBody>
         <CardFooter>
+          <p>Last edited: {updatedAt}</p>
           <CardButtonGroup>
             <button onClick={handleEditBlog}>Edit</button>
             <button onClick={handleDeleteBlog}>Delete</button>
@@ -81,7 +82,9 @@ const SingleDraft = ({ item }) => {
   );
 };
 
-const ContentBody = styled.div``;
+const ContentBody = styled.div`
+  
+`;
 
 const Card = styled.div`
   border: 0;
@@ -90,42 +93,47 @@ const Card = styled.div`
   min-height: 200px;
   padding: 10px;
   position: relative;
+  padding: 2rem;
 `;
 
 const CardHeader = styled.div`
   align-items: center;
-  border-bottom: 1px solid #b4b4b4;
   display: flex;
   justify-content: space-between;
   margin-top: 15px;
   padding-bottom: 5px;
+  font-size: 18px;
 
   strong {
-    font-size: 15px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 22px;
   }
   p {
     color: #7e7e7e;
-    font-size: 13px;
     font-weight: 500;
     margin: 0;
   }
 `;
 
 const CardBody = styled.div`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
   p {
     color: #4b4b4b;
-    font-size: 12px;
-    line-height: 18px;
+    font-size: 15px;
+    line-height: 25px;
     margin: 8px 0;
   }
 `;
 
 const CardFooter = styled.div`
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
+  display: flex;
+  justify-content: space-between;
+
+  p {
+    margin: 0;
+  }
 `;
 
 const CardButtonGroup = styled.div`
@@ -134,8 +142,9 @@ const CardButtonGroup = styled.div`
     border-radius: 3px;
     border: 1.5px solid #666666;
     margin-left: 5px;
-    min-width: 70px;
     outline: 0;
+    font-size: 15px;
+    padding: 0 10px;
   }
 `;
 
@@ -174,11 +183,11 @@ const Draft = () => {
         <div className="row">
           {showSidebar && <MainSidebar />}
           {showContent && (
-            <div className="col-md-9">
+            <div className={isMobile ? "col-md-12" : "col-md-9"}>
               <ContentTitle>
                 <p>Draft</p>
               </ContentTitle>
-              {isPending && <Spinner />}
+              {isPending && <Processing color="#000" />}
               {!isPending && (
                 <MainContent>
                   <div className="row">
@@ -241,7 +250,7 @@ const ContentTitle = styled.div`
     margin: 0.2rem 0;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     justify-content: space-between;
     padding: 0;
 
@@ -255,7 +264,7 @@ const ContentTitle = styled.div`
 
 const MainContent = styled.div`
   margin: 2rem 1rem;
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     margin: 0;
   }
 `;

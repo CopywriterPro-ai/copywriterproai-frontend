@@ -90,7 +90,7 @@ export const StyledUpgrade = styled.div`
 export const StyledUpgradeButton = styled.button`
   min-width: 35%;
   height: 2.5rem;
-  background: #40b1a7;
+  background: #10a37f;
   border: 0.5px solid #979797;
   border-radius: 7px;
   color: white;

@@ -194,7 +194,7 @@ const footerMenus = {
     },
     {
       title: 'Tutorial',
-      href: '/tutorial',
+      href: '/tutorial/ads-facebook-primary-texts',
     },
     // {
     //   title: 'AI Blog Writing',
@@ -301,10 +301,10 @@ const pricingData = [
         li: '10,000 words',
         available: true,
       },
-      {
-        li: '400 characters input limit',
-        available: true,
-      },
+      // {
+      //   li: '400 characters input limit',
+      //   available: true,
+      // },
       {
         li: '45 copywriting tools',
         available: true,
@@ -349,10 +349,10 @@ const pricingData = [
         li: '50,000 words',
         available: true,
       },
-      {
-        li: '800 characters input limit',
-        available: true,
-      },
+      // {
+      //   li: '800 characters input limit',
+      //   available: true,
+      // },
       {
         li: '50+ copywriting tools',
         available: true,
@@ -397,10 +397,10 @@ const pricingData = [
         li: '200,000 words',
         available: true,
       },
-      {
-        li: '1600 characters input limit',
-        available: true,
-      },
+      // {
+      //   li: '1600 characters input limit',
+      //   available: true,
+      // },
       {
         li: '50+ copywriting tools',
         available: true,
@@ -671,6 +671,264 @@ const navHomeTwo = [
   },
 ];
 
+//help center data
+const tutorials = [
+  {
+    caterory: 'Facebook',
+    listItem: [
+      {
+        tool: 'Ad Creative Description',
+        href: '/ads-facebook-primary-texts',
+      },
+      {
+        tool: 'Ad Creative Headlines',
+        href: '/ads-facebook-headlines',
+      },
+      {
+        tool: 'Ad Creative Link Descriptions',
+        href: '/ads-facebook-link-descriptions',
+      },
+      {
+        tool: 'Facebook Ads From Product Description',
+        href: '/facebook-ads-from-product-description',
+      },
+    ],
+  },
+  {
+    caterory: 'YouTube',
+    listItem: [
+      {
+        tool: 'Video Tags From Description',
+        href: '/youtube-video-tags-from-description',
+      },
+      {
+        tool: 'Channel Tags From Description',
+        href: '/youtube-channel-tags-from-description',
+      },
+      {
+        tool: 'Youtube Video Ideas',
+        href: '/youtube-video-ideas',
+      },
+      {
+        tool: 'Youtube Video Script',
+        href: '/youtube-video-script',
+      },
+    ],
+  },
+  {
+    caterory: 'Google',
+    listItem: [
+      {
+        tool: 'Google Ads Descriptions',
+        href: '/ads-google-descriptions',
+      },
+      {
+        tool: 'Google Ads Headlines',
+        href: '/ads-google-headlines',
+      },
+    ],
+  },
+  {
+    caterory: 'LinkedIn',
+    listItem: [
+      {
+        tool: 'LinkedIn Ads Texts',
+        href: '/linkedin-ad-texts',
+      },
+      {
+        tool: 'LinkedIn Profile About',
+        href: '/linkedin-summary',
+      },
+    ],
+  },
+  {
+    caterory: 'Product',
+    listItem: [
+      {
+        tool: 'Review Creator',
+        href: '/product-review',
+      },
+      {
+        tool: 'SEO Friendly Product Description',
+        href: '/seo-friendly-product-description',
+      },
+    ],
+  },
+  {
+    caterory: 'Writing',
+    listItem: [
+      {
+        tool: 'Paraphrasing',
+        href: '/paraphrasing',
+      },
+      {
+        tool: 'Expander',
+        href: '/expander',
+      },
+      {
+        tool: 'Simplifier',
+        href: '/simplifier',
+      },
+      {
+        tool: 'Summarizer',
+        href: '/summarizer',
+      },
+      {
+        tool: 'Notes From Passage',
+        href: '/notes-from-passage',
+      },
+      {
+        tool: 'Grammar Fixer',
+        href: '/grammar-fixer',
+      },
+      {
+        tool: 'Change Tone',
+        href: '/change-tone',
+      },
+      {
+        tool: 'Fiverr Profile Description',
+        href: '/fiverr-profile-description',
+      },
+      {
+        tool: 'Point of view',
+        href: '/point-of-view',
+      },
+      {
+        tool: 'Active Passive',
+        href: '/active-passive',
+      },
+      {
+        tool: 'Abstract',
+        href: '/abstract',
+      },
+    ],
+  },
+  {
+    caterory: 'Brainstorming',
+    listItem: [
+      {
+        tool: 'Idea for Ads Photography',
+        href: '/image-idea-from-ad-text',
+      },
+      {
+        tool: 'Facebook Campaign Post',
+        href: '/campaign-facebook-post',
+      },
+      {
+        tool: 'Product Name',
+        href: '/product-name',
+      },
+    ],
+  },
+  {
+    caterory: 'Email',
+    listItem: [
+      {
+        tool: 'Email Subject From Body',
+        href: '/email-subject-from-body',
+      },
+      {
+        tool: 'Email Marketing Campaign Subject',
+        href: '/email-marketing-campaign-subject',
+      },
+      {
+        tool: 'Email Marketing Campaign body',
+        href: '/email-marketing-campaign-body',
+      },
+      {
+        tool: 'Email Body',
+        href: '/email-body',
+      },
+    ],
+  },
+  {
+    caterory: 'Website',
+    listItem: [
+      {
+        tool: 'Website Short Description',
+        href: '/website-short-description',
+      },
+      {
+        tool: 'Website SEO Friendly Keywords From Text',
+        href: '/website-keywords-from-text',
+      },
+      {
+        tool: 'SEO Friendly Blog Ideas',
+        href: '/website-seo-friendly-blog-ideas',
+      },
+      {
+        tool: 'Landing Page Headline',
+        href: '/website-landing-page-headline',
+      },
+    ],
+  },
+  {
+    caterory: 'Business',
+    listItem: [
+      {
+        tool: 'Catchy Business Taglines',
+        href: '/catchy-business-taglines',
+      },
+    ],
+  },
+  {
+    caterory: 'CV Writing',
+    listItem: [
+      {
+        tool: 'CV Summary',
+        href: '/cv-summary',
+      },
+    ],
+  },
+  {
+    caterory: 'Headline',
+    listItem: [
+      {
+        tool: 'Newspaper Headline',
+        href: '/newspaper-headline',
+      },
+      {
+        tool: 'Attention Grabbing Headline',
+        href: '/attention-grabbing-headline',
+      },
+      {
+        tool: 'Catchy Headline',
+        href: '/catchy-headline',
+      },
+      {
+        tool: 'Resume Headline',
+        href: '/resume-headline',
+      },
+    ],
+  },
+  {
+    caterory: 'Amazon',
+    listItem: [
+      {
+        tool: 'Amazon Product Description',
+        href: '/amazon-product-listings',
+      },
+    ],
+  },
+  {
+    caterory: 'Sales Copy',
+    listItem: [
+      {
+        tool: 'Problem Agitate Solution',
+        href: '/problem-agitate-solution',
+      },
+      {
+        tool: 'Problem Agitate Solution Outcome',
+        href: '/problem-agitate-solution-outcome',
+      },
+      {
+        tool: 'Attention Interest Desire Action',
+        href: '/attention-interest-desire-action',
+      },
+    ],
+  },
+];
+
 export {
   IconBoxData,
   faqData,
@@ -687,4 +945,5 @@ export {
   navCompanyPage,
   navHomeOne,
   navHomeTwo,
+  tutorials,
 };

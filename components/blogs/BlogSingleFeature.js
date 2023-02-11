@@ -2,7 +2,7 @@ import React from 'react';
 
 import ProfileCard from './ProfileCard';
 
-const   BlogSingleFeature = ({ blog }) => {
+const BlogSingleFeature = ({ blog }) => {
   return (
     <>
       <section className="blog-details ptb-60">

@@ -10,7 +10,7 @@ const SOMETHING_WRONG = "Something went wrong!";
 const WarnToastWithIcon = ({ msg }) => {
   return (
     <Container>
-      <span style={{ marginRight: "12px" }}>
+      <span style={{ marginRight: "1rem" }}>
         <Image
           src={WarnIcon.src}
           alt="Warning"
@@ -28,7 +28,7 @@ const Container = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: auto !important;
 `;
 
 const success = (message, autoClose = AUTO_CLOSE_TIME, othersProps = {}) =>

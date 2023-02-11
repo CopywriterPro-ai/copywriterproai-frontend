@@ -19,7 +19,7 @@ import {
   selectors as authSelector,
 } from "@/redux/slices/auth";
 
-import {FaClipboard, FaClone, FaEdit} from 'react-icons/fa';
+import {FaClipboard, FaClone, FaEdit, FaBookmark} from 'react-icons/fa';
 
 const GeneratingResult = () => {
   const dispatch = useDispatch();
@@ -197,8 +197,7 @@ const GeneratingResult = () => {
                         contentText.text
                       )
                     }
-                    className="fas fa-bookmark"
-                  ></IconButton>
+                  ><i><FaBookmark/></i></IconButton>
                 ) : (
                   <IconButton
                     isPending={
@@ -213,8 +212,7 @@ const GeneratingResult = () => {
                         contentText.text
                       )
                     }
-                    className="far fa-bookmark"
-                  ></IconButton>
+                  ><i><FaBookmark/></i></IconButton>
                 )}
               </ResultActionRow>
             </ResultAction>

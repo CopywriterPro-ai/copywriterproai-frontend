@@ -116,13 +116,13 @@ const GenerateSidebar = () => {
   const { width: windowWidth } = useWindowSize();
 
   return (
-    <ProSidebar
+    <SidebarContainer
       width={`${windowWidth >= 1000 ? "auto" : "250px"}`}
       breakPoint="lg"
       toggled={toggled}
       onToggle={handleToggleSidebar}
     >
-      <SidebarHeader>
+      <CustomSidebarHeader>
         <SearchTools>
           <label htmlFor="search"><i><FaSearch/></i></label>
           <input
@@ -135,8 +135,8 @@ const GenerateSidebar = () => {
             id="search"
           />
         </SearchTools>
-      </SidebarHeader>
-      <SidebarContent>
+      </CustomSidebarHeader>
+      <Content>
         {noSearchResult && (
           <p style={{ padding: "8px 17px 8px 15px", wordWrap: "break-word" }}>
             No results found{" "}
@@ -145,11 +145,10 @@ const GenerateSidebar = () => {
         )}
         {hasSearchResult && (
           <>
-            <Menu>
+            <CustomMenu>
               <SidebarTitle>Search Results</SidebarTitle>
               {searchResult.map((tool) => (
                 <MenuItemStyle
-                  style={{ paddingLeft: "10px" }}
                   key={tool.key}
                   suffix={<FavouriteAction itemKey={tool.key} />}
                   onClick={() => handleActiveItem(tool.key)}
@@ -157,18 +156,17 @@ const GenerateSidebar = () => {
                   {tool.name}
                 </MenuItemStyle>
               ))}
-            </Menu>
-            <HR />
+            </CustomMenu>
+            {/* <HR /> */}
           </>
         )}
 
         {isAuth && (
           <>
-            <Menu>
-              <SidebarTitle>Favourite Tools</SidebarTitle>
+            <CustomMenu>
+              <SidebarTitle>Pinned Tools</SidebarTitle>
               {favouriteTools.map((tool) => (
                 <MenuItemStyle
-                  style={{ paddingLeft: "10px" }}
                   key={tool.key}
                   suffix={<FavouriteAction itemKey={tool.key} />}
                   onClick={() => handleActiveItem(tool.key)}
@@ -176,17 +174,16 @@ const GenerateSidebar = () => {
                   {tool.name}
                 </MenuItemStyle>
               ))}
-            </Menu>
-            <HR />
+            </CustomMenu>
+            {/* <HR /> */}
           </>
         )}
         {blogTool?.tools && (
           <>
-            <Menu>
+            <CustomMenu>
               <SidebarTitle>Blog Writer</SidebarTitle>
               {blogTool?.tools.map((item, index) => (
                 <MenuItemStyle
-                  style={{ paddingLeft: "10px" }}
                   suffix={<FavouriteAction itemKey={item.key} />}
                   active={item.key === activeKey}
                   key={index}
@@ -199,15 +196,17 @@ const GenerateSidebar = () => {
                   )}
                 </MenuItemStyle>
               ))}
-            </Menu>
-            <HR />
+            </CustomMenu>
+            {/* <HR /> */}
           </>
         )}
         {toolsCategories.length > 0 && (
-          <Menu>
+          <CustomMenu
+            style={{borderBottom: "none"}}
+          >
             <SidebarTitle>Writing Tools</SidebarTitle>
             {toolsCategories.map((group) => (
-              <SubMenu
+              <CustomSubMenu
                 key={group.key}
                 title={group.name}
                 icon={
@@ -216,9 +215,10 @@ const GenerateSidebar = () => {
                     alt={group.key}
                   ></IconImg>
                 }
+                style={{padding: "20px 0px 8px 0px !important"}}
               >
                 {group.tools.map((item, index) => (
-                  <MenuItemStyle
+                  <SubMenuItemStyle
                     suffix={<FavouriteAction itemKey={item.key} />}
                     active={item.key === activeKey}
                     key={index}
@@ -226,22 +226,96 @@ const GenerateSidebar = () => {
                     onClick={() => handleActiveItem(item.key)}
                   >
                     {item.name}
-                  </MenuItemStyle>
+                  </SubMenuItemStyle>
                 ))}
-              </SubMenu>
+              </CustomSubMenu>
             ))}
-          </Menu>
+          </CustomMenu>
         )}
-      </SidebarContent>
-    </ProSidebar>
+      </Content>
+    </SidebarContainer>
   );
 };
+
+const SidebarContainer = styled(ProSidebar)`
+  padding-top: 1rem;
+
+  @media(max-width: 992px) {
+    padding-top: 0;
+  }
+`;
+
+const Content = styled(SidebarContent)`
+  position: sticky;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ff0000;
+  }
+
+  max-height: 80vh;
+
+  // @media (min-width: 1200px) {
+  //   min-height: 80vh;
+  // }
+
+  // @media (min-width: 1024px) {
+  //   min-height: 80vh;
+  // }
+
+  // @media (min-width: 768px) {
+  //   max-height: 80vh;
+  // }
+`;
+
+const CustomSidebarHeader = styled(SidebarHeader)`
+  padding: 0rem 2rem 1rem 2rem;
+
+  @media(max-width: 992px) {
+    padding-top: 1rem;
+  }
+`;
+
+const CustomMenu = styled(Menu)`
+  padding: 1rem 2rem 1rem 2rem !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+`;
+
+const CustomSubMenu = styled(SubMenu)`
+  .pro-inner-item {
+    padding: 20px 0px 8px 0px !important;
+    &::before {
+      content: none !important;
+    }
+
+    .pro-arrow-wrapper {
+      right: 4px !important;
+    }
+  }
+`;
 
 const MenuItemStyle = styled(MenuItem)`
   user-select: none;
 
   .pro-inner-item {
-    padding: 8px 17px 8px 15px !important;
+    padding: 20px 0px 8px 0px !important;
+    &::before {
+      content: none !important;
+    }
+  }
+`;
+
+const SubMenuItemStyle = styled(MenuItem)`
+  user-select: none;
+
+  .pro-inner-item {
+    padding: 20px 0px 0px 0px !important;
     &::before {
       content: none !important;
     }
@@ -252,12 +326,9 @@ const SidebarTitle = styled.div`
   font-size: 1.1rem;
   font-weight: 500;
   line-height: 30px;
-  padding-left: 25px;
 `;
 
 const SearchTools = styled.div`
-  padding: 10px 0 10px 25px;
-
   label {
     padding-right: 10px;
     color: #b4b4b4;

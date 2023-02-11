@@ -17,6 +17,7 @@ import {
   setContentSidebar,
   setAccessTask,
 } from "@/redux/slices/ui";
+import Processing from "@/pages/Loading";
 import Spinner from "@/components/common/Spinner";
 import GenerateResult from "./GenerateResult";
 import TipsImg from "@/assets/images/generate-tips.png";
@@ -128,7 +129,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
   let isCurrentInput = defaultInput?.key === activeKey;
 
   if (!isToolFetched) {
-    return <Spinner />;
+    return <Processing color="#000" />;
   }
 
   if (!formContent) {
@@ -168,7 +169,6 @@ const InputGeneratingBox = ({ showTutorialState }) => {
         </ContentTitle>
         {isAuth && (
           <CreditsLeft
-            onClick={() => handleSubscriberModalOpen()}
             style={{ cursor: "pointer" }}
           >
             Words Left: {words ? words : 0}
@@ -183,6 +183,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
             some time making it as accurate as possible.
           </span>
         </Tips>
+        <br/>
         <div>
           <form onSubmit={handleSubmit(onSubmit)} className="content-form">
             {formContent.fields.map((field, index) => {
@@ -191,11 +192,14 @@ const InputGeneratingBox = ({ showTutorialState }) => {
                 const watchChar = watching[field.key]
                   ? watching[field.key]?.length
                   : 0;
-                const minChar = fieldValidation?.min || 1;
-                const maxChar = fieldValidation?.max || 10;
+                // const minChar = field?.validation?.min || 1;
+
+                // multiplied by 5 because I wanted to keep the current base values
+                // 5 is just a random number
+                const maxChar = field?.validation?.max * 5 || 10;
                 const required = fieldValidation?.required || false;
-                const minRows = Math.ceil(maxChar / 100);
-                const maxRows = Math.ceil(maxChar / 100 + 3);
+                const minRows = 3;
+                // const maxRows = Math.ceil(maxChar / 100 + 3);
                 const exceededChar = maxChar < watchChar;
 
                 return (
@@ -203,12 +207,13 @@ const InputGeneratingBox = ({ showTutorialState }) => {
                     <label htmlFor={field.key}>{field.name}</label>
                     <Input
                       minRows={minRows}
-                      maxRows={maxRows}
+                      // maxRows={maxRows}
                       autoComplete="off"
+                      maxlength={maxChar}
                       {...register(field.key, {
                         required,
                         maxLength: maxChar,
-                        minLength: minChar,
+                        // minLength: minChar,
                       })}
                       id={field.key}
                       defaultValue={
@@ -249,7 +254,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
                 );
               } else if (field.type === "InputNumber") {
                 const fieldValidation = validationSchema[field.key];
-                const minChar = fieldValidation?.min || 1;
+                // const minChar = fieldValidation?.min || 1;
                 const maxChar = fieldValidation?.max || 10;
                 const required = fieldValidation?.required || false;
 
@@ -259,16 +264,16 @@ const InputGeneratingBox = ({ showTutorialState }) => {
                     <InputNumber
                       type="number"
                       autoComplete="off"
-                      min={minChar}
+                      // min={minChar}
                       max={maxChar}
                       {...register(field.key, {
                         required,
                         max: maxChar,
-                        min: minChar,
+                        // min: minChar,
                       })}
                       id={field.key}
-                      defaultValue={
-                        isCurrentInput ? defaultInput.input[field.key] : null
+                      defaultValue={"1"
+                        // isCurrentInput ? defaultInput.input[field.key] : null
                       }
                       placeholder={field.placeholder}
                     />
@@ -320,7 +325,7 @@ const EmptyTool = styled.div`
 `;
 
 const Container = styled.div`
-  padding-top: 15px;
+  padding: 2rem;
 `;
 
 const SubscriptionOver = styled.div`
@@ -336,17 +341,18 @@ const SubscriptionOver = styled.div`
 `;
 
 const ContentHeader = styled.div`
-  align-items: center;
-  border-bottom: 1px solid #b4b4b4;
+  align-items: baseline;
   display: flex;
   justify-content: space-between;
-  padding: 0.4rem;
+  margin-bottom: 2rem;
 
   p {
     flex: 4;
-    font-size: 23px;
+    font-size: 24px;
     line-height: 34px;
     margin: 0;
+    font-weight: 700;
+    color: black;
   }
 
   @media (max-width: 768px) {
@@ -355,9 +361,13 @@ const ContentHeader = styled.div`
 
     p {
       flex: none;
-      font-size: 16px;
+      font-size: 20px;
       line-height: 34px;
     }
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
   }
 `;
 
@@ -367,9 +377,12 @@ const ContentTitle = styled.div`
 
   span {
     cursor: pointer;
-    font-size: 20px;
-    margin-right: 10px;
-
+    font-size: 18px;
+    font-weight: 500;
+    margin-right: 1.5rem;
+    padding: 0px 8px;
+    border: 2px solid #8d8d8d;
+    border-radius: 5px;
     @media (min-width: 990px) {
       display: none;
     }
@@ -379,10 +392,23 @@ const ContentTitle = styled.div`
 const CreditsLeft = styled.div`
   font-size: 18px;
   font-weight: 500;
+
+  @media (max-width: 992px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 1rem;
+    float: right;
+  }
 `;
 
 const MainContent = styled.div`
   margin: 1rem 0;
+
+  label {
+    font-size: 16px;
+  }
 `;
 
 const Tips = styled.div`
@@ -416,60 +442,69 @@ const SubmitAction = styled.div`
 const Input = styled(TextareaAutosize)`
   width: 100%;
   /* height: 45px; */
-  padding: 6px 15px;
+  padding: 15px 20px;
   outline: none;
   border: 1px solid #b4b4b4;
+  border-radius: 8px;
   color: black;
   font-size: 16px;
   display: block;
   resize: none;
+  margin: 15px 0 20px 0;
 `;
 
 const InputNumber = styled.input`
   width: 100%;
   height: 45px;
-  padding: 6px 15px;
+  padding: 15px 20px;
   outline: none;
   border: 1px solid #b4b4b4;
+  border-radius: 8px;
   color: black;
   font-size: 16px;
   display: block;
   resize: none;
+  margin: 15px 0 20px 0;
 `;
 
 const TextArea = styled(TextareaAutosize)`
   width: 100%;
   height: 270px;
-  padding: 6px 15px;
+  padding: 15px 20px;
   outline: none;
   border: 1px solid #b4b4b4;
+  border-radius: 8px;
   color: black;
   font-size: 16px;
   display: block;
   resize: none;
+  margin: 15px 0 20px 0;
 `;
 
 const OptionSelect = styled.select`
   width: 100%;
   height: 45px;
-  padding: 6px 15px;
+  padding: 15px 20px;
   outline: none;
   border: 1px solid #b4b4b4;
+  border-radius: 8px;
   color: #748194;
   font-size: 16px;
   display: block;
   background: transparent;
+  margin: 15px 0 20px 0;
 `;
 
 const Button = styled.button`
   display: inline-flex;
   font-size: 1rem;
-  font-weight: 500;
-  padding: 0.6rem 2.8rem;
-  border: 2px solid #3a4841;
+  font-weight: 600;
+  padding: 0.5rem 2.5rem;
+  border: none;
   border-radius: 5px;
   outline: none;
-  background-color: transparent;
+  background-color: #10a37f;
+  color: white;
   transition: all 0.5s;
 `;
 

@@ -8,13 +8,13 @@ import {
   writeAlongActions,
   selectors as writeAlongSelector,
 } from "@/redux/slices/blog";
-import { setAccessTask } from "@/redux/slices/ui";
+import { setAccessTask, setSigninModal } from "@/redux/slices/ui";
 import ToolTitleItem from "./components/ToolTitleItem";
 import { ToolItem, TextItem } from "./styles";
 import { BLOG_INTRO, BLOG_OUTLINE } from "@/appconstants";
 import * as MESSAGE from "@/appconstants/message";
 import { yupValidate } from "@/utils";
-import { useSubscriberModal, useToolAccess, useWriterAccess } from "@/hooks";
+import { useUser, useSubscriberModal, useToolAccess, useWriterAccess } from "@/hooks";
 import { ToolAction, ToolInput } from "./styles";
 import GenerateButton from "./components/GenerateButton";
 
@@ -53,8 +53,20 @@ const BlogIntro = ({ titleRef, aboutRef, quillRef }) => {
   const [accessBlogIntro] = useToolAccess([BLOG_INTRO]);
   const [showSubscriberModal, setShowSubscriberModal] = useSubscriberModal();
   const hasWriterAccess = useWriterAccess();
+  const {
+    isAuth,
+    subscribe: {
+      freeTrial: { eligible: freeTrailEligible },
+      activeSubscription: { words, subscription },
+    },
+  } = useUser();
 
   const handleBlogIntro = () => {
+    if (!isAuth) {
+      dispatch(setSigninModal(true));
+      return;
+    }
+
     if (showSubscriberModal.block) {
       setShowSubscriberModal({ ...showSubscriberModal, isOpen: true });
       return;

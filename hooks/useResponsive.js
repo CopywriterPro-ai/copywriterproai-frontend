@@ -13,8 +13,8 @@ const useResponsive = () => {
   useEffect(() => {
     setScreenSize({
       ...screenSize,
-      isMobile: windowSize?.width < 960,
-      isDesktop: windowSize?.width >= 960,
+      isMobile: windowSize?.width < 1000,
+      isDesktop: windowSize?.width >= 1000,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [windowSize]);
