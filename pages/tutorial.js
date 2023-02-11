@@ -13,7 +13,7 @@ const ComingSoon = () => {
   return (
     <Layout title={metaData.title} description={metaData.description}>
       <section
-        className="coming-soon-section min-vh-100 ptb-120 overflow-hidden position-relative w-100 d-flex flex-column justify-content-center"
+        className="coming-soon-section min-vh-100 ptb-80 overflow-hidden position-relative w-100 d-flex flex-column justify-content-center"
         style={{
           background: "url('/page-header-bg.svg')no-repeat bottom right",
         }}
@@ -37,7 +37,7 @@ const ComingSoon = () => {
 
                 {/* <h5 className="text-white">We are Coming Soon...</h5> */}
                 <h1 className="text-white">
-                  We Are Working on This Page. Please Stay With Us!	
+                  We Are Working on This Page. Please Stay With Us!
                 </h1>
                 <div className="action-btns">
                   <Link href="/contact-us">

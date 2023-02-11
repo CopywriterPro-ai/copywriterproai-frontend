@@ -192,11 +192,14 @@ const InputGeneratingBox = ({ showTutorialState }) => {
                 const watchChar = watching[field.key]
                   ? watching[field.key]?.length
                   : 0;
-                const minChar = fieldValidation?.min || 1;
-                const maxChar = fieldValidation?.max || 10;
+                // const minChar = field?.validation?.min || 1;
+
+                // multiplied by 5 because I wanted to keep the current base values
+                // 5 is just a random number
+                const maxChar = field?.validation?.max * 5 || 10;
                 const required = fieldValidation?.required || false;
-                const minRows = Math.ceil(maxChar / 100);
-                const maxRows = Math.ceil(maxChar / 100 + 3);
+                const minRows = 3;
+                // const maxRows = Math.ceil(maxChar / 100 + 3);
                 const exceededChar = maxChar < watchChar;
 
                 return (
@@ -204,11 +207,12 @@ const InputGeneratingBox = ({ showTutorialState }) => {
                     <label htmlFor={field.key}>{field.name}</label>
                     <Input
                       minRows={minRows}
-                      maxRows={maxRows}
+                      // maxRows={maxRows}
                       autoComplete="off"
+                      maxlength={maxChar}
                       {...register(field.key, {
                         required,
-                        // maxLength: maxChar,
+                        maxLength: maxChar,
                         // minLength: minChar,
                       })}
                       id={field.key}
@@ -223,9 +227,9 @@ const InputGeneratingBox = ({ showTutorialState }) => {
                       </UncontrolledTooltip>
                     )}
 
-                    {/* <WordCount exceededChar={exceededChar}>
+                    <WordCount exceededChar={exceededChar}>
                       {watchChar}/{maxChar} Max Characters
-                    </WordCount> */}
+                    </WordCount>
                   </div>
                 );
               } else if (field.type === "selectBox") {
@@ -251,7 +255,7 @@ const InputGeneratingBox = ({ showTutorialState }) => {
               } else if (field.type === "InputNumber") {
                 const fieldValidation = validationSchema[field.key];
                 // const minChar = fieldValidation?.min || 1;
-                // const maxChar = fieldValidation?.max || 10;
+                const maxChar = fieldValidation?.max || 10;
                 const required = fieldValidation?.required || false;
 
                 return (
@@ -261,10 +265,10 @@ const InputGeneratingBox = ({ showTutorialState }) => {
                       type="number"
                       autoComplete="off"
                       // min={minChar}
-                      // max={maxChar}
+                      max={maxChar}
                       {...register(field.key, {
                         required,
-                        // max: maxChar,
+                        max: maxChar,
                         // min: minChar,
                       })}
                       id={field.key}

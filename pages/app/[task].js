@@ -60,6 +60,31 @@ const AppItem = ({ doc }) => {
 };
 
 const Sidebar = styled.div`
+  // position: sticky;
+  // overflow-y: scroll;
+
+  // &::-webkit-scrollbar {
+  //   width: 0;
+  //   height: 0;
+  //   background: transparent;
+  // }
+
+  // &::-webkit-scrollbar-thumb {
+  //   background: #ff0000;
+  // }
+
+  // @media (min-width: 1200px) {
+  //   min-height: 75vh;
+  // }
+
+  // @media (min-width: 1024px) {
+  //   min-height: 70vh;
+  // }
+
+  // @media (min-width: 768px) {
+  //   max-height: 65vh;
+  // }
+
   padding: 0px;
   border-right: 1px solid rgba(0,0,0,.1);
 

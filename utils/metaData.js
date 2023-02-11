@@ -19,8 +19,8 @@ const blogs = {
 }
 
 const tutorial = {
-  title: "CopywriterPro | Get Started with CopywriterPro: A How-To Guide",
-  description: "Learn how to get started with copywriting. We'll walk you through the basics of using our AI copywriting tool to help you improve your content marketing."
+  title: "CopywriterPro | Learn How to Create Powerful Content with CopywriterPro!",
+  description: "Learn how to use CopywriterPro, the AI copywriting tool, to create powerful, engaging content for your website or blog. We will show you how to get the most out of CopywriterPro so you can start creating amazing content today!"
 }
 
 const contactUs = {

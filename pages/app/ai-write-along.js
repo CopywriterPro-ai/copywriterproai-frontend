@@ -665,7 +665,7 @@ const Generator = styled.div`
 `;
 
 const EditorSection = styled.div`
-  flex: 7;
+  flex: 8;
   margin: 1rem 2rem;
 
   @media (max-width: 1024px) {
@@ -679,7 +679,7 @@ const EditorSection = styled.div`
 `;
 
 const ToolsSection = styled.div`
-  flex: 5;
+  flex: 4;
   border: solid #cbcbcb;
   border-width: 0 0 0 1px;
 

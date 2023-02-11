@@ -136,7 +136,7 @@ const GenerateSidebar = () => {
           />
         </SearchTools>
       </CustomSidebarHeader>
-      <SidebarContent>
+      <Content>
         {noSearchResult && (
           <p style={{ padding: "8px 17px 8px 15px", wordWrap: "break-word" }}>
             No results found{" "}
@@ -232,7 +232,7 @@ const GenerateSidebar = () => {
             ))}
           </CustomMenu>
         )}
-      </SidebarContent>
+      </Content>
     </SidebarContainer>
   );
 };
@@ -243,6 +243,35 @@ const SidebarContainer = styled(ProSidebar)`
   @media(max-width: 992px) {
     padding-top: 0;
   }
+`;
+
+const Content = styled(SidebarContent)`
+  position: sticky;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ff0000;
+  }
+
+  max-height: 80vh;
+
+  // @media (min-width: 1200px) {
+  //   min-height: 80vh;
+  // }
+
+  // @media (min-width: 1024px) {
+  //   min-height: 80vh;
+  // }
+
+  // @media (min-width: 768px) {
+  //   max-height: 80vh;
+  // }
 `;
 
 const CustomSidebarHeader = styled(SidebarHeader)`
