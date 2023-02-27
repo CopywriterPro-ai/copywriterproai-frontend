@@ -79,7 +79,7 @@ const HeroSectionOne = () => {
                     title={"Sign up with Google"}
                   />
                 </div>
-                <div>
+                {/* <div>
                     <a href='#!'
                       onClick={() => setOpen(true)}
                       type="button"
@@ -87,7 +87,7 @@ const HeroSectionOne = () => {
                     >
                       <IoPlayCircleOutline className="me-2" /> Watch Demo
                     </a>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
