@@ -62,6 +62,44 @@ const App = ({ Component, pageProps, err }) => {
 
   const store = useStore();
 
+  const myBusiness = { 
+    "@context": "https://schema.org", 
+    "@type": "LocalBusiness", 
+    "name": "CopywriterPro AI", 
+    "image": "", 
+    "@id": "", 
+    "url": "https://copywriterpro.ai", 
+    "telephone": "", 
+    "address": { 
+      "@type": "PostalAddress", 
+      "streetAddress": "", 
+      "addressLocality": "Dhaka", 
+      "postalCode": "1212", 
+      "addressCountry": "BD" 
+    }, 
+    "openingHoursSpecification": { 
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [ 
+        "Monday", 
+        "Tuesday", 
+        "Wednesday", 
+        "Thursday", 
+        "Friday", 
+        "Saturday", 
+        "Sunday" 
+      ], 
+      "opens": "00:00", 
+      "closes": "23:59" 
+    }, 
+    "sameAs": [ 
+      "https://www.facebook.com/CopywriterProAI", 
+      "https://twitter.com/CopywriterProAI", 
+      "https://www.youtube.com/@copywriterpro4914", 
+      "https://www.linkedin.com/company/copywriterproai", 
+      "https://copywriterpro.ai/" 
+    ]  
+  };
+
   return (
     <>
       <Script
@@ -110,6 +148,13 @@ const App = ({ Component, pageProps, err }) => {
             src="https://r.wdfl.co/rw.js"
             data-rewardful="d9f50a"
           ></Script>
+
+          <Script
+            type="application/ld+json"
+            strategy="afterInteractive"
+            id="myBusiness"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(myBusiness) }}
+          />
         </>
       )}
 
