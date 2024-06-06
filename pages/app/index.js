@@ -18,7 +18,7 @@ const App = () => {
   const { width: windowWidth } = useWindowSize();
 
   useEffect(() => {
-    router.push(`/app/${MOBILE_DEFAULT_TOOL}`);
+    // router.push(`/app/${MOBILE_DEFAULT_TOOL}`);
   }, []);
 
   return (
