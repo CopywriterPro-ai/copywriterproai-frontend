@@ -16,6 +16,7 @@ const AdminLayout = ({
 }) => {
   const { push } = useRouter();
   const { isAuth, isRehydrated, userInfo } = useUser();
+  const { hasCompletedOnboarding = true } = userInfo;
 
   useEffect(() => {
     if (
@@ -25,8 +26,17 @@ const AdminLayout = ({
       userInfo.isLoaded
     ) {
       push(USER_DEFAULT_PATH);
+    } else if (isAuth && !hasCompletedOnboarding) {
+      router.push("/app/onboading");
     }
-  }, [isAuth, isRehydrated, push, userInfo.isLoaded, userInfo.role]);
+  }, [
+    isAuth,
+    isRehydrated,
+    push,
+    userInfo.isLoaded,
+    userInfo.role,
+    hasCompletedOnboarding,
+  ]);
 
   if (
     isAuth &&
@@ -34,7 +44,7 @@ const AdminLayout = ({
     userInfo.role !== "admin" &&
     userInfo.isLoaded
   ) {
-    return <Processing color='#000'/>;
+    return <Processing color="#000" />;
   }
 
   return (

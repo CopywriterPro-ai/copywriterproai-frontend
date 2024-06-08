@@ -16,12 +16,19 @@ const NewLayout = ({
   additionalMeta,
 }) => {
   const router = useRouter();
-  const { isAuth, isRehydrated } = useUser();
+  const {
+    isAuth,
+    isRehydrated,
+    userInfo: { hasCompletedOnboarding = true },
+  } = useUser();
 
   useEffect(() => {
     if (isAuth && isRehydrated) router.push(USER_DEFAULT_PATH);
+    else if (isAuth && !hasCompletedOnboarding) {
+      router.push("/app/onboading");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth, isRehydrated]);
+  }, [isAuth, isRehydrated, hasCompletedOnboarding]);
 
   if (isAuth && isRehydrated) {
     return <Processing color="#000" />;

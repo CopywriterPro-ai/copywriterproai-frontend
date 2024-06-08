@@ -1,7 +1,54 @@
+import { USER_DEFAULT_PATH } from "@/appconstants";
 import { UserLayout as Layout } from "@/layout";
+import {
+  selectors as authSelector,
+  complateOnboading,
+  submitOpenAIApi,
+} from "@/redux/slices/auth";
+
+import { useRouter } from "next/router";
+import { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 const Onboading = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const {
+    info: {
+      loading = "idle",
+      data: { hasCompletedOnboarding = false },
+    },
+  } = useSelector(authSelector.getAuth);
+
+  const [apiKey, setApiKey] = useState("");
+  const isLoading = loading === "pending";
+
+  const isValidApiKey = useMemo(() => {
+    return (
+      typeof apiKey === "string" &&
+      apiKey.length > 20 &&
+      apiKey.startsWith("sk-")
+    );
+  }, [apiKey]);
+
+  const handleComplateOnboading = () => {
+    dispatch(complateOnboading());
+  };
+
+  const handleSubmitAPI = () => {
+    if (isValidApiKey && !isLoading) {
+      dispatch(submitOpenAIApi({ ownOpenAIApiKey: apiKey }));
+    }
+  };
+
+  useEffect(() => {
+    if (hasCompletedOnboarding) {
+      router.push(USER_DEFAULT_PATH);
+    }
+  }, [hasCompletedOnboarding, router]);
+
   return (
     <Layout>
       <div className="container" style={{ maxWidth: "800px" }}>
@@ -17,14 +64,29 @@ const Onboading = () => {
           <ColFlexStyle>
             <APIKeyStyle>
               <div>OpneAl API Key:</div>
-              <input name="openai-api" type="text" placeholder="Enter key" />
+              <input
+                name="openai-api"
+                value={apiKey}
+                onChange={(ev) => setApiKey(ev.target.value)}
+                type="text"
+                placeholder="Enter key"
+              />
             </APIKeyStyle>
             <div style={{ margin: "5px 0" }}>
-              <ActionBtn>Save</ActionBtn>
+              <ActionBtn
+                IsDisable={isValidApiKey && !isLoading ? "false" : "true"}
+                onClick={handleSubmitAPI}
+              >
+                Save
+              </ActionBtn>
             </div>
           </ColFlexStyle>
           <div style={{ marginTop: "80px" }}>
-            <ActionBtn TextColor="white" BgColor="green">
+            <ActionBtn
+              onClick={handleComplateOnboading}
+              TextColor="white"
+              BgColor="green"
+            >
               Skip, start free trail
             </ActionBtn>
           </div>
@@ -67,7 +129,8 @@ const ActionBtn = styled.div`
   align-items: center;
   border-radius: 8px;
   border: 1px solid gray;
-  cursor: pointer;
+  cursor: ${({ IsDisable }) =>
+    IsDisable === "true" ? "not-allowed" : "pointer"};
   display: inline-flex;
   gap: 6px;
   justify-items: center;

@@ -38,7 +38,7 @@ const UserLayout = ({
   const [requestSubscriber, setRequestSubscriber] = useState(true);
   const { isLoaded, isAuth, isRehydrated } = useAuth();
   const {
-    userInfo: { id: userId },
+    userInfo: { id: userId, hasCompletedOnboarding = true },
     subscribe,
   } = useUser();
   const [subsModal] = useSubscriberModal();
@@ -55,8 +55,12 @@ const UserLayout = ({
   // }, [isAuth, isRehydrated, subscribe?.activeSubscription?.expire]);
 
   useEffect(() => {
-    if (isRehydrated && !isAuth && !isSpecial) router.push("/signin");
-  }, [isAuth, isRehydrated, isSpecial, router]);
+    if (isRehydrated && !isAuth && !isSpecial) {
+      router.push("/signin");
+    } else if (isAuth && !hasCompletedOnboarding) {
+      router.push("/app/onboading");
+    }
+  }, [isAuth, isRehydrated, isSpecial, router, hasCompletedOnboarding]);
 
   const {
     status: { fetchContent, fetchCategories },

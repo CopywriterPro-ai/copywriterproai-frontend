@@ -131,6 +131,39 @@ export const updateCopyCounter = createAsyncThunk(
   }
 );
 
+export const submitOpenAIApi = createAsyncThunk(
+  "user/submitOpenAIApiFetching",
+  async ({ ownOpenAIApiKey }, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await userApi.submitOpenAIApi({
+        data: { ownOpenAIApiKey },
+      });
+      await dispatch(complateOnboading());
+      return {
+        data: response.data,
+        status: response.status,
+      };
+    } catch (error) {
+      return asyncThunkError(error, rejectWithValue);
+    }
+  }
+);
+
+export const complateOnboading = createAsyncThunk(
+  "user/complateOnboadingFetching",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await userApi.complateOnboading();
+      return {
+        data: response.data,
+        status: response.status,
+      };
+    } catch (error) {
+      return asyncThunkError(error, rejectWithValue);
+    }
+  }
+);
+
 const initialState = {
   auth: {
     loading: "idle",
@@ -343,6 +376,42 @@ const auth = createSlice({
       }
     },
     [updateCopyCounter.rejected]: (state, action) => {
+      if (state.info.loading === "pending") {
+        state.info.loading = "idle";
+        state.info.error = action.payload.data;
+      }
+    },
+    [submitOpenAIApi.pending]: (state, action) => {
+      if (state.info.loading === "idle") {
+        state.info.loading = "pending";
+        state.info.error = null;
+      }
+    },
+    [submitOpenAIApi.fulfilled]: (state, action) => {
+      if (state.info.loading === "pending") {
+        state.info.loading = "idle";
+      }
+    },
+    [submitOpenAIApi.rejected]: (state, action) => {
+      if (state.info.loading === "pending") {
+        state.info.loading = "idle";
+        state.info.error = action.payload.data;
+      }
+    },
+
+    [complateOnboading.pending]: (state, action) => {
+      if (state.info.loading === "idle") {
+        state.info.loading = "pending";
+        state.info.error = null;
+      }
+    },
+    [complateOnboading.fulfilled]: (state, action) => {
+      if (state.info.loading === "pending") {
+        state.info.loading = "idle";
+        location.reload();
+      }
+    },
+    [complateOnboading.rejected]: (state, action) => {
       if (state.info.loading === "pending") {
         state.info.loading = "idle";
         state.info.error = action.payload.data;
