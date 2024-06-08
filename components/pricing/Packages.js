@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import Image from 'next/image';
-import { BsCalendar2Check, BsCalendarX, BsCreditCard } from 'react-icons/bs';
+import React, { useEffect } from "react";
+import Image from "next/image";
+import { BsCalendar2Check, BsCalendarX, BsCreditCard } from "react-icons/bs";
 
-import Circle from '../common/Circle';
-import { pricingData } from '../../utils/data';
+import Circle from "../common/Circle";
+import { pricingData } from "../../utils/data";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -19,7 +19,7 @@ import { selectors as subscriberSelector } from "@/redux/slices/subscriber";
 import { setRedirectPath } from "@/redux/slices/ui";
 import { stripe as getStripe } from "@/utils";
 
-const Packages = ({ header, paddingTop = 'pt-120' }) => {
+const Packages = ({ header, paddingTop = "pt-120" }) => {
   const dispatch = useDispatch();
 
   const interval = 1;
@@ -80,7 +80,9 @@ const Packages = ({ header, paddingTop = 'pt-120' }) => {
   };
 
   return (
-    <section className={`pricing-section pb-120 position-relative z-2 ${paddingTop}`}>
+    <section
+      className={`pricing-section pb-120 position-relative z-2 ${paddingTop}`}
+    >
       <div className="container">
         {header && (
           <div>
@@ -90,7 +92,8 @@ const Packages = ({ header, paddingTop = 'pt-120' }) => {
                   <h4 className="h5 text-primary">Pricing</h4>
                   <h2>Make Your Writing Sparkle</h2>
                   <p>
-                    Choose a plan that fits your needs and get started on your writing journey today!{' '}
+                    Choose a plan that fits your needs and get started on your
+                    writing journey today!{" "}
                   </p>
                 </div>
               </div>
@@ -143,8 +146,8 @@ const Packages = ({ header, paddingTop = 'pt-120' }) => {
               >
                 <div className="pricing-header mb-32">
                   <h3 className={`package-name ${pricing.textColor} d-block`}>
-                    {' '}
-                    {pricing.title}{' '}
+                    {" "}
+                    {pricing.title}{" "}
                   </h3>
                   <h4 className="display-6 fw-semi-bold">
                     {pricing.price}
@@ -156,10 +159,11 @@ const Packages = ({ header, paddingTop = 'pt-120' }) => {
                     {pricing.listItem.map((list, i) => (
                       <li key={i + 1}>
                         <Circle textColor={pricing.textColor} />
-                        {list.available ?
-                          <span>{list.li}</span> :
+                        {list.available ? (
+                          <span>{list.li}</span>
+                        ) : (
                           <strike>{list.li}</strike>
-                        }
+                        )}
                       </li>
                     ))}
                   </ul>
@@ -174,7 +178,7 @@ const Packages = ({ header, paddingTop = 'pt-120' }) => {
                   disabled={isCheckoutPending}
                 >
                   {isAuth &&
-                    (pricedata[i].metadata.priceKey === subscription
+                    (pricedata[i]?.metadata.priceKey === subscription
                       ? isPaidSubscribers
                         ? "Active"
                         : "Expired"

@@ -44,6 +44,18 @@ const user = {
       method: "post",
     });
   },
+  submitOpenAIApi: ({ data }) => {
+    return fetcher("/auth/submit-own-openai-api-key", {
+      method: "post",
+      data,
+    });
+  },
+
+  complateOnboading: () => {
+    return fetcher("/auth/complete-onboarding", {
+      method: "post",
+    });
+  },
 };
 
 export default user;
