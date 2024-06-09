@@ -54,7 +54,7 @@ const Onboarding = () => {
           <Container>
             <ColFlex>
               <Description>
-                Thank you for choosing us to write your <b>SEO-friendly</b> blog posts and marketing copywriting. While you are welcome to use your own OpenAI API key, we would greatly appreciate it if you use our AI model and subscribe to our package. Your support helps us continue to develop <b>open-source</b> software and drive our community. Thank you for your support! <b>Happy Copywriting</b> with CopywriterPro <FaSmile />.
+                Thank you for choosing us to write your <b>SEO-friendly</b> blog posts and marketing copywriting. While you are welcome to use your own API key, we would greatly appreciate it if you use our AI model and subscribe to our package. Your support helps us continue to develop <b>open-source</b> software and drive our community. Thank you for your support! <b>Happy Copywriting</b> with CopywriterPro <FaSmile />.
               </Description>
               <ColFlex>
                 <FormField>
