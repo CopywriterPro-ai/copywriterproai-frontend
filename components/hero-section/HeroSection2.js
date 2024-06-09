@@ -1,10 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
-import { FiLifeBuoy, FiGithub, FiKey, FiCheckCircle } from "react-icons/fi";
-import { FaGoogle } from "react-icons/fa";
+import { FiGithub, FiKey } from "react-icons/fi";
+import { FaGoogle, FaCheckCircle } from "react-icons/fa";
 import ModalVideo from "react-modal-video";
 import styled from "styled-components";
-import classNames from "classnames";
 
 import DemoBlogHeadline from "@/components/pages/landing/Banner/components/DemoBlogHeadline";
 import DemoParaphrase from "@/components/pages/landing/Banner/components/DemoParaphrase";
@@ -20,18 +19,6 @@ const brands = [
   { name: "spotify" },
   { name: "Mailchimp" },
   { name: "Mashable" },
-];
-
-const features = [
-  {
-    id: "open-source",
-    title: "Open Source: Access, Modify, and Improve",
-  },
-  {
-    id: "ai-powered",
-    title: "AI-Powered: High-Quality Content Tailored to You",
-  },
-  { id: "seo-friendly", title: "SEO-Friendly: Boost Your Online Visibility" },
 ];
 
 const apiFeatures = [
@@ -97,7 +84,7 @@ const HeroSectionTwo = () => {
                     Open-Source AI Writing Platform for SEO and Ad Copy
                   </HeadingStyle>
                   <DescriptionStyle>
-                    CopywriterPro is the world's first open-source AI content
+                    CopywriterPro is the world’s first open-source AI content
                     writing platform that empowers users to create SEO-friendly
                     blog posts, ad copy for social media, website landing pages,
                     and more. With its advanced AI algorithms and versatile
@@ -105,13 +92,20 @@ const HeroSectionTwo = () => {
                     unparalleled flexibility and freedom.
                   </DescriptionStyle>
 
-                  <FeaturesStyle>
-                    {features.map((feature) => (
-                        <FeatureStyle key={feature.id}>
-                          <FiCheckCircle /> {feature.title}
-                        </FeatureStyle>
-                    ))}
-                  </FeaturesStyle>
+                  <FeaturesList>
+                    <li>
+                      <FaCheckCircle className="me-2 text-primary mb-1" />
+                      <b>Open Source</b>: Access, Modify, and Improve
+                    </li>
+                    <li>
+                      <FaCheckCircle className="me-2 text-primary mb-1" />
+                      <b>AI-Powered</b>: High-Quality Content Tailored to You
+                    </li>
+                    <li>
+                      <FaCheckCircle className="me-2 text-primary mb-1" />
+                      <b>SEO-Friendly</b>: Boost Your Online Visibility
+                    </li>
+                  </FeaturesList>
 
                   <div className="action-btns mt-5 align-items-center flex d-sm-flex d-lg-flex d-md-flex">
                     <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
@@ -171,13 +165,14 @@ const HeroSectionTwo = () => {
                     features without any additional cost.
                   </DescriptionStyle>
 
-                  <FeaturesStyle>
+                  <FeaturesList>
                     {apiFeatures.map((feature) => (
-                        <FeatureStyle key={feature.id}>
-                          <FiCheckCircle /> {feature.title}
-                        </FeatureStyle>
+                        <li key={feature.id}>
+                          <FaCheckCircle className="me-2 text-primary mb-1" />
+                          {feature.title}
+                        </li>
                     ))}
-                  </FeaturesStyle>
+                  </FeaturesList>
 
                   <div className="action-btns mt-5 d-sm-flex d-lg-flex d-md-flex">
                     <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
@@ -206,14 +201,13 @@ const HeadingStyle = styled.h1`
 
 const DescriptionStyle = styled.p``;
 
-const FeaturesStyle = styled.div``;
-
-const FeatureStyle = styled.div`
+const FeaturesList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
   display: flex;
-  justify-items: center;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 5px;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const ActionBtn = styled.div`
