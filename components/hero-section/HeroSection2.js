@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
-import { FiLifeBuoy, FiGithub, FiFigma, FiCheckCircle } from "react-icons/fi";
+import { FiLifeBuoy, FiGithub, FiKey, FiCheckCircle } from "react-icons/fi";
+import { FaGoogle } from "react-icons/fa";
 import ModalVideo from "react-modal-video";
 import styled from "styled-components";
 import classNames from "classnames";
@@ -8,7 +9,6 @@ import classNames from "classnames";
 import DemoBlogHeadline from "@/components/pages/landing/Banner/components/DemoBlogHeadline";
 import DemoParaphrase from "@/components/pages/landing/Banner/components/DemoParaphrase";
 
-import { GoogleButton } from "@/components/common/AuthButton";
 import { isServer } from "@/utils";
 
 const baseURL = process.env.NEXT_PUBLIC_APP_API_URL;
@@ -97,7 +97,7 @@ const HeroSectionTwo = () => {
                     Open-Source AI Writing Platform for SEO and Ad Copy
                   </HeadingStyle>
                   <DescriptionStyle>
-                    CopywriterPro is the world&apos;s first open-source AI content
+                    CopywriterPro is the world's first open-source AI content
                     writing platform that empowers users to create SEO-friendly
                     blog posts, ad copy for social media, website landing pages,
                     and more. With its advanced AI algorithms and versatile
@@ -108,19 +108,19 @@ const HeroSectionTwo = () => {
                   <FeaturesStyle>
                     {features.map((feature) => (
                         <FeatureStyle key={feature.id}>
-                          <FiLifeBuoy /> {feature.title}
+                          <FiCheckCircle /> {feature.title}
                         </FeatureStyle>
                     ))}
                   </FeaturesStyle>
 
                   <div className="action-btns mt-5 align-items-center flex d-sm-flex d-lg-flex d-md-flex">
                     <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                      <ActionBtn>
+                      <ActionBtn onClick={() => window.open("https://github.com/CopywriterPro-ai", "_blank")}>
                         <FiGithub />
                         View on Github
                       </ActionBtn>
-                      <ActionBtn onClick={() => handleStrategyAction("google")}>
-                        <FiFigma />
+                      <ActionBtn onClick={() => window.open("https://copywriterpro.ai/signup", "_self")}>
+                        <FaGoogle />
                         Try for free
                       </ActionBtn>
                     </div>
@@ -181,12 +181,12 @@ const HeroSectionTwo = () => {
 
                   <div className="action-btns mt-5 d-sm-flex d-lg-flex d-md-flex">
                     <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                      <ActionBtn>
-                        <FiCheckCircle />
+                      <ActionBtn onClick={() => window.open("https://copywriterpro.ai/signup", "_self")}>
+                        <FiKey />
                         Add Your API Key
                       </ActionBtn>
-                      <ActionBtn>
-                        <FiCheckCircle />
+                      <ActionBtn onClick={() => window.open("https://copywriterpro.ai/signup", "_self")}>
+                        <FaGoogle />
                         Try for free
                       </ActionBtn>
                     </div>
