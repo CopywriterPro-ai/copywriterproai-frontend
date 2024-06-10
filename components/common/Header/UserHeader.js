@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from 'next/image';
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -26,7 +26,7 @@ import { useResponsive } from "@/hooks";
 import { useElementSize, useUser, useNotice } from "@/hooks";
 import { USER_DEFAULT_PATH } from "@/appconstants";
 
-import {FaChevronDown, FaBars, FaSignOutAlt, FaUser} from 'react-icons/fa';
+import { FaChevronDown, FaBars, FaSignOutAlt, FaUser } from "react-icons/fa";
 
 const NavItem = ({ link, title }) => {
   return (
@@ -47,7 +47,10 @@ const NavComDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
           data-toggle="dropdown"
           aria-expanded={isOpen}
         >
-          {MenuName} <i><FaChevronDown/></i>
+          {MenuName}{" "}
+          <i>
+            <FaChevronDown />
+          </i>
         </DropdownToggleOptions>
         <NavDropdownMenu>
           <a href={externalLink.facebookGroup} target="__blank">
@@ -74,14 +77,15 @@ const NavBlogDropdownMenuItem = ({ isOpen, toggle, MenuName }) => {
           data-toggle="dropdown"
           aria-expanded={isOpen}
         >
-          {MenuName} <i><FaChevronDown/></i>
+          {MenuName}{" "}
+          <i>
+            <FaChevronDown />
+          </i>
         </DropdownToggleOptions>
         <NavDropdownMenu>
           <Link href="/app/ai-write-along">
             <a>
-              <NavDropdownItem tag="div">
-                Write along
-              </NavDropdownItem>
+              <NavDropdownItem tag="div">Write along</NavDropdownItem>
             </a>
           </Link>
           <Link href="/app/ai-ghostwriter">
@@ -210,7 +214,7 @@ const AppHeader = () => {
         shownotice={showTopBar.toString()}
         noticeheight={topNoticeHeight}
       >
-        <div className="container-fluid" style={{padding: "0"}}>
+        <div className="container-fluid" style={{ padding: "0" }}>
           <NavbarContainer>
             <Logo>
               <Link href={isAuth ? USER_DEFAULT_PATH : "/"}>
@@ -220,7 +224,7 @@ const AppHeader = () => {
                   src="/logo-color.svg"
                   alt="logo"
                   className="img-fluid logo-color"
-                  style={{paddingTop: '15px !important'}}
+                  style={{ paddingTop: "15px !important" }}
                 />
               </Link>
             </Logo>
@@ -232,7 +236,7 @@ const AppHeader = () => {
                     <NavBlogDropdownMenuItem
                       isOpen={blogIsOpen}
                       toggle={blogToggle}
-                      MenuName="Blog"
+                      MenuName="SEO Genie"
                     />
                     <NavItem link="/bookmarks" title="Bookmarks" />
                   </>
@@ -248,9 +252,11 @@ const AppHeader = () => {
               </ul>
             </NavList>
 
-            <MobileToogle
-              onClick={toggleSidebar}
-            ><i><FaBars/></i></MobileToogle>
+            <MobileToogle onClick={toggleSidebar}>
+              <i>
+                <FaBars />
+              </i>
+            </MobileToogle>
 
             {!isAuth && (
               <NavbarMenu>
@@ -268,7 +274,7 @@ const AppHeader = () => {
                     tag="span"
                     data-toggle="dropdown"
                     aria-expanded={isOpen}
-                    style={{float: "right"}}
+                    style={{ float: "right" }}
                   >
                     <DropdownAvatar>
                       {profileAvatar ? (
@@ -277,19 +283,27 @@ const AppHeader = () => {
                         <FirstCharAvatar>{firstName.charAt(0)}</FirstCharAvatar>
                       )}
                       <span>{fullName}</span>
-                      <i style={{ paddingLeft: "5px" }}><FaChevronDown/></i>
+                      <i style={{ paddingLeft: "5px" }}>
+                        <FaChevronDown />
+                      </i>
                     </DropdownAvatar>
                   </DropdownToggleOptions>
                   <NavDropdownMenu userMenu="true">
                     <NavDropdownItem tag="div">
                       <Link href="/bookmarks">
                         <a>
-                          <i style={{ paddingRight: "5px" }}><FaUser/></i> My account
+                          <i style={{ paddingRight: "5px" }}>
+                            <FaUser />
+                          </i>{" "}
+                          My account
                         </a>
                       </Link>
                     </NavDropdownItem>
                     <NavDropdownItem tag="div" onClick={handleSignout}>
-                      <i style={{ paddingRight: "5px" }}><FaSignOutAlt/></i> Log out
+                      <i style={{ paddingRight: "5px" }}>
+                        <FaSignOutAlt />
+                      </i>{" "}
+                      Log out
                     </NavDropdownItem>
                   </NavDropdownMenu>
                 </DropdownOptions>
@@ -331,12 +345,12 @@ const JoinButton = styled.button`
 const NavDropdownMenu = styled(DropdownMenu)`
   display: none;
   position: absolute;
-  right: ${({ userMenu }) => userMenu === "true" ? "0px" : "auto"} !important;
-  left: ${({ userMenu }) => userMenu === "true" ? "auto" : "0px"} !important;
+  right: ${({ userMenu }) => (userMenu === "true" ? "0px" : "auto")} !important;
+  left: ${({ userMenu }) => (userMenu === "true" ? "auto" : "0px")} !important;
   transform: translate3d(0px, 35px, 0px) !important;
   background-color: #f9f9f9;
   min-width: 200px;
-  box-shadow: 0px 5px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 5px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 3;
   padding: 0px;
   margin: 0px;
@@ -400,7 +414,7 @@ const NavDropdownItem = styled(DropdownItem)`
   color: black;
   cursor: pointer;
   padding: 1rem 3.5rem 1rem 1.2rem;
-  
+
   &:hover {
     color: black;
     background-color: #f1f1f1;

@@ -21,7 +21,7 @@ import SubscriberModal from "@/components/modals/subscriptions/plan";
 import SubscriberTrialEndModal from "@/components/modals/subscriptions/trailend";
 import { useResponsive, useUser } from "@/hooks";
 
-import {FaChevronDown} from 'react-icons/fa';
+import { FaChevronDown } from "react-icons/fa";
 
 const MainSidebar = () => {
   const dispatch = useDispatch();
@@ -132,7 +132,10 @@ const MainSidebar = () => {
                   <DropDownMenuTitle
                     onClick={() => setPlanDrop((prevState) => !prevState)}
                   >
-                    Plan <i><FaChevronDown/></i>
+                    Plan{" "}
+                    <i>
+                      <FaChevronDown />
+                    </i>
                   </DropDownMenuTitle>
                   <Collapse isOpen={planDrop}>
                     <DropDownList>
@@ -146,7 +149,9 @@ const MainSidebar = () => {
                             </StyledPlanItem>
                           </li>
                           <li>
-                            <StyledPlanItem onClick={handleCreateCustomerPortal}>
+                            <StyledPlanItem
+                              onClick={handleCreateCustomerPortal}
+                            >
                               {loadingManageSubs ? "Loading..." : "Manage Plan"}
                             </StyledPlanItem>
                           </li>
@@ -168,7 +173,10 @@ const MainSidebar = () => {
               <DropDownMenuTitle
                 onClick={() => setBlogDrop((prevState) => !prevState)}
               >
-                Blog <i><FaChevronDown/></i>
+                SEO Genie{" "}
+                <i>
+                  <FaChevronDown />
+                </i>
               </DropDownMenuTitle>
               <Collapse isOpen={blogDrop}>
                 <DropDownList>
