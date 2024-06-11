@@ -11,12 +11,15 @@ import Faq from "@/components/faq/FaqThree";
 import Support from "@/components/support/SupportOne";
 import LatestBlog from "@/components/blogs/LatestBlog";
 import Footer from "@/layout/Footer/Footer";
+import { useAuthNavigate } from "@/hooks";
 
 import { landing } from "@/utils/metaData";
 
 const { title, description } = landing;
 
 export default function Home() {
+  useAuthNavigate();
+
   return (
     <Layout title={title} description={description}>
       <Navbar navDark />

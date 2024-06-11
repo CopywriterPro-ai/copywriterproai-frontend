@@ -8,7 +8,7 @@ import { GenerateSidebar, MainSidebar } from "@/components/sidebar";
 import { useSidebar } from "hooks";
 import { selectors as uiSelector } from "@/redux/slices/ui";
 import { SubscriberModal } from "@/components/modals/subscriber";
-import { useWindowSize } from "@/hooks";
+import { useWindowSize, useAuthNavigate } from "@/hooks";
 
 const MOBILE_DEFAULT_TOOL = "paraphrasing";
 
@@ -17,9 +17,7 @@ const App = () => {
   const { subscriber } = useSelector(uiSelector.getModal);
   const { width: windowWidth } = useWindowSize();
 
-  useEffect(() => {
-    // router.push(`/app/${MOBILE_DEFAULT_TOOL}`);
-  }, []);
+  useAuthNavigate();
 
   return (
     <Layout>

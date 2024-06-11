@@ -24,6 +24,7 @@ export const UPDATE = "update";
 export const CREATE = "create";
 
 export const USER_DEFAULT_PATH = "/app/paraphrasing";
+export const USER_ONBOARDING_PATH = "/app/onboading";
 
 // Quill Editor
 export const AI_BLOG_WRITER = "ai_blog_writer";
