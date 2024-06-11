@@ -21,10 +21,10 @@ export default function Home() {
     <Layout title={title} description={description}>
       <Navbar navDark />
       <HeroSection />
+      <Testimonial darkBg />
       <WorkProcess />
       <Feature cardDark />
       <FeatureImgContent />
-      <Testimonial darkBg />
       <Pricing header="true" />
       <Faq />
       {/* <Integration /> */}
