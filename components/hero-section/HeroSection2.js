@@ -65,152 +65,169 @@ const HeroSectionTwo = () => {
   const [isOpen, setOpen] = useState(false);
 
   return (
-    <>
-      <section
-        className="hero-section ptb-120 text-white bg-gradient"
-        style={{ background: "url('/hero-dot-bg.png')no-repeat center right" }}
-      >
-        <ModalVideo
-          channel="youtube"
-          isOpen={isOpen}
-          videoId="aQFao8lz6C8"
-          onClose={() => setOpen(false)}
-        />
-        <div className="container">
-          <div className="row align-items-center mt-40">
-            <div className="col-lg-6 col-md-10">
-              <div className="hero-content-wrap mt-100 mt-lg-0 mt-xl-0">
-                <HeadingStyle>
-                  Open-Source AI Writing Platform for SEO and Ad Copy
-                </HeadingStyle>
-                <DescriptionStyle>
-                  CopywriterPro is the world’s first open-source AI content
-                  writing platform that empowers users to create SEO-friendly
-                  blog posts, ad copy for social media, website landing pages,
-                  and more. With its advanced AI algorithms and versatile
-                  content creation capabilities, CopywriterPro offers
-                  unparalleled flexibility and freedom.
-                </DescriptionStyle>
+      <>
+        <section
+            className="hero-section ptb-120 text-white bg-gradient"
+            style={{ background: "url('/hero-dot-bg.png')no-repeat center right" }}
+        >
+          <ModalVideo
+              channel="youtube"
+              isOpen={isOpen}
+              videoId="aQFao8lz6C8"
+              onClose={() => setOpen(false)}
+          />
+          <div className="container">
+            <div className="row align-items-center mt-40">
+              <div className="col-lg-6 col-md-10">
+                <div className="hero-content-wrap mt-100 mt-lg-0 mt-xl-0">
+                  <HeadingStyle>
+                    Open-Source AI Writing Platform for SEO and Ad Copy
+                  </HeadingStyle>
+                  <DescriptionStyle>
+                    CopywriterPro is the world’s first open-source AI content
+                    writing platform that empowers users to create SEO-friendly
+                    blog posts, ad copy for social media, website landing pages,
+                    and more. With its advanced AI algorithms and versatile
+                    content creation capabilities, CopywriterPro offers
+                    unparalleled flexibility and freedom.
+                  </DescriptionStyle>
 
-                <FeaturesList>
-                  <li>
-                    <FaCheckCircle className="me-2 text-primary mb-1" />
-                    <b>Open Source</b>: Access, Modify, and Improve
-                  </li>
-                  <li>
-                    <FaCheckCircle className="me-2 text-primary mb-1" />
-                    <b>AI-Powered</b>: High-Quality Content Tailored to You
-                  </li>
-                  <li>
-                    <FaCheckCircle className="me-2 text-primary mb-1" />
-                    <b>SEO-Friendly</b>: Boost Your Online Visibility
-                  </li>
-                </FeaturesList>
-
-                <div className="action-btns mt-5 align-items-center flex d-sm-flex d-lg-flex d-md-flex">
-                  <div
-                    style={{ display: "flex", alignItems: "center", gap: 20 }}
-                  >
-                    <ActionBtn
-                      onClick={() =>
-                        window.open(
-                          "https://github.com/CopywriterPro-ai",
-                          "_blank"
-                        )
-                      }
-                    >
-                      <FiGithub />
-                      View on Github
-                    </ActionBtn>
-                    <ActionBtn
-                      onClick={() =>
-                        window.open("https://copywriterpro.ai/signup", "_self")
-                      }
-                    >
-                      <FaGoogle />
-                      Try for free
-                    </ActionBtn>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-6 col-md-12 mt-4 mt-lg-0">
-              <img width="100%" src="/open-source.png" alt="Screenshot" />
-            </div>
-          </div>
-        </div>
-        <div className="container" style={{ marginTop: "50px" }}>
-          <div
-            style={{
-              display: "flex",
-              overflow: "hidden",
-              justifyContent: "space-around",
-            }}
-          >
-            {brands.map((brand) => (
-              <div key={brand.name} title={brand.name}>
-                <img width="180px" src="/logo-color.svg" alt={brand.name} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      <section className="api-section ptb-120 bg-light text-dark">
-        <div className="container">
-          <div className="row align-items-center mt-40 flex-column-reverse flex-lg-row">
-            <div className="col-lg-6 col-md-12 mt-4 mt-lg-0">
-              <img
-                width="100%"
-                src="/onboarding.png"
-                alt="Onboard Screenshot"
-              />
-            </div>
-            <div className="col-lg-6 col-md-12">
-              <div className="api-content-wrap mt-100 mt-lg-0 mt-xl-0">
-                <HeadingStyle>Use Your Own API Keys for Free</HeadingStyle>
-                <DescriptionStyle>
-                  With CopywriterPro, you have the option to use your own API
-                  keys for free. This means you can take advantage of all our
-                  powerful features without any additional cost.
-                </DescriptionStyle>
-
-                <FeaturesList>
-                  {apiFeatures.map((feature) => (
-                    <li key={feature.id}>
+                  <FeaturesList>
+                    <li>
                       <FaCheckCircle className="me-2 text-primary mb-1" />
-                      {feature.title}
+                      <b>Open Source</b>: Access, Modify, and Improve
                     </li>
-                  ))}
-                </FeaturesList>
+                    <li>
+                      <FaCheckCircle className="me-2 text-primary mb-1" />
+                      <b>AI-Powered</b>: High-Quality Content Tailored to You
+                    </li>
+                    <li>
+                      <FaCheckCircle className="me-2 text-primary mb-1" />
+                      <b>SEO-Friendly</b>: Boost Your Online Visibility
+                    </li>
+                  </FeaturesList>
 
-                <div className="action-btns mt-5 d-sm-flex d-lg-flex d-md-flex">
-                  <div
-                    style={{ display: "flex", alignItems: "center", gap: 20 }}
-                  >
-                    <ActionBtn
-                      onClick={() =>
-                        window.open("https://copywriterpro.ai/signup", "_self")
-                      }
+                  <div className="action-btns mt-5 align-items-center flex d-sm-flex d-lg-flex d-md-flex">
+                    <div
+                        style={{ display: "flex", alignItems: "center", gap: 20 }}
                     >
-                      <FiKey />
-                      Add Your API Key
-                    </ActionBtn>
-                    <ActionBtn
-                      onClick={() =>
-                        window.open("https://copywriterpro.ai/signup", "_self")
-                      }
+                      <ActionBtn
+                          onClick={() =>
+                              window.open(
+                                  "https://github.com/CopywriterPro-ai",
+                                  "_blank"
+                              )
+                          }
+                      >
+                        <FiGithub />
+                        View on Github
+                      </ActionBtn>
+                      <ActionBtn
+                          onClick={() =>
+                              window.open("https://copywriterpro.ai/signup", "_self")
+                          }
+                      >
+                        <FaGoogle />
+                        Try for free
+                      </ActionBtn>
+                    </div>
+                  </div>
+
+                  <div className="product-hunt-badge mt-4">
+                    <a
+                        href="https://www.producthunt.com/posts/copywriterpro?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-copywriterpro"
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
-                      <FaGoogle />
-                      Try for free
-                    </ActionBtn>
+                      <img
+                          src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=461658&theme=light"
+                          alt="CopywriterPro - Worlds&#0032;first&#0032;open&#0032;source&#0032;AI&#0032;writing&#0032;platform&#0032;for&#0032;SEO&#0044;&#0032;AdCopy | Product Hunt"
+                          style={{ width: "250px", height: "54px" }}
+                          width="250"
+                          height="54"
+                      />
+                    </a>
+                  </div>
+
+                </div>
+              </div>
+              <div className="col-lg-6 col-md-12 mt-4 mt-lg-0">
+                <img width="100%" src="/open-source.png" alt="Screenshot" />
+              </div>
+            </div>
+          </div>
+          {/*<div className="container" style={{ marginTop: "50px" }}>*/}
+          {/*  <div*/}
+          {/*      style={{*/}
+          {/*        display: "flex",*/}
+          {/*        overflow: "hidden",*/}
+          {/*        justifyContent: "space-around",*/}
+          {/*      }}*/}
+          {/*  >*/}
+          {/*    {brands.map((brand) => (*/}
+          {/*        <div key={brand.name} title={brand.name}>*/}
+          {/*          <img width="180px" src="/logo-color.svg" alt={brand.name} />*/}
+          {/*        </div>*/}
+          {/*    ))}*/}
+          {/*  </div>*/}
+          {/*</div>*/}
+        </section>
+        <section className="api-section ptb-120 bg-light text-dark">
+          <div className="container">
+            <div className="row align-items-center mt-40 flex-column-reverse flex-lg-row">
+              <div className="col-lg-6 col-md-12 mt-4 mt-lg-0">
+                <img
+                    width="100%"
+                    src="/onboarding.png"
+                    alt="Onboard Screenshot"
+                />
+              </div>
+              <div className="col-lg-6 col-md-12">
+                <div className="api-content-wrap mt-100 mt-lg-0 mt-xl-0">
+                  <HeadingStyle>Use Your Own API Keys for Free</HeadingStyle>
+                  <DescriptionStyle>
+                    With CopywriterPro, you have the option to use your own API
+                    keys for free. This means you can take advantage of all our
+                    powerful features without any additional cost.
+                  </DescriptionStyle>
+
+                  <FeaturesList>
+                    {apiFeatures.map((feature) => (
+                        <li key={feature.id}>
+                          <FaCheckCircle className="me-2 text-primary mb-1" />
+                          {feature.title}
+                        </li>
+                    ))}
+                  </FeaturesList>
+
+                  <div className="action-btns mt-5 d-sm-flex d-lg-flex d-md-flex">
+                    <div
+                        style={{ display: "flex", alignItems: "center", gap: 20 }}
+                    >
+                      <ActionBtn
+                          onClick={() =>
+                              window.open("https://copywriterpro.ai/signup", "_self")
+                          }
+                      >
+                        <FiKey />
+                        Add Your API Key
+                      </ActionBtn>
+                      <ActionBtn
+                          onClick={() =>
+                              window.open("https://copywriterpro.ai/signup", "_self")
+                          }
+                      >
+                        <FaGoogle />
+                        Try for free
+                      </ActionBtn>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    </>
+        </section>
+      </>
   );
 };
 
