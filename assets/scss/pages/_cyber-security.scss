@@ -1,0 +1,333 @@
+// Index 10
+// Cyber Hero
+.hero-ten {
+  padding: 200px 0;
+}
+@media (min-width: 767px) and (max-width: 992px) {
+  .hero-ten {
+    padding: 110px 0;
+  }
+}
+@media (min-width: 320px) and (max-width: 768px) {
+  .hero-ten {
+    padding: 109px 0;
+  }
+}
+.cyber-down-btn a {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  line-height: 60px;
+  background-color: #fff;
+  font-size: 24px;
+  display: inline-block;
+  position: absolute;
+  top: 170px;
+  box-shadow: 0px 4px 4px 0px rgba(182, 182, 182, 0.2);
+}
+// About
+.cyber-about-img img {
+  border-radius: 10px;
+}
+.sheild-img img {
+  border: 20px solid #fff;
+  border-radius: 10px;
+  margin-top: -140px;
+  margin-left: -30px;
+}
+.cyber-about-count-box {
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.25);
+  border-right: 10px solid var(--bs-primary);
+  border-radius: 10px;
+}
+.cyber-about-box {
+  padding: 30px 20px;
+  box-shadow: 10px 10px 66px 0px rgba(136, 136, 136, 0.15);
+  background-color: #fff;
+  border-radius: 10px;
+}
+.cyber-about-icon {
+  margin-bottom: 25px;
+}
+.cyber-about-icon i {
+  text-align: center;
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 5px;
+  display: inline-block;
+  background-color: var(--bs-primary-soft);
+  color: var(--bs-primary);
+}
+// Services
+.cyber-features {
+  padding-bottom: 160px;
+}
+.cyber-single-service {
+  padding: 30px;
+}
+.cyber-single-service .feature-icon i {
+  font-size: 28px;
+}
+//CTA
+.cyber-cta {
+  margin-top: -100px;
+}
+
+//Count Box
+.cyber-video-img {
+  height: 100%;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  padding: 200px 0;
+}
+.cyber-video-img img {
+  border-radius: 10px;
+}
+.cyber-video-img a {
+  display: inline-block;
+  height: 75px;
+  width: 75px;
+  line-height: 77px;
+  text-align: center;
+  background-color: #175cff;
+  color: #fff;
+  border-radius: 50%;
+  position: relative;
+  font-size: 20px;
+}
+.cyber-video-img .popup-video-btn {
+  display: inline-block;
+  height: 75px;
+  width: 75px;
+  line-height: 77px;
+  text-align: center;
+  background-color: #175cff;
+  color: #fff;
+  border-radius: 50%;
+  position: relative;
+  font-size: 20px;
+  position: relative;
+}
+
+.cyber-video-img .popup-video-btn:before {
+  content: '';
+  position: absolute;
+  left: -12.5px;
+  top: -12.5px;
+  height: 100px;
+  width: 100px;
+  opacity: 0;
+  border-radius: 50%;
+  border: 1px solid #175cff;
+  animation: btnWave 1500ms linear infinite;
+}
+.cyber-video-img .popup-video-btn:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  border-radius: 50%;
+  border: 10px solid #175cff;
+  animation: btnWave 1000ms linear infinite;
+}
+.popup-video-btn:hover {
+  color: #fff;
+}
+
+@keyframes btnWave {
+  0% {
+    opacity: 1;
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -o-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    -o-transform: scale(1.5);
+    transform: scale(1.5);
+  }
+}
+.cyber-count-box {
+  border-radius: 6px 6px 6px 6px;
+  box-shadow: 0px 15px 55px 0px rgba(102, 102, 102, 0.1);
+  padding: 30px 30px 30px 30px;
+}
+
+//Store
+.product-row {
+  margin-top: -200px;
+}
+.store-bg-header {
+  padding-top: 100px;
+  padding-bottom: 200px;
+}
+.single-product img {
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+  cursor: pointer;
+}
+.product-img {
+  position: relative;
+}
+.product-img::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  background-color: rgba(12, 22, 54, 0.2);
+  content: '';
+  opacity: 0;
+  transition: all 0.3s;
+}
+.single-product:hover .product-img::after {
+  opacity: 1;
+}
+.product-info {
+  border-radius: 0 0 5px 5px;
+}
+.product-info h6 a {
+  color: var(--bs-dark);
+}
+.sale-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+.cart i {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  line-height: 40px;
+  display: inline-block;
+  text-align: center;
+  color: var(--bs-primary);
+}
+.heart i {
+  position: absolute;
+  top: 65px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  line-height: 40px;
+  display: inline-block;
+  text-align: center;
+  color: var(--bs-primary);
+}
+.product-cart-wishlist-icon {
+  opacity: 0;
+  transition: all 0.3s;
+}
+.single-product:hover .product-cart-wishlist-icon {
+  opacity: 1;
+}
+// Testimonial
+.cyber-single-testimonial {
+  border-radius: 10px;
+  padding: 30px;
+  background-color: aliceblue;
+}
+
+// Cyber FAQ
+.cyber-faq-wrapper .faq-accordion .accordion-item button {
+  padding: 20px 30px;
+}
+.cyber-faq-img img {
+  border-radius: 10px;
+}
+@media (min-width: 767px) and (max-width: 992px) {
+  .cyber-faq-img img {
+    width: 100%;
+  }
+}
+
+// Cyber Blog
+.cyber-article-img img {
+  width: 100%;
+}
+.cyber-single-article {
+  border-radius: 10px;
+}
+.cyber-single-article img {
+  border-radius: 10px 10px 0 0;
+}
+
+// Cyber Footer
+.cyber-footer {
+  position: relative;
+}
+
+.cyber-footer-social-list li a {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #05003b;
+  display: inline-block;
+  color: #fff;
+}
+.cyber-footer-social-list li a:hover {
+  background-color: #175cff;
+}
+.cyber-footer-bottom p {
+  border-top: 1px solid rgba(248, 249, 250, 0.05);
+}
+///Single Product Page
+.cyber-product-image img {
+  border-radius: 10px;
+  width: 100%;
+}
+.cp-quantity button {
+  font-size: 20px;
+}
+.cyber-product-tabs .nav-pills .nav-link {
+  padding: 0 0 10px 0;
+}
+.cyber-product-tabs .nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  border-bottom: 2px solid var(--bs-primary);
+  color: var(--bs-primary);
+  background-color: transparent;
+  border-radius: 0;
+}
+// Realted Product
+.related-product-cart-wishlist-icon .cart i,
+.related-product-cart-wishlist-icon .heart i {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #fff;
+  line-height: 40px;
+  display: inline-block;
+  text-align: center;
+  color: var(--bs-primary);
+  right: 15px;
+  transition: all 0.3s;
+}
+.related-product-cart-wishlist-icon .cart i {
+  top: 15px;
+}
+.related-product-cart-wishlist-icon .heart i {
+  top: 65px;
+}
+.related-product-cart-wishlist-icon {
+  opacity: 0;
+}
+.cyber-related-product-img:hover .related-product-cart-wishlist-icon {
+  opacity: 1;
+}

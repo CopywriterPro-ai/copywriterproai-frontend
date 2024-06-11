@@ -1,0 +1,25 @@
+{
+	"title": "Your Personal AI Copywriting Assistant",
+	"titleTemplate": "%s",
+	"description": "CopywriterPro is the highest quality AI copywriting tool that generates compelling and conversion-ready blog posts, website contents, marketing and sales copy with ease.",
+	"openGraph": {
+		"title": "Your Personal AI Copywriting Assistant",
+		"description": "CopywriterPro is the highest quality AI copywriting tool that generates compelling and conversion-ready blog posts, website contents, marketing and sales copy with ease.",
+		"type": "website",
+		"url": "https://copywriterpro.ai",
+		"site_name": "CopywriterPro.ai",
+		"images": [
+			{
+				"url": "https://copywriterpro.ai/feature-image.png",
+				"width": 800,
+				"height": 600,
+				"alt": "CopywriterPro.ai"
+			}
+		]
+	},
+	"twitter": {
+		"handle": "@CopywriterProAI",
+		"site": "@CopywriterProAI",
+		"cardType": "summary_large_image"
+	}
+}

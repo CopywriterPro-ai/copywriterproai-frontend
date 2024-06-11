@@ -1,0 +1,55 @@
+// 1. Configuration and helpers
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+@import 'abstracts/functions';
+
+// 2. Vendors
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+
+// 3. Base stuff
+@import 'base/base';
+@import 'base/fonts';
+@import 'base/typography';
+@import 'base/helpers';
+
+// 4. Layout-related sections/*
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/preloader';
+
+// 5. Components
+@import 'components/type';
+@import 'components/preloader';
+@import 'components/background';
+@import 'components/link';
+@import 'components/animated-shapes';
+@import 'components/promo';
+@import 'components/call-to-action';
+@import 'components/hero';
+@import 'components/about';
+@import 'components/customers';
+@import 'components/pricing';
+@import 'components/features';
+@import 'components/faq';
+@import 'components/support';
+@import 'components/team';
+@import 'components/blog';
+@import 'components/integration';
+@import 'components/forms';
+@import 'components/testimonial';
+@import 'components/buttons';
+@import 'components/color';
+@import 'components/work-process';
+
+// 6. Page-specific or demos styles
+@import 'pages/home';
+@import 'pages/it-solutions';
+@import 'pages/cyber-security';
+@import 'pages/crypto';
+@import 'pages/game-solution';
+@import 'pages/payment-getway';
+@import 'pages/digital-marketing';
+@import 'pages/conference';
+
+// 7. Themes
+@import 'themes/default';

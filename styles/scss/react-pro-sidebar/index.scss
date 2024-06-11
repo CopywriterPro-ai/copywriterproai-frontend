@@ -1,0 +1,13 @@
+@import "./variables.scss";
+@import "~react-pro-sidebar/dist/scss/partials/animation";
+@import "~react-pro-sidebar/dist/scss/partials/sidebar";
+@import "~react-pro-sidebar/dist/scss/partials/menu";
+@import "~react-pro-sidebar/dist/scss/partials/popperArrow";
+@import "~react-pro-sidebar/dist/scss/partials/reactSlidedown";
+
+@media (max-width: 992px) {
+  .pro-sidebar.lg.toggled {
+    left: 0;
+    top: 0;
+  }
+}

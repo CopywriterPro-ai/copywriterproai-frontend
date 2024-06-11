@@ -1,0 +1,284 @@
+// Blog module styles
+
+.blog-grid {
+  display: flex;
+  flex-flow: row nowrap;
+  transition: $transition-base;
+  opacity: 1;
+}
+.blog-grid .featured-post-wrapper,
+.blog-grid .posts-wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1 1;
+}
+.blog-grid .featured-post-wrapper .blog-item,
+.blog-grid .posts-wrapper .blog-item {
+  flex: 1 1;
+  display: flex;
+  padding: 15px;
+  width: 100%;
+}
+.blog-grid .blog-item .blog-content {
+  border-radius: 1rem;
+}
+.blog-grid .featured-post-wrapper .blog-item .read-more-link,
+.blog-grid .posts-wrapper .blog-item .read-more-link {
+  display: inline-block;
+}
+.blog-grid .featured-post-wrapper .blog-item .read-more-link a,
+.blog-grid .posts-wrapper .blog-item .read-more-link a {
+  transition: all 0.3s ease;
+  transform: translateX(-15px);
+  background-color: transparent;
+  color: $primary;
+}
+.blog-grid .featured-post-wrapper .blog-item .read-more-link a i,
+.blog-grid .posts-wrapper .blog-item .read-more-link a i {
+  margin-left: 10px;
+  margin-right: 0;
+  font-size: 14px;
+  line-height: 14px;
+  position: relative;
+  text-align: left;
+  margin-top: 3px;
+}
+.blog-grid .featured-post-wrapper .blog-item:hover .read-more-link a,
+.blog-grid .posts-wrapper .blog-item:hover .read-more-link a {
+  transition: all 0.3s ease;
+  transform: translateX(0);
+  background-color: $primary;
+  color: $white;
+}
+.blog-grid .featured-post-wrapper .blog-item .blog-content:hover,
+.blog-grid .posts-wrapper .blog-item .blog-content:hover {
+  box-shadow: none;
+}
+
+.blog-grid
+.featured-post-wrapper
+.blog-item
+.blog-content:hover
+.blog-media
+img,
+.blog-grid .posts-wrapper .blog-item .blog-content:hover .blog-media img {
+  transition: all 0.3s ease;
+  transform: scale(1.1);
+}
+.blog-grid .featured-post-wrapper .blog-item .blog-content:hover .blog-text h3,
+.blog-grid .posts-wrapper .blog-item .blog-content:hover .blog-text h3 {
+  color: $primary;
+}
+.blog-grid .featured-post-wrapper .blog-item .blog-content .blog-text h3 {
+  color: $primary;
+}
+.blog-grid .featured-post-wrapper .blog-item .read-more-link a {
+  transition: all 0.3s ease;
+  transform: translateX(0);
+  background-color: $primary;
+  color: $white;
+}
+.blog-text a {
+  text-decoration: none;
+}
+.blog-grid .featured-post-wrapper .blog-item .blog-content {
+  display: flex;
+  flex: 1 1 100%;
+  flex-flow: column nowrap;
+  position: relative;
+  width: 100%;
+}
+.blog-grid .featured-post-wrapper .blog-item .blog-content .blog-media {
+  flex: 1 1 46%;
+  width: 100%;
+  border-radius: 1rem 1rem 0 0;
+}
+.blog-grid .featured-post-wrapper .blog-item .blog-content .blog-text {
+  height: 290px;
+  width: 100%;
+}
+.blog-grid
+.featured-post-wrapper
+.blog-item
+.blog-content
+.blog-text
+.featured-badge {
+  position: absolute;
+  right: 5%;
+  top: -1px;
+}
+.blog-grid
+.featured-post-wrapper
+.blog-item
+.blog-content
+.blog-text
+.featured-badge
+i {
+  font-size: 35px;
+}
+
+.blog-grid .blog-content {
+  background-color: $white;
+  background-size: cover;
+  box-shadow: none;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+.blog-grid .blog-content .blog-media {
+  height: auto;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 35%;
+  overflow: hidden;
+  border-radius: 1rem 0 0 1rem;
+}
+.blog-grid .blog-content .blog-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: $white;
+  transition: all 0.3s ease;
+}
+.blog-grid .blog-content .blog-text {
+  padding: 33px;
+  width: 65%;
+}
+@media (min-width: 320px) and (max-width: 991px) {
+  .blog-grid {
+    display: block;
+  }
+}
+@media (min-width: 320px) and (max-width: 767px) {
+  .blog-grid .featured-post-wrapper .blog-item .blog-content .blog-text {
+    height: auto;
+  }
+  .blog-grid .blog-content .blog-media,
+  .blog-grid .blog-content .blog-text {
+    width: 100%;
+  }
+  .blog-grid .blog-content .blog-media {
+    border-radius: 1rem 1rem 0 0;
+  }
+}
+/*blog page css*/
+.single-article {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: $white;
+  background-clip: border-box;
+  border: 1px solid rgb(241, 241, 241);
+  transition: $transition-base;
+}
+.single-article a {
+  text-decoration: none;
+  display: block;
+}
+.article-img {
+  position: relative;
+  overflow: hidden;
+}
+.article-img:before {
+  content: "";
+  display: block;
+  background: rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease-in;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+.article-img img {
+  flex-shrink: 0;
+  width: 100%;
+  height: 14rem;
+  object-fit: cover;
+  transition: $transition-base;
+  transform: rotate(0) scale(1);
+}
+.single-article.feature-article {
+  flex-direction: row;
+}
+.single-article.feature-article .article-img img {
+  height: 20rem;
+}
+.single-article.feature-article .article-content {
+  width: fit-content;
+}
+
+@media (min-width: 320px) and (max-width: 575px) {
+  .single-article.feature-article {
+    flex-direction: column;
+  }
+  .single-article.feature-article .article-img img {
+    height: 14rem;
+  }
+}
+
+.article-category a {
+  font-weight: $font-weight-medium;
+  font-family: $headings-font-family;
+}
+.avatar-name {
+  font-size: 15px;
+}
+.avatar-info span {
+  font-size: 14px;
+}
+.article-title:hover,
+.avatar-name:hover {
+  color: $primary;
+}
+.limit-2-line-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.single-article:hover .article-img img {
+  transform: rotate(3deg) scale(1.1);
+}
+
+.single-article:hover .article-img:before {
+  background: transparent;
+}
+.single-article:hover {
+  transition: all 0.3s;
+  box-shadow: 0 11px 18px -8px rgba(0, 0, 0, 0.16);
+}
+.page-link {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-family: var(--bs-font-monospace);
+  font-weight: 600;
+}
+.page-item.active .page-link {
+  background: $primary;
+  border-color: $primary;
+}
+.page-link:focus {
+  box-shadow: none;
+  color: $primary;
+}
+
+//blog css
+
+.article-info{
+  a{
+    font-size: $font-size-sm;
+    i{
+      color: $secondary;
+    }
+  }
+}

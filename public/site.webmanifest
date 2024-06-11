@@ -1,0 +1,34 @@
+{
+	"theme_color": "#f69435",
+	"background_color": "#f69435",
+	"display": "standalone",
+	"orientation": "portrait",
+	"scope": "/",
+	"start_url": "/",
+	"id": "/",
+	"name": "CopywriterPro - Your Personal AI Copywriting Tool",
+	"short_name": "CopywriterPro",
+	"description": "CopywriterPro is the highest quality AI copywriting tool that generates compelling and conversion-ready blog posts, website content, marketing and sales copy with ease.",
+	"icons": [
+		{
+			"src": "/icon-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "/icon-256x256.png",
+			"sizes": "256x256",
+			"type": "image/png"
+		},
+		{
+			"src": "/icon-384x384.png",
+			"sizes": "384x384",
+			"type": "image/png"
+		},
+		{
+			"src": "/icon-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	]
+}

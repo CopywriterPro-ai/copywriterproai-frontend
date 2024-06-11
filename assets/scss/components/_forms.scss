@@ -1,0 +1,381 @@
+//
+// Forms
+// --------------------------------------------------
+
+select.form-select {
+  background-image: url("/img/dropdown-arrow.svg");
+}
+
+.form-control,
+.custom-select,
+.form-select {
+  border: 2px solid $border-color;
+}
+
+label {
+  font-weight: $font-weight-medium;
+  font-size: $font-size-sm;
+}
+.form-control:focus,
+.custom-select:focus {
+  background-color: $white;
+  outline: 0;
+  box-shadow: none;
+}
+.subscribe-feature-list li span {
+  margin: 0 15px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+}
+.subscribe-feature-list li span i {
+  font-size: 16px;
+}
+.bg-dark .subscribe-feature-list li span i {
+  color: darken($secondary, 10%) !important;
+}
+.register-form label:not(.form-check-label) {
+  font-size: 15px;
+  font-weight: 500;
+  font-family: $headings-font-family;
+}
+.form-check-label {
+  font-size: 13px;
+}
+.sign-up-in-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+// Label for use with horizontal and inline forms
+//.form-label {
+//  @include font-size($form-label-font-size);
+//  font-family: $font-family-monospace;
+//}
+
+input[type]::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder,
+select::-webkit-input-placeholder,
+select.form-select {
+  font-size: $font-size-sm;
+}
+
+input[type]:-moz-placeholder,
+textarea:-moz-placeholder,
+select:-moz-placeholder,
+select.form-select {
+  /* Firefox 18- */
+  font-size: $font-size-sm;
+}
+
+input[type]::-moz-placeholder,
+textarea::-moz-placeholder,
+select::-moz-placeholder,
+select.form-select {
+  /* Firefox 19+ */
+  font-size: $font-size-sm;
+}
+
+input[type]:-ms-input-placeholder,
+textarea:-ms-input-placeholder,
+select:-ms-input-placeholder,
+select.form-select {
+  font-size: $font-size-sm;
+}
+
+//select.form-select {
+//  background-image: url(../img/dropdown-arrow.svg);
+//}
+//// Remove default -webkit search input clear button
+//
+//input[type="search"]::-webkit-search-decoration,
+//input[type="search"]::-webkit-search-cancel-button,
+//input[type="search"]::-webkit-search-results-button,
+//input[type="search"]::-webkit-search-results-decoration {
+//  display: none;
+//}
+//
+//
+//// Password visibility toggle
+//
+//.password-toggle {
+//  position: relative;
+//  .form-control {
+//    padding-right: $font-size-base + ($spacer * 2);
+//  }
+//}
+//
+//.password-toggle-btn {
+//  position: absolute;
+//  top: 50%;
+//  right: .625rem;
+//  margin-bottom: 0;
+//  padding: $spacer * .5;
+//  transform: translateY(-50%);
+//  font-size: $btn-font-size-lg;
+//  line-height: 1;
+//  cursor: pointer;
+//
+//  .password-toggle-indicator {
+//    transition: color .2s ease-in-out;
+//    color: $input-placeholder-color;
+//    font: {
+//      family: 'cartzilla-icons';
+//      style: normal;
+//    }
+//    &::before { content: '\e937'; }
+//    &:hover { color: $input-color; }
+//  }
+//
+//  .password-toggle-check {
+//    position: absolute;
+//    left: 0;
+//    z-index: -1;
+//    width: 1rem;
+//    height: 1.25rem;
+//    opacity: 0;
+//
+//    &:checked ~ .password-toggle-indicator::before {
+//      content: '\e9d6';
+//    }
+//  }
+//}
+//.was-validated .password-toggle .form-control:invalid,
+//.was-validated .password-toggle .form-control.is-invalid,
+//.was-validated .password-toggle .form-control:valid,
+//.was-validated .password-toggle .form-control.is-valid {
+//  padding-right: 4rem;
+//  & + .password-toggle-btn { right: 2.1rem; }
+//}
+//
+//
+//// Checkboxes and radios
+//
+//.form-check-label {
+//  font-size: $form-check-label-font-size;
+//}
+//.form-check-justified {
+//  flex-basis: 0;
+//  flex-grow: 1;
+//  &:not(:last-child) {
+//    margin-right: $spacer * .5;
+//  }
+//  .form-option-label {
+//    width: 100%;
+//  }
+//}
+//
+//
+//// Switches
+//
+//.form-switch {
+//  .form-check-input {
+//    height: $form-switch-height;
+//    border: 0;
+//    background-color: $form-switch-bg;
+//    &:checked {
+//      background-color: $form-switch-checked-bg;
+//      box-shadow: $form-switch-checked-box-shadow;
+//    }
+//    &:disabled {
+//      box-shadow: none;
+//    }
+//  }
+//  .form-check-label {
+//    margin-top: .1875rem;
+//  }
+//}
+//
+//
+//// Form validation
+//
+//.valid-tooltip,
+//.invalid-tooltip {
+//  position: static;
+//  margin-top: .25rem;
+//}
+//.valid-tooltip {
+//  color: $success;
+//}
+//.invalid-tooltip {
+//  color: $danger;
+//}
+//.was-validated {
+//  .form-control:invalid,
+//  .form-control.is-invalid,
+//  .form-check-input:invalid,
+//  .form-check-input.is-invalid {
+//    &~.invalid-tooltip { display: table; }
+//  }
+//  .form-control:valid,
+//  .form-control.is-valid,
+//  .form-check-input:valid,
+//  .form-check-input.is-valid {
+//    &~.valid-tooltip { display: table; }
+//  }
+//  .form-control:valid,
+//  .form-control.is-valid,
+//  .form-select:valid,
+//  .form-select.is-valid {
+//    border-color: $input-border-color !important;
+//  }
+//}
+//.was-validated .form-check-input:valid ~ .form-check-label,
+//.was-validated .form-check-input.is-valid ~ .form-check-label {
+//  color: inherit;
+//}
+//.was-validated .form-check-input:valid:checked,
+//.was-validated .form-check-input.is-valid:checked {
+//  border-color: $form-check-input-checked-border-color;
+//  background-color: $form-check-input-checked-bg-color;
+//}
+//
+//
+//// Disabled inputs
+//
+//.form-control:disabled {
+//  cursor: not-allowed;
+//}
+//
+//
+//// Subscription form status
+//
+//.subscription-status {
+//  @include border-radius($border-radius-sm);
+//  font-size: $font-size-ms;
+//  text-align: center;
+//  &.status-success,
+//  &.status-error {
+//    margin-top: .5rem;
+//    padding: .25rem .375rem;
+//  }
+//  &.status-success {
+//    background-color: rgba($success, .1);
+//    color: darken($success, 10%);
+//  }
+//  &.status-error {
+//    background-color: rgba($danger, .1);
+//    color: $danger;
+//  }
+//}
+//
+//
+//// Custom size / color radios
+//
+//.form-option {
+//  padding-left: 0;
+//  &.form-check-inline {
+//    margin-right: ($spacer * .25);
+//  }
+//  .form-check-input {
+//    border: 0;
+//    background: none;
+//  }
+//}
+//.form-option-label {
+//  position: relative;
+//  min-width: $form-option-size;
+//  height: $form-option-size;
+//  margin-bottom: 0;
+//  padding: {
+//    top: .0625rem;
+//    right:$form-option-padding-x;
+//    left: $form-option-padding-x;
+//  }
+//  transition: $form-option-transition;
+//  border: $form-option-border-width solid $form-option-border-color;
+//  @include border-radius($form-option-border-radius);
+//  color: $form-option-color;
+//  font: {
+//    size: $form-option-font-size;
+//    weight: $form-option-font-weight;
+//  }
+//  text-align: center;
+//  line-height: ($form-option-size - .25rem);
+//  cursor: pointer;
+//  &:hover {
+//    border-color: $form-option-hover-border-color;
+//    color: $form-option-hover-color;
+//  }
+//}
+//.form-option-color {
+//  display: block;
+//  position: absolute;
+//  top: 50%;
+//  left: 50%;
+//  width: ($form-option-size - .5rem);
+//  height: ($form-option-size - .5rem);
+//  margin: {
+//    top: -(($form-option-size - .5rem) * .5);
+//    left: -(($form-option-size - .5rem) * .5);
+//  }
+//  background: {
+//    position: top left;
+//    size: ($form-option-size - .5rem) ($form-option-size - .5rem);
+//    repeat: no-repeat;
+//  }
+//}
+//.form-check-input:checked ~ .form-option-label {
+//  border-color: $form-option-active-border-color;
+//  color: $form-option-active-color;
+//}
+//
+//
+//// Custom file input drop area
+//
+//.file-drop-area {
+//  position: relative;
+//  padding: ($spacer * 2) $spacer;
+//  transition: $input-transition;
+//  border: ($input-border-width * 2) dashed $input-border-color;
+//  background-color: $input-bg;
+//  text-align: center;
+//  cursor: pointer;
+//
+//  .file-drop-input {
+//    display: block;
+//    position: absolute;
+//    top: 0;
+//    left: 0;
+//    width: 100%;
+//    height: 100%;
+//    background-color: transparent;
+//    opacity: 0;
+//    outline: none;
+//    cursor: pointer;
+//    z-index: 2;
+//  }
+//
+//  .file-drop-icon {
+//    display: block;
+//    margin-bottom: .75rem;
+//    color: $gray-500;
+//    font-size: $font-size-xl;
+//  }
+//
+//  .file-drop-preview {
+//    max-width: $file-drop-area-preview-width;
+//    margin: {
+//      right: auto;
+//      bottom: .75rem;
+//      left: auto;
+//    }
+//  }
+//
+//  .file-drop-message {
+//    display: block;
+//    font-size: $font-size-sm;
+//    margin-bottom: 1.25rem;
+//  }
+//
+//  .btn {
+//    position: relative;
+//    z-index: 3;
+//  }
+//
+//  &:hover {
+//    border-color: darken($input-border-color, 7%);
+//  }
+//}

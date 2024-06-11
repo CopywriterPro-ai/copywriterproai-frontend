@@ -1,0 +1,47 @@
+.faq-icon {
+  font-size: 25px;
+  line-height: normal;
+}
+.faq-accordion .accordion-item {
+  margin-bottom: 15px;
+  border-radius: 1rem;
+}
+.faq-accordion .accordion-item:last-of-type {
+  margin-bottom: 0;
+}
+.faq-accordion .accordion-item button {
+  border-radius: 1rem 1rem 0 0;
+  border: none;
+  padding: 1.5rem;
+  font-size: 18px;
+  font-weight: $font-weight-medium;
+}
+.faq-accordion .accordion-item button.accordion-button {
+  border-radius: 1rem;
+}
+.faq-accordion .accordion-item:last-of-type .accordion-button.collapsed {
+  border-radius: 1rem;
+}
+.faq-accordion .accordion-body {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+}
+.faq-accordion .accordion-item button:focus {
+  border-color: transparent;
+  box-shadow: none;
+}
+.faq-accordion .accordion-item .accordion-button:not(.collapsed) {
+  background: transparent;
+  box-shadow: none;
+  color: $primary;
+}
+.accordion-list li {
+  padding: 5px 0;
+}
+.accordion-list li a {
+  color: $body-color;
+  display: inline-block;
+  width: 100%;
+}
+.accordion-list li a:hover {
+  color: $primary;
+}

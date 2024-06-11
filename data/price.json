@@ -1,0 +1,92 @@
+{
+	"BASIC_1MONTH": {
+		"key": "BASIC_1MONTH",
+		"name": "Basic",
+		"period": "1month",
+		"words": "7,000",
+		"totalTools": "45",
+		"maxInput": "400",
+		"maxOutput": "600",
+		"user": "1",
+		"hasAiBlog": false,
+		"hasPlagiarism": false,
+		"price": {
+			"bdt": "399"
+		}
+	},
+	"BASIC_6MONTH": {
+		"key": "BASIC_6MONTH",
+		"name": "Basic",
+		"period": "6month",
+		"words": "7,000",
+		"totalTools": "45",
+		"maxInput": "400",
+		"maxOutput": "600",
+		"user": "1",
+		"hasAiBlog": false,
+		"hasPlagiarism": false,
+		"price": {
+			"bdt": "1999"
+		}
+	},
+	"STANDARD_1MONTH": {
+		"key": "STANDARD_1MONTH",
+		"name": "Standard",
+		"period": "1month",
+		"words": "50,000",
+		"totalTools": "50+",
+		"maxInput": "800",
+		"maxOutput": "600",
+		"user": "1",
+		"hasAiBlog": true,
+		"hasPlagiarism": false,
+		"price": {
+			"bdt": "1999"
+		}
+	},
+	"STANDARD_6MONTH": {
+		"key": "STANDARD_6MONTH",
+		"name": "Standard",
+		"period": "6month",
+		"words": "50,000",
+		"totalTools": "50+",
+		"maxInput": "800",
+		"maxOutput": "600",
+		"user": "1",
+		"hasAiBlog": true,
+		"hasPlagiarism": false,
+		"price": {
+			"bdt": "9999"
+		}
+	},
+	"PROFESSIONAL_1MONTH": {
+		"key": "PROFESSIONAL_1MONTH",
+		"name": "Professional",
+		"period": "1month",
+		"words": "200,000",
+		"totalTools": "50+",
+		"maxInput": "1600",
+		"maxOutput": "1000",
+		"user": "5",
+		"hasAiBlog": true,
+		"hasPlagiarism": true,
+		"price": {
+			"bdt": "4999"
+		}
+	},
+	"PROFESSIONAL_6MONTH": {
+		"key": "PROFESSIONAL_6MONTH",
+		"name": "Professional",
+		"period": "6month",
+		"words": "200,000",
+		"totalTools": "50+",
+		"maxInput": "1600",
+		"maxOutput": "1000",
+		"user": "5",
+		"hasAiBlog": true,
+		"hasPlagiarism": true,
+		"price": {
+			"bdt": "24999"
+		}
+	}
+}
