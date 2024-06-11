@@ -60,7 +60,8 @@ const UserLayout = ({
     } else if (isAuth && !hasCompletedOnboarding) {
       router.push("/app/onboading");
     }
-  }, [isAuth, isRehydrated, isSpecial, router, hasCompletedOnboarding]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth, isRehydrated, isSpecial, hasCompletedOnboarding]);
 
   const {
     status: { fetchContent, fetchCategories },
