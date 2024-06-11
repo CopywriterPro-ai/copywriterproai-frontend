@@ -13,17 +13,13 @@ import { darken } from "polished";
 import { FaKey, FaSmile } from "react-icons/fa";
 import PageHeader from "@/components/common/PageHeader";
 import Footer from "@/layout/Footer/Footer"; // Importing PageHeader
+import { useAuthNavigate } from "@/hooks";
 
 const Onboarding = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
+  useAuthNavigate();
 
-  const {
-    info: {
-      loading = "idle",
-      data: { hasCompletedOnboarding = false } = {},
-    } = {},
-  } = useSelector(authSelector.getAuth);
+  const { info: { loading = "idle" } = {} } = useSelector(authSelector.getAuth);
 
   const [apiKey, setApiKey] = useState("");
   const [aiModel, setAiModel] = useState("");
@@ -46,13 +42,6 @@ const Onboarding = () => {
       dispatch(submitOpenAIApi({ ownOpenAIApiKey: apiKey }));
     }
   };
-
-  useEffect(() => {
-    if (hasCompletedOnboarding) {
-      router.push(USER_DEFAULT_PATH);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasCompletedOnboarding]);
 
   return (
     <Layout type="centered">
