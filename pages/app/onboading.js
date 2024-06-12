@@ -70,7 +70,6 @@ const Onboarding = () => {
                 >
                   <option value="">Select AI Model</option>
                   <option value="openai">OpenAI</option>
-                  <option value="google-gemini">Google Gemini AI</option>
                 </select>
               </FormField>
               <FormField>
