@@ -1,4 +1,17 @@
 const blogs = [
+    {
+        id: "join-the-copywriterpro-ai-revolution-why-we-need-an-open-source-ai-content-writing-platform",
+        title: "Join the CopywriterPro Revolution: Why We Need an Open Source AI Content Writing Platform",
+        description: "CopywriterPro.ai, the world's first open-source AI content writing platform, enabling users to create SEO blog posts and ad copy with their own API keys and AI models for free.",
+        link: "/join-the-copywriterpro-ai-revolution-why-we-need-an-open-source-ai-content-writing-platform",
+        tags: 'Open Source, AI, Content Writing',
+        date: 'June 12, 2024',
+        class: 'bg-primary-soft',
+        author: {
+            name: 'Nafii',
+            photo: '/blog-authors/nafis.jpg',
+        },
+    },
   {
 		id: "6-best-paraphrasing-tool-in-2023",
 		title: "6 Best Paraphrasing Tool in 2023",
