@@ -108,28 +108,41 @@ const HeroSectionTwo = () => {
                   </FeaturesList>
 
                   <div className="action-btns mt-5 align-items-center flex d-sm-flex d-lg-flex d-md-flex">
-                    <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                      <ActionBtn onClick={() => window.open("https://github.com/CopywriterPro-ai", "_blank")}>
+                    <div
+                        style={{ display: "flex", alignItems: "center", gap: 20 }}
+                    >
+                      <ActionBtn
+                          onClick={() =>
+                              window.open(
+                                  "https://github.com/CopywriterPro-ai",
+                                  "_blank"
+                              )
+                          }
+                      >
                         <FiGithub />
                         View on Github
                       </ActionBtn>
-                      <ActionBtn onClick={() => window.open("https://copywriterpro.ai/signup", "_self")}>
+                      <ActionBtn
+                          onClick={() =>
+                              window.open("https://copywriterpro.ai/signup", "_self")
+                          }
+                      >
                         <FaGoogle />
                         Try for free
                       </ActionBtn>
                     </div>
                   </div>
 
-                  {/* Product Hunt Badge */}
-                  <div className="mt-4">
+                  <div className="product-hunt-badge mt-4">
                     <a
                         href="https://www.producthunt.com/posts/copywriterpro?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-copywriterpro"
                         target="_blank"
+                        rel="noopener noreferrer"
                     >
                       <img
                           src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=461658&theme=light"
-                          alt="CopywriterPro - World's first open-source AI writing platform for SEO, AdCopy | Product Hunt"
-                          style={{ width: '250px', height: '54px' }}
+                          alt="CopywriterPro - Worlds&#0032;first&#0032;open&#0032;source&#0032;AI&#0032;writing&#0032;platform&#0032;for&#0032;SEO&#0044;&#0032;AdCopy | Product Hunt"
+                          style={{ width: "250px", height: "54px" }}
                           width="250"
                           height="54"
                       />
@@ -139,29 +152,25 @@ const HeroSectionTwo = () => {
                 </div>
               </div>
               <div className="col-lg-6 col-md-12 mt-4 mt-lg-0">
-                <img
-                    width="100%"
-                    src="https://plus.unsplash.com/premium_photo-1661877737564-3dfd7282efcb"
-                    alt="Screenshot"
-                />
+                <img width="100%" src="/open-source.png" alt="Screenshot" />
               </div>
             </div>
           </div>
-          <div className="container" style={{ marginTop: "50px" }}>
-            <div
-                style={{
-                  display: "flex",
-                  overflow: "hidden",
-                  justifyContent: "space-around",
-                }}
-            >
-              {brands.map((brand) => (
-                  <div key={brand.name} title={brand.name}>
-                    <img width="180px" src="/logo-color.svg" alt={brand.name} />
-                  </div>
-              ))}
-            </div>
-          </div>
+          {/*<div className="container" style={{ marginTop: "50px" }}>*/}
+          {/*  <div*/}
+          {/*      style={{*/}
+          {/*        display: "flex",*/}
+          {/*        overflow: "hidden",*/}
+          {/*        justifyContent: "space-around",*/}
+          {/*      }}*/}
+          {/*  >*/}
+          {/*    {brands.map((brand) => (*/}
+          {/*        <div key={brand.name} title={brand.name}>*/}
+          {/*          <img width="180px" src="/logo-color.svg" alt={brand.name} />*/}
+          {/*        </div>*/}
+          {/*    ))}*/}
+          {/*  </div>*/}
+          {/*</div>*/}
         </section>
         <section className="api-section ptb-120 bg-light text-dark">
           <div className="container">
@@ -169,7 +178,7 @@ const HeroSectionTwo = () => {
               <div className="col-lg-6 col-md-12 mt-4 mt-lg-0">
                 <img
                     width="100%"
-                    src="https://plus.unsplash.com/premium_photo-1661877737564-3dfd7282efcb"
+                    src="/onboarding.png"
                     alt="Onboard Screenshot"
                 />
               </div>
@@ -177,9 +186,9 @@ const HeroSectionTwo = () => {
                 <div className="api-content-wrap mt-100 mt-lg-0 mt-xl-0">
                   <HeadingStyle>Use Your Own API Keys for Free</HeadingStyle>
                   <DescriptionStyle>
-                    With CopywriterPro, you have the option to use your own API keys
-                    for free. This means you can take advantage of all our powerful
-                    features without any additional cost.
+                    With CopywriterPro, you have the option to use your own API
+                    keys for free. This means you can take advantage of all our
+                    powerful features without any additional cost.
                   </DescriptionStyle>
 
                   <FeaturesList>
@@ -192,12 +201,22 @@ const HeroSectionTwo = () => {
                   </FeaturesList>
 
                   <div className="action-btns mt-5 d-sm-flex d-lg-flex d-md-flex">
-                    <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                      <ActionBtn onClick={() => window.open("https://copywriterpro.ai/signup", "_self")}>
+                    <div
+                        style={{ display: "flex", alignItems: "center", gap: 20 }}
+                    >
+                      <ActionBtn
+                          onClick={() =>
+                              window.open("https://copywriterpro.ai/signup", "_self")
+                          }
+                      >
                         <FiKey />
                         Add Your API Key
                       </ActionBtn>
-                      <ActionBtn onClick={() => window.open("https://copywriterpro.ai/signup", "_self")}>
+                      <ActionBtn
+                          onClick={() =>
+                              window.open("https://copywriterpro.ai/signup", "_self")
+                          }
+                      >
                         <FaGoogle />
                         Try for free
                       </ActionBtn>

@@ -289,8 +289,8 @@ const testimonial = [
 
 const pricingData = [
   {
-    title: 'Starter',
-    price: '$5',
+    title: 'Starter Package',
+    price: '$15',
     time: '/month',
     bgColor: 'bg-white',
     textColor: 'text-primary',
@@ -298,27 +298,19 @@ const pricingData = [
     shape: 'left--40 bottom--40',
     listItem: [
       {
-        li: '10,000 words',
+        li: '130,000 words, suitable for up to 100 articles',
         available: true,
       },
-      // {
-      //   li: '400 characters input limit',
-      //   available: true,
-      // },
       {
         li: '45 copywriting tools',
         available: true,
       },
       {
         li: 'AI blog writer',
-        available: false,
+        available: true,
       },
       {
         li: 'Plagiarism Checker',
-        available: false,
-      },
-      {
-        li: '1 user login',
         available: true,
       },
       {
@@ -330,29 +322,40 @@ const pricingData = [
         available: true,
       },
       {
-        li: '24/7 Life time Support',
-        available: false,
+        li: '24/7 Lifetime Support',
+        available: true,
+      },
+      {
+        li: 'Multiple AI models',
+        available: true,
+      },
+      {
+        li: 'Always the newest models',
+        available: true,
+      },
+      {
+        li: 'Rephrase & Rewrite',
+        available: true,
+      },
+      {
+        li: 'Dynamic Templates',
+        available: true,
       },
     ],
   },
 
   {
-    title: 'Advanced',
-    price: '$12',
+    title: 'Professional Package',
+    price: '$21',
     time: '/month',
     bgColor: 'bg-gradient',
     textColor: 'text-warning',
     btnColor: 'btn-primary',
-
     listItem: [
       {
-        li: '50,000 words',
+        li: '450,000 words, suitable for up to 350 articles',
         available: true,
       },
-      // {
-      //   li: '800 characters input limit',
-      //   available: true,
-      // },
       {
         li: '50+ copywriting tools',
         available: true,
@@ -363,10 +366,6 @@ const pricingData = [
       },
       {
         li: 'Plagiarism Checker',
-        available: false,
-      },
-      {
-        li: '1 user login',
         available: true,
       },
       {
@@ -378,15 +377,43 @@ const pricingData = [
         available: true,
       },
       {
-        li: '24/7 Life time Support',
+        li: '24/7 Lifetime Support',
+        available: true,
+      },
+      {
+        li: 'Multiple AI models',
+        available: true,
+      },
+      {
+        li: 'Always the newest models',
+        available: true,
+      },
+      {
+        li: 'Rephrase & Rewrite',
+        available: true,
+      },
+      {
+        li: 'Dynamic Templates',
+        available: true,
+      },
+      {
+        li: 'Recent news & cite sources',
+        available: true,
+      },
+      {
+        li: 'Style Guide',
+        available: true,
+      },
+      {
+        li: 'Core Functionality',
         available: true,
       },
     ],
   },
 
   {
-    title: 'Premium',
-    price: '$15',
+    title: 'Unlimited Package',
+    price: '$39',
     time: '/month',
     bgColor: 'bg-white',
     textColor: 'text-primary',
@@ -394,13 +421,9 @@ const pricingData = [
     shape: 'right--40 top--40',
     listItem: [
       {
-        li: '200,000 words',
+        li: 'Unlimited words, suitable for up to 800 articles',
         available: true,
       },
-      // {
-      //   li: '1600 characters input limit',
-      //   available: true,
-      // },
       {
         li: '50+ copywriting tools',
         available: true,
@@ -414,10 +437,6 @@ const pricingData = [
         available: true,
       },
       {
-        li: '5 user login',
-        available: true,
-      },
-      {
         li: 'Automated Updated Features',
         available: true,
       },
@@ -426,12 +445,62 @@ const pricingData = [
         available: true,
       },
       {
-        li: '24/7 Life time Support',
+        li: '24/7 Lifetime Support',
+        available: true,
+      },
+      {
+        li: 'Multiple AI models',
+        available: true,
+      },
+      {
+        li: 'Always the newest models',
+        available: true,
+      },
+      {
+        li: 'Rephrase & Rewrite',
+        available: true,
+      },
+      {
+        li: 'Dynamic Templates',
+        available: true,
+      },
+      {
+        li: 'Recent news & cite sources',
+        available: true,
+      },
+      {
+        li: 'Style Guide',
+        available: true,
+      },
+      {
+        li: 'Core Functionality',
+        available: true,
+      },
+      {
+        li: 'Company Knowledge Hub',
+        available: true,
+      },
+      {
+        li: 'SEO Mode',
+        available: true,
+      },
+      {
+        li: 'History & Backups',
+        available: true,
+      },
+      {
+        li: 'Security & Privacy (SSO, SOC2 Compliant, etc.) (Coming Soon)',
+        available: false,
+      },
+      {
+        li: 'Onboarding & Support (Dedicated Customer Success Manager, Product Training, Priority Support)',
         available: true,
       },
     ],
   },
 ];
+
+
 
 //Offcanvas Menu
 const offcanvasMenuData = [

@@ -28,3 +28,4 @@ export { default as useQuillValueIsChange } from "./editor/useQuillValueIsChange
 export { default as useToolAccess } from "./useToolAccess";
 export { default as useWriterAccess } from "./useWriterAccess";
 export { default as usePackages } from "./usePackages";
+export { default as useAuthNavigate } from "./useAuthNavigate";

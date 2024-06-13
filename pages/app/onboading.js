@@ -1,101 +1,118 @@
 import { USER_DEFAULT_PATH } from "@/appconstants";
 import { UserLayout as Layout } from "@/layout";
-import { selectors as authSelector, completeOnboarding, submitOpenAIApi } from "@/redux/slices/auth";
+import {
+  selectors as authSelector,
+  completeOnboarding,
+  submitOpenAIApi,
+} from "@/redux/slices/auth";
 import { useRouter } from "next/router";
-import React, { useEffect, useMemo, useState, useCallback } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { darken } from "polished";
 import { FaKey, FaSmile } from "react-icons/fa";
 import PageHeader from "@/components/common/PageHeader";
-import Footer from "@/layout/Footer/Footer";
+import Footer from "@/layout/Footer/Footer"; // Importing PageHeader
+import { useAuthNavigate } from "@/hooks";
 
 const Onboarding = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
-  const [hasNavigated, setHasNavigated] = useState(false);
+  useAuthNavigate();
 
-  const { info: { loading = "idle", data: { hasCompletedOnboarding = false } = {} } = {} } = useSelector(authSelector.getAuth);
+  const { info: { loading = "idle" } = {} } = useSelector(authSelector.getAuth);
 
   const [apiKey, setApiKey] = useState("");
   const [aiModel, setAiModel] = useState("");
-
   const isLoading = loading === "pending";
 
   const isValidApiKey = useMemo(() => {
-    return typeof apiKey === "string" && apiKey.length > 20 && apiKey.startsWith("sk-");
+    return (
+      typeof apiKey === "string" &&
+      apiKey.length > 20 &&
+      apiKey.startsWith("sk-")
+    );
   }, [apiKey]);
 
-  const handleCompleteOnboarding = useCallback(() => {
+  const handleCompleteOnboarding = () => {
     dispatch(completeOnboarding());
-  }, [dispatch]);
+  };
 
-  const handleSubmitAPI = useCallback(() => {
+  const handleSubmitAPI = () => {
     if (isValidApiKey && !isLoading) {
       dispatch(submitOpenAIApi({ ownOpenAIApiKey: apiKey }));
     }
-  }, [dispatch, isValidApiKey, isLoading, apiKey]);
-
-  useEffect(() => {
-    if (hasCompletedOnboarding && !hasNavigated) {
-      router.replace(USER_DEFAULT_PATH);
-      setHasNavigated(true);
-    }
-  }, [hasCompletedOnboarding, hasNavigated, router]);
+  };
 
   return (
-      <Layout type="centered">
-        <PageHeader
-            title="Welcome to CopywriterPro"
-            description="Thank you for choosing us. Complete the onboarding to start using our services."
-        />
-        <Content>
-          <Container>
+    <Layout type="centered">
+      <PageHeader
+        title="Welcome to CopywriterPro"
+        description="Thank you for choosing us. Complete the onboarding to start using our services."
+      />
+      <Content>
+        <Container>
+          <ColFlex>
+            <Description>
+              Thank you for choosing us to write your <b>SEO-friendly</b> blog
+              posts and marketing copywriting. While you are welcome to use your
+              own API key, we would greatly appreciate it if you use our AI
+              model and subscribe to our package. Your support helps us continue
+              to develop <b>open-source</b> software and drive our community.
+              Thank you for your support! <b>Happy Copywriting</b> with
+              CopywriterPro <FaSmile />.
+            </Description>
             <ColFlex>
-              <Description>
-                Thank you for choosing us to write your <b>SEO-friendly</b> blog posts and marketing copywriting. While you are welcome to use your own API key, we would greatly appreciate it if you use our AI model and subscribe to our package. Your support helps us continue to develop <b>open-source</b> software and drive our community. Thank you for your support! <b>Happy Copywriting</b> with CopywriterPro <FaSmile />.
-              </Description>
-              <ColFlex>
-                <FormField>
-                  <label>Choose AI Model:</label>
-                  <select value={aiModel} onChange={(e) => setAiModel(e.target.value)}>
-                    <option value="">Select AI Model</option>
-                    <option value="openai">OpenAI</option>
-                    <option value="google-gemini">Google Gemini AI</option>
-                  </select>
-                </FormField>
-                <FormField>
-                  <label>OpenAI API Key: <FaKey /></label>
-                  <input
-                      name="openai-api"
-                      value={apiKey}
-                      onChange={(ev) => setApiKey(ev.target.value)}
-                      type="text"
-                      placeholder="Enter key"
-                  />
-                </FormField>
-                <ActionWrapper>
-                  <ActionBtn disabled={!isValidApiKey || isLoading} onClick={handleSubmitAPI}>
-                    Save
-                  </ActionBtn>
-                </ActionWrapper>
-              </ColFlex>
+              <FormField>
+                <label>Choose AI Model:</label>
+                <select
+                  value={aiModel}
+                  onChange={(e) => setAiModel(e.target.value)}
+                >
+                  <option value="">Select AI Model</option>
+                  <option value="openai">OpenAI</option>
+                </select>
+              </FormField>
+              <FormField>
+                <label>
+                  OpenAI API Key: <FaKey />
+                </label>
+                <input
+                  name="openai-api"
+                  value={apiKey}
+                  onChange={(ev) => setApiKey(ev.target.value)}
+                  type="text"
+                  placeholder="Enter key"
+                />
+              </FormField>
               <ActionWrapper>
-                <ActionBtn onClick={handleCompleteOnboarding} bgColor="green" textColor="white">
-                  Skip, start free trial
+                <ActionBtn
+                  disabled={!isValidApiKey || isLoading}
+                  onClick={() => handleSubmitAPI()}
+                >
+                  Save
                 </ActionBtn>
               </ActionWrapper>
             </ColFlex>
-          </Container>
-        </Content>
-        <Footer />
-      </Layout>
+            <ActionWrapper>
+              <ActionBtn
+                onClick={() => handleCompleteOnboarding()}
+                bgColor="green"
+                textColor="white"
+              >
+                Skip, start free trial
+              </ActionBtn>
+            </ActionWrapper>
+          </ColFlex>
+        </Container>
+      </Content>
+      <Footer />
+    </Layout>
   );
 };
 
 const Content = styled.div`
   flex: 1;
-  overflow-y: auto;
+  overflow-y: auto; /* Ensure scrolling */
   padding: 20px;
 `;
 
@@ -119,11 +136,12 @@ const Description = styled.div`
   margin: 25px 0;
   border-radius: 8px;
   padding: 15px;
-  box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px, rgba(255, 255, 255, 0.25) 0px 1px 0px inset;
+  box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px,
+    rgba(255, 255, 255, 0.25) 0px 1px 0px inset;
   text-align: center;
   border: 2px solid #d1d1d1;
   background-color: #f9f9f9;
-  font-size: 18px;
+  font-size: 18px; /* Increased font size */
 `;
 
 const FormField = styled.div`
@@ -140,7 +158,8 @@ const FormField = styled.div`
     gap: 5px;
   }
 
-  select, input {
+  select,
+  input {
     border: 1px solid gray;
     border-radius: 8px;
     padding: 10px;
@@ -150,7 +169,7 @@ const FormField = styled.div`
   }
 
   input {
-    min-width: 300px;
+    min-width: 300px; /* Ensure the input is wider on larger screens */
     @media (min-width: 600px) {
       min-width: 400px;
     }
@@ -175,7 +194,8 @@ const ActionBtn = styled.button`
   padding: 10px 20px;
   user-select: none;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  background: ${({ bgColor, disabled }) => (disabled ? "#ccc" : bgColor ? bgColor : "#007bff")};
+  background: ${({ bgColor, disabled }) =>
+    disabled ? "#ccc" : bgColor ? bgColor : "#007bff"};
   color: ${({ textColor }) => (textColor ? textColor : "white")};
   font-size: 16px;
   transition: background 0.3s ease;
@@ -183,7 +203,8 @@ const ActionBtn = styled.button`
   max-width: 200px;
 
   &:hover {
-    background: ${({ bgColor, disabled }) => !disabled && (bgColor ? darken(0.1, bgColor) : "#0056b3")};
+    background: ${({ bgColor, disabled }) =>
+      !disabled && (bgColor ? darken(0.1, bgColor) : "#0056b3")};
   }
 `;
 

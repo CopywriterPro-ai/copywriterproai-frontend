@@ -149,8 +149,8 @@ export const submitOpenAIApi = createAsyncThunk(
   }
 );
 
-export const complateOnboading = createAsyncThunk(
-  "user/complateOnboadingFetching",
+export const completeOnboarding = createAsyncThunk(
+  "user/completeOnboardingFetching",
   async (_, { rejectWithValue }) => {
     try {
       const response = await userApi.complateOnboading();
@@ -399,19 +399,19 @@ const auth = createSlice({
       }
     },
 
-    [complateOnboading.pending]: (state, action) => {
+    [completeOnboarding.pending]: (state, action) => {
       if (state.info.loading === "idle") {
         state.info.loading = "pending";
         state.info.error = null;
       }
     },
-    [complateOnboading.fulfilled]: (state, action) => {
+    [completeOnboarding.fulfilled]: (state, action) => {
       if (state.info.loading === "pending") {
         state.info.loading = "idle";
         location.reload();
       }
     },
-    [complateOnboading.rejected]: (state, action) => {
+    [completeOnboarding.rejected]: (state, action) => {
       if (state.info.loading === "pending") {
         state.info.loading = "idle";
         state.info.error = action.payload.data;

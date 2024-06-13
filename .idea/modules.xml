@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/copywriterproai-fronted.iml" filepath="$PROJECT_DIR$/.idea/copywriterproai-fronted.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/copywriter-server-rendering.iml" filepath="$PROJECT_DIR$/.idea/copywriter-server-rendering.iml" />
     </modules>
   </component>
 </project>
