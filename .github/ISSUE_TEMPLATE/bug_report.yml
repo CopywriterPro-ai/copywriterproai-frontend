@@ -1,7 +1,6 @@
----
 name: 🐛 Bug Report
-about: Create a report to help us improve
-title: ""
+description: Create a report to help us improve
+title: " "
 labels: [bug, triage]
 body:
   - type: markdown
@@ -25,8 +24,8 @@ body:
       description: Provide console output with error messages and/or screenshots of the bug.
       placeholder: |
         Provide a brief description of the problem here.
-      validations:
-        required: true
+    validations:
+      required: true
 
   - type: textarea
     attributes:
@@ -34,8 +33,8 @@ body:
       description: Provide clearly ordered steps to reproduce the issue
       placeholder: |
         Include as much information as possible (screenshots, logs, tracebacks etc.) to receive the most helpful response.
-      validations:
-        required: true
+    validations:
+      required: true
 
   - type: textarea
     attributes:
@@ -43,8 +42,8 @@ body:
       description: Clearly describe the current behavior
       placeholder: |
         Include as much information as possible (screenshots, logs, tracebacks etc.) to receive the most helpful response.
-      validations:
-        required: true
+    validations:
+      required: true
 
   - type: textarea
     attributes:
@@ -52,8 +51,8 @@ body:
       description: Clearly describe the expected behavior
       placeholder: |
         Include as much information as possible (screenshots, logs, tracebacks etc.) to receive the most helpful response.
-      validations:
-        required: true
+    validations:
+      required: true
 
   - type: textarea
     attributes:
